@@ -16,9 +16,15 @@ namespace FoodPlanner
         private List<Food> ingredients = new List<Food>();
         private int cookingTime = 0;
 
-        public Recipe()
+        public Recipe(string Name, int Persons, string Image, string Description, List<string> CookingSteps, List<Food> Ingredients, int CookingTime)
         {
-
+            name = Name;
+            persons = Persons;
+            image = Image;
+            description = Description;
+            cookingSteps = CookingSteps;
+            ingredients = Ingredients;
+            cookingTime = CookingTime;
         }
     }
 }

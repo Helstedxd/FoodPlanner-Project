@@ -8,7 +8,7 @@ namespace FoodPlanner
 {
     abstract class Food
     {
-        protected enum bUnits {g, ml, stk};
+        protected enum bUnits { g, ml, stk };
 
         protected string foodName = null;
         protected bUnits unit = bUnits.g;
@@ -16,22 +16,28 @@ namespace FoodPlanner
         protected DateTime expirationDate = DateTime.Now;
         protected DateTime purchaseDate = DateTime.Now;
 
-        public Food()
+        public Food(string Name, int Quantity, DateTime ExpirationDate, DateTime PurchaseDate)
         {
-
+            foodName = Name;
+            quantity = Quantity;
+            expirationDate = ExpirationDate;
+            purchaseDate = PurchaseDate;
         }
     }
 
     class LiquidFood : Food
     {
-        public LiquidFood(){
+        public LiquidFood(string Name, int Quantity, DateTime ExpirationDate, DateTime PurchaseDate)
+            : base(Name, Quantity, ExpirationDate, PurchaseDate)
+        {
             unit = bUnits.ml;
         }
     }
 
     class SolidFood : Food
     {
-        public SolidFood()
+        public SolidFood(string Name, int Quantity, DateTime ExpirationDate, DateTime PurchaseDate)
+            : base(Name, Quantity, ExpirationDate, PurchaseDate)
         {
             unit = bUnits.g;
         }
@@ -39,7 +45,8 @@ namespace FoodPlanner
 
     class MiscFood : Food
     {
-        public MiscFood()
+        public MiscFood(string Name, int Quantity, DateTime ExpirationDate, DateTime PurchaseDate)
+            : base(Name, Quantity, ExpirationDate, PurchaseDate)
         {
             unit = bUnits.stk;
         }

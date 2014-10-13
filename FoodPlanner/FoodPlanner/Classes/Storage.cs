@@ -8,17 +8,19 @@ namespace FoodPlanner.Classes
 {
     abstract class Storage
     {
-        private string test = null;
-        public Storage(string input)
+        protected List<Food> items = new List<Food>();
+
+
+        public Storage(Food food)
         {
-            test = input;
+            items.Add(food);
         }
     }
 
     class ShoppingList : Storage
     {
-        public ShoppingList(string test)
-            : base(test)
+        public ShoppingList(Food food)
+            : base(food)
         {
 
         }
@@ -26,8 +28,8 @@ namespace FoodPlanner.Classes
 
     class Inventory : Storage
     {
-        public Inventory(string test)
-            : base(test)
+        public Inventory(Food food)
+            : base(food)
         {
 
         }

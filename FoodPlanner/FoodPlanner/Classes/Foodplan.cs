@@ -8,6 +8,10 @@ namespace FoodPlanner
 {
     class Foodplan
     {
+        private List<Meal> meals = new List<Meal>();
+        private int week = 0;
+
+
         public Foodplan()
         {
 

@@ -8,7 +8,10 @@ namespace FoodPlanner
 {
     class Meal
     {
-        private DateTime time = DateTime.MinValue;
+        private DateTime date = DateTime.MinValue;
+        private Recipe recipe = null;
+        private int persons = Properties.Settings.Default.Persons;
+
 
         public Meal()
         {

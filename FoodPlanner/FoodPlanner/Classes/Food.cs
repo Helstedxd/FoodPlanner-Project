@@ -6,18 +6,42 @@ using System.Threading.Tasks;
 
 namespace FoodPlanner
 {
-    class Food
+    abstract class Food
     {
-        enum bUnit {none, g, ml, stk};
+        protected enum bUnits {g, ml, stk};
 
-        //private int id = 0;
-        private string foodName = null;
-        private bUnit unit = bUnit.none;
-        private int amount = -1;
+        protected string foodName = null;
+        protected bUnits unit = bUnits.g;
+        protected int quantity = -1;
+        protected DateTime expirationDate = DateTime.Now;
+        protected DateTime purchaseDate = DateTime.Now;
 
         public Food()
         {
 
+        }
+    }
+
+    class LiquidFood : Food
+    {
+        public LiquidFood(){
+            unit = bUnits.ml;
+        }
+    }
+
+    class SolidFood : Food
+    {
+        public SolidFood()
+        {
+            unit = bUnits.g;
+        }
+    }
+
+    class MiscFood : Food
+    {
+        public MiscFood()
+        {
+            unit = bUnits.stk;
         }
     }
 }

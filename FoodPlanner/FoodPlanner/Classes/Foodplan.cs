@@ -12,9 +12,14 @@ namespace FoodPlanner
         private int week = 0;
 
 
-        public Foodplan()
+        public Foodplan(int Week)
         {
+            week = Week;
+        }
 
+        public void addMeal(Meal meal)
+        {
+            meals.Add(meal);
         }
     }
 }

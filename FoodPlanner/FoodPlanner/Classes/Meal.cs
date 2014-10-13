@@ -13,9 +13,11 @@ namespace FoodPlanner
         private int persons = Properties.Settings.Default.Persons;
 
 
-        public Meal()
+        public Meal(DateTime Date, Recipe Recipe, int Persons)
         {
-
+            date = Date;
+            recipe = Recipe;
+            persons = Persons;
         }
     }
 }

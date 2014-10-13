@@ -4,34 +4,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FoodPlanner.Classes
+namespace FoodPlanner
 {
     abstract class Storage
     {
         protected List<Food> items = new List<Food>();
 
 
+        public Storage(List<Food> food)
+        {
+            items.AddRange(food);
+        }
+
         public Storage(Food food)
         {
             items.Add(food);
+        }
+
+        public void addItem(Food item)
+        {
+            items.Add(item);
         }
     }
 
     class ShoppingList : Storage
     {
-        public ShoppingList(Food food)
-            : base(food)
-        {
+        public ShoppingList(Food food) : base(food){}
+        public ShoppingList(List<Food> food) : base(food) { }
 
-        }
     }
 
     class Inventory : Storage
     {
-        public Inventory(Food food)
-            : base(food)
-        {
+        public Inventory(Food food) : base(food){}
+        public Inventory(List<Food> food) : base(food) {}
 
-        }
     }
 }

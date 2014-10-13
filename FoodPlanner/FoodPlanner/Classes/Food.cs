@@ -8,6 +8,13 @@ namespace FoodPlanner
 {
     class Food
     {
+        enum bUnit {none, g, ml, stk};
+
+        //private int id = 0;
+        private string foodName = null;
+        private bUnit unit = bUnit.none;
+        private int amount = -1;
+
         public Food()
         {
 

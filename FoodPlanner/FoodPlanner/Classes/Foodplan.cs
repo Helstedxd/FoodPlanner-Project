@@ -8,16 +8,16 @@ namespace FoodPlanner
 {
     class Foodplan
     {
-        private List<Meal> meals = new List<Meal>();
-        private int week = 0;
+        private List<Meal> meals;
+        private int week;
 
-
-        public Foodplan(int Week)
+        public Foodplan(int week)
         {
-            week = Week;
+            this.week = week;
+            this.meals = new List<Meal>();
         }
 
-        public void addMeal(Meal meal)
+        public void AddMeal(Meal meal)
         {
             meals.Add(meal);
         }

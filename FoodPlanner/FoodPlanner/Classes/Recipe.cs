@@ -8,23 +8,21 @@ namespace FoodPlanner
 {
     class Recipe
     {
-        private string name = null;
-        private int persons = Properties.Settings.Default.Persons;
-        private string image = null;
-        private string description = null;
-        private List<string> cookingSteps = new List<string>();
-        private List<Food> ingredients = new List<Food>();
-        private int cookingTime = 0;
+        public string Name { get; set; }
+        public string ImagePath { get; set; }
+        public string Description { get; set; }
+        public TimeSpan CookingTime { get; set; }
+        public List<string> CookingSteps { get; private set; }
+        public List<Food> Ingredients { get; private set; }
 
-        public Recipe(string Name, int Persons, string Image, string Description, List<string> CookingSteps, List<Food> Ingredients, int CookingTime)
+        public Recipe(string name, string description, TimeSpan cookingTime, string imagePath)
         {
-            name = Name;
-            persons = Persons;
-            image = Image;
-            description = Description;
-            cookingSteps = CookingSteps;
-            ingredients = Ingredients;
-            cookingTime = CookingTime;
+            this.Name = name;
+            this.Description = description;
+            this.CookingTime = cookingTime;
+            this.ImagePath = imagePath;
+            this.CookingSteps = new List<string>();
+            this.Ingredients = new List<Food>();
         }
     }
 }

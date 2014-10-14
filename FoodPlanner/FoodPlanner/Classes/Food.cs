@@ -10,25 +10,27 @@ namespace FoodPlanner
     {
         protected enum bUnits { g, ml, stk };
 
-        protected string foodName = null;
-        protected bUnits unit = bUnits.g;
-        protected int quantity = -1;
-        protected DateTime expirationDate = DateTime.Now;
-        protected DateTime purchaseDate = DateTime.Now;
+        public string Name { get; set; }
+        public int Quantity { get; set; }
+        public DateTime ExpirationDate { get; set; }
+        public DateTime PurchaseDate { get; set; }
 
-        public Food(string Name, int Quantity, DateTime ExpirationDate, DateTime PurchaseDate)
+        protected bUnits unit = bUnits.g;
+
+        public Food(string name, int quantity, DateTime expirationDate, DateTime purchaseDate)
         {
-            foodName = Name;
-            quantity = Quantity;
-            expirationDate = ExpirationDate;
-            purchaseDate = PurchaseDate;
+            this.Name = name;
+            this.Quantity = quantity;
+            this.ExpirationDate = expirationDate;
+            this.PurchaseDate = purchaseDate;
         }
+
     }
 
     class LiquidFood : Food
     {
-        public LiquidFood(string Name, int Quantity, DateTime ExpirationDate, DateTime PurchaseDate)
-            : base(Name, Quantity, ExpirationDate, PurchaseDate)
+        public LiquidFood(string name, int quantity, DateTime expirationDate, DateTime purchaseDate)
+            : base(name, quantity, expirationDate, purchaseDate)
         {
             unit = bUnits.ml;
         }
@@ -36,8 +38,8 @@ namespace FoodPlanner
 
     class SolidFood : Food
     {
-        public SolidFood(string Name, int Quantity, DateTime ExpirationDate, DateTime PurchaseDate)
-            : base(Name, Quantity, ExpirationDate, PurchaseDate)
+        public SolidFood(string name, int quantity, DateTime expirationDate, DateTime purchaseDate)
+            : base(name, quantity, expirationDate, purchaseDate)
         {
             unit = bUnits.g;
         }
@@ -45,8 +47,8 @@ namespace FoodPlanner
 
     class MiscFood : Food
     {
-        public MiscFood(string Name, int Quantity, DateTime ExpirationDate, DateTime PurchaseDate)
-            : base(Name, Quantity, ExpirationDate, PurchaseDate)
+        public MiscFood(string name, int quantity, DateTime expirationDate, DateTime purchaseDate)
+            : base(name, quantity, expirationDate, purchaseDate)
         {
             unit = bUnits.stk;
         }

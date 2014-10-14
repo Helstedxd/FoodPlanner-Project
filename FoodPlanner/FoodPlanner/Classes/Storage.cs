@@ -10,7 +10,6 @@ namespace FoodPlanner
     {
         protected List<Food> items = new List<Food>();
 
-
         public Storage(List<Food> food)
         {
             items.AddRange(food);
@@ -21,7 +20,7 @@ namespace FoodPlanner
             items.Add(food);
         }
 
-        public void addItem(Food item)
+        public void AddItem(Food item)
         {
             items.Add(item);
         }
@@ -29,15 +28,13 @@ namespace FoodPlanner
 
     class ShoppingList : Storage
     {
-        public ShoppingList(Food food) : base(food){}
+        public ShoppingList(Food food) : base(food) { }
         public ShoppingList(List<Food> food) : base(food) { }
-
     }
 
     class Inventory : Storage
     {
-        public Inventory(Food food) : base(food){}
-        public Inventory(List<Food> food) : base(food) {}
-
+        public Inventory(Food food) : base(food) { }
+        public Inventory(List<Food> food) : base(food) { }
     }
 }

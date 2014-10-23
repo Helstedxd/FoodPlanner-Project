@@ -23,6 +23,11 @@ namespace FoodPlanner
         public int ID { get; set; }
         public string Ingredient { get; set; }
         public string Unit { get; set; }
+
+        public override string ToString()
+        {
+            return this.Ingredient;
+        }
     
         public virtual ICollection<InventoryIngredients> InventoryIngredients { get; set; }
         public virtual ICollection<RecipeIngredients> RecipeIngredients { get; set; }

@@ -31,9 +31,10 @@ namespace FoodPlanner
 
         private void selectRecipe_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MessageBox.Show(db.Recipes.Where(r => r ==  selectRecipe.SelectedItem).First().ToString());
-            //List<int> test = db.RecipeIngredients.Where(r => r.RecipeID == selectRecipe.SelectedItem).ToList<int>();
-            //listIngredients.ItemsSource = db.Ingredients
+            //List<RecipeIngredients> Ingredients = db.RecipeIngredients.Where(r => r.RecipeID == ((Recipes)selectRecipe.SelectedItem).ID).ToList<RecipeIngredients>();
+
+            listIngredients.ItemsSource = ((Recipes)selectRecipe.SelectedItem).RecipeIngredients;
+            cookingSteps.ItemsSource = ((Recipes)selectRecipe.SelectedItem).CookingSteps;
         }
     }
 }

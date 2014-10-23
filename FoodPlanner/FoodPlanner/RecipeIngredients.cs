@@ -18,6 +18,18 @@ namespace FoodPlanner
         public int RecipeID { get; set; }
         public int IngredientID { get; set; }
         public decimal Quantity { get; set; }
+
+        public override string ToString()
+        {
+            if (this.Quantity == 0)
+            {
+                return Convert.ToString(this.Ingredients.Ingredient);
+            }
+            else
+            {
+                return Convert.ToString(this.Quantity + this.Ingredients.Unit + " " + this.Ingredients.Ingredient);
+            }
+        }
     
         public virtual Ingredients Ingredients { get; set; }
         public virtual Recipes Recipes { get; set; }

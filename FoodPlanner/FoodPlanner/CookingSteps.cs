@@ -17,7 +17,12 @@ namespace FoodPlanner
         public int ID { get; set; }
         public int RecipeID { get; set; }
         public string Step { get; set; }
-    
+
+        public override string ToString()
+        {
+            return this.Step;
+        }
+
         public virtual Recipes Recipes { get; set; }
     }
 }

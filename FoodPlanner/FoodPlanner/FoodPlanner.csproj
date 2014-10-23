@@ -34,13 +34,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\MySQL\MySQL Connector Net 6.9.4\Assemblies\v4.5\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
@@ -60,31 +67,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CookingSteps.cs">
-      <DependentUpon>database.tt</DependentUpon>
+    <Compile Include="CookingStep.cs">
+      <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="database.cs">
+    <Compile Include="FoodDatabase.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>database.tt</DependentUpon>
+      <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Ingredients.cs">
-      <DependentUpon>database.tt</DependentUpon>
+    <Compile Include="Ingredient.cs">
+      <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="InventoryIngredients.cs">
-      <DependentUpon>database.tt</DependentUpon>
+    <Compile Include="InventoryIngredient.cs">
+      <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Meals.cs">
-      <DependentUpon>database.tt</DependentUpon>
+    <Compile Include="Meal.cs">
+      <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="RecipeIngredients.cs">
-      <DependentUpon>database.tt</DependentUpon>
+    <Compile Include="Recipe.cs">
+      <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Recipes.cs">
-      <DependentUpon>database.tt</DependentUpon>
+    <Compile Include="RecipeIngredient.cs">
+      <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Users.cs">
-      <DependentUpon>database.tt</DependentUpon>
+    <Compile Include="User.cs">
+      <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -94,15 +101,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="database.Context.cs">
+    <Compile Include="FoodDatabase.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>database.Context.tt</DependentUpon>
+      <DependentUpon>FoodDatabase.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="database.Designer.cs">
+    <Compile Include="FoodDatabase.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>database.edmx</DependentUpon>
+      <DependentUpon>FoodDatabase.edmx</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -127,22 +134,22 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="database.edmx">
+    <EntityDeploy Include="FoodDatabase.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>database.Designer.cs</LastGenOutput>
+      <LastGenOutput>FoodDatabase.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="database.Context.tt">
+    <None Include="FoodDatabase.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>database.edmx</DependentUpon>
-      <LastGenOutput>database.Context.cs</LastGenOutput>
+      <DependentUpon>FoodDatabase.edmx</DependentUpon>
+      <LastGenOutput>FoodDatabase.Context.cs</LastGenOutput>
     </None>
-    <None Include="database.edmx.diagram">
-      <DependentUpon>database.edmx</DependentUpon>
+    <None Include="FoodDatabase.edmx.diagram">
+      <DependentUpon>FoodDatabase.edmx</DependentUpon>
     </None>
-    <None Include="database.tt">
+    <None Include="FoodDatabase.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>database.edmx</DependentUpon>
-      <LastGenOutput>database.cs</LastGenOutput>
+      <DependentUpon>FoodDatabase.edmx</DependentUpon>
+      <LastGenOutput>FoodDatabase.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

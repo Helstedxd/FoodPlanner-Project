@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="foodplanModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="FoodModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CookingSteps">
           <Key>
             <PropertyRef Name="ID" />
@@ -147,7 +147,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="foodplanModelStoreContainer">
+        <EntityContainer Name="FoodModelStoreContainer">
           <EntitySet Name="CookingSteps" EntityType="Self.CookingSteps" Schema="foodplan" store:Type="Tables" />
           <EntitySet Name="Ingredients" EntityType="Self.Ingredients" Schema="foodplan" store:Type="Tables" />
           <EntitySet Name="InventoryIngredients" EntityType="Self.InventoryIngredients" Schema="foodplan" store:Type="Tables" />
@@ -188,27 +188,27 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="foodplanModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="CookingSteps">
+      <Schema Namespace="FoodModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CookingStep">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RecipeID" Type="Int32" Nullable="false" />
           <Property Name="Step" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Recipes" Relationship="Self.CookingSteps_ibfk_1" FromRole="CookingSteps" ToRole="Recipes" />
+          <NavigationProperty Name="Recipe" Relationship="Self.CookingSteps_ibfk_1" FromRole="CookingSteps" ToRole="Recipes" />
         </EntityType>
-        <EntityType Name="Ingredients">
+        <EntityType Name="Ingredient">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Ingredient" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ingredient1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Unit" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="InventoryIngredients" Relationship="Self.InventoryIngredients_ibfk_2" FromRole="Ingredients" ToRole="InventoryIngredients" />
           <NavigationProperty Name="RecipeIngredients" Relationship="Self.RecipeIngredients_ibfk_2" FromRole="Ingredients" ToRole="RecipeIngredients" />
         </EntityType>
-        <EntityType Name="InventoryIngredients">
+        <EntityType Name="InventoryIngredient">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -216,10 +216,10 @@
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="IngredientID" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Ingredients" Relationship="Self.InventoryIngredients_ibfk_2" FromRole="InventoryIngredients" ToRole="Ingredients" />
-          <NavigationProperty Name="Users" Relationship="Self.InventoryIngredients_ibfk_1" FromRole="InventoryIngredients" ToRole="Users" />
+          <NavigationProperty Name="Ingredient" Relationship="Self.InventoryIngredients_ibfk_2" FromRole="InventoryIngredients" ToRole="Ingredients" />
+          <NavigationProperty Name="User" Relationship="Self.InventoryIngredients_ibfk_1" FromRole="InventoryIngredients" ToRole="Users" />
         </EntityType>
-        <EntityType Name="Meals">
+        <EntityType Name="Meal">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -227,10 +227,10 @@
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="RecipeID" Type="Int32" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="Recipes" Relationship="Self.Meals_ibfk_1" FromRole="Meals" ToRole="Recipes" />
-          <NavigationProperty Name="Users" Relationship="Self.Meals_ibfk_2" FromRole="Meals" ToRole="Users" />
+          <NavigationProperty Name="Recipe" Relationship="Self.Meals_ibfk_1" FromRole="Meals" ToRole="Recipes" />
+          <NavigationProperty Name="User" Relationship="Self.Meals_ibfk_2" FromRole="Meals" ToRole="Users" />
         </EntityType>
-        <EntityType Name="RecipeIngredients">
+        <EntityType Name="RecipeIngredient">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -238,10 +238,10 @@
           <Property Name="RecipeID" Type="Int32" Nullable="false" />
           <Property Name="IngredientID" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Decimal" Nullable="false" />
-          <NavigationProperty Name="Ingredients" Relationship="Self.RecipeIngredients_ibfk_2" FromRole="RecipeIngredients" ToRole="Ingredients" />
-          <NavigationProperty Name="Recipes" Relationship="Self.RecipeIngredients_ibfk_1" FromRole="RecipeIngredients" ToRole="Recipes" />
+          <NavigationProperty Name="Ingredient" Relationship="Self.RecipeIngredients_ibfk_2" FromRole="RecipeIngredients" ToRole="Ingredients" />
+          <NavigationProperty Name="Recipe" Relationship="Self.RecipeIngredients_ibfk_1" FromRole="RecipeIngredients" ToRole="Recipes" />
         </EntityType>
-        <EntityType Name="Recipes">
+        <EntityType Name="Recipe">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -252,7 +252,7 @@
           <NavigationProperty Name="Meals" Relationship="Self.Meals_ibfk_1" FromRole="Recipes" ToRole="Meals" />
           <NavigationProperty Name="RecipeIngredients" Relationship="Self.RecipeIngredients_ibfk_1" FromRole="Recipes" ToRole="RecipeIngredients" />
         </EntityType>
-        <EntityType Name="Users">
+        <EntityType Name="User">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -262,8 +262,8 @@
           <NavigationProperty Name="Meals" Relationship="Self.Meals_ibfk_2" FromRole="Users" ToRole="Meals" />
         </EntityType>
         <Association Name="CookingSteps_ibfk_1">
-          <End Role="Recipes" Type="Self.Recipes" Multiplicity="1" />
-          <End Role="CookingSteps" Type="Self.CookingSteps" Multiplicity="*" />
+          <End Role="Recipes" Type="Self.Recipe" Multiplicity="1" />
+          <End Role="CookingSteps" Type="Self.CookingStep" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Recipes">
               <PropertyRef Name="ID" />
@@ -274,8 +274,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="InventoryIngredients_ibfk_2">
-          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="1" />
-          <End Role="InventoryIngredients" Type="Self.InventoryIngredients" Multiplicity="*" />
+          <End Role="Ingredients" Type="Self.Ingredient" Multiplicity="1" />
+          <End Role="InventoryIngredients" Type="Self.InventoryIngredient" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ingredients">
               <PropertyRef Name="ID" />
@@ -286,8 +286,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="RecipeIngredients_ibfk_2">
-          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="1" />
-          <End Role="RecipeIngredients" Type="Self.RecipeIngredients" Multiplicity="*" />
+          <End Role="Ingredients" Type="Self.Ingredient" Multiplicity="1" />
+          <End Role="RecipeIngredients" Type="Self.RecipeIngredient" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ingredients">
               <PropertyRef Name="ID" />
@@ -298,8 +298,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="InventoryIngredients_ibfk_1">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="InventoryIngredients" Type="Self.InventoryIngredients" Multiplicity="*" />
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="InventoryIngredients" Type="Self.InventoryIngredient" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="ID" />
@@ -310,8 +310,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="Meals_ibfk_1">
-          <End Role="Recipes" Type="Self.Recipes" Multiplicity="1" />
-          <End Role="Meals" Type="Self.Meals" Multiplicity="*" />
+          <End Role="Recipes" Type="Self.Recipe" Multiplicity="1" />
+          <End Role="Meals" Type="Self.Meal" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Recipes">
               <PropertyRef Name="ID" />
@@ -322,8 +322,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="Meals_ibfk_2">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Meals" Type="Self.Meals" Multiplicity="*" />
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Meals" Type="Self.Meal" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="ID" />
@@ -334,8 +334,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="RecipeIngredients_ibfk_1">
-          <End Role="Recipes" Type="Self.Recipes" Multiplicity="1" />
-          <End Role="RecipeIngredients" Type="Self.RecipeIngredients" Multiplicity="*" />
+          <End Role="Recipes" Type="Self.Recipe" Multiplicity="1" />
+          <End Role="RecipeIngredients" Type="Self.RecipeIngredient" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Recipes">
               <PropertyRef Name="ID" />
@@ -345,14 +345,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="databaseContext" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="CookingSteps" EntityType="Self.CookingSteps" />
-          <EntitySet Name="Ingredients" EntityType="Self.Ingredients" />
-          <EntitySet Name="InventoryIngredients" EntityType="Self.InventoryIngredients" />
-          <EntitySet Name="Meals" EntityType="Self.Meals" />
-          <EntitySet Name="RecipeIngredients" EntityType="Self.RecipeIngredients" />
-          <EntitySet Name="Recipes" EntityType="Self.Recipes" />
-          <EntitySet Name="Users" EntityType="Self.Users" />
+        <EntityContainer Name="FoodContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CookingSteps" EntityType="Self.CookingStep" />
+          <EntitySet Name="Ingredients" EntityType="Self.Ingredient" />
+          <EntitySet Name="InventoryIngredients" EntityType="Self.InventoryIngredient" />
+          <EntitySet Name="Meals" EntityType="Self.Meal" />
+          <EntitySet Name="RecipeIngredients" EntityType="Self.RecipeIngredient" />
+          <EntitySet Name="Recipes" EntityType="Self.Recipe" />
+          <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="CookingSteps_ibfk_1" Association="Self.CookingSteps_ibfk_1">
             <End Role="Recipes" EntitySet="Recipes" />
             <End Role="CookingSteps" EntitySet="CookingSteps" />
@@ -387,9 +387,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="foodplanModelStoreContainer" CdmEntityContainer="databaseContext">
+        <EntityContainerMapping StorageEntityContainer="FoodModelStoreContainer" CdmEntityContainer="FoodContext">
           <EntitySetMapping Name="CookingSteps">
-            <EntityTypeMapping TypeName="foodplanModel.CookingSteps">
+            <EntityTypeMapping TypeName="FoodModel.CookingStep">
               <MappingFragment StoreEntitySet="CookingSteps">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
@@ -398,16 +398,16 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Ingredients">
-            <EntityTypeMapping TypeName="foodplanModel.Ingredients">
+            <EntityTypeMapping TypeName="FoodModel.Ingredient">
               <MappingFragment StoreEntitySet="Ingredients">
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Ingredient" ColumnName="Ingredient" />
+                <ScalarProperty Name="Ingredient1" ColumnName="Ingredient" />
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="InventoryIngredients">
-            <EntityTypeMapping TypeName="foodplanModel.InventoryIngredients">
+            <EntityTypeMapping TypeName="FoodModel.InventoryIngredient">
               <MappingFragment StoreEntitySet="InventoryIngredients">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
@@ -417,7 +417,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Meals">
-            <EntityTypeMapping TypeName="foodplanModel.Meals">
+            <EntityTypeMapping TypeName="FoodModel.Meal">
               <MappingFragment StoreEntitySet="Meals">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
@@ -427,7 +427,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RecipeIngredients">
-            <EntityTypeMapping TypeName="foodplanModel.RecipeIngredients">
+            <EntityTypeMapping TypeName="FoodModel.RecipeIngredient">
               <MappingFragment StoreEntitySet="RecipeIngredients">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
@@ -437,7 +437,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Recipes">
-            <EntityTypeMapping TypeName="foodplanModel.Recipes">
+            <EntityTypeMapping TypeName="FoodModel.Recipe">
               <MappingFragment StoreEntitySet="Recipes">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -446,7 +446,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="foodplanModel.Users">
+            <EntityTypeMapping TypeName="FoodModel.User">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -467,9 +467,9 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

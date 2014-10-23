@@ -20,19 +20,28 @@ namespace FoodPlanner
     /// </summary>
     public partial class MainWindow : Window
     {
-        FoodContext db = new FoodContext();
+        private FoodContext db;
 
         public MainWindow()
         {
             InitializeComponent();
-
-            selectRecipe.ItemsSource = db.Recipes.ToList<Recipe>();
         }
 
         private void selectRecipe_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             listIngredients.ItemsSource = ((Recipe)selectRecipe.SelectedItem).RecipeIngredients;
             cookingSteps.ItemsSource = ((Recipe)selectRecipe.SelectedItem).CookingSteps;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.db = new FoodContext();
+            selectRecipe.ItemsSource = db.Recipes.ToList<Recipe>();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.db.Dispose();
         }
     }
 }

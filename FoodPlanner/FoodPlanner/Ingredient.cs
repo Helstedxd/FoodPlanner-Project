@@ -21,7 +21,7 @@ namespace FoodPlanner
         }
     
         public int ID { get; set; }
-        public string Ingredient1 { get; set; }
+        public string Name { get; set; }
         public string Unit { get; set; }
     
         public virtual ObservableCollection<InventoryIngredient> InventoryIngredients { get; set; }

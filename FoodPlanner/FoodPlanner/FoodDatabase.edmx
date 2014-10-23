@@ -203,7 +203,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Ingredient1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Unit" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="InventoryIngredients" Relationship="Self.InventoryIngredients_ibfk_2" FromRole="Ingredients" ToRole="InventoryIngredients" />
           <NavigationProperty Name="RecipeIngredients" Relationship="Self.RecipeIngredients_ibfk_2" FromRole="Ingredients" ToRole="RecipeIngredients" />
@@ -401,7 +401,7 @@
             <EntityTypeMapping TypeName="FoodModel.Ingredient">
               <MappingFragment StoreEntitySet="Ingredients">
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Ingredient1" ColumnName="Ingredient" />
+                <ScalarProperty Name="Name" ColumnName="Ingredient" />
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
               </MappingFragment>
             </EntityTypeMapping>

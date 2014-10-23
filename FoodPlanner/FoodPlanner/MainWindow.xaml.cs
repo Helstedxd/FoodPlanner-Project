@@ -23,6 +23,15 @@ namespace FoodPlanner
         public MainWindow()
         {
             InitializeComponent();
+
+            databaseContext db = new databaseContext();
+
+            selectRecipe.ItemsSource = db.Recipes.ToList<Recipes>();
+        }
+
+        private void selectRecipe_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

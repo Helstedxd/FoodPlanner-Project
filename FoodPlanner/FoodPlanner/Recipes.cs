@@ -24,6 +24,11 @@ namespace FoodPlanner
         public int ID { get; set; }
         public string Title { get; set; }
         public int Persons { get; set; }
+
+        public override string ToString()
+        {
+            return this.Title;
+        }
     
         public virtual ICollection<CookingSteps> CookingSteps { get; set; }
         public virtual ICollection<Meals> Meals { get; set; }

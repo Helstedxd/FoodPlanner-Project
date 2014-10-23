@@ -9,8 +9,9 @@
         <CollectionViewSource x:Key="recipeCookingStepsViewSource" Source="{Binding CookingSteps, Source={StaticResource recipeViewSource}}"/>
     </Window.Resources>
     <Grid DataContext="{StaticResource recipeViewSource}">
-        <ComboBox Margin="10,10,10,0" VerticalAlignment="Top" x:Name="selectRecipe" ItemsSource="{Binding}" SelectedValuePath="ID" />
+        <Button Content="Open Search" Name="openSearch" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="150" Click="openSearch_Click"/>
+        <!--<ComboBox Margin="10,10,10,0" VerticalAlignment="Top" x:Name="selectRecipe" ItemsSource="{Binding}" SelectedValuePath="ID" />
         <ListBox HorizontalAlignment="Right" Margin="0,42,10,10" Width="200" x:Name="listIngredients" ItemsSource="{Binding Source={StaticResource recipeRecipeIngredientsViewSource}}" SelectedValuePath="ID"/>
-        <ListBox Margin="10,42,220,10" x:Name="cookingSteps" ItemsSource="{Binding Source={StaticResource recipeCookingStepsViewSource}}" SelectedValuePath="ID"/>
+        <ListBox Margin="10,42,220,10" x:Name="cookingSteps" ItemsSource="{Binding Source={StaticResource recipeCookingStepsViewSource}}" SelectedValuePath="ID"/>-->
     </Grid>
 </Window>

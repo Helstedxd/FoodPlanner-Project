@@ -29,14 +29,22 @@ namespace FoodPlanner
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            /*
             this.db = new FoodContext();
             CollectionViewSource recipeViewSource = ((CollectionViewSource)(this.FindResource("recipeViewSource")));
             recipeViewSource.Source = db.Recipes.ToList();
+            */
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            this.db.Dispose();
+            //this.db.Dispose();
+        }
+
+        private void openSearch_Click(object sender, RoutedEventArgs e)
+        {
+            var openSearch = new Search();
+            openSearch.ShowDialog();
         }
     }
 }

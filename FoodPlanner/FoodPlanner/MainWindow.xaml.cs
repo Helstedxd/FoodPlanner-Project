@@ -20,18 +20,20 @@ namespace FoodPlanner
     /// </summary>
     public partial class MainWindow : Window
     {
+        databaseContext db = new databaseContext();
+
         public MainWindow()
         {
             InitializeComponent();
-
-            databaseContext db = new databaseContext();
 
             selectRecipe.ItemsSource = db.Recipes.ToList<Recipes>();
         }
 
         private void selectRecipe_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            MessageBox.Show(db.Recipes.Where(r => r ==  selectRecipe.SelectedItem).First().ToString());
+            //List<int> test = db.RecipeIngredients.Where(r => r.RecipeID == selectRecipe.SelectedItem).ToList<int>();
+            //listIngredients.ItemsSource = db.Ingredients
         }
     }
 }

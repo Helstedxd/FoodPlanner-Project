@@ -23,5 +23,15 @@ namespace FoodPlanner
         {
             InitializeComponent();
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Data.CollectionViewSource recipeViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("recipeViewSource")));
+            recipeViewSource.Source = MainWindow.db.Recipes.ToList();
+        }
+
+
+
+
     }
 }

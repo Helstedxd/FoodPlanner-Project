@@ -1,9 +1,20 @@
-﻿<Window x:Class="FoodPlanner.Search"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Search" Height="500" Width="700">
-    <Grid>
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:FoodPlanner" mc:Ignorable="d" x:Class="FoodPlanner.Search"
+        Title="Search" Height="500" Width="700" Loaded="Window_Loaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="recipeViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Recipe}, CreateList=True}"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource recipeViewSource}">
         <TextBox Height="23" Margin="10,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <ListView Margin="10,43,10,10" SelectionMode="Single" SelectedValuePath="ID" ItemsSource="{Binding}" DisplayMemberPath="ID">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
 
     </Grid>
 </Window>

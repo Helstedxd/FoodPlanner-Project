@@ -20,17 +20,18 @@ namespace FoodPlanner
     /// </summary>
     public partial class MainWindow : Window
     {
-        private FoodContext db;
+        public static FoodContext db;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            db = new FoodContext();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             /*
-            this.db = new FoodContext();
             CollectionViewSource recipeViewSource = ((CollectionViewSource)(this.FindResource("recipeViewSource")));
             recipeViewSource.Source = db.Recipes.ToList();
             */

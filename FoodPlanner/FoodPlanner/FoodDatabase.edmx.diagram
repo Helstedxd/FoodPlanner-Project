@@ -5,13 +5,13 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="5063aff712da4d4e869c59ea303b5cb1" Name="Diagram1">
-        <EntityTypeShape EntityType="FoodModel.CookingStep" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="FoodModel.Ingredient" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="FoodModel.InventoryIngredient" Width="1.5" PointX="6" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="FoodModel.Meal" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="FoodModel.RecipeIngredient" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="FoodModel.Recipe" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="FoodModel.User" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FoodModel.CookingStep" Width="1.5" PointX="0.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FoodModel.Ingredient" Width="1.5" PointX="4.25" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FoodModel.InventoryIngredient" Width="1.5" PointX="4.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FoodModel.Meal" Width="1.5" PointX="2.25" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FoodModel.RecipeIngredient" Width="1.5" PointX="2.25" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FoodModel.Recipe" Width="1.5" PointX="2.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FoodModel.User" Width="1.5" PointX="4.25" PointY="1.375" IsExpanded="true" />
         <AssociationConnector Association="FoodModel.CookingSteps_ibfk_1" ManuallyRouted="false" />
         <AssociationConnector Association="FoodModel.InventoryIngredients_ibfk_2" ManuallyRouted="false" />
         <AssociationConnector Association="FoodModel.RecipeIngredients_ibfk_2" ManuallyRouted="false" />

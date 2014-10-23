@@ -10,21 +10,21 @@
 namespace FoodPlanner
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
     public partial class Ingredient
     {
         public Ingredient()
         {
-            this.InventoryIngredients = new HashSet<InventoryIngredient>();
-            this.RecipeIngredients = new HashSet<RecipeIngredient>();
+            this.InventoryIngredients = new ObservableCollection<InventoryIngredient>();
+            this.RecipeIngredients = new ObservableCollection<RecipeIngredient>();
         }
     
         public int ID { get; set; }
         public string Ingredient1 { get; set; }
         public string Unit { get; set; }
     
-        public virtual ICollection<InventoryIngredient> InventoryIngredients { get; set; }
-        public virtual ICollection<RecipeIngredient> RecipeIngredients { get; set; }
+        public virtual ObservableCollection<InventoryIngredient> InventoryIngredients { get; set; }
+        public virtual ObservableCollection<RecipeIngredient> RecipeIngredients { get; set; }
     }
 }

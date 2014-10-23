@@ -10,20 +10,20 @@
 namespace FoodPlanner
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
     public partial class User
     {
         public User()
         {
-            this.InventoryIngredients = new HashSet<InventoryIngredient>();
-            this.Meals = new HashSet<Meal>();
+            this.InventoryIngredients = new ObservableCollection<InventoryIngredient>();
+            this.Meals = new ObservableCollection<Meal>();
         }
     
         public int ID { get; set; }
         public string Name { get; set; }
     
-        public virtual ICollection<InventoryIngredient> InventoryIngredients { get; set; }
-        public virtual ICollection<Meal> Meals { get; set; }
+        public virtual ObservableCollection<InventoryIngredient> InventoryIngredients { get; set; }
+        public virtual ObservableCollection<Meal> Meals { get; set; }
     }
 }

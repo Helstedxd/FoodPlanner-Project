@@ -10,23 +10,23 @@
 namespace FoodPlanner
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
     public partial class Recipe
     {
         public Recipe()
         {
-            this.CookingSteps = new HashSet<CookingStep>();
-            this.Meals = new HashSet<Meal>();
-            this.RecipeIngredients = new HashSet<RecipeIngredient>();
+            this.CookingSteps = new ObservableCollection<CookingStep>();
+            this.Meals = new ObservableCollection<Meal>();
+            this.RecipeIngredients = new ObservableCollection<RecipeIngredient>();
         }
     
         public int ID { get; set; }
         public string Title { get; set; }
         public int Persons { get; set; }
     
-        public virtual ICollection<CookingStep> CookingSteps { get; set; }
-        public virtual ICollection<Meal> Meals { get; set; }
-        public virtual ICollection<RecipeIngredient> RecipeIngredients { get; set; }
+        public virtual ObservableCollection<CookingStep> CookingSteps { get; set; }
+        public virtual ObservableCollection<Meal> Meals { get; set; }
+        public virtual ObservableCollection<RecipeIngredient> RecipeIngredients { get; set; }
     }
 }

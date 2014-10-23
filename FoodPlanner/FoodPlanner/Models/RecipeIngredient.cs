@@ -10,7 +10,7 @@ namespace FoodPlanner
     {
         public override string ToString()
         {
-            if (this.Quantity == 0)
+            if (!Convert.ToBoolean(this.Quantity))
             {
                 return Convert.ToString(this.Ingredient.Name);
             }

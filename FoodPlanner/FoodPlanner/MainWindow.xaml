@@ -1,11 +1,16 @@
-﻿<Window x:Class="FoodPlanner.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:FoodPlanner" mc:Ignorable="d" x:Class="FoodPlanner.MainWindow"
         Title="MainWindow" Height="350" Width="525" Loaded="Window_Loaded" Closing="Window_Closing">
-    <Grid>
-        <ComboBox Margin="10,10,10,0" VerticalAlignment="Top" Name="selectRecipe" SelectionChanged="selectRecipe_SelectionChanged" />
-        <ListBox HorizontalAlignment="Right" Margin="0,42,10,10" Width="200" Name="listIngredients"/>
-        <ListBox Margin="10,42,220,10" x:Name="cookingSteps"/>
-
+    <Window.Resources>
+        <CollectionViewSource x:Key="recipeViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Recipe}, CreateList=True}"/>
+        <CollectionViewSource x:Key="recipeRecipeIngredientsViewSource" Source="{Binding RecipeIngredients, Source={StaticResource recipeViewSource}}"/>
+        <CollectionViewSource x:Key="recipeCookingStepsViewSource" Source="{Binding CookingSteps, Source={StaticResource recipeViewSource}}"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource recipeViewSource}">
+        <ComboBox Margin="10,10,10,0" VerticalAlignment="Top" x:Name="selectRecipe" ItemsSource="{Binding}" SelectedValuePath="ID" />
+        <ListBox HorizontalAlignment="Right" Margin="0,42,10,10" Width="200" x:Name="listIngredients" ItemsSource="{Binding Source={StaticResource recipeRecipeIngredientsViewSource}}" SelectedValuePath="ID"/>
+        <ListBox Margin="10,42,220,10" x:Name="cookingSteps" ItemsSource="{Binding Source={StaticResource recipeCookingStepsViewSource}}" SelectedValuePath="ID"/>
     </Grid>
 </Window>

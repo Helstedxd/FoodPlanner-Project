@@ -82,6 +82,9 @@
     <Compile Include="InventoryIngredient.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="InventoryWindow.xaml.cs">
+      <DependentUpon>InventoryWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Meal.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
@@ -101,6 +104,10 @@
     <Compile Include="User.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
+    <Page Include="InventoryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -165,6 +172,7 @@
     </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Recipe.datasource" />
+    <None Include="Properties\DataSources\User.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

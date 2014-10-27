@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace FoodPlanner
 {
     /// <summary>
@@ -19,6 +20,7 @@ namespace FoodPlanner
     /// </summary>
     public partial class Search : Window
     {
+
         public Search()
         {
             InitializeComponent();
@@ -31,6 +33,10 @@ namespace FoodPlanner
         }
 
         private void searchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+        }
+
+        private void doSearch()
         {
             List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
 

@@ -27,6 +27,11 @@ namespace FoodPlanner
             InitializeComponent();
 
             db = new FoodContext();
+
+
+            var openSearch = new Search();
+            openSearch.ShowDialog();
+            Close();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -44,8 +49,6 @@ namespace FoodPlanner
 
         private void openSearch_Click(object sender, RoutedEventArgs e)
         {
-            var openSearch = new Search();
-            openSearch.ShowDialog();
         }
     }
 }

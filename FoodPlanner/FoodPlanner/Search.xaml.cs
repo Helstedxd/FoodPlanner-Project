@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -30,8 +30,11 @@ namespace FoodPlanner
             recipeViewSource.Source = MainWindow.db.Recipes.ToList();
         }
 
+        private void searchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
 
-
-
+            searchList.ItemsSource = (from rec in MainWindow.db.Recipes join ri in MainWindow.db.RecipeIngredients on rec.ID equals ri.RecipeID join ing in MainWindow.db.Ingredients on ri.IngredientID equals ing.ID where searchQuery.Any(s => ing.Name.Contains(s)) || searchQuery.Any(s => rec.Title.Contains(s)) select rec.Title).Distinct().ToList();
+        }
     }
 }

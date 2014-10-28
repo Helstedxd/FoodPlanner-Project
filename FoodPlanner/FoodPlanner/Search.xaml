@@ -7,11 +7,14 @@
         <CollectionViewSource x:Key="recipeViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Recipe}, CreateList=True}"/>
     </Window.Resources>
     <Grid DataContext="{StaticResource recipeViewSource}">
-        <TextBox Height="23" Margin="10,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Name="searchBox" TextChanged="searchBox_TextChanged"/>
-        <ListView Margin="10,43,10,10" SelectionMode="Single" Name="searchList" SelectedValuePath="ID" DisplayMemberPath="ID">
+        <TextBox Height="23" Margin="10,10,90,0" TextWrapping="Wrap" VerticalAlignment="Top" Name="searchBox"/>
+        <Button Content="Search" HorizontalAlignment="Right" Margin="10,10,10,0" VerticalAlignment="Top" Width="75" Name="startSearch" Click="startSearch_Click"/>
+
+        <ListView Margin="10,45,10,8" x:Name="searchList">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn Header="Name" Width="400" DisplayMemberBinding="{Binding Recipe.Title}"/>
+                    <GridViewColumn Header="Match" Width="100" DisplayMemberBinding="{Binding Match}"/>
                 </GridView>
             </ListView.View>
         </ListView>

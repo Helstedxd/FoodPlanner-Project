@@ -20,7 +20,6 @@ namespace FoodPlanner
     /// </summary>
     public partial class Search : Window
     {
-
         public Search()
         {
             InitializeComponent();
@@ -32,15 +31,17 @@ namespace FoodPlanner
             recipeViewSource.Source = MainWindow.db.Recipes.ToList();
         }
 
-        private void searchBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-        }
-
-        private void doSearch()
+        private void startSearch_Click(object sender, RoutedEventArgs e)
         {
             List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
 
-            searchList.ItemsSource = (from rec in MainWindow.db.Recipes join ri in MainWindow.db.RecipeIngredients on rec.ID equals ri.RecipeID join ing in MainWindow.db.Ingredients on ri.IngredientID equals ing.ID where searchQuery.Any(s => ing.Name.Contains(s)) || searchQuery.Any(s => rec.Title.Contains(s)) select rec.Title).Distinct().ToList();
+            searchList.ItemsSource = (from rec in MainWindow.db.Recipes join ri in MainWindow.db.RecipeIngredients on rec.ID equals ri.RecipeID join ing in MainWindow.db.Ingredients on ri.IngredientID equals ing.ID where searchQuery.Any(s => ing.Name.Contains(s)) || searchQuery.Any(s => rec.Title.Contains(s)) select ri).Distinct().ToList(); //.OrderBy(x => x.Match);
+
+            foreach (RecipeIngredient ri in searchList.Items)
+            {
+                ri.setMatch(searchQuery);
+            }
         }
+
     }
 }

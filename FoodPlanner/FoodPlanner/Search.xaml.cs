@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -20,6 +21,8 @@ namespace FoodPlanner
     /// </summary>
     public partial class Search : Window
     {
+        private List<InventoryIngredient> inventoryList = MainWindow.db.InventoryIngredients.Where(ii => ii.UserID == MainWindow.CurrentUser.ID && ii.Ingredient.ID != -1).ToList();
+
         public Search()
         {
             InitializeComponent();
@@ -33,9 +36,11 @@ namespace FoodPlanner
 
         private void startSearch_Click(object sender, RoutedEventArgs e)
         {
+            Stopwatch watch = new Stopwatch();
+            debugLog.Items.Clear();
+            int i = 1;
+
             List<SearchResults> searchResults = new List<SearchResults>();
-            List<InventoryIngredient> tmpinv = MainWindow.db.InventoryIngredients.Where(ii => ii.UserID == MainWindow.CurrentUser.ID).ToList();
-            // && ii.IngredientID == ri.IngredientID
 
             List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
 
@@ -43,21 +48,26 @@ namespace FoodPlanner
 
             foreach (RecipeIngredient ri in recipeIngredient)
             {
+                watch.Start();
+                debugLog.Items.Add((watch.ElapsedMilliseconds) + ": " + i + " start element");
                 if (searchResults.Where(x => x.recipe.Title == ri.Recipe.Title).Count() == 0)
                 {
+                    debugLog.Items.Add((watch.ElapsedMilliseconds) + ": " + i++ + " Første element");
                     searchResults.Add(new SearchResults(ri.Recipe, searchQuery.Any(s => ri.Ingredient.Name.Contains(s)), searchQuery.Any(s => ri.Recipe.Title.Contains(s))));
                 }
                 else
                 {
-                    if (searchQuery.Any(s => ri.Ingredient.Name.Contains(s)))
+                    debugLog.Items.Add((watch.ElapsedMilliseconds) + ": " + i++ + " Ikke første element");
+                    if (searchQuery.Any(s => ri.Ingredient.Name.Contains(s))) // kan eventuelt optimeres
                     {
+                        debugLog.Items.Add((watch.ElapsedMilliseconds) + ": " + i++ + " Tilføj 1 til match");
                         searchResults.Where(x => x.recipe.Title == ri.Recipe.Title).Single().match++;
                     }
                 }
 
-                if (tmpinv.Where(ii => ii.IngredientID == ri.IngredientID).Count() == 1)
+                if (inventoryList.Where(ii => ii.IngredientID == ri.IngredientID).Count() == 1)
                 {
-                    if (tmpinv.Where(ii => ii.IngredientID == ri.IngredientID).First().Quantity >= ri.Quantity)
+                    if (inventoryList.Where(ii => ii.IngredientID == ri.IngredientID).First().Quantity >= ri.Quantity)
                     {
                         searchResults.Where(x => x.recipe.Title == ri.Recipe.Title).Single().fullMatch++;
                     }
@@ -67,6 +77,9 @@ namespace FoodPlanner
                     }
                 }
 
+                debugLog.Items.Add(" ");
+                watch.Stop();
+                watch.Reset();
             }
 
             searchList.ItemsSource = searchResults.OrderByDescending(x => x.fullMatch).ThenByDescending(x => x.partialMatch).ThenByDescending(x => x.match).ThenBy(x => x.recipe.Title);

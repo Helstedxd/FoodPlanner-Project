@@ -43,7 +43,7 @@ namespace FoodPlanner
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             //Close the database
-            this.db.Dispose();
+            db.Dispose();
         }
 
         private void openSearch_Click(object sender, RoutedEventArgs e)

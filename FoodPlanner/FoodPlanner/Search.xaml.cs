@@ -52,12 +52,23 @@ namespace FoodPlanner
                         searchResults.Where(x => x.recipe.Title == ri.Recipe.Title).Single().match++;
                     }
                 }
+
+                List<InventoryIngredient> tmpinv = MainWindow.db.InventoryIngredients.Where(ii => ii.UserID == MainWindow.CurrentUser.ID && ii.IngredientID == ri.IngredientID).ToList();
+                if (tmpinv.Count() == 1)
+                {
+                    if (tmpinv.First().Quantity >= ri.Quantity)
+                    {
+                        searchResults.Where(x => x.recipe.Title == ri.Recipe.Title).Single().fullMatch++;
+                    }
+                    else
+                    {
+                        searchResults.Where(x => x.recipe.Title == ri.Recipe.Title).Single().partialMatch++;
+                    }
+                }
+
             }
 
-
-            searchList.ItemsSource = MainWindow.db.InventoryIngredients.Where(x => x.UserID == MainWindow.CurrentUser.ID).ToList();
-
-            //searchList.ItemsSource = searchResults.OrderByDescending(x => x.match);
+            searchList.ItemsSource = searchResults.OrderByDescending(x => x.fullMatch).ThenByDescending(x => x.partialMatch).ThenByDescending(x => x.match).ThenBy(x => x.recipe.Title);
         }
 
     }

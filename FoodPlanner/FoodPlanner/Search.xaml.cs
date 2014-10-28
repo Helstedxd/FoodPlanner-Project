@@ -34,6 +34,8 @@ namespace FoodPlanner
         private void startSearch_Click(object sender, RoutedEventArgs e)
         {
             List<SearchResults> searchResults = new List<SearchResults>();
+            List<InventoryIngredient> tmpinv = MainWindow.db.InventoryIngredients.Where(ii => ii.UserID == MainWindow.CurrentUser.ID).ToList();
+            // && ii.IngredientID == ri.IngredientID
 
             List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
 
@@ -53,10 +55,9 @@ namespace FoodPlanner
                     }
                 }
 
-                List<InventoryIngredient> tmpinv = MainWindow.db.InventoryIngredients.Where(ii => ii.UserID == MainWindow.CurrentUser.ID && ii.IngredientID == ri.IngredientID).ToList();
-                if (tmpinv.Count() == 1)
+                if (tmpinv.Where(ii => ii.IngredientID == ri.IngredientID).Count() == 1)
                 {
-                    if (tmpinv.First().Quantity >= ri.Quantity)
+                    if (tmpinv.Where(ii => ii.IngredientID == ri.IngredientID).First().Quantity >= ri.Quantity)
                     {
                         searchResults.Where(x => x.recipe.Title == ri.Recipe.Title).Single().fullMatch++;
                     }

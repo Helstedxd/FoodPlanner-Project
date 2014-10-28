@@ -13,8 +13,8 @@
         <ListView Margin="10,45,10,8" x:Name="searchList">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" Width="400" DisplayMemberBinding="{Binding Recipe.Title}"/>
-                    <GridViewColumn Header="Match" Width="100" DisplayMemberBinding="{Binding Match}"/>
+                    <GridViewColumn Header="Name" Width="400" DisplayMemberBinding="{Binding recipe}"/>
+                    <GridViewColumn Header="Match" Width="100" DisplayMemberBinding="{Binding match}"/>
                 </GridView>
             </ListView.View>
         </ListView>

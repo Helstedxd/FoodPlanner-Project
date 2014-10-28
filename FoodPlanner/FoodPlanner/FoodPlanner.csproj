@@ -93,6 +93,7 @@
     <Compile Include="Models\InventoryIngredient.cs" />
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\RecipeIngredient.cs" />
+    <Compile Include="Models\SearchResults.cs" />
     <Compile Include="Recipe.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>

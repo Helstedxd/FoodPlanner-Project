@@ -30,9 +30,9 @@ namespace FoodPlanner
             db = new FoodContext();
             CurrentUser = db.Users.First();
 
-            //var openSearch = new Search();
-            //openSearch.ShowDialog();
-            //Close();
+            var openSearch = new Search();
+            openSearch.ShowDialog();
+            Close();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

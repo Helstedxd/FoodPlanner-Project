@@ -21,17 +21,18 @@ namespace FoodPlanner
     public partial class MainWindow : Window
     {
         public static FoodContext db;
+        public static User CurrentUser { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
 
             db = new FoodContext();
+            CurrentUser = db.Users.First();
 
-
-            var openSearch = new Search();
-            openSearch.ShowDialog();
-            Close();
+            //var openSearch = new Search();
+            //openSearch.ShowDialog();
+            //Close();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

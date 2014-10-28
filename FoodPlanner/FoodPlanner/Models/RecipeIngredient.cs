@@ -10,7 +10,7 @@ namespace FoodPlanner
     {
         public override string ToString()
         {
-            if (!Convert.ToBoolean(this.Quantity))
+            if (this.Quantity == 0)//Så der ikke står " g salt" men bare "salt"
             {
                 return Convert.ToString(this.Ingredient.Name);
             }

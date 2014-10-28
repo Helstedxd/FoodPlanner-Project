@@ -1,0 +1,14 @@
+﻿<Window x:Class="FoodPlanner.Foodplan"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Foodplan" Height="385.714" Width="460.15" Loaded="Foodplan_Loaded">
+    <Grid>
+        <TextBox x:Name="dateBox1" Height="23" Margin="53,10,328,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top"/>
+        <TextBox x:Name="dateBox2" Height="23" Margin="150,10,231,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top"/>
+        <TextBox x:Name="dateBox3" Height="23" Margin="274,10,107,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top"/>
+        <TextBox x:Name="dateBox4" Height="23" Margin="10,60,371,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top"/>
+        <TextBox x:Name="dateBox5" Height="23" Margin="113,60,268,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top"/>
+        <TextBox x:Name="dateBox6" Height="23" Margin="214,60,167,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top"/>
+        <TextBox x:Name="dateBox7" Height="23" Margin="339,60,42,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top"/>
+    </Grid>
+</Window>

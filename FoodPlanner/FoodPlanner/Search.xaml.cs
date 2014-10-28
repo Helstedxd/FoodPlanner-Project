@@ -47,14 +47,17 @@ namespace FoodPlanner
                 }
                 else
                 {
-                    if (searchQuery.Contains(ri.Ingredient.Name))
+                    if (searchQuery.Any(s => ri.Ingredient.Name.Contains(s)))
                     {
                         searchResults.Where(x => x.recipe.Title == ri.Recipe.Title).Single().match++;
                     }
                 }
             }
 
-            searchList.ItemsSource = searchResults.OrderByDescending(x => x.match);
+
+            searchList.ItemsSource = MainWindow.db.InventoryIngredients.Where(x => x.UserID == MainWindow.CurrentUser.ID).ToList();
+
+            //searchList.ItemsSource = searchResults.OrderByDescending(x => x.match);
         }
 
     }

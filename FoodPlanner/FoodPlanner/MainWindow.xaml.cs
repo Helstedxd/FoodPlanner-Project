@@ -30,12 +30,6 @@ namespace FoodPlanner
             db = new FoodContext();
             CurrentUser = db.Users.First();
 
-            var openSearch = new Search();
-            var fP = new Foodplan();
-
-            fP.Show();
-            openSearch.ShowDialog();
-            Close();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -48,11 +42,27 @@ namespace FoodPlanner
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            //this.db.Dispose();
+            //Close the database
+            this.db.Dispose();
         }
 
         private void openSearch_Click(object sender, RoutedEventArgs e)
         {
+            var openSearch = new Search();
+            openSearch.Show();
+        }
+
+        private void openFoodplan_Click(object sender, RoutedEventArgs e)
+        {
+            var openFoodplan = new Foodplan();
+            openFoodplan.Show();
+        }
+
+        private void openInventory_Click(object sender, RoutedEventArgs e)
+        {
+            var openInventory = new InventoryWindow();
+            openInventory.Show();
+
         }
     }
 }

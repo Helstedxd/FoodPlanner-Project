@@ -10,6 +10,15 @@
     </Window.Resources>
     <Grid DataContext="{StaticResource recipeViewSource}">
         <Button Content="Open Search" Name="openSearch" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="150" Click="openSearch_Click"/>
+        <Button Content="Open Foodplan" Name="openFoodplan" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="150" Click="openFoodplan_Click"/>
+        <Button Content="Open Inventory" Name="openInventory" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Width="150" Click="openInventory_Click"/>
+
+
+
+
+
+
+
         <!--<ComboBox Margin="10,10,10,0" VerticalAlignment="Top" x:Name="selectRecipe" ItemsSource="{Binding}" SelectedValuePath="ID" />
         <ListBox HorizontalAlignment="Right" Margin="0,42,10,10" Width="200" x:Name="listIngredients" ItemsSource="{Binding Source={StaticResource recipeRecipeIngredientsViewSource}}" SelectedValuePath="ID"/>
         <ListBox Margin="10,42,220,10" x:Name="cookingSteps" ItemsSource="{Binding Source={StaticResource recipeCookingStepsViewSource}}" SelectedValuePath="ID"/>-->

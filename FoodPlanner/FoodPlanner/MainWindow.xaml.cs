@@ -31,6 +31,9 @@ namespace FoodPlanner
             CurrentUser = db.Users.First();
 
             var openSearch = new Search();
+            var fP = new Foodplan();
+
+            fP.Show();
             openSearch.ShowDialog();
             Close();
         }

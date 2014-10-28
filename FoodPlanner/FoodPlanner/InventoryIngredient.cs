@@ -18,6 +18,8 @@ namespace FoodPlanner
         public int UserID { get; set; }
         public int IngredientID { get; set; }
         public int Quantity { get; set; }
+        public System.DateTime PurchaseDate { get; set; }
+        public System.DateTime ExpirationDate { get; set; }
     
         public virtual Ingredient Ingredient { get; set; }
         public virtual User User { get; set; }

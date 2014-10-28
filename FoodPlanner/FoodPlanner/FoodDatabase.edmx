@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FoodModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FoodModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CookingSteps">
           <Key>
             <PropertyRef Name="ID" />
@@ -29,6 +29,8 @@
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="IngredientID" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="PurchaseDate" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="ExpirationDate" Type="datetime" Precision="0" Nullable="false" />
         </EntityType>
         <EntityType Name="Meals">
           <Key>
@@ -184,8 +186,7 @@
             <End Role="RecipeIngredients" EntitySet="RecipeIngredients" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FoodModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -208,7 +209,7 @@
           <NavigationProperty Name="InventoryIngredients" Relationship="Self.InventoryIngredients_ibfk_2" FromRole="Ingredients" ToRole="InventoryIngredients" />
           <NavigationProperty Name="RecipeIngredients" Relationship="Self.RecipeIngredients_ibfk_2" FromRole="Ingredients" ToRole="RecipeIngredients" />
         </EntityType>
-        <EntityType Name="InventoryIngredient">
+        <EntityType Name="InventoryIngredient" a:TypeAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -218,6 +219,8 @@
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Ingredient" Relationship="Self.InventoryIngredients_ibfk_2" FromRole="InventoryIngredients" ToRole="Ingredients" />
           <NavigationProperty Name="User" Relationship="Self.InventoryIngredients_ibfk_1" FromRole="InventoryIngredients" ToRole="Users" />
+          <Property Name="PurchaseDate" Type="DateTime" Nullable="false" />
+          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" />
         </EntityType>
         <EntityType Name="Meal">
           <Key>
@@ -348,7 +351,7 @@
         <EntityContainer Name="FoodContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CookingSteps" EntityType="Self.CookingStep" />
           <EntitySet Name="Ingredients" EntityType="Self.Ingredient" />
-          <EntitySet Name="InventoryIngredients" EntityType="Self.InventoryIngredient" />
+          <EntitySet Name="InventoryIngredients" EntityType="Self.InventoryIngredient" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <EntitySet Name="Meals" EntityType="Self.Meal" />
           <EntitySet Name="RecipeIngredients" EntityType="Self.RecipeIngredient" />
           <EntitySet Name="Recipes" EntityType="Self.Recipe" />
@@ -409,6 +412,8 @@
           <EntitySetMapping Name="InventoryIngredients">
             <EntityTypeMapping TypeName="FoodModel.InventoryIngredient">
               <MappingFragment StoreEntitySet="InventoryIngredients">
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="IngredientID" ColumnName="IngredientID" />

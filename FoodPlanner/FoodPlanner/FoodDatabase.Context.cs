@@ -18,6 +18,7 @@ namespace FoodPlanner
         public FoodContext()
             : base("name=FoodContext")
         {
+            InventoryIngredients = Set<InventoryIngredient>();
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -27,7 +28,7 @@ namespace FoodPlanner
     
         public virtual DbSet<CookingStep> CookingSteps { get; set; }
         public virtual DbSet<Ingredient> Ingredients { get; set; }
-        public virtual DbSet<InventoryIngredient> InventoryIngredients { get; set; }
+        internal virtual DbSet<InventoryIngredient> InventoryIngredients { get; set; }
         public virtual DbSet<Meal> Meals { get; set; }
         public virtual DbSet<RecipeIngredient> RecipeIngredients { get; set; }
         public virtual DbSet<Recipe> Recipes { get; set; }

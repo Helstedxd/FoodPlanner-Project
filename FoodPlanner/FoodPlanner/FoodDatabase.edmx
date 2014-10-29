@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FoodModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FoodModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CookingSteps">
           <Key>
             <PropertyRef Name="ID" />
@@ -57,6 +57,8 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Persons" Type="int" Nullable="false" />
+          <Property Name="Description" Type="text" Nullable="false" />
+          <Property Name="Image" Type="mediumblob" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -126,18 +128,6 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="RecipeIngredients_ibfk_1">
-          <End Role="Recipes" Type="Self.Recipes" Multiplicity="1" />
-          <End Role="RecipeIngredients" Type="Self.RecipeIngredients" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Recipes">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="RecipeIngredients">
-              <PropertyRef Name="RecipeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="RecipeIngredients_ibfk_2">
           <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="1" />
           <End Role="RecipeIngredients" Type="Self.RecipeIngredients" Multiplicity="*" />
           <ReferentialConstraint>
@@ -146,6 +136,18 @@
             </Principal>
             <Dependent Role="RecipeIngredients">
               <PropertyRef Name="IngredientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipeIngredients_ibfk_2">
+          <End Role="Recipes" Type="Self.Recipes" Multiplicity="1" />
+          <End Role="RecipeIngredients" Type="Self.RecipeIngredients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recipes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RecipeIngredients">
+              <PropertyRef Name="RecipeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -178,11 +180,11 @@
             <End Role="Meals" EntitySet="Meals" />
           </AssociationSet>
           <AssociationSet Name="RecipeIngredients_ibfk_1" Association="Self.RecipeIngredients_ibfk_1">
-            <End Role="Recipes" EntitySet="Recipes" />
+            <End Role="Ingredients" EntitySet="Ingredients" />
             <End Role="RecipeIngredients" EntitySet="RecipeIngredients" />
           </AssociationSet>
           <AssociationSet Name="RecipeIngredients_ibfk_2" Association="Self.RecipeIngredients_ibfk_2">
-            <End Role="Ingredients" EntitySet="Ingredients" />
+            <End Role="Recipes" EntitySet="Recipes" />
             <End Role="RecipeIngredients" EntitySet="RecipeIngredients" />
           </AssociationSet>
         </EntityContainer>
@@ -254,6 +256,8 @@
           <NavigationProperty Name="CookingSteps" Relationship="Self.CookingSteps_ibfk_1" FromRole="Recipes" ToRole="CookingSteps" />
           <NavigationProperty Name="Meals" Relationship="Self.Meals_ibfk_1" FromRole="Recipes" ToRole="Meals" />
           <NavigationProperty Name="RecipeIngredients" Relationship="Self.RecipeIngredients_ibfk_1" FromRole="Recipes" ToRole="RecipeIngredients" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -444,6 +448,8 @@
           <EntitySetMapping Name="Recipes">
             <EntityTypeMapping TypeName="FoodModel.Recipe">
               <MappingFragment StoreEntitySet="Recipes">
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Persons" ColumnName="Persons" />

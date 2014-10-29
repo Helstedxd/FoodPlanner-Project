@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -21,7 +22,7 @@ namespace FoodPlanner
     /// </summary>
     public partial class Search : Window
     {
-        private List<InventoryIngredient> inventoryList = MainWindow.db.InventoryIngredients.Where(ii => ii.UserID == MainWindow.CurrentUser.ID && ii.Ingredient.ID != -1).ToList();
+        private List<InventoryIngredient> inventoryList = MainWindow.db.InventoryIngredients.Where(ii => ii.UserID == MainWindow.CurrentUser.ID).ToList();
 
         public Search()
         {
@@ -36,10 +37,6 @@ namespace FoodPlanner
 
         private void startSearch_Click(object sender, RoutedEventArgs e)
         {
-            Stopwatch watch = new Stopwatch();
-            debugLog.Items.Clear();
-            int i = 1;
-
             List<SearchResults> searchResults = new List<SearchResults>();
 
             List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
@@ -48,19 +45,14 @@ namespace FoodPlanner
 
             foreach (RecipeIngredient ri in recipeIngredient)
             {
-                watch.Start();
-                debugLog.Items.Add((watch.ElapsedMilliseconds) + ": " + i + " start element");
                 if (searchResults.Where(x => x.recipe.Title == ri.Recipe.Title).Count() == 0)
                 {
-                    debugLog.Items.Add((watch.ElapsedMilliseconds) + ": " + i++ + " Første element");
                     searchResults.Add(new SearchResults(ri.Recipe, searchQuery.Any(s => ri.Ingredient.Name.Contains(s)), searchQuery.Any(s => ri.Recipe.Title.Contains(s))));
                 }
                 else
                 {
-                    debugLog.Items.Add((watch.ElapsedMilliseconds) + ": " + i++ + " Ikke første element");
                     if (searchQuery.Any(s => ri.Ingredient.Name.Contains(s))) // kan eventuelt optimeres
                     {
-                        debugLog.Items.Add((watch.ElapsedMilliseconds) + ": " + i++ + " Tilføj 1 til match");
                         searchResults.Where(x => x.recipe.Title == ri.Recipe.Title).Single().match++;
                     }
                 }
@@ -76,14 +68,15 @@ namespace FoodPlanner
                         searchResults.Where(x => x.recipe.Title == ri.Recipe.Title).Single().partialMatch++;
                     }
                 }
-
-                debugLog.Items.Add(" ");
-                watch.Stop();
-                watch.Reset();
             }
 
             searchList.ItemsSource = searchResults.OrderByDescending(x => x.fullMatch).ThenByDescending(x => x.partialMatch).ThenByDescending(x => x.match).ThenBy(x => x.recipe.Title);
         }
 
+        private void searchList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var showRecipe = new ShowRecipe(((SearchResults)searchList.SelectedItem).recipe);
+            showRecipe.ShowDialog();
+        }
     }
 }

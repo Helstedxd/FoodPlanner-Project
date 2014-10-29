@@ -1,0 +1,12 @@
+﻿<Window x:Class="FoodPlanner.ShowRecipe"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ShowRecipe" Height="600" Width="600" ResizeMode="NoResize">
+    <Grid>
+        <Image HorizontalAlignment="Left" Height="300" Margin="10,10,0,0" VerticalAlignment="Top" Source="{Binding}" Name="imageSource" Width="300"/>
+
+        <ListBox HorizontalAlignment="Left" Height="300" Margin="320,10,0,0" VerticalAlignment="Top" Name="showIngredients" Width="264"/>
+
+        <ListBox HorizontalAlignment="Left" Height="247" Margin="10,315,0,0" VerticalAlignment="Top" Name="showSteps" Width="574"/>
+    </Grid>
+</Window>

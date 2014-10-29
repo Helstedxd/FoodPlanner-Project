@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,16 +22,20 @@ namespace FoodPlanner
     /// </summary>
     public partial class ShowRecipe : Window
     {
-        private BitmapImage ROFLMETHOD(string bgImage64)
+        private string ROFLMETHOD(Recipe recipe)
         {
-            byte[] binaryData = Convert.FromBase64String(bgImage64);
+            WebClient client = new WebClient();
+            string path = Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString() + "/imageCache";
 
-            BitmapImage bi = new BitmapImage();
-            bi.BeginInit();
-            bi.StreamSource = new MemoryStream(binaryData);
-            bi.EndInit();
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
 
-            return bi;
+            if (!File.Exists(path + "/" + recipe.ID + ".jpg"))
+            {
+                client.DownloadFile(recipe.Image, path + "/" + recipe.ID + ".jpg");
+            }
+
+            return path + "/" + recipe.ID + ".jpg";
         }
 
 
@@ -40,7 +46,8 @@ namespace FoodPlanner
             showIngredients.ItemsSource = MainWindow.db.RecipeIngredients.Where(ri => ri.Recipe.ID == recipe.ID).ToList();
             showSteps.ItemsSource = recipe.CookingSteps.ToList();
 
-            imageSource.Source = ROFLMETHOD(System.Text.Encoding.UTF8.GetString(recipe.Image));
+
+            imageSource.DataContext = ROFLMETHOD(recipe);
         }
     }
 }

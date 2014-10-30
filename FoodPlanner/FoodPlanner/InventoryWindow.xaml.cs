@@ -21,6 +21,9 @@ namespace FoodPlanner
     /// </summary>
     public partial class InventoryWindow : Window
     {
+        private int _maximumAutoCompleteItems = 5;
+        private string _lastSearchText = "";
+
         public InventoryWindow()
         {
             InitializeComponent();
@@ -31,21 +34,10 @@ namespace FoodPlanner
             CollectionViewSource userViewSource = ((CollectionViewSource)(this.FindResource("userViewSource")));
             MainWindow.db.Users.Load();
             userViewSource.Source = MainWindow.db.Users.Local;
-            //TODO: bad hack
-
-            //userViewSource.Source = MainWindow.db.Users.Where(u => u.ID == MainWindow.CurrentUser.ID).ToList();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            /*var lol = new InventoryIngredient();
-            lol.Ingredient = new Ingredient();
-            lol.Ingredient.Name = "Noget mad";
-            lol.Ingredient.Unit = "stk";
-            lol.Quantity = 123;
-
-            MainWindow.CurrentUser.InventoryIngredients.Add(lol);*/
-
             // Remove unlinked items from the database
             foreach (var inventoryItem in MainWindow.db.InventoryIngredients.Local.ToList())
             {
@@ -59,40 +51,62 @@ namespace FoodPlanner
 
             // Refresh the grids so the database generated values show up. 
             this.inventoryIngredientsDataGrid.Items.Refresh();
+            Console.WriteLine("Inventory saved!");
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            string searchString = searchTextBox.Text;
-            int quantity;
-
-            if (!int.TryParse(quantityTextBox.Text, out quantity))
-            {
-                MessageBox.Show("Quantity not a number!", ":(");
-                return;
+            Ingredient food = inventoryAutoCompleteBox.SelectedItem as Ingredient;
+            if (food != null) {
+                var newInventoryItem = new InventoryIngredient(food, 1);
+                MainWindow.CurrentUser.InventoryIngredients.Add(newInventoryItem);
             }
+        }
 
-            var result = MainWindow.db.Ingredients.Where(i => i.Name.ToLower().Contains(searchString.ToLower()));
+        private void inventoryAutoCompleteBox_Populating(object sender, PopulatingEventArgs e)
+        {
+            AutoCompleteBox acb = (sender as AutoCompleteBox);
 
-            Ingredient first = result.FirstOrDefault();
-            if (first != null)
+            // Only query the database if the search string has changed
+            // and a continues search string could change the previously fetched items.
+            if (acb.SearchText.StartsWith(_lastSearchText, StringComparison.OrdinalIgnoreCase) &&
+                acb.ItemsSource != null &&
+                acb.ItemsSource.OfType<object>().Count() < _maximumAutoCompleteItems)
             {
-                searchTextBox.Text = first.Name;
+                Console.WriteLine("Just avoided a unnecessary db lookup ;)");
             }
             else
             {
-                MessageBox.Show("Food not found!", ":(");
-                return;
+                // Cancel default population and query the database.
+                e.Cancel = true;
+                _lastSearchText = acb.SearchText;
+                Console.WriteLine("Fetching data from db! " + DateTime.Now.ToLongTimeString());
+                PopulateAutoCompleteBoxWithDataFromDatabase(acb);
             }
-
-            //if (MainWindow.CurrentUser.InventoryIngredients)
-
-            var test = new InventoryIngredient(first, quantity);
-            MainWindow.CurrentUser.InventoryIngredients.Add(test);
-
-            //MessageBox.Show(string.Join(", ", result.Select(i => i.Name).ToArray()));
         }
 
+        private void PopulateAutoCompleteBoxWithDataFromDatabase(AutoCompleteBox acb)
+        {
+            string originalSearchText = acb.SearchText;
+
+            var foundIngredients = MainWindow.db.Ingredients
+                .Where(i => i.Name.ToLower().Contains(originalSearchText.ToLower()))
+                .Take(_maximumAutoCompleteItems)
+                //.OrderBy(ii => ii.Ingredient.Name.IndexOf(originalSearchText, StringComparison.InvariantCultureIgnoreCase));
+                .OrderBy(i => i.Name.ToLower().IndexOf(originalSearchText));
+
+            // Populate the AutoCompleteBox if the search text has not changed.
+            if (originalSearchText == acb.SearchText)
+            {
+                acb.ItemsSource = foundIngredients;
+                acb.PopulateComplete();
+            }
+            else
+            {
+                Console.WriteLine("Search text changed before population...");
+            }
+
+        }
 
     }
 }

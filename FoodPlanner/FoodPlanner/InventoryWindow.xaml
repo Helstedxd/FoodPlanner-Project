@@ -3,27 +3,33 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
         xmlns:local="clr-namespace:FoodPlanner" mc:Ignorable="d" x:Class="FoodPlanner.InventoryWindow"
-        Title="InventoryWindow" Height="297.487" Width="482.953" Loaded="Window_Loaded">
+        Title="Inventory" Height="350" Width="650" Loaded="Window_Loaded">
     <Window.Resources>
         <CollectionViewSource x:Key="userViewSource" d:DesignSource="{d:DesignInstance {x:Type local:User}, CreateList=True}"/>
         <CollectionViewSource x:Key="userInventoryIngredientsViewSource" Source="{Binding InventoryIngredients, Source={StaticResource userViewSource}}"/>
     </Window.Resources>
     <Grid DataContext="{StaticResource userInventoryIngredientsViewSource}">
-        <Label Content="Inventory" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"/>
-        <Button Content="Save" HorizontalAlignment="Left" Margin="385,232,0,0" VerticalAlignment="Top" Width="75"
-                Click="Button_Click"/>
-        <DataGrid x:Name="inventoryIngredientsDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="10,31,9.948,36.869" RowDetailsVisibilityMode="VisibleWhenSelected">
-            <DataGrid.Columns>
-                <DataGridTextColumn x:Name="ingredientColumn" Binding="{Binding Ingredient}" Header="Food" Width="Auto"/>
-                <DataGridTextColumn x:Name="quantityColumn" Binding="{Binding Quantity}" Header="Quantity" Width="Auto"/>
-                <DataGridTextColumn x:Name="purchaseDateColumn" Binding="{Binding PurchaseDate}" Header="PurchaseDate" Width="Auto"/>
-                <DataGridTextColumn x:Name="expirationDateColumn" Binding="{Binding ExpirationDate}" Header="ExpirationDate" Width="Auto"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <Button Content="Add" HorizontalAlignment="Left" Margin="171,232,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
-        <TextBox x:Name="searchTextBox" HorizontalAlignment="Left" Height="23" Margin="10,231,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="quantityTextBox" HorizontalAlignment="Left" Height="23" Margin="135,232,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="31" Text="1"/>
-
+        <StackPanel>
+            <Label Content="Inventory" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" FontWeight="Bold"/>
+            <StackPanel x:Name="LayoutRoot" Orientation="Horizontal" >
+                <TextBlock Text="Add Food:" Margin="5" VerticalAlignment="Center" />
+                <toolkit:AutoCompleteBox x:Name="inventoryAutoCompleteBox" Width="475" Margin="5" VerticalAlignment="Center"
+                                         FilterMode="Contains" IsTextCompletionEnabled="True"
+                                         MinimumPopulateDelay="500" MinimumPrefixLength="2" Populating="inventoryAutoCompleteBox_Populating" />
+                <Button x:Name="AddButton"  Content="Add" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Center" Width="75" Click="AddButton_Click"/>
+            </StackPanel>
+            <DataGrid x:Name="inventoryIngredientsDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
+                      ItemsSource="{Binding}" Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" Height="200">
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="ingredientColumn" Binding="{Binding Ingredient}" Header="Food" IsReadOnly="True" Width="Auto"/>
+                    <DataGridTextColumn x:Name="quantityColumn" Binding="{Binding Quantity}" Header="Quantity" Width="Auto"/>
+                    <DataGridTextColumn x:Name="purchaseDateColumn" Binding="{Binding PurchaseDate}" Header="PurchaseDate" Width="Auto"/>
+                    <DataGridTextColumn x:Name="expirationDateColumn" Binding="{Binding ExpirationDate}" Header="ExpirationDate" Width="Auto"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button x:Name="SaveButton"  Content="Save" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Top" Width="75" Click="SaveButton_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

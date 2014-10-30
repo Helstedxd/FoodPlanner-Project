@@ -12,29 +12,39 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace FoodPlanner {
+namespace FoodPlanner 
+{
     /// <summary>
     /// Interaction logic for Foodplan.xaml
     /// </summary>
-    public partial class Foodplan : Window {
-        public Foodplan() {
+    public partial class Foodplan : Window 
+    {
+        public Foodplan() 
+        {
             InitializeComponent();
         }
+        
         private void Foodplan_Loaded(object sender, RoutedEventArgs e)
         {
             //setup of trvival data
-            DateTime moment = new DateTime();
-            int year = moment.Year;
-            int month = moment.Month;
-            int day = moment.Day;
-            string dayString = getStringDay(day);
+
+            DateTime moment = DateTime.Now;
+            int year = moment.Year,
+                month = moment.Month,
+                day = moment.Day,
+                weekDay = Convert.ToInt16(moment.DayOfWeek);
+            string dayString = getStringDay(weekDay);
             bool leapYear = DateTime.IsLeapYear(year);
             int daysInMonth = DateTime.DaysInMonth(year, month);
+
+            setCurrentDays(weekDay);
         }
-        private string getStringDay(int day){
+
+        private string getStringDay(int day)
+        {
             string stringDay;
             switch (day)
-	{
+            {
                 case 1:
                     stringDay  = "Mon";
                     break;
@@ -57,21 +67,41 @@ namespace FoodPlanner {
                     stringDay  = "Sun";
                     break;
                 default:
-                    stringDay = "Error"; 
+                    stringDay = "Error, out of reach"; 
                     break;
             }
             return stringDay;
         }
-        private List<int> getCurrentDays() {
-            List<int> dhdash = new List<int>();
 
+        private void setCurrentDays(int weekDay) 
+        {
+            List<TextBox> dateBoxes = new List<TextBox>(){dateBox1, dateBox2 ,dateBox3,dateBox4,dateBox5,dateBox6,dateBox7};
+            weekDay = 1;
+            for (int i = 0, j = weekDay - 1; i < 7; i++) {
+                if (j < 1) 
+                {
+                    j = 7;
+                }
+                else if (j == 8) {
+                    j = 1;
+                }
+                dateBoxes[i].Text = getStringDay(j);
+                //Add meal
+                j++;
+            }
 
-            return dhdash;
-    }
+        }
 
+        private void addMealToMeals(DateTime dateForMeal, Recipe recipeForMeal) 
+        {
+            Meal newMeal = new Meal();
+            newMeal.User.ID = MainWindow.CurrentUser.ID;
+            newMeal.Recipe.ID = recipeForMeal.ID;
+            //newMeal.Recipe.ID = MainWindow.db.Recipes.Where(r => r.ID == 1);
+            newMeal.Date = dateForMeal;
 
-
-        private void randomMeth() {
+            MainWindow.db.Meals.Add(newMeal);
+            MainWindow.db.SaveChanges();
         }
     }
 }

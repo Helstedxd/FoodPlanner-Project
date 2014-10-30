@@ -28,14 +28,17 @@ namespace FoodPlanner
             string path = Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString() + "/imageCache";
 
             if (!Directory.Exists(path))
+            {
                 Directory.CreateDirectory(path);
+            }
 
             if (!File.Exists(path + "/" + recipe.ID + ".jpg"))
+            {
                 client.DownloadFile(recipe.Image, path + "/" + recipe.ID + ".jpg");
+            }
 
             return path + "/" + recipe.ID + ".jpg";
         }
-
 
         public ShowRecipe(Recipe recipe)
         {

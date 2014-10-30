@@ -40,6 +40,7 @@
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="RecipeID" Type="int" Nullable="false" />
           <Property Name="Date" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="Participants" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="RecipeIngredients">
           <Key>
@@ -234,6 +235,7 @@
           <Property Name="Date" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="Recipe" Relationship="Self.Meals_ibfk_1" FromRole="Meals" ToRole="Recipes" />
           <NavigationProperty Name="User" Relationship="Self.Meals_ibfk_2" FromRole="Meals" ToRole="Users" />
+          <Property Name="Participants" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="RecipeIngredient">
           <Key>
@@ -428,6 +430,7 @@
           <EntitySetMapping Name="Meals">
             <EntityTypeMapping TypeName="FoodModel.Meal">
               <MappingFragment StoreEntitySet="Meals">
+                <ScalarProperty Name="Participants" ColumnName="Participants" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />

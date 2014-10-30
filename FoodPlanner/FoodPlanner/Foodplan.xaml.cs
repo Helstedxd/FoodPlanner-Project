@@ -23,6 +23,7 @@ namespace FoodPlanner
         {
             InitializeComponent();
         }
+        
         private void Foodplan_Loaded(object sender, RoutedEventArgs e)
         {
             //setup of trvival data
@@ -38,6 +39,7 @@ namespace FoodPlanner
 
             setCurrentDays(weekDay);
         }
+
         private string getStringDay(int day)
         {
             string stringDay;
@@ -74,7 +76,7 @@ namespace FoodPlanner
         private void setCurrentDays(int weekDay) 
         {
             List<TextBox> dateBoxes = new List<TextBox>(){dateBox1, dateBox2 ,dateBox3,dateBox4,dateBox5,dateBox6,dateBox7};
-
+            weekDay = 1;
             for (int i = 0, j = weekDay - 1; i < 7; i++) {
                 if (j < 1) 
                 {
@@ -84,15 +86,22 @@ namespace FoodPlanner
                     j = 1;
                 }
                 dateBoxes[i].Text = getStringDay(j);
+                //Add meal
                 j++;
             }
 
         }
 
-
-
-        private void randomMeth() 
+        private void addMealToMeals(DateTime dateForMeal, Recipe recipeForMeal) 
         {
+            Meal newMeal = new Meal();
+            newMeal.User.ID = MainWindow.CurrentUser.ID;
+            newMeal.Recipe.ID = recipeForMeal.ID;
+            //newMeal.Recipe.ID = MainWindow.db.Recipes.Where(r => r.ID == 1);
+            newMeal.Date = dateForMeal;
+
+            MainWindow.db.Meals.Add(newMeal);
+            MainWindow.db.SaveChanges();
         }
     }
 }

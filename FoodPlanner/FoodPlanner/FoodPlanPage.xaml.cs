@@ -209,7 +209,7 @@ namespace FoodPlanner {
 
             string date = buttonList[0].Content.ToString();
             string upWeek; 
-            date.Split
+            /*date.Split
 
 
             if (buttonList[0].IsFocused) 
@@ -223,7 +223,7 @@ namespace FoodPlanner {
 
             }
 
-
+            */
             foreach (Button but in buttonList) 
             {
                 if (but.IsFocused) 

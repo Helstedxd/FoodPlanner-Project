@@ -21,7 +21,7 @@ namespace FoodPlanner
     /// </summary>
     public partial class InventoryWindow : Window
     {
-        private int _maximumAutoCompleteItems = 5;
+        private int _maximumAutoCompleteItems = 10;
         private string _lastSearchText = "";
 
         public InventoryWindow()

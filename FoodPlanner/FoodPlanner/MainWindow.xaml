@@ -12,6 +12,7 @@
         <Button Content="Open Search" Name="openSearch" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="150" Click="openSearch_Click"/>
         <Button Content="Open Foodplan" Name="openFoodplan" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="150" Click="openFoodplan_Click"/>
         <Button Content="Open Inventory" Name="openInventory" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Width="150" Click="openInventory_Click"/>
+        <Button Content="Open Recommended Recipes" Name="openRecommendedRecipes" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Width="150"/>
 
         <!--<Image HorizontalAlignment="Left" Height="200" Margin="207,10,0,0" VerticalAlignment="Top" Width="300" Source="http://viskalspise.dk/sites/default/files/imagecache/image_300x300r/hakkebf-og-bnnesalat-med-olive.jpg" Stretch="Fill" />-->
 

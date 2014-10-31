@@ -62,5 +62,10 @@ namespace FoodPlanner
             openInventory.Show();
 
         }
+
+        private void openRecommendedRecipes_Click(object sender, RoutedEventArgs e)
+        {
+            new RecommendedRecipesWindow().Show();
+        }
     }
 }

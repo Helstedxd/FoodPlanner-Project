@@ -14,6 +14,14 @@ using System.Windows.Shapes;
 
 namespace FoodPlanner
 {
+    // TODO: merge with other search result stuff
+    public class search_result_x {
+
+        public Recipe Recipe { get; set;  }
+        public decimal MatchPercentage { get; set; }
+    }
+
+
     /// <summary>
     /// Interaction logic for RecommendedRecipesWindow.xaml
     /// </summary>
@@ -23,31 +31,49 @@ namespace FoodPlanner
         {
             InitializeComponent();
 
+            //TODO: the grouping contains a lot of dublicate data, maybe this can be avoided...
             var q3 = from ri in MainWindow.db.RecipeIngredients
                      join ii in MainWindow.db.InventoryIngredients on ri.IngredientID equals ii.IngredientID
-                     select new { recipeID = ri.RecipeID, recipe = ri.Recipe, riq = ri.Quantity, iiq = ii.Quantity } into c
-                     group c by c.recipeID into g
+                     select new { RecipeID = ri.RecipeID, Recipe = ri.Recipe, RecipeQuantity = ri.Quantity, InventoryRecipe = ii.Quantity, IngredientCount = ri.Recipe.RecipeIngredients.Count() } into c
+                     group c by c.RecipeID into g
                      select g;
-                     //select new { riq = g /*ri.Quantity, iiq = ii.Quantity*/ };
 
-                   // select new { lol.Key }; //produces flat sequence
-            //select ri.Recipe;
+            List<search_result_x> searchResults = new List<search_result_x>();
 
-            var l3 = q3.ToList();
+            DateTime startTime = DateTime.Now;
 
-            foreach (var group in l3) {
-                //var x = group.FirstOrDefault();
-                Recipe r = group.First().recipe;
-                int ingredientCount = r.RecipeIngredients.Count();
+            foreach (var group in q3)
+            {
+                var first = group.First();
+
                 decimal totalPercent = 0;
-                foreach (var x in group) { 
-                   // decimal matchPercent = x.
-                
+                foreach (var g in group)
+                {
+                    if (g.InventoryRecipe >= g.RecipeQuantity)
+                    {
+                        totalPercent += 1;
+                    }
+                    else
+                    {
+                        if (g.RecipeQuantity == 0)
+                            Console.WriteLine("This should not be possible...");
+                        totalPercent += g.InventoryRecipe / g.RecipeQuantity;
+                    }
+                    
                 }
-             
-            
+
+                decimal recipeMatchPercent = totalPercent / first.IngredientCount;
+
+                searchResults.Add(new search_result_x() { Recipe = first.Recipe, MatchPercentage = recipeMatchPercent });
+
+               // Console.WriteLine( (ccc++) + " Match percent: " + recipeMatchPercent);
             }
 
+            TimeSpan e = DateTime.Now - startTime;
+
+            Console.WriteLine("Calculated Match Percentage for {0} recipes in {1}", q3.Count(), e);
+
+            recommendedRecipesDataGrid.ItemsSource = searchResults.OrderByDescending(s => s.MatchPercentage);
 
         }
     }

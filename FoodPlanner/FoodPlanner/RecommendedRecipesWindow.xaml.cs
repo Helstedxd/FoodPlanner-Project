@@ -15,12 +15,11 @@ using System.Windows.Shapes;
 namespace FoodPlanner
 {
     // TODO: merge with other search result stuff
-    public class search_result_x {
-
-        public Recipe Recipe { get; set;  }
+    public class search_result_x
+    {
+        public Recipe Recipe { get; set; }
         public decimal MatchPercentage { get; set; }
     }
-
 
     /// <summary>
     /// Interaction logic for RecommendedRecipesWindow.xaml
@@ -59,14 +58,14 @@ namespace FoodPlanner
                             Console.WriteLine("This should not be possible...");
                         totalPercent += g.InventoryRecipe / g.RecipeQuantity;
                     }
-                    
+
                 }
 
-                decimal recipeMatchPercent = totalPercent / first.IngredientCount;
-
-                searchResults.Add(new search_result_x() { Recipe = first.Recipe, MatchPercentage = recipeMatchPercent });
-
-               // Console.WriteLine( (ccc++) + " Match percent: " + recipeMatchPercent);
+                searchResults.Add(new search_result_x()
+                {
+                    Recipe = first.Recipe,
+                    MatchPercentage = totalPercent / first.IngredientCount
+                });
             }
 
             TimeSpan e = DateTime.Now - startTime;

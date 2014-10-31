@@ -67,5 +67,6 @@ namespace FoodPlanner
         {
             new RecommendedRecipesWindow().Show();
         }
+
     }
 }

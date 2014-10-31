@@ -29,7 +29,6 @@ namespace FoodPlanner
 
             db = new FoodContext();
             CurrentUser = db.Users.First();
-
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -42,7 +41,6 @@ namespace FoodPlanner
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            //Close the database
             db.Dispose();
         }
 

@@ -15,6 +15,9 @@ namespace FoodPlanner
         {
             this.Ingredient = ingredient;
             this.Quantity = quantity;
+            // TODO: These dates should probably be chosen in a more clever way.
+            this.PurchaseDate = DateTime.Now;
+            this.ExpirationDate = DateTime.Now;
         }
 
         public override string ToString()

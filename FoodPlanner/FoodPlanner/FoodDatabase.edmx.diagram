@@ -8,7 +8,7 @@
         <EntityTypeShape EntityType="FoodModel.CookingStep" Width="1.5" PointX="0.5" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="FoodModel.Ingredient" Width="1.5" PointX="4.375" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="FoodModel.InventoryIngredient" Width="1.5" PointX="4.375" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FoodModel.Meal" Width="1.5" PointX="2.375" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FoodModel.Meal" Width="1.5" PointX="2.25" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="FoodModel.RecipeIngredient" Width="1.5" PointX="2.375" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="FoodModel.Recipe" Width="1.5" PointX="2.375" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="FoodModel.User" Width="1.5" PointX="4.375" PointY="1.25" IsExpanded="true" />

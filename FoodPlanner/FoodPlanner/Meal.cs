@@ -18,6 +18,7 @@ namespace FoodPlanner
         public int UserID { get; set; }
         public int RecipeID { get; set; }
         public System.DateTime Date { get; set; }
+        public int Participants { get; set; }
     
         public virtual Recipe Recipe { get; set; }
         public virtual User User { get; set; }

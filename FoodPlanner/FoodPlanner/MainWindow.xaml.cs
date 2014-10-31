@@ -52,8 +52,8 @@ namespace FoodPlanner
 
         private void openFoodplan_Click(object sender, RoutedEventArgs e)
         {
-            var openFoodplan = new Foodplan();
-            openFoodplan.Show();
+            var openFoodplan = new FoodPlanPage();
+            //openFoodplan.Show();
         }
 
         private void openInventory_Click(object sender, RoutedEventArgs e)

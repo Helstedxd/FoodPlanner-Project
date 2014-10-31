@@ -10,90 +10,53 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Globalization;
 
-namespace FoodPlanner 
-{
+namespace FoodPlanner {
     /// <summary>
-    /// Interaction logic for Foodplan.xaml
+    /// Interaction logic for FoodPlanPage.xaml
     /// </summary>
-    public partial class Foodplan : Window 
+    public partial class FoodPlanPage : Page 
     {
-        public Foodplan() 
+        public FoodPlanPage() 
         {
             InitializeComponent();
         }
-        
-        private void Foodplan_Loaded(object sender, RoutedEventArgs e)
-        {
-            //setup of trvival data
-
-            DateTime moment = DateTime.Now;
-            int year = moment.Year,
-                month = moment.Month,
-                day = moment.Day,
-                weekDay = Convert.ToInt16(moment.DayOfWeek);
-            string dayString = getStringDay(weekDay);
-            bool leapYear = DateTime.IsLeapYear(year);
-            int daysInMonth = DateTime.DaysInMonth(year, month);
-
-            //setCurrentDays(weekDay);
-            
-        }
-
-        private string getStringDay(int day)
+        private string getStringDay(int day) 
         {
             string stringDay;
-            switch (day)
+            switch (day) 
             {
                 case 1:
-                    stringDay  = "Mon";
+                    stringDay = "Mon";
                     break;
                 case 2:
-                    stringDay  = "Tur";
+                    stringDay = "Tue";
                     break;
                 case 3:
-                    stringDay  = "Wen";
+                    stringDay = "Wed";
                     break;
                 case 4:
-                    stringDay  = "Thu";
+                    stringDay = "Thu";
                     break;
                 case 5:
-                    stringDay  = "Fri";
+                    stringDay = "Fri";
                     break;
                 case 6:
-                    stringDay  = "Sat";
+                    stringDay = "Sat";
                     break;
                 case 7:
-                    stringDay  = "Sun";
+                    stringDay = "Sun";
                     break;
                 default:
-                    stringDay = "Error, out of reach"; 
+                    stringDay = "Error, out of reach";
                     break;
             }
             return stringDay;
         }
-
-        private void setCurrentDays(int weekDay) 
-        {
-            List<TextBox> dateBoxes = new List<TextBox>(){dateBox1, dateBox2 ,dateBox3,dateBox4,dateBox5,dateBox6,dateBox7};
-            weekDay = 1;
-            for (int i = 0, j = weekDay - 1; i < 7; i++) 
-            {
-                if (j < 1) 
-                {
-                    j = 7;
-                }
-                else if (j == 8) {
-                    j = 1;
-                }
-                dateBoxes[i].Text = getStringDay(j);
-                //Add meal
-                j++;
-            }
-
-        }
-
+       
         private void addMealToMeals(DateTime dateForMeal, Recipe recipeForMeal, int Participants) 
         {
             Meal newMeal = new Meal();
@@ -156,7 +119,7 @@ namespace FoodPlanner
             }
             catch (Exception e) 
             {
-                MessageBox.Show(e.Message+"\nHow is that exception even possible?!?", "What have you done??");
+                MessageBox.Show(e.Message + "\nHow is that exception even possible?!?", "What have you done??");
             }
 
             try 
@@ -170,7 +133,7 @@ namespace FoodPlanner
                 {
                     MessageBox.Show("ERROR\nInvalidParticipantsNumber:\nThe given participants value is not accepted. It must be above zero", "addMealToMeals: InvalidParticipantsNumber");
                 }
-                
+
             }
             catch (NotFiniteNumberException) 
             {
@@ -191,7 +154,7 @@ namespace FoodPlanner
 
         private void IDexceptionBox(string errorType, string faultType) 
         {
-            MessageBox.Show("ERROR\n" + errorType + ":\nThe given ID is not " + faultType, "addMealToMeals: "+errorType);
+            MessageBox.Show("ERROR\n" + errorType + ":\nThe given ID is not " + faultType, "addMealToMeals: " + errorType);
         }
 
         private void foodPlanTest_Click(object sender, RoutedEventArgs e) 
@@ -200,12 +163,78 @@ namespace FoodPlanner
             addMealToMeals(moment, MainWindow.db.Recipes.First(), 4);
         }
 
-        private void showCurrentDay(int dayOfWeek) 
+        /*private void showCurrentDay(int dayOfWeek) 
         {
-            string day = getStringDay(dayOfWeek);
+         //   string day = getStringDay();
             FoodPlanPage FPP = new FoodPlanPage();
 
-            List<Button> buttonList = new List<Button> { };
+            List<Button> buttonList = new List<Button> { butUp, butMon, butTue, butWed, butThu, butFri, butSat, butSun, butDown };
+            List<Line> lineList = new List<Line> { upLine, monLine, tueLine, wedLine, thuLine, friLine, satLine, sunLine, downLine };
+
+            for (int i = 0; i < buttonList.Count; i++) 
+            {
+                if (buttonList[i].Content.ToString() == day) 
+                {
+                    lineList[i].Visibility = Visibility.Hidden;
+                }   
+            }
+        }*/
+
+        private void buttonInFocus(object sender, RoutedEventArgs e)
+        {
+            List<Button> buttonList = new List<Button> { butUp, butMon, butTue, butWed, butThu, butFri, butSat, butSun, butDown };
+
+            foreach (Button but in buttonList) 
+            {
+                if (but.IsFocused) 
+                {
+                    but.Background = Brushes.LightGray;
+                }
+                else 
+                {
+                    but.Background = Brushes.White;
+                }
+            }
+            
+        }
+
+        private void updateArrows(object sender, RoutedEventArgs e) 
+        {
+            System.Globalization.Calendar calendar = CultureInfo.CurrentCulture.Calendar;
+            DateTime moment = DateTime.Now;
+            System.Globalization.CalendarWeekRule rule = CalendarWeekRule.FirstFourDayWeek;
+            int weeNumber = calendar.GetWeekOfYear(moment, rule, moment.DayOfWeek);
+
+            List<Button> buttonList = new List<Button> { butUp, butDown };
+
+            string date = buttonList[0].Content.ToString();
+            string upWeek; 
+            date.Split
+
+
+            if (buttonList[0].IsFocused) 
+            {
+                
+                int difference = 
+                buttonList[0].Content = "^"+
+            }
+            else if (buttonList[1].IsFocused) 
+            {
+
+            }
+
+
+            foreach (Button but in buttonList) 
+            {
+                if (but.IsFocused) 
+                {
+
+                }
+                else 
+                {
+
+                }
+            }
         }
     }
 }

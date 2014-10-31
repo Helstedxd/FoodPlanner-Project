@@ -3,29 +3,46 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 	mc:Ignorable="d"
 	x:Class="FoodPlanner.UserControlButtonSlide"
 	x:Name="UserControl"
-	d:DesignWidth="640" d:DesignHeight="480">
+	d:DesignWidth="720" d:DesignHeight="480">
 
-	<Grid x:Name="LayoutRoot" Width="720" Height="1280" Background="#FF8F8F8F" HorizontalAlignment="Left" Margin="0,0,-80,-800">
-		<Grid HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100">
-			<StackPanel HorizontalAlignment="Left" Height="174" VerticalAlignment="Bottom" Width="720" Background="Black" Margin="0,0,-620,-1324" Orientation="Horizontal">
-				<Button Content="Button" Width="144" Height="144" VerticalAlignment="Bottom"/>
-				<Button Content="Button" Width="144" Height="144" VerticalAlignment="Bottom"/>
-				<Button Content="Button" Width="144" Height="144" VerticalAlignment="Bottom"/>
-				<Button Content="Button" Width="144" Height="144" VerticalAlignment="Bottom"/>
-				<Button Content="Button" Height="144" Width="144" VerticalAlignment="Bottom"/>
-			</StackPanel>
-			<Grid HorizontalAlignment="Left" Height="1280" Margin="0" VerticalAlignment="Top" Width="720">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
-			</Grid>
-		</Grid>
+	<Grid x:Name="LayoutRoot" Width="720" Background="#FF8F8F8F" HorizontalAlignment="Left">
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="ShowHideSlidePannel" ei:ExtendedVisualStateManager.UseFluidLayout="True">
+				<VisualStateGroup.Transitions>
+					<VisualTransition GeneratedDuration="0:0:0.3"/>
+				</VisualStateGroup.Transitions>
+				<VisualState x:Name="ShowSlidePannel">
+					<Storyboard>
+						<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="SlidePannel">
+							<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+						</ThicknessAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+				<VisualState x:Name="HideSlidePannel"/>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+		<VisualStateManager.CustomVisualStateManager>
+			<ei:ExtendedVisualStateManager/>
+		</VisualStateManager.CustomVisualStateManager>
+		<StackPanel x:Name="SlidePannel" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="720" Background="Black" Margin="0,0,0,-144" Orientation="Horizontal" Height="174">
+			<i:Interaction.Triggers>
+				<i:EventTrigger EventName="MouseLeftButtonDown">
+					<ei:GoToStateAction x:Name="ShowSlidePannelAction" StateName="ShowSlidePannel"/>
+				</i:EventTrigger>
+				<i:EventTrigger EventName="MouseLeave">
+					<ei:GoToStateAction x:Name="HideSlidePannelAction" StateName="HideSlidePannel"/>
+				</i:EventTrigger>
+			</i:Interaction.Triggers>
+			<Button Content="Button" Width="144" Height="144" VerticalAlignment="Bottom"/>
+			<Button Content="Button" Width="144" Height="144" VerticalAlignment="Bottom"/>
+			<Button Content="Button" Width="144" Height="144" VerticalAlignment="Bottom"/>
+			<Button Content="Button" Width="144" Height="144" VerticalAlignment="Bottom"/>
+			<Button Content="Button" Height="144" Width="144" VerticalAlignment="Bottom"/>
+				
+		</StackPanel>
 	</Grid>
 </UserControl>

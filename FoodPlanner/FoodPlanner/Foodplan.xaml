@@ -10,5 +10,6 @@
         <TextBox x:Name="dateBox5" Height="23" Margin="113,60,268,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top"/>
         <TextBox x:Name="dateBox6" Height="23" Margin="214,60,167,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top"/>
         <TextBox x:Name="dateBox7" Height="23" Margin="339,60,42,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top"/>
+        <Button x:Name="foodPlanTest" Content="TestBut" HorizontalAlignment="Left" Margin="184,209,0,0" VerticalAlignment="Top" Width="75" Click="foodPlanTest_Click"/>
     </Grid>
 </Window>

@@ -37,7 +37,8 @@ namespace FoodPlanner
             bool leapYear = DateTime.IsLeapYear(year);
             int daysInMonth = DateTime.DaysInMonth(year, month);
 
-            setCurrentDays(weekDay);
+            //setCurrentDays(weekDay);
+            
         }
 
         private string getStringDay(int day)
@@ -77,7 +78,8 @@ namespace FoodPlanner
         {
             List<TextBox> dateBoxes = new List<TextBox>(){dateBox1, dateBox2 ,dateBox3,dateBox4,dateBox5,dateBox6,dateBox7};
             weekDay = 1;
-            for (int i = 0, j = weekDay - 1; i < 7; i++) {
+            for (int i = 0, j = weekDay - 1; i < 7; i++) 
+            {
                 if (j < 1) 
                 {
                     j = 7;
@@ -92,16 +94,110 @@ namespace FoodPlanner
 
         }
 
-        private void addMealToMeals(DateTime dateForMeal, Recipe recipeForMeal) 
+        private void addMealToMeals(DateTime dateForMeal, Recipe recipeForMeal, int Participants) 
         {
             Meal newMeal = new Meal();
-            newMeal.User.ID = MainWindow.CurrentUser.ID;
-            newMeal.Recipe.ID = recipeForMeal.ID;
-            //newMeal.Recipe.ID = MainWindow.db.Recipes.Where(r => r.ID == 1);
-            newMeal.Date = dateForMeal;
+            bool userIDsucces = false, mealIDsucces = false, participantsSucces = false, dateSucces = false;
+            try 
+            {
+                if (MainWindow.CurrentUser.ID > 0) // CurrentUser ID  
+                {
+                    newMeal.User = MainWindow.CurrentUser;
+                    userIDsucces = true;
+                }
+                else 
+                {
+                    IDexceptionBox("ArgumentOutOfRangeException", "valid (value is below 0)");
+                }
+            }
+            catch (ArgumentNullException) 
+            {
+                IDexceptionBox("ArgumentNullException", "valid");
+            }
+            catch (NotFiniteNumberException) 
+            {
+                IDexceptionBox("NotFiniteNumberException", "a number");
+            }
+            catch (Exception) 
+            {
+                IDexceptionBox("An unknown exception", "valid");
+            }
 
-            MainWindow.db.Meals.Add(newMeal);
-            MainWindow.db.SaveChanges();
+            try 
+            {
+                if (recipeForMeal.ID > 0)  // RecipeForMeal ID
+                {
+                    newMeal.Recipe = recipeForMeal;
+                    mealIDsucces = true;
+                    //newMeal.Recipe.ID = MainWindow.db.Recipes.Where(r => r.ID == 1);
+                }
+                else 
+                {
+                    IDexceptionBox("ArgumentOutOfRangeException", "valid (value is below 0)");
+                }
+            }
+            catch (ArgumentNullException) 
+            {
+                IDexceptionBox("ArgumentNullException", "valid");
+            }
+            catch (NotFiniteNumberException) 
+            {
+                IDexceptionBox("NotFiniteNumberException", "a number");
+            }
+            catch (Exception) 
+            {
+                IDexceptionBox("An unknown exception", "valid");
+            }
+
+            try 
+            {
+                newMeal.Date = dateForMeal;
+                dateSucces = true;
+            }
+            catch (Exception e) 
+            {
+                MessageBox.Show(e.Message+"\nHow is that exception even possible?!?", "What have you done??");
+            }
+
+            try 
+            {
+                if (Participants > 0) 
+                {
+                    newMeal.Participants = Participants;
+                    participantsSucces = true;
+                }
+                else 
+                {
+                    MessageBox.Show("ERROR\nInvalidParticipantsNumber:\nThe given participants value is not accepted. It must be above zero", "addMealToMeals: InvalidParticipantsNumber");
+                }
+                
+            }
+            catch (NotFiniteNumberException) 
+            {
+                MessageBox.Show("ERROR\nNotFiniteNumberException:\nThe given participants value is not a number.", "addMealToMeals: NotFiniteNumberException");
+            }
+            catch (Exception e) 
+            {
+                MessageBox.Show(e.Message + "\nHow is that exception even possible?!?", "What have you done??");
+            }
+
+
+            if (userIDsucces && mealIDsucces && participantsSucces && dateSucces) // If all previously assignments were succesful, the DB will be updated
+            {
+                MainWindow.db.Meals.Add(newMeal);
+                MainWindow.db.SaveChanges();
+            }
+        }
+
+        private void IDexceptionBox(string errorType, string faultType) 
+        {
+            MessageBox.Show("ERROR\n" + errorType + ":\nThe given ID is not " + faultType, "addMealToMeals: "+errorType);
+        }
+
+        private void foodPlanTest_Click(object sender, RoutedEventArgs e) 
+        {
+            DateTime moment = DateTime.Now;
+            addMealToMeals(moment, MainWindow.db.Recipes.First(), 4);
         }
     }
 }

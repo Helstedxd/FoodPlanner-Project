@@ -1,0 +1,31 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="FoodPlanner.UserControlButtonSlide"
+	x:Name="UserControl"
+	d:DesignWidth="640" d:DesignHeight="480">
+
+	<Grid x:Name="LayoutRoot" Width="720" Height="1280" Background="#FF8F8F8F" HorizontalAlignment="Left" Margin="0,0,-80,-800">
+		<Grid HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100">
+			<StackPanel HorizontalAlignment="Left" Height="174" VerticalAlignment="Bottom" Width="720" Background="Black" Margin="0,0,-620,-1324" Orientation="Horizontal">
+				<Button Content="Button" Width="144" Height="144" VerticalAlignment="Bottom"/>
+				<Button Content="Button" Width="144" Height="144" VerticalAlignment="Bottom"/>
+				<Button Content="Button" Width="144" Height="144" VerticalAlignment="Bottom"/>
+				<Button Content="Button" Width="144" Height="144" VerticalAlignment="Bottom"/>
+				<Button Content="Button" Height="144" Width="144" VerticalAlignment="Bottom"/>
+			</StackPanel>
+			<Grid HorizontalAlignment="Left" Height="1280" Margin="0" VerticalAlignment="Top" Width="720">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+			</Grid>
+		</Grid>
+	</Grid>
+</UserControl>

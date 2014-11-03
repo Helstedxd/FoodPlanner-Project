@@ -34,11 +34,22 @@ namespace FoodPlanner
             List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
             try
             {
-                List<RecipeIngredient> recipeIngredient = (from rec in MainWindow.db.Recipes 
-                                                           join ri in MainWindow.db.RecipeIngredients on rec.ID equals ri.RecipeID 
-                                                           join ing in MainWindow.db.Ingredients on ri.IngredientID equals ing.ID 
-                                                           where searchQuery.Any(s => ing.Name.Contains(s)) || searchQuery.Any(s => rec.Title.Contains(s)) 
-                                                           select ri).ToList();
+                IQueryable<IGrouping<int, SearchResults>> recipeIngredient = (from rec in MainWindow.db.Recipes
+                                                              join ri in MainWindow.db.RecipeIngredients on rec.ID equals ri.RecipeID
+                                                              join ing in MainWindow.db.Ingredients on ri.IngredientID equals ing.ID
+                                                              //join ii in MainWindow.db.InventoryIngredients on ri.IngredientID equals ii.IngredientID
+                                                              where searchQuery.Any(s => ing.Name.Contains(s)) || searchQuery.Any(s => rec.Title.Contains(s))
+                                                              select new SearchResults()
+                                                              {
+                                                                  RecipeID = ri.RecipeID,
+                                                                  Recipe = ri.Recipe,
+                                                                  RecipeQuantity = ri.Quantity,
+                                                                  /*, InventoryRecipe = ii.Quantity*/
+                                                                  IngredientCount = ri.Recipe.RecipeIngredients.Count()
+                                                              } into c
+                                                              group c by c.Recipe.ID into g
+                                                              select g);
+
 
                 MessageBox.Show(recipeIngredient.Count().ToString());
             }
@@ -97,8 +108,10 @@ namespace FoodPlanner
 
         private void searchList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            /*
             var showRecipe = new ShowRecipe(((SearchResults)searchList.SelectedItem).recipe);
             showRecipe.ShowDialog();
+            */
         }
     }
 }

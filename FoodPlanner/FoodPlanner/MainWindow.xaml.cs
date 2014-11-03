@@ -31,14 +31,6 @@ namespace FoodPlanner
             CurrentUser = db.Users.First();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            /*
-            CollectionViewSource recipeViewSource = ((CollectionViewSource)(this.FindResource("recipeViewSource")));
-            recipeViewSource.Source = db.Recipes.ToList();
-            */
-        }
-
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             db.Dispose();

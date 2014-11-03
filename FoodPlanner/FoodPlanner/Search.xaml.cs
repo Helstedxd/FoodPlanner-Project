@@ -32,10 +32,16 @@ namespace FoodPlanner
         private void startSearch_Click(object sender, RoutedEventArgs e)
         {
             List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
+            try
+            {
+                List<RecipeIngredient> q = (from ri in MainWindow.db.RecipeIngredients where searchQuery.Any(s => ri.Recipe.Title.Contains(s)) || searchQuery.Any(s => ri.Ingredient.Name.Contains(s)) select ri).ToList();
 
-            List<RecipeIngredient> q = (from ri in MainWindow.db.RecipeIngredients where searchQuery.Any(s => ri.Recipe.Title.Contains(s)) || searchQuery.Any(s => ri.Ingredient.Name.Contains(s)) select ri).ToList();
-
-            MessageBox.Show(q.Count().ToString());
+                MessageBox.Show(q.Count().ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.InnerException.Message);
+            }
 
 
 

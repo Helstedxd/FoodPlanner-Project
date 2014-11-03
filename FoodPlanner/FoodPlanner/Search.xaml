@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:FoodPlanner" mc:Ignorable="d" x:Class="FoodPlanner.Search"
-        Title="Search" Height="500" Width="700" ResizeMode="NoResize">
+        Title="Search" Height="500" Width="700">
     <Window.Resources>
         <CollectionViewSource x:Key="recipeViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Recipe}, CreateList=True}"/>
     </Window.Resources>
@@ -10,18 +10,7 @@
         <TextBox Height="23" Margin="10,10,90,0" TextWrapping="Wrap" VerticalAlignment="Top" Name="searchBox"/>
         <Button Content="Search" HorizontalAlignment="Right" Margin="10,10,10,0" VerticalAlignment="Top" Width="75" Name="startSearch" Click="startSearch_Click"/>
 
-        <ListView Margin="10,45,10,10" x:Name="searchList" SelectionMode="Single" SelectionChanged="searchList_SelectionChanged">
-            <ListView.View>
-                <GridView>
-                    <!--
-                    <GridViewColumn Header="Name" Width="400" DisplayMemberBinding="{Binding Ingredient.Name}"/>
-                    <GridViewColumn Header="Name" Width="400" DisplayMemberBinding="{Binding Quantity}"/>-->
-                    <GridViewColumn Header="Name" Width="375" DisplayMemberBinding="{Binding recipe}"/>
-                    <GridViewColumn Header="Whole" Width="100" DisplayMemberBinding="{Binding fullMatch}"/>
-                    <GridViewColumn Header="Partial" Width="100" DisplayMemberBinding="{Binding partialMatch}"/>
-                    <GridViewColumn Header="Match" Width="100" DisplayMemberBinding="{Binding match}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <DataGrid Margin="10,48,10,10" Name="listResults"/>
+
     </Grid>
 </Window>

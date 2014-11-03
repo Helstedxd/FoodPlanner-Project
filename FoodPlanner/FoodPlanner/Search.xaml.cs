@@ -31,6 +31,23 @@ namespace FoodPlanner
 
         private void startSearch_Click(object sender, RoutedEventArgs e)
         {
+            List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
+
+            List<RecipeIngredient> q = (from ri in MainWindow.db.RecipeIngredients where searchQuery.Any(s => ri.Recipe.Title.Contains(s)) || searchQuery.Any(s => ri.Ingredient.Name.Contains(s)) select ri).ToList();
+
+            MessageBox.Show(q.Count().ToString());
+
+
+
+            /*
+            var q3 = from ri in MainWindow.db.RecipeIngredients
+                     join ii in MainWindow.db.InventoryIngredients on ri.IngredientID equals ii.IngredientID
+                     select new { RecipeID = ri.RecipeID, Recipe = ri.Recipe, RecipeQuantity = ri.Quantity, InventoryRecipe = ii.Quantity, IngredientCount = ri.Recipe.RecipeIngredients.Count() } into c
+                     group c by c.RecipeID into g
+                     select g;
+            */
+
+            /*
             List<SearchResults> searchResults = new List<SearchResults>();
 
             List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
@@ -65,6 +82,7 @@ namespace FoodPlanner
             }
 
             searchList.ItemsSource = searchResults.OrderByDescending(x => x.fullMatch).ThenByDescending(x => x.partialMatch).ThenByDescending(x => x.match).ThenBy(x => x.recipe.Title);
+            */
         }
 
         private void searchList_SelectionChanged(object sender, SelectionChangedEventArgs e)

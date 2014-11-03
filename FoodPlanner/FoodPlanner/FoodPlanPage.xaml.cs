@@ -267,7 +267,7 @@ namespace FoodPlanner {
 
             if (goesUp) 
             {
-                moment = moment.;
+                moment = moment.AddDays(7);
             }
 
             else 
@@ -280,6 +280,6 @@ namespace FoodPlanner {
                 return weekNumber;
             }
 
-        }
+        
     }
 }

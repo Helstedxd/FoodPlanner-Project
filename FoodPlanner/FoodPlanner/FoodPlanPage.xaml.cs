@@ -24,6 +24,7 @@ namespace FoodPlanner {
         {
             InitializeComponent();
         }
+
         private string getStringDay(int day) 
         {
             string stringDay;
@@ -204,36 +205,151 @@ namespace FoodPlanner {
             DateTime moment = DateTime.Now;
             System.Globalization.CalendarWeekRule rule = CalendarWeekRule.FirstFourDayWeek;
             int weeNumber = calendar.GetWeekOfYear(moment, rule, moment.DayOfWeek);
+            bool goUp;
 
             List<Button> buttonList = new List<Button> { butUp, butDown };
-
-            string date = buttonList[0].Content.ToString();
-            string upWeek; 
-            /*date.Split
-
-
-            if (buttonList[0].IsFocused) 
-            {
-                
-                int difference = 
-                buttonList[0].Content = "^"+
+            if (buttonList[0].IsFocused) {
+                goUp = true;
             }
-            else if (buttonList[1].IsFocused) 
+            else
             {
-
+                goUp = false;
             }
 
-            */
-            foreach (Button but in buttonList) 
+            string upDate = buttonList[0].Content.ToString(), downDate = buttonList[1].Content.ToString();//text from butDown and butUp
+            string[] upWeek = upDate.Split(' '), downWeek = downDate.Split(' '); //Splits the sting into '^' 'week:' 'number'
+
+            if (goUp) 
             {
-                if (but.IsFocused) 
+                butUp.Content = "^ week: " + (newWeek(Convert.ToInt16(upWeek[2]), true)).ToString(); //gets an updated 'number' and updates the text on the butUp
+                butDown.Content = "v week: " + (newWeek(Convert.ToInt16(downWeek[2]), true)).ToString(); //gets an updated 'number' and updates the text on the butDown                
+            }
+            else if (!goUp)
+            {
+                butUp.Content = "^ week: " + (newWeek(Convert.ToInt16(upWeek[2]), false)).ToString(); //gets an updated 'number' and updates the text on the butUp
+                butDown.Content = "v week: " + (newWeek(Convert.ToInt16(downWeek[2]), false)).ToString(); //gets an updated 'number' and updates the text on the butDown
+            }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e) 
+        {
+            System.Globalization.Calendar calendar = CultureInfo.CurrentCulture.Calendar;
+            DateTime moment = DateTime.Now;
+            System.Globalization.CalendarWeekRule rule = CalendarWeekRule.FirstFourDayWeek;
+            int weekNumber = calendar.GetWeekOfYear(moment, rule, moment.DayOfWeek);
+
+            int upWeek = newWeek(weekNumber, true), downWeek = newWeek(weekNumber, false);
+            butUp.Content = "^ week: " + upWeek.ToString();
+            butDown.Content = "v week: " + downWeek.ToString();
+        }
+        private int newWeek(int currentWeek, bool goesUp) 
+        {
+            DateTime moment = new DateTime(DateTime.Now.Year, 12, 27);
+            if (DateTime.IsLeapYear(moment.Year)) //It is impornant to know if its a leapyear. The ate of which the number of weeks depends on requires to know if it is a leapyear
+            {
+                moment.AddDays(-1);
+                if (moment.DayOfWeek == DayOfWeek.Sunday || moment.DayOfWeek == DayOfWeek.Saturday) //53 weeks if the 26 december is a sunday or saturday
                 {
-
+                    if (goesUp) 
+                    {
+                        if (currentWeek == 53) 
+                        {
+                            currentWeek = 1;
+                        }
+                        else 
+                        {
+                            currentWeek++;
+                        }
+                    }
+                    else 
+                    {
+                        if (currentWeek == 1) 
+                        {
+                            currentWeek = 53;
+                        }
+                        else 
+                        {
+                            currentWeek--;
+                        }
+                    }
+                    return currentWeek;
                 }
                 else 
                 {
-
+                    if (goesUp) 
+                    {
+                        if (currentWeek == 52) 
+                        {
+                            currentWeek = 1;
+                        }
+                        else 
+                        {
+                            currentWeek++;
+                        }
+                    }
+                    else 
+                    {
+                        if (currentWeek == 1) 
+                        {
+                            currentWeek = 52;
+                        }
+                        else {
+                            currentWeek--;
+                        }
+                    }
+                    return currentWeek;
                 }
+            }
+            if (moment.DayOfWeek == DayOfWeek.Sunday) //53 weeks if the 27 december is a sunday
+            {
+                if (goesUp) 
+                {
+                    if (currentWeek == 53) 
+                    {
+                        currentWeek = 1;
+                    }
+                    else 
+                    {
+                        currentWeek++;
+                    }
+                }
+                else {
+                    if (currentWeek == 1) 
+                    {
+                        currentWeek = 53;
+                    }
+                    else 
+                    {
+                        currentWeek--;
+                    }
+                }
+                return currentWeek;
+            }
+            else 
+            {
+                if (goesUp) 
+                {
+                    if (currentWeek == 52) 
+                    {
+                        currentWeek = 1;
+                    }
+                    else 
+                    {
+                        currentWeek++;
+                    }
+                }
+                else 
+                {
+                    if (currentWeek == 1) 
+                    {
+                        currentWeek = 52;
+                    }
+                    else 
+                    {
+                        currentWeek--;
+                    }
+                }
+                return currentWeek;
             }
         }
     }

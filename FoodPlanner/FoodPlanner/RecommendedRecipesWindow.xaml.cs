@@ -33,8 +33,8 @@ namespace FoodPlanner
             //TODO: the grouping contains a lot of dublicate data, maybe this can be avoided...
             var q3 = from ri in MainWindow.db.RecipeIngredients
                      join ii in MainWindow.db.InventoryIngredients on ri.IngredientID equals ii.IngredientID
-                     select new { RecipeID = ri.RecipeID, Recipe = ri.Recipe, RecipeQuantity = ri.Quantity, InventoryRecipe = ii.Quantity, IngredientCount = ri.Recipe.RecipeIngredients.Count() } into c
-                     group c by c.RecipeID into g
+                     select new { Recipe = ri.Recipe, RecipeQuantity = ri.Quantity, InventoryRecipe = ii.Quantity, IngredientCount = ri.Recipe.RecipeIngredients.Count() } into c
+                     group c by c.Recipe.ID into g
                      select g;
 
             List<search_result_x> searchResults = new List<search_result_x>();
@@ -54,8 +54,6 @@ namespace FoodPlanner
                     }
                     else
                     {
-                        if (g.RecipeQuantity == 0)
-                            Console.WriteLine("This should not be possible...");
                         totalPercent += g.InventoryRecipe / g.RecipeQuantity;
                     }
 
@@ -74,6 +72,13 @@ namespace FoodPlanner
 
             recommendedRecipesDataGrid.ItemsSource = searchResults.OrderByDescending(s => s.MatchPercentage);
 
+        }
+
+        private void recommendedRecipesDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            search_result_x r = (search_result_x)recommendedRecipesDataGrid.SelectedItem;
+            var show = new ShowRecipe(r.Recipe);
+            show.Show();
         }
     }
 }

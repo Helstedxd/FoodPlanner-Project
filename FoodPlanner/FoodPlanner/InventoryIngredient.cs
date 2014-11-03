@@ -17,7 +17,7 @@ namespace FoodPlanner
         public int ID { get; set; }
         public int UserID { get; set; }
         public int IngredientID { get; set; }
-        public int Quantity { get; set; }
+        public decimal Quantity { get; set; }
         public System.DateTime PurchaseDate { get; set; }
         public System.DateTime ExpirationDate { get; set; }
     

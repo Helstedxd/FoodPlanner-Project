@@ -4,7 +4,7 @@
         Title="RecommendedRecipesWindow" Height="400" Width="600">
     <Grid>
         <DataGrid x:Name="recommendedRecipesDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
-                      Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected">
+                      Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="recommendedRecipesDataGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Recipe.ID}" Header="ID" IsReadOnly="True" Width="Auto"/>
                 <DataGridTextColumn x:Name="recipeColumn" Binding="{Binding Recipe}" Header="Recipe" IsReadOnly="True" Width="Auto"/>

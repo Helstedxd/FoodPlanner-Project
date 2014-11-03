@@ -25,7 +25,7 @@ namespace FoodPlanner {
             InitializeComponent();
         }
 
-        private string getStringDay(int day) 
+       /* private string getStringDay(int day) 
         {
             string stringDay;
             switch (day) 
@@ -56,7 +56,7 @@ namespace FoodPlanner {
                     break;
             }
             return stringDay;
-        }
+        }*/
        
         private void addMealToMeals(DateTime dateForMeal, Recipe recipeForMeal, int Participants) 
         {
@@ -181,7 +181,7 @@ namespace FoodPlanner {
             }
         }*/
 
-        private void buttonInFocus(object sender, RoutedEventArgs e)
+        private void buttonInFocus(object sender, RoutedEventArgs e) //Sets a button in focus
         {
             List<Button> buttonList = new List<Button> { butUp, butMon, butTue, butWed, butThu, butFri, butSat, butSun, butDown };
 
@@ -241,116 +241,53 @@ namespace FoodPlanner {
             int upWeek = newWeek(weekNumber, true), downWeek = newWeek(weekNumber, false);
             butUp.Content = "^ week: " + upWeek.ToString();
             butDown.Content = "v week: " + downWeek.ToString();
+
+            int daysToMonday = Convert.ToUInt16(moment.DayOfWeek)-1;
+            DateTime monday = moment.AddDays(-daysToMonday);
+            DateTime sunday = monday.AddDays(6);
+
+
+            //List<Meal> meals = MainWindow.db.Meals.Where(m => m.Date => monday && sunday).toList();
         }
+
+        public int getWeeksInYear(int year) 
+        {
+            DateTimeFormatInfo format = DateTimeFormatInfo.CurrentInfo;
+            DateTime weekYear = new DateTime(year, 12, 31);
+            System.Globalization.Calendar calendar = format.Calendar;
+            return calendar.GetWeekOfYear(weekYear, format.CalendarWeekRule, format.FirstDayOfWeek);
+        }
+
         private int newWeek(int currentWeek, bool goesUp) 
         {
+
+            return 0;
+            /*
             DateTime moment = new DateTime(DateTime.Now.Year, 12, 27);
-            if (DateTime.IsLeapYear(moment.Year)) //It is impornant to know if its a leapyear. The ate of which the number of weeks depends on requires to know if it is a leapyear
+
+            int maxWeek = getWeeksInYear(moment.Year);
+
+            if (goesUp) 
             {
-                moment.AddDays(-1);
-                if (moment.DayOfWeek == DayOfWeek.Sunday || moment.DayOfWeek == DayOfWeek.Saturday) //53 weeks if the 26 december is a sunday or saturday
+                if (currentWeek++ <= maxWeek) 
                 {
-                    if (goesUp) 
-                    {
-                        if (currentWeek == 53) 
-                        {
-                            currentWeek = 1;
-                        }
-                        else 
-                        {
-                            currentWeek++;
-                        }
-                    }
-                    else 
-                    {
-                        if (currentWeek == 1) 
-                        {
-                            currentWeek = 53;
-                        }
-                        else 
-                        {
-                            currentWeek--;
-                        }
-                    }
-                    return currentWeek;
+                    return currentWeek++;
                 }
                 else 
                 {
-                    if (goesUp) 
-                    {
-                        if (currentWeek == 52) 
-                        {
-                            currentWeek = 1;
-                        }
-                        else 
-                        {
-                            currentWeek++;
-                        }
-                    }
-                    else 
-                    {
-                        if (currentWeek == 1) 
-                        {
-                            currentWeek = 52;
-                        }
-                        else {
-                            currentWeek--;
-                        }
-                    }
-                    return currentWeek;
+                    return 1;
                 }
             }
-            if (moment.DayOfWeek == DayOfWeek.Sunday) //53 weeks if the 27 december is a sunday
-            {
-                if (goesUp) 
+            else {
+                if (currentWeek-- >= 1) 
                 {
-                    if (currentWeek == 53) 
-                    {
-                        currentWeek = 1;
-                    }
-                    else 
-                    {
-                        currentWeek++;
-                    }
-                }
-                else {
-                    if (currentWeek == 1) 
-                    {
-                        currentWeek = 53;
-                    }
-                    else 
-                    {
-                        currentWeek--;
-                    }
-                }
-                return currentWeek;
-            }
-            else 
-            {
-                if (goesUp) 
-                {
-                    if (currentWeek == 52) 
-                    {
-                        currentWeek = 1;
-                    }
-                    else 
-                    {
-                        currentWeek++;
-                    }
+                    return currentWeek--;
                 }
                 else 
                 {
-                    if (currentWeek == 1) 
-                    {
-                        currentWeek = 52;
-                    }
-                    else 
-                    {
-                        currentWeek--;
-                    }
+                    return maxWeek;
                 }
-                return currentWeek;
-            }
+            }*/
         }
     }
 }

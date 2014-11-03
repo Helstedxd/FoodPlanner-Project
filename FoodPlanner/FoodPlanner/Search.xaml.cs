@@ -44,7 +44,7 @@ namespace FoodPlanner
                                                                   RecipeID = ri.RecipeID,
                                                                   Recipe = ri.Recipe,
                                                                   RecipeQuantity = ri.Quantity,
-                                                                  /*, InventoryRecipe = ii.Quantity*/
+                                                                  InventoryQuantity = (from ii in MainWindow.db.InventoryIngredients where ii.IngredientID == ing.ID select ii.Quantity).FirstOrDefault(),
                                                                   IngredientCount = ri.Recipe.RecipeIngredients.Count()
                                                               } into c
                                                               group c by c.Recipe.ID into g
@@ -55,7 +55,14 @@ namespace FoodPlanner
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.InnerException.Message);
+                if (string.IsNullOrEmpty(ex.InnerException.Message))
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                else
+                {
+                    MessageBox.Show(ex.InnerException.Message);
+                }
             }
 
 

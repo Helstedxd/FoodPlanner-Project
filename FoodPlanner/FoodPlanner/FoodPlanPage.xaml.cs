@@ -204,7 +204,7 @@ namespace FoodPlanner {
             System.Globalization.Calendar calendar = CultureInfo.CurrentCulture.Calendar;
             DateTime moment = DateTime.Now;
             System.Globalization.CalendarWeekRule rule = CalendarWeekRule.FirstFourDayWeek;
-            int weeNumber = calendar.GetWeekOfYear(moment, rule, moment.DayOfWeek);
+            int weekNumber = calendar.GetWeekOfYear(moment, rule, moment.DayOfWeek);
             bool goUp;
 
             List<Button> buttonList = new List<Button> { butUp, butDown };
@@ -219,26 +219,29 @@ namespace FoodPlanner {
             string upDate = buttonList[0].Content.ToString(), downDate = buttonList[1].Content.ToString();//text from butDown and butUp
             string[] upWeek = upDate.Split(' '), downWeek = downDate.Split(' '); //Splits the sting into '^' 'week:' 'number'
 
+            int futureDiff = Convert.ToUInt16(upWeek[2]) - weekNumber;
+            int pastDiff = weekNumber - Convert.ToUInt16(downWeek[2]); 
+
+            DateTime futureWeek = DateTime.Now.AddDays(7 *futureDiff);
+            DateTime pastWeek = DateTime.Now.AddDays(-7 * pastDiff);
+
             if (goUp) 
             {
-                butUp.Content = "^ week: " + (newWeek(Convert.ToInt16(upWeek[2]), true)).ToString(); //gets an updated 'number' and updates the text on the butUp
-                butDown.Content = "v week: " + (newWeek(Convert.ToInt16(downWeek[2]), true)).ToString(); //gets an updated 'number' and updates the text on the butDown                
+                butUp.Content = "^ week: " + (newWeek(futureWeek, true)).ToString(); //gets an updated 'number' and updates the text on the butUp
+                butDown.Content = "v week: " + (newWeek(pastWeek, true)).ToString(); //gets an updated 'number' and updates the text on the butDown                
             }
             else if (!goUp)
             {
-                butUp.Content = "^ week: " + (newWeek(Convert.ToInt16(upWeek[2]), false)).ToString(); //gets an updated 'number' and updates the text on the butUp
-                butDown.Content = "v week: " + (newWeek(Convert.ToInt16(downWeek[2]), false)).ToString(); //gets an updated 'number' and updates the text on the butDown
+                butUp.Content = "^ week: " + (newWeek(futureWeek, false)).ToString(); //gets an updated 'number' and updates the text on the butUp
+                butDown.Content = "v week: " + (newWeek(pastWeek, false)).ToString(); //gets an updated 'number' and updates the text on the butDown
             }
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e) 
         {
-            System.Globalization.Calendar calendar = CultureInfo.CurrentCulture.Calendar;
             DateTime moment = DateTime.Now;
-            System.Globalization.CalendarWeekRule rule = CalendarWeekRule.FirstFourDayWeek;
-            int weekNumber = calendar.GetWeekOfYear(moment, rule, moment.DayOfWeek);
 
-            int upWeek = newWeek(weekNumber, true), downWeek = newWeek(weekNumber, false);
+            int upWeek = newWeek(moment, true), downWeek = newWeek(moment, false);
             butUp.Content = "^ week: " + upWeek.ToString();
             butDown.Content = "v week: " + downWeek.ToString();
 
@@ -258,36 +261,25 @@ namespace FoodPlanner {
             return calendar.GetWeekOfYear(weekYear, format.CalendarWeekRule, format.FirstDayOfWeek);
         }
 
-        private int newWeek(int currentWeek, bool goesUp) 
+        private int newWeek(DateTime moment, bool goesUp) 
         {
-
-            return 0;
-            /*
-            DateTime moment = new DateTime(DateTime.Now.Year, 12, 27);
-
-            int maxWeek = getWeeksInYear(moment.Year);
+           // DateTime moment = new DateTime(DateTime.Now.Year, 12, 27);
 
             if (goesUp) 
             {
-                if (currentWeek++ <= maxWeek) 
-                {
-                    return currentWeek++;
-                }
-                else 
-                {
-                    return 1;
-                }
+                moment = moment.;
             }
-            else {
-                if (currentWeek-- >= 1) 
-                {
-                    return currentWeek--;
-                }
-                else 
-                {
-                    return maxWeek;
-                }
-            }*/
+
+            else 
+            {
+                moment = moment.AddDays(-7);
+            }
+                System.Globalization.Calendar calendar = CultureInfo.CurrentCulture.Calendar;
+                System.Globalization.CalendarWeekRule rule = CalendarWeekRule.FirstFourDayWeek;
+                int weekNumber = calendar.GetWeekOfYear(moment, rule, moment.DayOfWeek);
+                return weekNumber;
+            }
+
         }
     }
 }

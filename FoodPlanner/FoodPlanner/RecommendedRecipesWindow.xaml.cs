@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using FoodPlanner.Models;
 
 namespace FoodPlanner
 {
@@ -41,7 +42,7 @@ namespace FoodPlanner
             //TODO: the grouping contains a lot of dublicate data, maybe this can be avoided...
             var q3 = from ri in MainWindow.db.RecipeIngredients
                      join ii in MainWindow.db.InventoryIngredients on ri.IngredientID equals ii.IngredientID
-                     select new { Recipe = ri.Recipe, RecipeQuantity = ri.Quantity, InventoryRecipe = ii.Quantity, IngredientCount = ri.Recipe.RecipeIngredients.Count() } into c
+                     select new { Recipe = ri.Recipe, RecipeQuantity = ri.Quantity, InventoryQuantity = ii.Quantity, IngredientCount = ri.Recipe.RecipeIngredients.Count() } into c
                      group c by c.Recipe.ID into g
                      select g;
 
@@ -55,13 +56,13 @@ namespace FoodPlanner
                 decimal totalPercent = 0;
                 foreach (var g in group)
                 {
-                    if (g.InventoryRecipe >= g.RecipeQuantity)
+                    if (g.InventoryQuantity >= g.RecipeQuantity)
                     {
                         totalPercent += 1;
                     }
                     else
                     {
-                        totalPercent += g.InventoryRecipe / g.RecipeQuantity;
+                        totalPercent += g.InventoryQuantity / g.RecipeQuantity;
                     }
                 }
 

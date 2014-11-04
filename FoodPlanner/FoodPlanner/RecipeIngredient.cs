@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FoodPlanner
+namespace FoodPlanner.Models
 {
     using System;
     using System.Collections.ObjectModel;

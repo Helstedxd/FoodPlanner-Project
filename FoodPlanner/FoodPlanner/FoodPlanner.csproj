@@ -209,6 +209,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>FoodDatabase.edmx</DependentUpon>
       <LastGenOutput>FoodDatabase.cs</LastGenOutput>
+      <CustomToolNamespace>FoodPlanner.Models</CustomToolNamespace>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Recipe.datasource" />

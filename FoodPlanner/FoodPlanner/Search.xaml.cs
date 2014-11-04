@@ -32,9 +32,29 @@ namespace FoodPlanner
         private void startSearch_Click(object sender, RoutedEventArgs e)
         {
             List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
+
+            DateTime test = DateTime.Now;
+
+            IQueryable<Recipe> recipes = MainWindow.db.Recipes.Where(r => searchQuery.Any(s => r.Title.Contains(s)));
+            IQueryable<Ingredient> ingredients = MainWindow.db.Ingredients.Where(i => searchQuery.Any(s => i.Name.Contains(s)));
+            IQueryable<IGrouping<int,RecipeIngredient>> recipeIngredient = MainWindow.db.RecipeIngredients.Where(ri => recipes.Any(r => r.ID == ri.Recipe.ID) || ingredients.Any(i => i.ID == ri.Ingredient.ID)).GroupBy(ri => ri.RecipeID);
+
+            MessageBox.Show((DateTime.Now - test).TotalMilliseconds.ToString());
+            /*
+            MessageBox.Show(recipes.Count().ToString());
+            MessageBox.Show(ingredients.Count().ToString());
+            MessageBox.Show(recipeIngredient.Count().ToString());
+            */
+
+            listResults.ItemsSource = recipeIngredient.ToList();
+
+
+
+
+            /*
             try
             {
-                IQueryable<SearchResults> recipeIngredient = (from rec in MainWindow.db.Recipes
+                IQueryable<IGrouping<int,SearchResults>> recipeIngredient = (from rec in MainWindow.db.Recipes
                                                               join ri in MainWindow.db.RecipeIngredients on rec.ID equals ri.RecipeID
                                                               join ing in MainWindow.db.Ingredients on ri.IngredientID equals ing.ID
                                                               where searchQuery.Any(s => ing.Name.Contains(s)) || searchQuery.Any(s => rec.Title.Contains(s))
@@ -46,7 +66,8 @@ namespace FoodPlanner
                                                                   InventoryQuantity = ((from ii in MainWindow.db.InventoryIngredients where ii.IngredientID == ing.ID && ii.UserID == MainWindow.CurrentUser.ID select ii).Count() > 0 ? (from ii in MainWindow.db.InventoryIngredients where ii.IngredientID == ing.ID && ii.UserID == MainWindow.CurrentUser.ID select ii.Quantity).FirstOrDefault() : -1),
                                                                   IngredientCount = ri.Recipe.RecipeIngredients.Count()
                                                               } into c
-                                                              select c);
+                                                              group c by c.RecipeID into g
+                                                              select g);
 
                 listResults.ItemsSource = recipeIngredient.ToList();
             }
@@ -55,7 +76,6 @@ namespace FoodPlanner
                 MessageBox.Show(ex.InnerException.Message);
             }
 
-            /*
             List<SearchResults> searchResults = new List<SearchResults>();
 
             List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
@@ -70,7 +90,7 @@ namespace FoodPlanner
                 }
                 else
                 {
-                    if (searchQuery.Any(s => ri.Ingredient.Name.Contains(s))) // kan eventuelt optimeres
+                    if (    ) // kan eventuelt optimeres
                     {
                         searchResults.Where(x => x.recipe.Title == ri.Recipe.Title).Single().match++;
                     }

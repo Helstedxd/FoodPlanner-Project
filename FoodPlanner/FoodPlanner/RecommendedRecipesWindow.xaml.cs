@@ -30,6 +30,13 @@ namespace FoodPlanner
         {
             InitializeComponent();
 
+            /*
+            var q = MainWindow.db.InventoryIngredients
+                    .Where(x => x.User.ID == MainWindow.CurrentUser.ID)
+                    .GroupBy(x => x.IngredientID)
+                    .Select(x => new { ID = x.FirstOrDefault().IngredientID, Amount = x.Sum(y => y.Quantity) });
+            */
+
             //TODO: Select only for a single user.
             //TODO: the grouping contains a lot of dublicate data, maybe this can be avoided...
             var q3 = from ri in MainWindow.db.RecipeIngredients

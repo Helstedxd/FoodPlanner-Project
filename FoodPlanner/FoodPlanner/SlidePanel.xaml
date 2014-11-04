@@ -7,20 +7,29 @@
 	mc:Ignorable="d"
 	x:Class="FoodPlanner.SlidePanel"
 	x:Name="UserControl"
-	d:DesignWidth="640" d:DesignHeight="480" Width="720">
+	d:DesignWidth="720" d:DesignHeight="480">
 
 	<Grid x:Name="LayoutRoot">
 		<VisualStateManager.VisualStateGroups>
-			<VisualStateGroup x:Name="HideShowSlidePannel" ei:ExtendedVisualStateManager.UseFluidLayout="True">
+			<VisualStateGroup x:Name="HideShowSlidePannel">
 				<VisualStateGroup.Transitions>
 					<VisualTransition GeneratedDuration="0:0:0.3"/>
 				</VisualStateGroup.Transitions>
-				<VisualState x:Name="HideSlidePannel"/>
+				<VisualState x:Name="HideSlidePannel">
+					<Storyboard>
+						<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="SlidePannel">
+							<EasingThicknessKeyFrame KeyTime="0" Value="0,0,0,-144"/>
+						</ThicknessAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
 				<VisualState x:Name="ShowSlidePannel">
 					<Storyboard>
 						<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="SlidePannel">
-							<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+							<EasingThicknessKeyFrame KeyTime="0" Value="0,0,0,-144"/>
 						</ThicknessAnimationUsingKeyFrames>
+						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="SlidePannel">
+							<EasingDoubleKeyFrame KeyTime="0" Value="-144"/>
+						</DoubleAnimationUsingKeyFrames>
 					</Storyboard>
 				</VisualState>
 			</VisualStateGroup>
@@ -28,7 +37,15 @@
 		<VisualStateManager.CustomVisualStateManager>
 			<ei:ExtendedVisualStateManager/>
 		</VisualStateManager.CustomVisualStateManager>
-		<StackPanel x:Name="SlidePannel" HorizontalAlignment="Left" Height="174" VerticalAlignment="Bottom" Width="720" Margin="0,0,0,-144">
+		<StackPanel x:Name="SlidePannel" HorizontalAlignment="Left" Height="174" VerticalAlignment="Bottom" Width="720" Margin="0,0,0,-144" RenderTransformOrigin="0.5,0.5">
+			<StackPanel.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform/>
+					<SkewTransform/>
+					<RotateTransform/>
+					<TranslateTransform/>
+				</TransformGroup>
+			</StackPanel.RenderTransform>
 			<Grid x:Name="SlideButtonsGrid" VerticalAlignment="Bottom" Height="174" Width="720">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="*"/>
@@ -42,11 +59,11 @@
 					<RowDefinition Height="144"/>
 				</Grid.RowDefinitions>
 				<i:Interaction.Triggers>
-				<i:EventTrigger EventName="MouseLeftButtonUp">
+				<i:EventTrigger EventName="MouseLeave">
 					<ei:GoToStateAction x:Name="HideSlidePannelAction" StateName="HideSlidePannel"/>
 				</i:EventTrigger>
-				<i:EventTrigger EventName="MouseLeftButtonDown">
-					<ei:GoToStateAction/>
+				<i:EventTrigger EventName="MouseEnter">
+					<ei:GoToStateAction x:Name="ShowSlidePannelAction" StateName="ShowSlidePannel"/>
 				</i:EventTrigger>
 			</i:Interaction.Triggers>
 				<Grid Background="Black" Grid.Row="0" Grid.ColumnSpan="5" Margin="0"/>

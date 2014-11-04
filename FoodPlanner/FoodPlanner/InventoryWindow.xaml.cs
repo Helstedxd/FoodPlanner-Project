@@ -53,16 +53,16 @@ namespace FoodPlanner
             this.inventoryIngredientsDataGrid.Items.Refresh();
             Console.WriteLine("Inventory saved!");
         }
-
+        
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-          /*  Ingredient food = inventoryAutoCompleteBox.SelectedItem as Ingredient;
+         /*   Ingredient food = inventoryAutoCompleteBox.SelectedItem as Ingredient;
             if (food != null) {
                 var newInventoryItem = new InventoryIngredient(food, 1);
                 MainWindow.CurrentUser.InventoryIngredients.Add(newInventoryItem);
             }*/
         }
-
+        /*
         private void inventoryAutoCompleteBox_Populating(object sender, PopulatingEventArgs e)
         {
             AutoCompleteBox acb = (sender as AutoCompleteBox);
@@ -84,7 +84,7 @@ namespace FoodPlanner
                 PopulateAutoCompleteBoxWithDataFromDatabase(acb);
             }
         }
-
+       
         private void PopulateAutoCompleteBoxWithDataFromDatabase(AutoCompleteBox acb)
         {
             string originalSearchText = acb.SearchText;
@@ -107,6 +107,6 @@ namespace FoodPlanner
             }
 
         }
-
+    */
     }
 }

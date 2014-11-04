@@ -1,10 +1,10 @@
 ﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:FoodPlanner" mc:Ignorable="d" x:Class="FoodPlanner.Search"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:FoodPlanner" xmlns:Models="clr-namespace:FoodPlanner.Models" mc:Ignorable="d" x:Class="FoodPlanner.Search"
         Title="Search" Height="500" Width="700">
     <Window.Resources>
-        <CollectionViewSource x:Key="recipeViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Recipe}, CreateList=True}"/>
+        <CollectionViewSource x:Key="recipeViewSource" d:DesignSource="{d:DesignInstance {x:Type Models:Recipe}, CreateList=True}"/>
     </Window.Resources>
     <Grid DataContext="{StaticResource recipeViewSource}">
         <TextBox Height="23" Margin="10,10,90,0" TextWrapping="Wrap" VerticalAlignment="Top" Name="searchBox"/>

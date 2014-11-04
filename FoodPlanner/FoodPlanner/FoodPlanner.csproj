@@ -212,8 +212,8 @@
       <CustomToolNamespace>FoodPlanner.Models</CustomToolNamespace>
     </None>
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\Recipe.datasource" />
-    <None Include="Properties\DataSources\User.datasource" />
+    <None Include="Properties\DataSources\FoodPlanner.Models.Recipe.datasource" />
+    <None Include="Properties\DataSources\FoodPlanner.Models.User.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

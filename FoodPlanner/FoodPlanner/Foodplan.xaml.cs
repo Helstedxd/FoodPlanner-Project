@@ -24,7 +24,7 @@ namespace FoodPlanner
         {
             InitializeComponent();
         }
-        
+
         private void Foodplan_Loaded(object sender, RoutedEventArgs e)
         {
             //setup of trvival data
@@ -39,7 +39,10 @@ namespace FoodPlanner
             int daysInMonth = DateTime.DaysInMonth(year, month);
 
             //setCurrentDays(weekDay);
-            
+
+            System.Windows.Data.CollectionViewSource recipeViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("recipeViewSource")));
+            // Load data by setting the CollectionViewSource.Source property:
+            // recipeViewSource.Source = [generic data source]
         }
 
         private string getStringDay(int day)

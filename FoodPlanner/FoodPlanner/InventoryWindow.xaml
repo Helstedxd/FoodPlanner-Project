@@ -3,12 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-   
+        xmlns:Models="clr-namespace:FoodPlanner.Models" 
         xmlns:local="clr-namespace:FoodPlanner" mc:Ignorable="d" x:Class="FoodPlanner.InventoryWindow"
         Title="Inventory" Height="350" Width="650" Loaded="Window_Loaded">
     <!--    xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"-->
     <Window.Resources>
-        <CollectionViewSource x:Key="userViewSource" d:DesignSource="{d:DesignInstance {x:Type local:User}, CreateList=True}"/>
+        <CollectionViewSource x:Key="userViewSource" d:DesignSource="{d:DesignInstance {x:Type Models:User}, CreateList=True}"/>
         <CollectionViewSource x:Key="userInventoryIngredientsViewSource" Source="{Binding InventoryIngredients, Source={StaticResource userViewSource}}"/>
     </Window.Resources>
     <Grid DataContext="{StaticResource userInventoryIngredientsViewSource}">

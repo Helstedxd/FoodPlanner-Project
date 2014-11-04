@@ -37,7 +37,21 @@ namespace FoodPlanner
 
             IQueryable<Recipe> recipes = MainWindow.db.Recipes.Where(r => searchQuery.Any(s => r.Title.Contains(s)));
             IQueryable<Ingredient> ingredients = MainWindow.db.Ingredients.Where(i => searchQuery.Any(s => i.Name.Contains(s)));
-            IQueryable<IGrouping<int,RecipeIngredient>> recipeIngredient = MainWindow.db.RecipeIngredients.Where(ri => recipes.Any(r => r.ID == ri.Recipe.ID) || ingredients.Any(i => i.ID == ri.Ingredient.ID)).GroupBy(ri => ri.RecipeID);
+            IQueryable<IGrouping<int, RecipeIngredient>> recipeIngredient = MainWindow.db.RecipeIngredients.Where(ri => recipes.Any(r => r.ID == ri.Recipe.ID) || ingredients.Any(i => i.ID == ri.Ingredient.ID)).GroupBy(ri => ri.RecipeID);
+
+            List<SearchResults> results = new List<SearchResults>();
+
+            foreach (IGrouping<int, RecipeIngredient> recipeGroup in recipeIngredient)
+            {
+
+                foreach (RecipeIngredient ingredient in recipeGroup)
+                {
+                    MessageBox.Show(ingredient.IngredientID.ToString());
+                }
+            }
+
+
+
 
             MessageBox.Show((DateTime.Now - test).TotalMilliseconds.ToString());
             /*
@@ -46,7 +60,7 @@ namespace FoodPlanner
             MessageBox.Show(recipeIngredient.Count().ToString());
             */
 
-            listResults.ItemsSource = recipeIngredient.ToList();
+            listResults.ItemsSource = results.OrderByDescending(x => x.fullMatch).ThenByDescending(x => x.partialMatch).ThenByDescending(x => x.keyWordMatch).ThenBy(x => x.Recipe.Title);
 
 
 

@@ -43,7 +43,7 @@ namespace FoodPlanner
                                                                   RecipeID = ri.RecipeID,
                                                                   Recipe = ri.Recipe,
                                                                   RecipeQuantity = ri.Quantity,
-                                                                  InventoryQuantity = ((from ii in MainWindow.db.InventoryIngredients where ii.IngredientID == ing.ID && ii.UserID == MainWindow.CurrentUser.ID select ii).Count() > 0 ? (from ii in MainWindow.db.InventoryIngredients where ii.IngredientID == ing.ID && ii.UserID == MainWindow.CurrentUser.ID select ii.Quantity).FirstOrDefault() : 0),
+                                                                  InventoryQuantity = ((from ii in MainWindow.db.InventoryIngredients where ii.IngredientID == ing.ID && ii.UserID == MainWindow.CurrentUser.ID select ii).Count() > 0 ? (from ii in MainWindow.db.InventoryIngredients where ii.IngredientID == ing.ID && ii.UserID == MainWindow.CurrentUser.ID select ii.Quantity).FirstOrDefault() : -1),
                                                                   IngredientCount = ri.Recipe.RecipeIngredients.Count()
                                                               } into c
                                                               select c);
@@ -54,16 +54,6 @@ namespace FoodPlanner
             {
                 MessageBox.Show(ex.InnerException.Message);
             }
-
-
-
-            /*
-            var q3 = from ri in MainWindow.db.RecipeIngredients
-                     join ii in MainWindow.db.InventoryIngredients on ri.IngredientID equals ii.IngredientID
-                     select new { RecipeID = ri.RecipeID, Recipe = ri.Recipe, RecipeQuantity = ri.Quantity, InventoryRecipe = ii.Quantity, IngredientCount = ri.Recipe.RecipeIngredients.Count() } into c
-                     group c by c.RecipeID into g
-                     select g;
-            */
 
             /*
             List<SearchResults> searchResults = new List<SearchResults>();

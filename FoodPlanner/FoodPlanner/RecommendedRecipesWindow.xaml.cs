@@ -30,6 +30,7 @@ namespace FoodPlanner
         {
             InitializeComponent();
 
+            //TODO: Select only for a single user.
             //TODO: the grouping contains a lot of dublicate data, maybe this can be avoided...
             var q3 = from ri in MainWindow.db.RecipeIngredients
                      join ii in MainWindow.db.InventoryIngredients on ri.IngredientID equals ii.IngredientID
@@ -43,7 +44,6 @@ namespace FoodPlanner
 
             foreach (var group in q3)
             {
-                var first = group.First();
 
                 decimal totalPercent = 0;
                 foreach (var g in group)
@@ -56,13 +56,15 @@ namespace FoodPlanner
                     {
                         totalPercent += g.InventoryRecipe / g.RecipeQuantity;
                     }
-
                 }
+
+                // All items in the group has the same IngredientCount and Recipe property so we just select the first.
+                var first = group.First();
 
                 searchResults.Add(new search_result_x()
                 {
                     Recipe = first.Recipe,
-                    MatchPercentage = totalPercent / first.IngredientCount
+                    MatchPercentage = totalPercent / first.IngredientCount // average
                 });
             }
 

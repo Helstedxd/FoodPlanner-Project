@@ -357,7 +357,7 @@
         <EntityContainer Name="FoodContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CookingSteps" EntityType="Self.CookingStep" />
           <EntitySet Name="Ingredients" EntityType="Self.Ingredient" />
-          <EntitySet Name="InventoryIngredients" EntityType="Self.InventoryIngredient" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <EntitySet Name="InventoryIngredients" EntityType="Self.InventoryIngredient" />
           <EntitySet Name="Meals" EntityType="Self.Meal" />
           <EntitySet Name="RecipeIngredients" EntityType="Self.RecipeIngredient" />
           <EntitySet Name="Recipes" EntityType="Self.Recipe" />

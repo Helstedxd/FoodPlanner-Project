@@ -230,6 +230,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>FoodDatabase.edmx</DependentUpon>
       <LastGenOutput>FoodDatabase.Context.cs</LastGenOutput>
+      <CustomToolNamespace>FoodPlanner.Models</CustomToolNamespace>
     </None>
     <None Include="FoodDatabase.edmx.diagram">
       <DependentUpon>FoodDatabase.edmx</DependentUpon>

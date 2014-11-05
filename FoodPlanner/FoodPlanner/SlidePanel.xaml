@@ -59,7 +59,11 @@
 					<RowDefinition Height="81"/>
 				</Grid.RowDefinitions>
 				<Grid Background="Black" Grid.Row="0" Grid.ColumnSpan="5" />
-				<Button Content="Food plan" Grid.Row="1" Grid.Column="0" />
+				<Button Content="" Grid.Row="1" Grid.Column="0" >
+					<Button.Background>
+						<ImageBrush ImageSource="refrigerator_slidebutton_image.png" Stretch="Uniform"/>
+					</Button.Background>
+				</Button>
 				<Button Content="Recipes" Grid.Row="1" Grid.Column="1"/>
 				<Button Content="Shopping list" Grid.Row="1" Grid.Column="2"/>
 				<Button Content="Inventory" Grid.Row="1" Grid.Column="3"/>

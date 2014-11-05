@@ -6,7 +6,7 @@
     xmlns:Models="clr-namespace:FoodPlanner.Models" 
     xmlns:local="clr-namespace:FoodPlanner"
     mc:Ignorable="d" x:Class="FoodPlanner.MainWindow"
-    Title="MainWindow" d:DesignHeight="720" d:DesingHeightWidth="410" Closing="Window_Closing"  Height="720"  Width="410">
+    Title="MainWindow" d:DesignHeight="720" d:DesingHeightWidth="405" ResizeMode="NoResize"  Height="720"  Width="405">
     <Window.Resources>
         <CollectionViewSource x:Key="recipeViewSource" d:DesignSource="{d:DesignInstance {x:Type Models:Recipe}, CreateList=True}"/>
         <CollectionViewSource x:Key="recipeRecipeIngredientsViewSource" Source="{Binding RecipeIngredients, Source={StaticResource recipeViewSource}}"/>
@@ -25,7 +25,6 @@
 
         <Label Content="Slide Panel Testing" Margin="195,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
         -->
-        <Frame x:Name="mainFrame" />
         <local:SlidePanel VerticalAlignment="Bottom" Grid.Row="1"/>
 
         <!--<Image HorizontalAlignment="Left" Height="200" Margin="207,10,0,0" VerticalAlignment="Top" Width="300" Source="http://viskalspise.dk/sites/default/files/imagecache/image_300x300r/hakkebf-og-bnnesalat-med-olive.jpg" Stretch="Fill" />-->

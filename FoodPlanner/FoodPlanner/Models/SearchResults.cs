@@ -16,6 +16,9 @@ namespace FoodPlanner.Models
 
         public int fullMatch { get; set; }
 
-        public SearchResults() { }
+        public SearchResults(Recipe recipe)
+        {
+            this.Recipe = recipe;
+        }
     }
 }

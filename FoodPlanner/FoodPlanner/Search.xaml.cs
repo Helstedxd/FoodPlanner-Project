@@ -41,13 +41,28 @@ namespace FoodPlanner
 
             List<SearchResults> results = new List<SearchResults>();
 
+            Recipe rec = MainWindow.db.Recipes.First();
+
             foreach (IGrouping<int, RecipeIngredient> recipeGroup in recipeIngredient)
             {
+                SearchResults recipeResult = new SearchResults(rec);
 
                 foreach (RecipeIngredient ingredient in recipeGroup)
                 {
-                    MessageBox.Show(ingredient.IngredientID.ToString());
+                    if (inventoryList.Where(il => il.IngredientID == ingredient.IngredientID).Count() != 0)
+                    {
+                        if (inventoryList.Where(il => il.IngredientID == ingredient.IngredientID).Sum(iq => iq.Quantity) >= ingredient.Quantity)
+                        {
+                            recipeResult.fullMatch++;
+                        }
+                        else
+                        {
+                            recipeResult.partialMatch++;
+                        }
+                    }
                 }
+
+                results.Add(recipeResult);
             }
 
 

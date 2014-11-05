@@ -133,9 +133,6 @@
     <Compile Include="SlidePanel.xaml.cs">
       <DependentUpon>SlidePanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestWindowChristian.xaml.cs">
-      <DependentUpon>TestWindowChristian.xaml</DependentUpon>
-    </Compile>
     <Compile Include="User.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
@@ -205,10 +202,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TestWindowChristian.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -264,8 +257,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\refrigerator_slidebutton_image.png" />
-    <Resource Include="refrigerator_slidebutton_image.png" />
+    <Resource Include="Images\foodplan.jpg" />
+    <Resource Include="Images\refigorator.jpg" />
+    <Resource Include="refigorator.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\plus_icon_image.png" />

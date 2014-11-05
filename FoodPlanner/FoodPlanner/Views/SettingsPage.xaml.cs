@@ -13,12 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FoodPlanner {
+namespace FoodPlanner.Views {
     /// <summary>
-    /// Interaction logic for InventoryPage.xaml
+    /// Interaction logic for SettingsPage.xaml
     /// </summary>
-    public partial class InventoryPage : Page {
-        public InventoryPage() {
+    public partial class SettingsPage : Page {
+        public SettingsPage() {
             InitializeComponent();
         }
     }

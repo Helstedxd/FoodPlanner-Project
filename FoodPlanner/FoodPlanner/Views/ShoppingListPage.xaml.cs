@@ -14,14 +14,22 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 
-namespace FoodPlanner {
+namespace FoodPlanner.Views
+{
     /// <summary>
     /// Interaction logic for ShoppingListPage.xaml
     /// </summary>
+<<<<<<< HEAD:FoodPlanner/FoodPlanner/ShoppingListPage.xaml.cs
     public partial class ShoppingListPage : Page {
        
 
         public ShoppingListPage() {
+=======
+    public partial class ShoppingListPage : Page
+    {
+        public ShoppingListPage()
+        {
+>>>>>>> origin/master:FoodPlanner/FoodPlanner/Views/ShoppingListPage.xaml.cs
             InitializeComponent();
             
         }

@@ -13,12 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FoodPlanner {
+namespace FoodPlanner.Views
+{
     /// <summary>
     /// Interaction logic for Recipes.xaml
     /// </summary>
-    public partial class Recipes : Page {
-        public Recipes() {
+    public partial class Recipes : Page
+    {
+        public Recipes()
+        {
             InitializeComponent();
         }
     }

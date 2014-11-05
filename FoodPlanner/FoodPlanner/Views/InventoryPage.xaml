@@ -1,0 +1,50 @@
+﻿<Page 
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ViewModels="clr-namespace:FoodPlanner.ViewModels"
+      x:Class="FoodPlanner.Views.InventoryPage"
+      mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300"
+      Title="InventoryPage">
+    <Page.DataContext>
+        <ViewModels:InventoryViewModel/>
+    </Page.DataContext>
+    <Grid DataContext="{Binding InventoryIngredientsCollectionViewSource}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Add Food:" VerticalAlignment="Center" Margin="5" />
+            <!--<toolkit:AutoCompleteBox x:Name="inventoryAutoCompleteBox" Width="475" Margin="5" VerticalAlignment="Center"
+                                         FilterMode="Contains" IsTextCompletionEnabled="True"
+                                         MinimumPopulateDelay="500" MinimumPrefixLength="2" Populating="inventoryAutoCompleteBox_Populating" />-->
+            <TextBox Width="100" Margin="5"></TextBox>
+            <Button x:Name="AddButton" Content="Add" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Margin="5" />
+        </StackPanel>
+        <DataGrid x:Name="inventoryIngredientsDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="5" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False" Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="ingredientColumn" Width="Auto" Header="Ingredient" Binding="{Binding Ingredient}"/>
+                <DataGridTextColumn x:Name="quantityColumn" Width="Auto" Header="Quantity" Binding="{Binding Quantity}"/>
+                <DataGridTemplateColumn x:Name="purchaseDateColumn" Width="Auto" Header="Purchase Date">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding PurchaseDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn x:Name="expirationDateColumn" Width="Auto" Header="Expiration Date">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding ExpirationDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Bottom" Width="75" Grid.Row="2"/>
+    </Grid>
+</Page>

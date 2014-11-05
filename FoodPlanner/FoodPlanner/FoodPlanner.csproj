@@ -259,7 +259,7 @@
   <ItemGroup>
     <Resource Include="Images\foodplan.jpg" />
     <Resource Include="Images\refigorator.jpg" />
-    <Resource Include="refigorator.jpg" />
+    <Resource Include="Images\shoppinglist.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\plus_icon_image.png" />

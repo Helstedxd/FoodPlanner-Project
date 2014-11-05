@@ -9,32 +9,33 @@
 	Title="ShoppingListPage">
 
     <Grid>
-    
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="37"/>
-        </Grid.ColumnDefinitions> 
-        
+        </Grid.ColumnDefinitions>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <TextBox />
-        
+
         <Button  Grid.Column="1">
-            <Image Source="Images/plus_icon_image.png" Stretch="Fill"/>
-            
+            <Button.Background>
+                <ImageBrush ImageSource="/FoodPlanner;component/Images/plusIcon.png"/>
+            </Button.Background>
         </Button>
-        
-        
+
+
         <ListView Grid.Row="1" Grid.ColumnSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="300" Header="Name" />
                     <GridViewColumn Width="105" Header="Quantity" />
-                      
-                    
+
+
                 </GridView>
             </ListView.View>
         </ListView>

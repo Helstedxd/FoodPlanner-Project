@@ -12,7 +12,7 @@
     
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="37"/>
         </Grid.ColumnDefinitions> 
         
         <Grid.RowDefinitions>
@@ -23,7 +23,7 @@
         <TextBox />
         
         <Button  Grid.Column="1">
-                <Image Source="Images/plus_icon_image.png"/>
+                <Image Source="Images/plus_icon_image.png" Stretch="Fill"/>
         </Button>
         
         

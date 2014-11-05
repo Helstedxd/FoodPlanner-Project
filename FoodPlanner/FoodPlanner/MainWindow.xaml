@@ -6,20 +6,27 @@
     xmlns:Models="clr-namespace:FoodPlanner.Models" 
     xmlns:local="clr-namespace:FoodPlanner"
     mc:Ignorable="d" x:Class="FoodPlanner.MainWindow"
-    Title="MainWindow" Height="350" Width="525" Closing="Window_Closing">
+    Title="MainWindow" d:DesignHeight="720" d:DesingHeightWidth="410" Closing="Window_Closing"  Height="720"  Width="410">
     <Window.Resources>
         <CollectionViewSource x:Key="recipeViewSource" d:DesignSource="{d:DesignInstance {x:Type Models:Recipe}, CreateList=True}"/>
         <CollectionViewSource x:Key="recipeRecipeIngredientsViewSource" Source="{Binding RecipeIngredients, Source={StaticResource recipeViewSource}}"/>
         <CollectionViewSource x:Key="recipeCookingStepsViewSource" Source="{Binding CookingSteps, Source={StaticResource recipeViewSource}}"/>
     </Window.Resources>
     <Grid DataContext="{StaticResource recipeViewSource}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+    <!--
         <Button Content="Open Search" Name="openSearch" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="167" Click="openSearch_Click"/>
         <Button Content="Open Foodplan" Name="openFoodplan" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="167" Click="openFoodplan_Click"/>
         <Button Content="Open Inventory" Name="openInventory" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Width="167" Click="openInventory_Click"/>
         <Button Content="Open Recommended Recipes" Name="openRecommendedRecipes" HorizontalAlignment="Left" Margin="10,91,0,0" VerticalAlignment="Top" Width="167" Click="openRecommendedRecipes_Click"/>
 
         <Label Content="Slide Panel Testing" Margin="195,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
-        <local:SlidePanel Width="720" Height="Auto" VerticalAlignment="Bottom" ></local:SlidePanel>
+        -->
+        <Frame x:Name="mainFrame" />
+        <local:SlidePanel VerticalAlignment="Bottom" Grid.Row="1"/>
 
         <!--<Image HorizontalAlignment="Left" Height="200" Margin="207,10,0,0" VerticalAlignment="Top" Width="300" Source="http://viskalspise.dk/sites/default/files/imagecache/image_300x300r/hakkebf-og-bnnesalat-med-olive.jpg" Stretch="Fill" />-->
 

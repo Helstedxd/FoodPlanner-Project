@@ -7,29 +7,20 @@
 	mc:Ignorable="d"
 	x:Class="FoodPlanner.SlidePanel"
 	x:Name="UserControl"
-	d:DesignWidth="720" d:DesignHeight="480">
+	d:DesignWidth="405" d:DesignHeight="115">
 
 	<Grid x:Name="LayoutRoot">
 		<VisualStateManager.VisualStateGroups>
-			<VisualStateGroup x:Name="HideShowSlidePannel">
+			<VisualStateGroup x:Name="HideShowSlidePannel" ei:ExtendedVisualStateManager.UseFluidLayout="True">
 				<VisualStateGroup.Transitions>
 					<VisualTransition GeneratedDuration="0:0:0.3"/>
 				</VisualStateGroup.Transitions>
-				<VisualState x:Name="HideSlidePannel">
-					<Storyboard>
-						<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="SlidePannel">
-							<EasingThicknessKeyFrame KeyTime="0" Value="0,0,0,-144"/>
-						</ThicknessAnimationUsingKeyFrames>
-					</Storyboard>
-				</VisualState>
+				<VisualState x:Name="HideSlidePannel"/>
 				<VisualState x:Name="ShowSlidePannel">
 					<Storyboard>
 						<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="SlidePannel">
-							<EasingThicknessKeyFrame KeyTime="0" Value="0,0,0,-144"/>
+							<EasingThicknessKeyFrame KeyTime="0" Value="0,0,0,-1"/>
 						</ThicknessAnimationUsingKeyFrames>
-						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="SlidePannel">
-							<EasingDoubleKeyFrame KeyTime="0" Value="-144"/>
-						</DoubleAnimationUsingKeyFrames>
 					</Storyboard>
 				</VisualState>
 			</VisualStateGroup>
@@ -37,7 +28,8 @@
 		<VisualStateManager.CustomVisualStateManager>
 			<ei:ExtendedVisualStateManager/>
 		</VisualStateManager.CustomVisualStateManager>
-		<StackPanel x:Name="SlidePannel" HorizontalAlignment="Left" Height="174" VerticalAlignment="Bottom" Width="720" Margin="0,0,0,-144" RenderTransformOrigin="0.5,0.5">
+        <Frame x:Name="StackFramePage" />
+		<StackPanel x:Name="SlidePannel" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,-81">
 			<StackPanel.RenderTransform>
 				<TransformGroup>
 					<ScaleTransform/>
@@ -46,7 +38,15 @@
 					<TranslateTransform/>
 				</TransformGroup>
 			</StackPanel.RenderTransform>
-			<Grid x:Name="SlideButtonsGrid" VerticalAlignment="Bottom" Height="174" Width="720">
+			<Grid x:Name="SlideButtonsGrid" VerticalAlignment="Bottom" Height="115" Width="Auto">
+				<i:Interaction.Triggers>
+					<i:EventTrigger EventName="MouseEnter">
+						<ei:GoToStateAction x:Name="ShowSlidePannelAction" StateName="ShowSlidePannel"/>
+					</i:EventTrigger>
+					<i:EventTrigger EventName="MouseLeave">
+						<ei:GoToStateAction x:Name="HideSlidePannelAction" StateName="HideSlidePannel"/>
+					</i:EventTrigger>
+				</i:Interaction.Triggers>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="*"/>
@@ -56,22 +56,14 @@
 				</Grid.ColumnDefinitions>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*"/>
-					<RowDefinition Height="144"/>
+					<RowDefinition Height="81"/>
 				</Grid.RowDefinitions>
-				<i:Interaction.Triggers>
-				<i:EventTrigger EventName="MouseLeave">
-					<ei:GoToStateAction x:Name="HideSlidePannelAction" StateName="HideSlidePannel"/>
-				</i:EventTrigger>
-				<i:EventTrigger EventName="MouseEnter">
-					<ei:GoToStateAction x:Name="ShowSlidePannelAction" StateName="ShowSlidePannel"/>
-				</i:EventTrigger>
-			</i:Interaction.Triggers>
-				<Grid Background="Black" Grid.Row="0" Grid.ColumnSpan="5" Margin="0"/>
-				<Button Content="Button 1" Grid.Row="1" Grid.Column="0"/>
-				<Button Content="Button 2" Grid.Row="1" Grid.Column="1"/>
-				<Button Content="Button 3" Grid.Row="1" Grid.Column="2"/>
-				<Button Content="Button 4" Grid.Row="1" Grid.Column="3"/>
-				<Button Content="Button 5" Grid.Row="1" Grid.Column="4"/>
+				<Grid Background="Black" Grid.Row="0" Grid.ColumnSpan="5" />
+				<Button Content="Food plan" Grid.Row="1" Grid.Column="0" />
+				<Button Content="Recipes" Grid.Row="1" Grid.Column="1"/>
+				<Button Content="Shopping list" Grid.Row="1" Grid.Column="2"/>
+				<Button Content="Inventory" Grid.Row="1" Grid.Column="3"/>
+				<Button Content="Settings" Grid.Row="1" Grid.Column="4"/>
 			</Grid>
 		</StackPanel>
 	</Grid>

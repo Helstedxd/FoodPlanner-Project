@@ -267,6 +267,9 @@
     <Resource Include="Images\refrigerator_slidebutton_image.png" />
     <Resource Include="refrigerator_slidebutton_image.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\plus_icon_image.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

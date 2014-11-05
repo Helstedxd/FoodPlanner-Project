@@ -4,8 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="720" d:DesignWidth="410"
-      Height="720" Width="410"
+      d:DesignHeight="720" d:DesignWidth="405"
+      Height="720" Width="405"
 	Title="ShoppingListPage">
 
     <Grid>
@@ -23,17 +23,17 @@
         <TextBox />
         
         <Button  Grid.Column="1">
-                <Image Source="Images/plus_icon_image.png" Stretch="Fill"/>
+            <Image Source="Images/plus_icon_image.png" Stretch="Fill"/>
+            
         </Button>
         
         
         <ListView Grid.Row="1" Grid.ColumnSpan="2">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="Auto" Header="Name"/>
-                    <GridViewColumn Width="Auto" Header="Quantity"/>
-            
-                        
+                    <GridViewColumn Width="300" Header="Name" />
+                    <GridViewColumn Width="105" Header="Quantity" />
+                      
                     
                 </GridView>
             </ListView.View>

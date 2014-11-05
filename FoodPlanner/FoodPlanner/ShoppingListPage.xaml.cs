@@ -12,14 +12,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace FoodPlanner {
     /// <summary>
     /// Interaction logic for ShoppingListPage.xaml
     /// </summary>
     public partial class ShoppingListPage : Page {
+       
+
         public ShoppingListPage() {
             InitializeComponent();
+            
         }
     }
 }

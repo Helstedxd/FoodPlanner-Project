@@ -19,7 +19,7 @@
 				<VisualState x:Name="ShowSlidePannel">
 					<Storyboard>
 						<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="SlidePannel">
-							<EasingThicknessKeyFrame KeyTime="0" Value="0,0,0,-1"/>
+							<EasingThicknessKeyFrame KeyTime="0" Value="0,0,0,0"/>
 						</ThicknessAnimationUsingKeyFrames>
 					</Storyboard>
 				</VisualState>
@@ -28,7 +28,6 @@
 		<VisualStateManager.CustomVisualStateManager>
 			<ei:ExtendedVisualStateManager/>
 		</VisualStateManager.CustomVisualStateManager>
-        <Frame x:Name="StackFramePage" />
 		<StackPanel x:Name="SlidePannel" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,-81">
 			<StackPanel.RenderTransform>
 				<TransformGroup>
@@ -38,7 +37,7 @@
 					<TranslateTransform/>
 				</TransformGroup>
 			</StackPanel.RenderTransform>
-			<Grid x:Name="SlideButtonsGrid" VerticalAlignment="Bottom" Height="115" Width="Auto">
+			<Grid x:Name="SlideButtonsGrid" VerticalAlignment="Bottom" Height="115">
 				<i:Interaction.Triggers>
 					<i:EventTrigger EventName="MouseEnter">
 						<ei:GoToStateAction x:Name="ShowSlidePannelAction" StateName="ShowSlidePannel"/>
@@ -54,16 +53,16 @@
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="*"/>
 				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="*"/>
-					<RowDefinition Height="81"/>
-				</Grid.RowDefinitions>
-				<Grid Background="Black" Grid.RowSpan="2" Grid.ColumnSpan="5"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="81"/>
+                </Grid.RowDefinitions>
+                <Grid Background="Black" Grid.RowSpan="2" Grid.ColumnSpan="5"/>
                 <Button Grid.Row="1" Grid.Column="0" Style="{DynamicResource ButtonSlidePannelTemplate}" Command="{Binding GoToRecipesCommand}">
-					<Button.Background>
-						<ImageBrush ImageSource="Images/calender.jpg"/>
-					</Button.Background>
-				</Button>
+                    <Button.Background>
+                        <ImageBrush ImageSource="Images/calender.jpg"/>
+                    </Button.Background>
+                </Button>
                 <Button Grid.Row="1" Grid.Column="1" Style="{DynamicResource ButtonSlidePannelTemplate}">
                     <Button.Background>
 						<ImageBrush ImageSource="Images/foodplan.jpg"/>
@@ -80,8 +79,8 @@
 					</Button.Background>
 				</Button>
                 <Button Grid.Row="1" Grid.Column="4" Style="{DynamicResource ButtonSlidePannelTemplate}" Command="{Binding GoToSettingsCommand}">
-                    <Button.Background>
-						<ImageBrush ImageSource="Images/settings.jpg"/>
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/settings.jpg"/>
 					</Button.Background>
 				</Button>
 			</Grid>

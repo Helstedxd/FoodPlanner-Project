@@ -14,18 +14,21 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="50"/>
             <ColumnDefinition/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid Background="Gray"/>
-        <Label Content="Search:"/>
-        <TextBox Grid.Column="1"/>
-        <ComboBox Grid.Column="2" Height="25.96" VerticalAlignment="Top"/>
-        <ListBox Grid.Row="1" Grid.ColumnSpan="3"/>
+        <Label>
+        	<Label.Background>
+        		<ImageBrush ImageSource="/Images/searchIcon.png" Stretch="Uniform"/>
+        	</Label.Background>
+        </Label>
+    	<TextBox Grid.Column="1"/>
+    	<ComboBox Grid.Column="2"/>
+        <ListBox Grid.Row="1" Grid.ColumnSpan="3" ItemTemplate="{StaticResource ListRecipesTemplate}"/>
     </Grid>
 </Page>

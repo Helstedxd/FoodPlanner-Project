@@ -10,7 +10,7 @@
         <TextBox Height="23" Margin="10,10,90,0" TextWrapping="Wrap" VerticalAlignment="Top" Name="searchBox"/>
         <Button Content="Search" HorizontalAlignment="Right" Margin="10,10,10,0" VerticalAlignment="Top" Width="75" Name="startSearch" Click="startSearch_Click"/>
 
-        <DataGrid Margin="10,48,10,10" Name="listResults"/>
+        <DataGrid Margin="10,48,10,10" Name="listResults" SelectionChanged="listResults_SelectionChanged"/>
 
     </Grid>
 </Window>

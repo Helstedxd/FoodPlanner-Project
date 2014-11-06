@@ -32,6 +32,10 @@ namespace FoodPlanner
 
             db = new FoodContext();
             CurrentUser = db.Users.First();
+
+
+            var openSearch = new Search();
+            openSearch.Show();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

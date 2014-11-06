@@ -71,9 +71,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CookingStep.cs">
-      <DependentUpon>FoodDatabase.tt</DependentUpon>
-    </Compile>
     <Compile Include="FoodDatabase.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -99,7 +96,6 @@
     <Compile Include="Meal.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CookingStep.cs" />
     <Compile Include="Models\Ingredient.cs" />
     <Compile Include="Models\InventoryIngredient.cs" />
     <Compile Include="Models\Recipe.cs" />
@@ -267,6 +263,7 @@
     <Resource Include="Images\foodplan.jpg" />
     <Resource Include="Images\recipes2.jpg" />
     <Resource Include="Images\refigorator.jpg" />
+    <Resource Include="Images\searchIcon.png" />
     <Resource Include="Images\settings.jpg" />
     <Resource Include="Images\shoppinglist.jpg" />
   </ItemGroup>

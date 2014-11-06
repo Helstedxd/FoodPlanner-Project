@@ -25,7 +25,6 @@ namespace FoodPlanner.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<CookingStep> CookingSteps { get; set; }
         public virtual DbSet<Ingredient> Ingredients { get; set; }
         public virtual DbSet<InventoryIngredient> InventoryIngredients { get; set; }
         public virtual DbSet<Meal> Meals { get; set; }

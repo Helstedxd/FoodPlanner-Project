@@ -17,7 +17,7 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-    <!--
+        <!--
         <Button Content="Open Search" Name="openSearch" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="167" Click="openSearch_Click"/>
         <Button Content="Open Foodplan" Name="openFoodplan" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="167" Click="openFoodplan_Click"/>
         <Button Content="Open Inventory" Name="openInventory" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Width="167" Click="openInventory_Click"/>

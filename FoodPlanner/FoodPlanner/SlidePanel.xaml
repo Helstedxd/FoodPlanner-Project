@@ -19,7 +19,7 @@
 				<VisualState x:Name="ShowSlidePannel">
 					<Storyboard>
 						<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="SlidePannel">
-							<EasingThicknessKeyFrame KeyTime="0" Value="0,0,0,-1"/>
+							<EasingThicknessKeyFrame KeyTime="0" Value="0,0,0,0"/>
 						</ThicknessAnimationUsingKeyFrames>
 					</Storyboard>
 				</VisualState>
@@ -28,7 +28,6 @@
 		<VisualStateManager.CustomVisualStateManager>
 			<ei:ExtendedVisualStateManager/>
 		</VisualStateManager.CustomVisualStateManager>
-        <Frame x:Name="StackFramePage" />
 		<StackPanel x:Name="SlidePannel" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,-81">
 			<StackPanel.RenderTransform>
 				<TransformGroup>
@@ -38,7 +37,7 @@
 					<TranslateTransform/>
 				</TransformGroup>
 			</StackPanel.RenderTransform>
-			<Grid x:Name="SlideButtonsGrid" VerticalAlignment="Bottom" Height="115" Width="Auto">
+			<Grid x:Name="SlideButtonsGrid" VerticalAlignment="Bottom" Height="115">
 				<i:Interaction.Triggers>
 					<i:EventTrigger EventName="MouseEnter">
 						<ei:GoToStateAction x:Name="ShowSlidePannelAction" StateName="ShowSlidePannel"/>

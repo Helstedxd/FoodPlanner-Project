@@ -16,7 +16,6 @@ namespace FoodPlanner.Models
     {
         public Recipe()
         {
-            this.CookingSteps = new ObservableCollection<CookingStep>();
             this.Meals = new ObservableCollection<Meal>();
             this.RecipeIngredients = new ObservableCollection<RecipeIngredient>();
         }
@@ -24,10 +23,9 @@ namespace FoodPlanner.Models
         public int ID { get; set; }
         public string Title { get; set; }
         public int Persons { get; set; }
-        public string Description { get; set; }
         public string Image { get; set; }
+        public string Preparation { get; set; }
     
-        public virtual ObservableCollection<CookingStep> CookingSteps { get; set; }
         public virtual ObservableCollection<Meal> Meals { get; set; }
         public virtual ObservableCollection<RecipeIngredient> RecipeIngredients { get; set; }
     }

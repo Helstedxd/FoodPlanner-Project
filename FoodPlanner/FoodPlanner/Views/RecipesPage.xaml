@@ -22,6 +22,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <ListBox Name="listBoxRecipes" Grid.Row="1" Grid.ColumnSpan="3" ItemTemplate="{StaticResource ListRecipesTemplate}"/>
         <Label>
         	<Label.Background>
         		<ImageBrush ImageSource="/Images/searchIcon.png" Stretch="Uniform"/>
@@ -29,6 +30,5 @@
         </Label>
     	<TextBox Grid.Column="1"/>
     	<ComboBox Grid.Column="2"/>
-        <ListBox Grid.Row="1" Grid.ColumnSpan="3" ItemTemplate="{StaticResource ListRecipesTemplate}"/>
     </Grid>
 </Page>

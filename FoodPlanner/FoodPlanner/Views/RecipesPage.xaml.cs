@@ -24,6 +24,7 @@ namespace FoodPlanner.Views
         public Recipes()
         {
             InitializeComponent();
+            listBoxRecipes.ItemsSource = MainWindow.db.Recipes.Take(20).ToList();
         }
     }
 }

@@ -13,18 +13,52 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using FoodPlanner.Models;
 
-namespace FoodPlanner.Views
-{
+namespace FoodPlanner.Views {
     /// <summary>
     /// Interaction logic for ShoppingListPage.xaml
     /// </summary>
     public partial class ShoppingListPage : Page {
-       
+
+        public static FoodContext db;
+        public static User CurrentUser { get; set; }
+        public ObservableCollection<RecipeIngredient> ShoppingList = new ObservableCollection<RecipeIngredient>();
+
         public ShoppingListPage() {
 
             InitializeComponent();
-            
+            this.DataContext = ShoppingList;
+
+            db = new FoodContext();
+            CurrentUser = db.Users.First();
+
+            CreateShoppingList();
+        }
+
+        private void CreateShoppingList() {
+            List<InventoryIngredient> inventoryIngrdients = db.InventoryIngredients.Where(m => m.UserID == CurrentUser.ID).ToList();
+
+            List<RecipeIngredient> recipeIngredients = db.RecipeIngredients.Where(ri => db.Meals.Where(m => m.UserID == CurrentUser.ID).Any(m => m.RecipeID == ri.RecipeID)).ToList();
+
+            /*foreach (RecipeIngredient ri in recipeIngredients) {
+                MessageBox.Show(ri.Quantity.ToString());
+            }*/
+
+            //Tilføj elementer til shopping list med fælgende kriterie
+            //RecipeIngrediensen er ikke i Inventory, recipeingrediensen har fratrukket hvad der er i Inventory
+            foreach (RecipeIngredient ri in recipeIngredients) {
+                foreach (InventoryIngredient invenIn in inventoryIngrdients) {
+                    if (invenIn.ID != ri.ID) {
+                        ShoppingList.Add(ri);
+                    }
+                }
+            }
+
+            /*foreach (RecipeIngredient ri in ShoppingList) {
+                MessageBox.Show(ri.Ingredient.Name);
+            }*/
+
         }
     }
 }

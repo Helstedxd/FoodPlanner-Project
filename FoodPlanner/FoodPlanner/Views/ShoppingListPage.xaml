@@ -22,18 +22,18 @@
 
         <TextBox />
 
-        <Button  Grid.Column="1">
+        <Button  Grid.Column="1" Style="{DynamicResource ButtonSlidePannelTemplate}">
             <Button.Background>
                 <ImageBrush ImageSource="/FoodPlanner;component/Images/plusIcon.png"/>
             </Button.Background>
         </Button>
 
 
-        <ListView Grid.Row="1" Grid.ColumnSpan="2">
+        <ListView Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="300" Header="Name" />
-                    <GridViewColumn Width="105" Header="Quantity" />
+                    <GridViewColumn Width="Auto" Header="Name" DisplayMemberBinding="{Binding Path=Ingredient}" />
+                    <GridViewColumn Width="Auto" Header="Quantity" DisplayMemberBinding="{Binding Path=Quantity}" />
 
 
                 </GridView>

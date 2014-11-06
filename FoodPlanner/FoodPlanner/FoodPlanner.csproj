@@ -71,9 +71,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CookingStep.cs">
-      <DependentUpon>FoodDatabase.tt</DependentUpon>
-    </Compile>
     <Compile Include="FoodDatabase.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

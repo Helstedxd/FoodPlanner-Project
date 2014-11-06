@@ -42,7 +42,7 @@ namespace FoodPlanner
             InitializeComponent();
 
             showIngredients.ItemsSource = MainWindow.db.RecipeIngredients.Where(ri => ri.Recipe.ID == recipe.ID).ToList();
-            showSteps.ItemsSource = recipe.CookingSteps.ToList();
+            //showSteps.ItemsSource = recipe.CookingSteps.ToList();
 
 
             imageSource.DataContext = ROFLMETHOD(recipe);

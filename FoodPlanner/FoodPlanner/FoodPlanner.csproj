@@ -94,7 +94,6 @@
     <Compile Include="Meal.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CookingStep.cs" />
     <Compile Include="Models\Ingredient.cs" />
     <Compile Include="Models\InventoryIngredient.cs" />
     <Compile Include="Models\Recipe.cs" />

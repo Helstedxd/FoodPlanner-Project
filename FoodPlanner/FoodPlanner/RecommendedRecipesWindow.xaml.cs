@@ -31,26 +31,18 @@ namespace FoodPlanner
         {
             InitializeComponent();
 
-            /*
-            var q = MainWindow.db.InventoryIngredients
-                    .Where(x => x.User.ID == MainWindow.CurrentUser.ID)
-                    .GroupBy(x => x.IngredientID)
-                    .Select(x => new { ID = x.FirstOrDefault().IngredientID, Amount = x.Sum(y => y.Quantity) });
-            */
-
-            //TODO: Select only for a single user.
-            //TODO: the grouping contains a lot of dublicate data, maybe this can be avoided...
-            var q3 = from ri in MainWindow.db.RecipeIngredients
-                     join ii in MainWindow.db.InventoryIngredients on ri.IngredientID equals ii.IngredientID
-                     select new { Recipe = ri.Recipe, RecipeQuantity = ri.Quantity, InventoryQuantity = ii.Quantity, IngredientCount = ri.Recipe.RecipeIngredients.Count() } into c
-                     group c by c.Recipe.ID into g
-                     select g;
+            var q4 = from ii in MainWindow.db.InventoryIngredients
+                     where ii.UserID == MainWindow.CurrentUser.ID
+                     group ii by ii.IngredientID into iig
+                     select new { IngredientID = iig.FirstOrDefault().IngredientID, TotalQuantity = iig.Sum(i => i.Quantity) } into iig
+                     join ri in MainWindow.db.RecipeIngredients on iig.IngredientID equals ri.IngredientID
+                     group new { Recipe = ri.Recipe, RecipeQuantity = ri.Quantity, InventoryQuantity = iig.TotalQuantity, IngredientCount = ri.Recipe.RecipeIngredients.Count() } by ri.RecipeID;
 
             List<search_result_x> searchResults = new List<search_result_x>();
 
             DateTime startTime = DateTime.Now;
 
-            foreach (var group in q3)
+            foreach (var group in q4)
             {
 
                 decimal totalPercent = 0;
@@ -78,7 +70,7 @@ namespace FoodPlanner
 
             TimeSpan e = DateTime.Now - startTime;
 
-            Console.WriteLine("Calculated Match Percentage for {0} recipes in {1}", q3.Count(), e);
+            Console.WriteLine("Calculated Match Percentage for {0} recipes in {1}", q4.Count(), e);
 
             recommendedRecipesDataGrid.ItemsSource = searchResults.OrderByDescending(s => s.MatchPercentage);
 

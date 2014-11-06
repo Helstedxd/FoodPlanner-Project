@@ -17,6 +17,7 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        <ListBox Name="listBoxRecipes" Grid.Row="0" ItemTemplate="{StaticResource ListRecipesTemplate}"/>
         <!--
         <Button Content="Open Search" Name="openSearch" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="167" Click="openSearch_Click"/>
         <Button Content="Open Foodplan" Name="openFoodplan" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="167" Click="openFoodplan_Click"/>
@@ -25,8 +26,7 @@
 
         <Label Content="Slide Panel Testing" Margin="195,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
         -->
-        <local:SlidePanel VerticalAlignment="Bottom" Grid.Row="1"/>
-
+        <local:SlidePanel x:Name="navigationSlidePannel" VerticalAlignment="Bottom" Grid.Row="1"/>
         <!--<Image HorizontalAlignment="Left" Height="200" Margin="207,10,0,0" VerticalAlignment="Top" Width="300" Source="http://viskalspise.dk/sites/default/files/imagecache/image_300x300r/hakkebf-og-bnnesalat-med-olive.jpg" Stretch="Fill" />-->
 
         <!--<ComboBox Margin="10,10,10,0" VerticalAlignment="Top" x:Name="selectRecipe" ItemsSource="{Binding}" SelectedValuePath="ID" />

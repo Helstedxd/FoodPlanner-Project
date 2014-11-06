@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <!--Start:Template for Image buttons-->
+        <!--Brushes used in templates-->
         <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
         <SolidColorBrush x:Key="Button.Blue.Border" Color="#FF3C7FB1"/>
+        <!--Start: Template for Image buttons-->
         <Style x:Key="ButtonIconTemplate" TargetType="{x:Type Button}">
             <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
             <Setter Property="BorderThickness" Value="5"/>
@@ -26,6 +27,25 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <!--End:Template for Image buttons-->
+        <!--End: Template for Image buttons-->
+        <!--Stat: Template for recipes list-->
+        <DataTemplate x:Key="ListRecipesTemplate">
+            <Grid>
+                <Border Margin="3" BorderBrush="#909090" BorderThickness="1" Padding="2" CornerRadius="2,2,2,2">
+                    <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    </Grid>
+                </Border>
+            </Grid>
+        </DataTemplate>
+        <!--End: Template for recipes list-->
     </Application.Resources>
 </Application>

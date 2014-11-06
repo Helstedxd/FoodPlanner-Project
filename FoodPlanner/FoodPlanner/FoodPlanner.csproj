@@ -259,6 +259,7 @@
     <Resource Include="Images\foodplan.jpg" />
     <Resource Include="Images\recipes2.jpg" />
     <Resource Include="Images\refigorator.jpg" />
+    <Resource Include="Images\searchIcon.png" />
     <Resource Include="Images\settings.jpg" />
     <Resource Include="Images\shoppinglist.jpg" />
   </ItemGroup>

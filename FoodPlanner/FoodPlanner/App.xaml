@@ -4,18 +4,9 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <!--Start:Template for Image buttons-->
-        <Style x:Key="FocusVisual">
-            <Setter Property="Control.Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Rectangle Margin="15"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
         <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
         <SolidColorBrush x:Key="Button.Blue.Border" Color="#FF3C7FB1"/>
-        <Style x:Key="ButtonSlidePannelTemplate" TargetType="{x:Type Button}">
+        <Style x:Key="ButtonIconTemplate" TargetType="{x:Type Button}">
             <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
             <Setter Property="BorderThickness" Value="5"/>
             <Setter Property="Margin" Value="2"/>

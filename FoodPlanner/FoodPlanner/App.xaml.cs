@@ -5,6 +5,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace FoodPlanner
 {
@@ -13,5 +15,8 @@ namespace FoodPlanner
     /// </summary>
     public partial class App : Application
     {
+        //TODO: Implement proper NavigationService and maybe IOC.
+        //public static Frame MainFrame { get; set; }
+        public static NavigationService NavigationService { get; set; }
     }
 }

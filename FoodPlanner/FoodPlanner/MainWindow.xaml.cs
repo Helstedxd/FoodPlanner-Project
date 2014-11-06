@@ -28,6 +28,8 @@ namespace FoodPlanner
         {
             InitializeComponent();
 
+            App.NavigationService = this.Frame.NavigationService;
+
             db = new FoodContext();
             CurrentUser = db.Users.First();
         }

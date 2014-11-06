@@ -1,11 +1,16 @@
-﻿<Page x:Class="FoodPlanner.Views.Recipes"
+﻿<Page
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ViewModels="clr-namespace:FoodPlanner.ViewModels" x:Class="FoodPlanner.Views.Recipes" 
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="405"
 	Title="Recipes">
+
+    <Page.DataContext>
+        <ViewModels:RecipesViewModel/>
+    </Page.DataContext>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -17,7 +22,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-		<Grid Background="Gray"/>
+        <Grid Background="Gray"/>
         <Label Content="Search:"/>
         <TextBox Grid.Column="1"/>
         <ComboBox Grid.Column="2" Height="25.96" VerticalAlignment="Top"/>

@@ -85,6 +85,8 @@
     <Compile Include="FoodPlanPage.xaml.cs">
       <DependentUpon>FoodPlanPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helper Classes\ObservableObject.cs" />
+    <Compile Include="Helper Classes\RelayCommand.cs" />
     <Compile Include="Ingredient.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
@@ -109,6 +111,8 @@
     <Compile Include="RecipeIngredient.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\RecipesViewModel.cs" />
     <Compile Include="Views\RecipesPage.xaml.cs">
       <DependentUpon>RecipesPage.xaml</DependentUpon>
     </Compile>

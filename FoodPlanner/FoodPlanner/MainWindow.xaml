@@ -6,7 +6,7 @@
     xmlns:Models="clr-namespace:FoodPlanner.Models" 
     xmlns:local="clr-namespace:FoodPlanner"
     mc:Ignorable="d" x:Class="FoodPlanner.MainWindow"
-    Title="MainWindow" d:DesignHeight="720" d:DesingHeightWidth="405" ResizeMode="NoResize"  Height="720"  Width="405">
+    Title="MainWindow" d:DesignHeight="720" d:DesingHeightWidth="405" ResizeMode="NoResize" WindowStyle="ToolWindow" Height="720"  Width="405">
     <Window.Resources>
         <CollectionViewSource x:Key="recipeViewSource" d:DesignSource="{d:DesignInstance {x:Type Models:Recipe}, CreateList=True}"/>
         <CollectionViewSource x:Key="recipeRecipeIngredientsViewSource" Source="{Binding RecipeIngredients, Source={StaticResource recipeViewSource}}"/>

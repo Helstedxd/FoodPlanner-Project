@@ -78,7 +78,7 @@
 				</Button>
                 <Button Margin="5" Grid.Row="1" Grid.Column="3" Style="{DynamicResource ButtonIconTemplate}" Command="{Binding GoToInventoryCommand}">
                     <Button.Background>
-                        <ImageBrush ImageSource="Images/Crate.png"/>
+                        <ImageBrush ImageSource="Images/refrigeratorIcon.png"/>
 					</Button.Background>
 				</Button>
                 <Button Margin="5" Grid.Row="1" Grid.Column="4" Style="{DynamicResource ButtonIconTemplate}" Command="{Binding GoToSettingsCommand}">

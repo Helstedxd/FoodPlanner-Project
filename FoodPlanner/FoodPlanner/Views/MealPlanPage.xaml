@@ -25,7 +25,6 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid Background="Wheat" Grid.RowSpan="9"/>
         <Button Grid.Row="0" Style="{DynamicResource ButtonIconTemplate}">
             <Button.Background>
                 <ImageBrush ImageSource="/Images/upArrowIcon.png" Stretch="Uniform"/>

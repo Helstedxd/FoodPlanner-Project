@@ -266,15 +266,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\calender.jpg" />
     <Resource Include="Images\downArrowIcon.png" />
-    <Resource Include="Images\foodplan.jpg" />
     <Resource Include="Images\forwardArrowIcon.png" />
-    <Resource Include="Images\recipes2.jpg" />
-    <Resource Include="Images\refigorator.jpg" />
     <Resource Include="Images\searchIcon.png" />
-    <Resource Include="Images\settings.jpg" />
-    <Resource Include="Images\shoppinglist.jpg" />
     <Resource Include="Images\upArrowIcon.png" />
   </ItemGroup>
   <ItemGroup>

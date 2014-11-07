@@ -78,8 +78,13 @@ namespace FoodPlanner
 
         private void listResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var showRecipe = new ShowRecipe(((SearchResults)listResults.SelectedItem).Recipe);
-            showRecipe.ShowDialog();
+            try
+            {
+                var showRecipe = new ShowRecipe(((SearchResults)listResults.SelectedItem).Recipe);
+                showRecipe.ShowDialog();
+            }
+
+            catch (Exception ex) { }
         }
     }
 }

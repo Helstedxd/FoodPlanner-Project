@@ -7,6 +7,6 @@
 
         <ListBox HorizontalAlignment="Left" Height="300" Margin="320,10,0,0" VerticalAlignment="Top" Name="showIngredients" Width="264"/>
 
-        <ListBox HorizontalAlignment="Left" Height="247" Margin="10,315,0,0" VerticalAlignment="Top" Name="showSteps" Width="574"/>
+        <TextBlock Margin="10,320,10,10" Name="showSteps" TextWrapping="Wrap"/>
     </Grid>
 </Window>

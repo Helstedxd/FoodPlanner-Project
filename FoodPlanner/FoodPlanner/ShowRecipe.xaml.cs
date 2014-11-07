@@ -23,7 +23,7 @@ namespace FoodPlanner
     /// </summary>
     public partial class ShowRecipe : Window
     {
-        private string ROFLMETHOD(Recipe recipe)
+        private string ImageCache(Recipe recipe)
         {
             WebClient client = new WebClient();
             string path = Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString() + "/imageCache";
@@ -42,10 +42,9 @@ namespace FoodPlanner
             InitializeComponent();
 
             showIngredients.ItemsSource = MainWindow.db.RecipeIngredients.Where(ri => ri.Recipe.ID == recipe.ID).ToList();
-            //showSteps.ItemsSource = recipe.CookingSteps.ToList();
+            showSteps.Text = recipe.Preparation;
 
-
-            imageSource.DataContext = ROFLMETHOD(recipe);
+            imageSource.DataContext = ImageCache(recipe);
         }
     }
 }

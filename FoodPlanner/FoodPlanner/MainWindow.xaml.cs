@@ -31,6 +31,9 @@ namespace FoodPlanner
 
             db = new FoodContext();
             CurrentUser = db.Users.First();
+
+            var test = new Search();
+            test.ShowDialog();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

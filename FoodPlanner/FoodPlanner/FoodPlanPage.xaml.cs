@@ -240,7 +240,8 @@ namespace FoodPlanner {
 
         private void Page_Loaded(object sender, RoutedEventArgs e) 
         {
-            DateTime moment = DateTime.Now;
+            //DateTime moment = DateTime.Now;
+            DateTime moment = new DateTime(2014, 12, 27);
 
             int upWeek = newWeek(moment, true), downWeek = newWeek(moment, false);
             butUp.Content = "^ week: " + upWeek.ToString();

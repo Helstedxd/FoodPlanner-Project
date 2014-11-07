@@ -16,12 +16,13 @@ namespace FoodPlanner.ViewModels
         private ICommand _goToShoppingListCommand;
         private ICommand _goToRecipesCommand;
         private ICommand _goToSettingsCommand;
+		private ICommand _goToMealPlanCommand;
 
         private static Uri inventoryPageUri = new Uri("Views/InventoryPage.xaml", UriKind.Relative);
         private static Uri shoppingListPageUri = new Uri("Views/ShoppingListPage.xaml", UriKind.Relative);
         private static Uri recipesPageUri = new Uri("Views/RecipesPage.xaml", UriKind.Relative);
         private static Uri settingsPageUri = new Uri("Views/SettingsPage.xaml", UriKind.Relative);
-
+        private static Uri MealPlanPageUri = new Uri("Views/MealPlanPage.xaml", UriKind.Relative);
 
         /*public ICommand ChangePageCommand
         {
@@ -93,7 +94,19 @@ namespace FoodPlanner.ViewModels
                 return _goToSettingsCommand;
             }
         }
+		
+		public ICommand GoToMealPlanCommand
+        {
+            get
+            {
+                if (_goToMealPlanCommand == null)
+                {
+                    _goToMealPlanCommand = new RelayCommand(p => ChangePage(MealPlanPageUri), p => true);
+                }
 
+                return _goToMealPlanCommand;
+            }
+        }
         private void ChangePage(Uri pagePath)
         {
             //App.MainFrame.Navigate(new Views.InventoryPage());

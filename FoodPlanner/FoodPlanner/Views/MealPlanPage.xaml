@@ -1,0 +1,48 @@
+﻿<Page
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	x:Class="FoodPlanner.MealPlanPage"
+    mc:Ignorable="d"
+	FlowDirection="LeftToRight"
+    d:DesignHeight="720" d:DesignWidth="405"
+    Title="MealPlan">
+
+	<Grid>
+	    <Grid.ColumnDefinitions>
+	        <ColumnDefinition Width="80"/>
+	        <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Background="Wheat" Grid.RowSpan="9"/>
+        <Button Grid.Row="0" Style="{DynamicResource ButtonIconTemplate}">
+            <Button.Background>
+                <ImageBrush ImageSource="/Images/upArrowIcon.png" Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
+        <Button Content="Monday" Grid.Row="1" Style="{DynamicResource ButtonTextTemplate}"/>
+        <Button Content="Tuesday" Grid.Row="2" Style="{DynamicResource ButtonTextTemplate}"/>
+        <Button Content="Wednesday" Grid.Row="3" Style="{DynamicResource ButtonTextTemplate}"/>
+        <Button Content="Thursday" Grid.Row="4" Style="{DynamicResource ButtonTextTemplate}"/>
+        <Button Content="Friday" Grid.Row="5" Style="{DynamicResource ButtonTextTemplate}"/>
+        <Button Content="Saturday" Grid.Row="6" Style="{DynamicResource ButtonTextTemplate}"/>
+        <Button Content="Sunday" Grid.Row="7" Style="{DynamicResource ButtonTextTemplate}"/>
+        <Button Content="\/" Grid.Row="8" Style="{DynamicResource ButtonIconTemplate}">
+            <Button.Background>
+                <ImageBrush ImageSource="/Images/downArrowIcon.png" Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
+        <ListBox Grid.Column="1" Grid.RowSpan="9"></ListBox>
+    </Grid> 
+</Page>

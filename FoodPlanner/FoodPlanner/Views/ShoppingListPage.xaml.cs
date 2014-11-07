@@ -47,8 +47,9 @@ namespace FoodPlanner.Views {
 
             //Tilføj elementer til shopping list med fælgende kriterie
             //RecipeIngrediensen er ikke i Inventory, recipeingrediensen har fratrukket hvad der er i Inventory
+            foreach (InventoryIngredient invenIn in inventoryIngrdients) {
             foreach (RecipeIngredient ri in recipeIngredients) {
-                foreach (InventoryIngredient invenIn in inventoryIngrdients) {
+
                     if (invenIn.ID != ri.ID) {
                         ShoppingList.Add(ri);
                     }

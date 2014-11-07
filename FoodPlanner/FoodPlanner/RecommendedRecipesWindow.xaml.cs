@@ -16,7 +16,7 @@ using FoodPlanner.Models;
 namespace FoodPlanner
 {
     // TODO: merge with other search result stuff
-    public class search_result_x
+    public class RecipeSearchResult
     {
         public Recipe Recipe { get; set; }
         public decimal MatchPercentage { get; set; }
@@ -31,20 +31,42 @@ namespace FoodPlanner
         {
             InitializeComponent();
 
-            var q4 = from ii in MainWindow.db.InventoryIngredients
-                     where ii.UserID == MainWindow.CurrentUser.ID
-                     group ii by ii.IngredientID into iig
-                     select new { IngredientID = iig.FirstOrDefault().IngredientID, TotalQuantity = iig.Sum(i => i.Quantity) } into iig
-                     join ri in MainWindow.db.RecipeIngredients on iig.IngredientID equals ri.IngredientID
-                     group new { Recipe = ri.Recipe, RecipeQuantity = ri.Quantity, InventoryQuantity = iig.TotalQuantity, IngredientCount = ri.Recipe.RecipeIngredients.Count() } by ri.RecipeID;
+            /*var combined_query = 
+                from ii in MainWindow.db.InventoryIngredients
+                where ii.UserID == MainWindow.CurrentUser.ID
+                group ii by ii.IngredientID into iig
+                select new { IngredientID = iig.FirstOrDefault().IngredientID, TotalQuantity = iig.Sum(i => i.Quantity) } into iig
+                join ri in MainWindow.db.RecipeIngredients on iig.IngredientID equals ri.IngredientID
+                group new { Recipe = ri.Recipe, RecipeQuantity = ri.Quantity, InventoryQuantity = iig.TotalQuantity, IngredientCount = ri.Recipe.RecipeIngredients.Count() } by ri.RecipeID;
+            */
 
-            List<search_result_x> searchResults = new List<search_result_x>();
+            var InventoryIngredientsTotalQuantity =
+                from ii in MainWindow.db.InventoryIngredients
+                where ii.UserID == MainWindow.CurrentUser.ID
+                group ii by ii.IngredientID into iig
+                select new
+                {
+                    IngredientID = iig.FirstOrDefault().IngredientID,
+                    TotalQuantity = iig.Sum(i => i.Quantity)
+                };
+
+            var RecipeIngredientsWithQuantityFromInventory =
+                from iitq in InventoryIngredientsTotalQuantity
+                join ri in MainWindow.db.RecipeIngredients on iitq.IngredientID equals ri.IngredientID
+                group new
+                {
+                    Recipe = ri.Recipe,
+                    RecipeQuantity = ri.Quantity,
+                    InventoryQuantity = iitq.TotalQuantity,
+                    IngredientCount = ri.Recipe.RecipeIngredients.Count()
+                } by ri.RecipeID;
+
+            List<RecipeSearchResult> searchResults = new List<RecipeSearchResult>();
 
             DateTime startTime = DateTime.Now;
 
-            foreach (var group in q4)
+            foreach (var group in RecipeIngredientsWithQuantityFromInventory)
             {
-
                 decimal totalPercent = 0;
                 foreach (var g in group)
                 {
@@ -61,7 +83,7 @@ namespace FoodPlanner
                 // All items in the group has the same IngredientCount and Recipe property so we just select the first.
                 var first = group.First();
 
-                searchResults.Add(new search_result_x()
+                searchResults.Add(new RecipeSearchResult()
                 {
                     Recipe = first.Recipe,
                     MatchPercentage = totalPercent / first.IngredientCount // average
@@ -70,15 +92,14 @@ namespace FoodPlanner
 
             TimeSpan e = DateTime.Now - startTime;
 
-            Console.WriteLine("Calculated Match Percentage for {0} recipes in {1}", q4.Count(), e);
+            Console.WriteLine("Calculated Match Percentage for {0} recipes in {1}", RecipeIngredientsWithQuantityFromInventory.Count(), e);
 
             recommendedRecipesDataGrid.ItemsSource = searchResults.OrderByDescending(s => s.MatchPercentage);
-
         }
 
         private void recommendedRecipesDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            search_result_x r = (search_result_x)recommendedRecipesDataGrid.SelectedItem;
+            RecipeSearchResult r = (RecipeSearchResult)recommendedRecipesDataGrid.SelectedItem;
             var show = new ShowRecipe(r.Recipe);
             show.Show();
         }

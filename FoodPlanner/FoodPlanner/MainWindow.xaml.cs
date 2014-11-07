@@ -27,15 +27,8 @@ namespace FoodPlanner
         public MainWindow()
         {
             InitializeComponent();
-
             App.NavigationService = this.Frame.NavigationService;
 
-            db = new FoodContext();
-            CurrentUser = db.Users.First();
-
-
-            var openSearch = new Search();
-            openSearch.Show();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

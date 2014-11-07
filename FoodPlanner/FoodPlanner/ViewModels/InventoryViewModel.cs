@@ -11,24 +11,17 @@ namespace FoodPlanner.ViewModels
 
     public class InventoryViewModel
     {
-      
+
+        public CollectionViewSource InventoryIngredientsCollectionViewSource { get; private set; }
+
         public InventoryViewModel()
         {
             InventoryIngredientsCollectionViewSource = new CollectionViewSource();
 
-
-
-           // var db = new FoodContext(); //TODO: this connection should not remain open like this.
-           // var db = MainWindow.db;
-
-            //User CurrentUser = db.Users.First();
-            //InventoryIngredientsCollectionViewSource.Source = CurrentUser.InventoryIngredients; //db.InventoryIngredients.Local;
-
-            // db.Dispose();
-
+            InventoryIngredientsCollectionViewSource.Source = MainWindow.CurrentUser.InventoryIngredients; 
         }
 
-        public CollectionViewSource InventoryIngredientsCollectionViewSource { get; set; }
+      
 
     }
 }

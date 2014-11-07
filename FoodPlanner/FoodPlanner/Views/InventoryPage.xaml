@@ -23,7 +23,7 @@
                                          FilterMode="Contains" IsTextCompletionEnabled="True"
                                          MinimumPopulateDelay="500" MinimumPrefixLength="2" Populating="inventoryAutoCompleteBox_Populating" />-->
             <TextBox Width="100" Margin="5"></TextBox>
-            <Button x:Name="AddButton" Content="Add" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Margin="5" />
+            <Button x:Name="AddButton" Content="Add" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Margin="5" IsEnabled="False" />
         </StackPanel>
         <DataGrid x:Name="inventoryIngredientsDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="5" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False" Grid.Row="1">
             <DataGrid.Columns>

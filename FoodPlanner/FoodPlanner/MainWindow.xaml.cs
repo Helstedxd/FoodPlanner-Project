@@ -38,6 +38,7 @@ namespace FoodPlanner
             db.Dispose();
         }
 
+        //TODO: remove these click handlers.
         private void openSearch_Click(object sender, RoutedEventArgs e)
         {
             var openSearch = new Search();

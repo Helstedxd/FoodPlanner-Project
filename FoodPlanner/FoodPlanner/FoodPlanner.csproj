@@ -259,13 +259,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\calender.jpg" />
-    <Resource Include="Images\foodplan.jpg" />
-    <Resource Include="Images\recipes2.jpg" />
-    <Resource Include="Images\refigorator.jpg" />
     <Resource Include="Images\searchIcon.png" />
-    <Resource Include="Images\settings.jpg" />
-    <Resource Include="Images\shoppinglist.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\plusIcon.png" />
@@ -275,6 +269,24 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\completeShoppingListIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\181.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Calender.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Shoppinglist.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Foodplan.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Crate.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

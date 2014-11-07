@@ -14,21 +14,23 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="30"/>
             <ColumnDefinition/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="30"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <ListBox Name="listBoxRecipes" Grid.Row="1" Grid.ColumnSpan="3" ItemTemplate="{StaticResource ListRecipesTemplate}"/>
-        <Label>
+        
+        <Label Margin="5">
         	<Label.Background>
         		<ImageBrush ImageSource="/Images/searchIcon.png" Stretch="Uniform"/>
         	</Label.Background>
         </Label>
-    	<TextBox Grid.Column="1"/>
+    	<TextBox Grid.Column="1" FontSize="19"/>
     	<ComboBox Grid.Column="2"/>
+        
+        <ListBox Name="listBoxRecipes" Grid.Row="1" Grid.ColumnSpan="3" ItemTemplate="{StaticResource ListRecipesTemplate}"/>
     </Grid>
 </Page>

@@ -9,7 +9,7 @@
         <!--Start: Template for Image buttons-->
         <Style x:Key="ButtonIconTemplate" TargetType="{x:Type Button}">
             <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
-            <Setter Property="BorderThickness" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Margin" Value="2"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -31,17 +31,32 @@
         <!--Stat: Template for recipes list-->
         <DataTemplate x:Key="ListRecipesTemplate">
             <Grid>
-                <Border Margin="3" BorderBrush="#909090" BorderThickness="1" Padding="2" CornerRadius="2,2,2,2">
+                <Border Margin="3" BorderBrush="#909090" BorderThickness="1" Padding="2">
                     <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="75"/>
+                            <ColumnDefinition Width="275"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Grid.Column="0" Height="75" Width="75" Stretch="UniformToFill" Source="/FoodPlanner;component/Images/181.jpg" />
+
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="25"/>
+                            </Grid.RowDefinitions>
+                            
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="50"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Padding="5,0,0,0" Grid.Column="0" Grid.Row="0" FontSize="30" Content="Test"/>
+                            <Label Grid.Column="0" Grid.Row="1" Content="TEST"/>
+
+                            <Label Padding="0,0,5,0" Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Right" FontSize="30" Content="1/2"/>
+                            <Label Padding="0,0,5,0" Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Right" Content="4/5"/>
+                        </Grid>
                     </Grid>
                 </Border>
             </Grid>

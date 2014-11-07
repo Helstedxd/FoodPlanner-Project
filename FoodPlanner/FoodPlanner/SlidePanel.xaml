@@ -57,30 +57,33 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="81"/>
                 </Grid.RowDefinitions>
-                <Grid Background="Black" Grid.RowSpan="2" Grid.ColumnSpan="5"/>
-                <Button Grid.Row="1" Grid.Column="0" Style="{DynamicResource ButtonIconTemplate}" Command="{Binding GoToRecipesCommand}">
+
+                <Grid Background="Black" Grid.Row="0" Grid.RowSpan="1" Grid.ColumnSpan="5"/>
+                <Grid Background="White" Grid.Row="1" Grid.RowSpan="1" Grid.ColumnSpan="5"/>
+
+                <Button Margin="5" Grid.Row="1" Grid.Column="0" Style="{DynamicResource ButtonIconTemplate}" Command="{Binding GoToRecipesCommand}">
                     <Button.Background>
-                        <ImageBrush ImageSource="Images/calender.jpg"/>
+                        <ImageBrush ImageSource="Images/Calender.png"/>
                     </Button.Background>
                 </Button>
-                <Button Grid.Row="1" Grid.Column="1" Style="{DynamicResource ButtonIconTemplate}">
+                <Button Margin="5" Grid.Row="1" Grid.Column="1" Style="{DynamicResource ButtonIconTemplate}">
                     <Button.Background>
-						<ImageBrush ImageSource="Images/foodplan.jpg"/>
+						<ImageBrush ImageSource="Images/Foodplan.png"/>
 					</Button.Background>
 				</Button>
-                <Button Grid.Row="1" Grid.Column="2" Style="{DynamicResource ButtonIconTemplate}" Command="{Binding GoToShoppingListCommand}">
+                <Button Margin="5" Grid.Row="1" Grid.Column="2" Style="{DynamicResource ButtonIconTemplate}" Command="{Binding GoToShoppingListCommand}">
                     <Button.Background>
-						<ImageBrush ImageSource="Images/shoppinglist.jpg"/>
+						<ImageBrush ImageSource="Images/Shoppinglist.png"/>
 					</Button.Background>
 				</Button>
-                <Button Grid.Row="1" Grid.Column="3" Style="{DynamicResource ButtonIconTemplate}" Command="{Binding GoToInventoryCommand}">
+                <Button Margin="5" Grid.Row="1" Grid.Column="3" Style="{DynamicResource ButtonIconTemplate}" Command="{Binding GoToInventoryCommand}">
                     <Button.Background>
-						<ImageBrush ImageSource="Images/refigorator.jpg"/>
+                        <ImageBrush ImageSource="Images/Crate.png"/>
 					</Button.Background>
 				</Button>
-                <Button Grid.Row="1" Grid.Column="4" Style="{DynamicResource ButtonIconTemplate}" Command="{Binding GoToSettingsCommand}">
+                <Button Margin="5" Grid.Row="1" Grid.Column="4" Style="{DynamicResource ButtonIconTemplate}" Command="{Binding GoToSettingsCommand}">
                         <Button.Background>
-                            <ImageBrush ImageSource="Images/settings.jpg"/>
+                            <ImageBrush ImageSource="Images/Settings.png"/>
 					</Button.Background>
 				</Button>
 			</Grid>

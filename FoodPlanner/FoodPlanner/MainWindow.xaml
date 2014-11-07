@@ -30,7 +30,7 @@
         <Label Content="Slide Panel Testing" Margin="195,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
         -->
         
-        <Frame x:Name="Frame" Grid.Row="0"></Frame>
+        <Frame x:Name="Frame" Grid.Row="0" NavigationUIVisibility="Hidden"></Frame>
 
         <local:SlidePanel VerticalAlignment="Bottom" Grid.Row="2"/>
 

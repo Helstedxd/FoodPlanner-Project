@@ -11,24 +11,23 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="30"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
 
-        <ListView Grid.RowSpan="2" Grid.ColumnSpan="2" ItemsSource="{Binding}" >
-            <!--<ListView.View>
+        <ListView Grid.RowSpan="1" Grid.ColumnSpan="2" ItemsSource="{Binding}">
+            <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="Auto" Header="Name" DisplayMemberBinding="{Binding Path=Ingredient}" />
-                    <GridViewColumn Width="Auto" Header="Quantity" DisplayMemberBinding="{Binding Path=Quantity}" />
-                    <GridViewColumn Width="Auto" Header="Unit" DisplayMemberBinding="{Binding Path=Ingredient.Unit}" />
-
+                    <GridViewColumn Width="Auto" Header="Name" CellTemplate="{StaticResource ShoppingListNameCell}"/>
+                    <GridViewColumn Width="Auto" Header="Quantity" CellTemplate="{StaticResource ShoppingListQuantityCell}"/>
+                    <GridViewColumn Width="Auto" Header="Unit" CellTemplate="{StaticResource ShoppingListUnitCell}"/>
                 </GridView>
-            </ListView.View>-->
+            </ListView.View>
         </ListView>
 
         <Button Grid.Row="1" Grid.Column="2" Style="{DynamicResource ButtonIconTemplate}">
@@ -36,6 +35,7 @@
                 <ImageBrush ImageSource="/FoodPlanner;component/Images/completeShoppingListIcon.png"/>
             </Button.Background>
         </Button>
+        <TextBlock Grid.Row="1" TextWrapping="Wrap" TextAlignment="Center" Background="WhiteSmoke" Text="You are shopping for the next: x Days"/>
 
     </Grid>
 </Page>

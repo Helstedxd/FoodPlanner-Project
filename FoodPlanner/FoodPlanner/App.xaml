@@ -115,5 +115,32 @@
         	</Setter>
         </Style>
         <!--End: Template for recipes list-->
+        <!--Start: Template for Shopping List (element Listview)-->
+        <DataTemplate x:Key="ShoppingListNameCell">
+            <TextBlock Text="{Binding Path=Ingredient}" Foreground="Black"/>
+        </DataTemplate>
+        <DataTemplate x:Key="ShoppingListQuantityCell">
+            <TextBlock Text="{Binding Path=Quantity}" Foreground="Black"/>
+        </DataTemplate>
+        <DataTemplate x:Key="ShoppingListUnitCell">
+            <TextBlock Text="{Binding Path=Ingredient.Unit}" Foreground="Black"/>
+        </DataTemplate>
+        
+        <!--<Style x:Key="ShoppingListviewTemplate" TargetType="ListView">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListView">
+                        <GridViewColumnHeader>
+                            <GridView.ColumnCollection>
+                                <GridViewColumn Width="Auto" Header="Name" DisplayMemberBinding="{Binding Path=Ingredient}"/>
+                                <GridViewColumn Width="Auto" Header="Quantity" DisplayMemberBinding="{Binding Path=Quantity}"/>
+                                <GridViewColumn Width="Auto" Header="Unit" DisplayMemberBinding="{Binding Path=Ingredient.Unit}"/>
+                            </GridView.ColumnCollection>
+                        </GridViewColumnHeader>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style> -->
+        <!-- End: Template for Shopping List (element Listview)-->
     </Application.Resources>
 </Application>

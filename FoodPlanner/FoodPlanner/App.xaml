@@ -82,7 +82,7 @@
                             <ColumnDefinition Width="275"/>
                         </Grid.ColumnDefinitions>
 
-                        <Image Grid.Column="0" Height="75" Width="75" Stretch="UniformToFill" Source="{Binding ImageCache}" />
+                        <Image Grid.Column="0" Height="75" Width="75" Stretch="UniformToFill" Source="{Binding recipe.Image}" />
 
                         <Grid Grid.Column="1">
                             <Grid.RowDefinitions>

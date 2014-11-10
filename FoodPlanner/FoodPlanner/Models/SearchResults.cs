@@ -57,6 +57,7 @@ namespace FoodPlanner.Models
                 _partialMatch = value;
             }
         }
+
         public int keyWordMatch
         {
             get
@@ -81,28 +82,6 @@ namespace FoodPlanner.Models
         {
             _recipe = recipe;
             _ingredients = ingredients;
-        }
-
-        public string ImageCache
-        {
-            get
-            {
-                WebClient client = new WebClient();
-                string path = Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString() + "/imageCache";
-
-                if (!Directory.Exists(path))
-                    Directory.CreateDirectory(path);
-
-                if (!File.Exists(path + "/" + _recipe.ID + ".jpg"))
-                {
-                    client.DownloadFileAsync(new Uri(recipe.Image), path + "/" + _recipe.ID + ".jpg");
-                    return recipe.Image;
-                }
-                else
-                {
-                    return path + "/" + _recipe.ID + ".jpg";
-                }
-            }
         }
     }
 }

@@ -29,10 +29,10 @@
             </Label.Background>
         </Label>
 
-        <TextBox Grid.Column="1" FontSize="19" Name="Search" Text="{Binding Path=SearchDefine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=3000}"/>
+        <TextBox Grid.Column="1" FontSize="19" Name="Search" Text="{Binding Path=SearchDefine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=1000}"/>
 
         <ComboBox Grid.Column="2"/>
 
-        <ListBox Name="listBoxRecipes" Grid.Row="1" Grid.ColumnSpan="3" ItemTemplate="{StaticResource ListRecipesTemplate}"  ItemsSource="{Binding Path=listOstrings, Mode=OneWay}"/>
+        <ListBox Name="listBoxRecipes" Grid.Row="1" Grid.ColumnSpan="3" ItemTemplate="{StaticResource ListRecipesTemplate}"  ItemsSource="{Binding Path=listOfSearchResults, Mode=OneWay}"/>
     </Grid>
 </Page>

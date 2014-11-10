@@ -30,12 +30,12 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Style="{DynamicResource ButtonIconTemplate}">
+        <Button Click="{Binding Path=weekUp()}" Grid.Row="0" Style="{DynamicResource ButtonIconTemplate}">
             <Button.Background>
                 <ImageBrush ImageSource="/Images/upArrowIcon.png" Stretch="Uniform"/>
             </Button.Background>
         </Button>
-        <Button Content="Monday" Grid.Row="1" Style="{DynamicResource ButtonTextTemplate}"/>
+        <Button Content="{Binding Path=mondayString, Mode=OneWay}" Grid.Row="1" Style="{DynamicResource ButtonTextTemplate}"/>
         <Button Content="Tuesday" Grid.Row="2" Style="{DynamicResource ButtonTextTemplate}"/>
         <Button Content="Wednesday" Grid.Row="3" Style="{DynamicResource ButtonTextTemplate}"/>
         <Button Content="Thursday" Grid.Row="4" Style="{DynamicResource ButtonTextTemplate}"/>

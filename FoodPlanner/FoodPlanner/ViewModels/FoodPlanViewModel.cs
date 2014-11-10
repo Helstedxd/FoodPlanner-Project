@@ -20,31 +20,110 @@ namespace FoodPlanner.ViewModels
 {
     public class FoodPlanViewModel
     {
+        public FoodPlanViewModel()
+        {
+            activeDate = DateTime.Now;
+        }
+
+        private DateTime activeDate
+        {
+            get;
+            set;
+        }
+
+        public string mondayString
+        {
+            get
+            {
+                return day(DayOfWeek.Monday);
+            }
+        }
+        public string tuesdayString
+        {
+            get
+            {
+                return day(DayOfWeek.Tuesday);
+            }
+        }
+        public string wednesdayString
+        {
+            get
+            {
+                return day(DayOfWeek.Wednesday);
+            }
+        }
+        public string thursdayString
+        {
+            get
+            {
+                return day(DayOfWeek.Thursday);
+            }
+        }
+        public string fridatString
+        {
+            get
+            {
+                return day(DayOfWeek.Friday);
+            }
+        }
+        public string saturdayString
+        {
+            get
+            {
+                return day(DayOfWeek.Saturday);
+            }
+        }
+        public string sundayString
+        {
+            get
+            {
+                return day(DayOfWeek.Sunday);
+            }
+        }
+
+
+        public void weekUp()
+        {
+            activeDate = activeDate.AddDays(7);
+        }
+        public void weekDown()
+        {
+            activeDate = activeDate.AddDays(-7);
+        }
+        private string day(DayOfWeek day)
+        {
+            string result;
+            int diff = activeDate.DayOfWeek - day;
+
+            return result = activeDate.AddDays(-diff).Date.ToString();
+        }
+
+        /*        
         private string getStringDay(int day)
         {
             string stringDay;
             switch (day)
             {
                 case 1:
-                    stringDay = "Mon";
+                    stringDay = "Monday";
                     break;
                 case 2:
-                    stringDay = "Tue";
+                    stringDay = "Tuesday";
                     break;
                 case 3:
-                    stringDay = "Wed";
+                    stringDay = "Wednesday";
                     break;
                 case 4:
-                    stringDay = "Thu";
+                    stringDay = "Thursday";
                     break;
                 case 5:
-                    stringDay = "Fri";
+                    stringDay = "Friday";
                     break;
                 case 6:
-                    stringDay = "Sat";
+                    stringDay = "Saturday";
                     break;
                 case 7:
-                    stringDay = "Sun";
+                    stringDay = "Sunday";
                     break;
                 default:
                     stringDay = "Error, out of reach";
@@ -213,5 +292,23 @@ namespace FoodPlanner.ViewModels
                 butDown.Content = "v week: " + (newWeek(pastWeek, false)).ToString(); //gets an updated 'number' and updates the text on the butDown
             }
         }
+        private string updateDate(string date, bool goesUp) 
+        { 
+            string[] split = date.Split('.'); //date 23.02.2014
+            string result;
+            int day = Convert.ToInt16(split[0]), month = Convert.ToInt16(split[1]), year = Convert.ToInt16(split[2]);
+            DateTime moment = new DateTime(year, month, day);
+
+            if (goesUp)
+            {
+                moment = moment.AddDays(7);
+            }
+            else
+            {
+                moment = moment.AddDays(-7);
+            }
+            return result = getStringDay(Convert.ToInt16(moment.DayOfWeek)) + "\n" + moment.Day + "." + moment.Month;
+        }
+        */
     }
 }

@@ -21,29 +21,29 @@ namespace FoodPlanner.Views {
     /// </summary>
     public partial class ShoppingListPage : Page {
 
-        public static FoodContext db;
+        /*public static FoodContext db;
         public static User CurrentUser { get; set; }
-        public ObservableCollection<RecipeIngredient> ShoppingList = new ObservableCollection<RecipeIngredient>();
+        public ObservableCollection<RecipeIngredient> ShoppingList = new ObservableCollection<RecipeIngredient>();*/
 
         public ShoppingListPage() {
 
             InitializeComponent();
             //this.DataContext = ShoppingList;
 
-            db = new FoodContext();
+           /* db = new FoodContext();
             CurrentUser = db.Users.First();
 
-            CreateShoppingList();
+            CreateShoppingList();*/
         }
 
-        private void CreateShoppingList() {
+        /*private void CreateShoppingList() {
             List<InventoryIngredient> inventoryIngrdients = db.InventoryIngredients.Where(m => m.UserID == CurrentUser.ID).ToList();
 
             List<RecipeIngredient> recipeIngredients = db.RecipeIngredients.Where(ri => db.Meals.Where(m => m.UserID == CurrentUser.ID).Any(m => m.RecipeID == ri.RecipeID)).ToList();
 
-            /*foreach (RecipeIngredient ri in recipeIngredients) {
+            foreach (RecipeIngredient ri in recipeIngredients) {
                 MessageBox.Show(ri.Quantity.ToString());
-            }*/
+            }
 
             //Tilføj elementer til shopping list med fælgende kriterie
             //RecipeIngrediensen er ikke i Inventory, recipeingrediensen har fratrukket hvad der er i Inventory
@@ -56,10 +56,10 @@ namespace FoodPlanner.Views {
                 }
             }
 
-            /*foreach (RecipeIngredient ri in ShoppingList) {
+            foreach (RecipeIngredient ri in ShoppingList) {
                 MessageBox.Show(ri.Ingredient.Name);
             }*/
 
-        }
+        //}
     }
 }

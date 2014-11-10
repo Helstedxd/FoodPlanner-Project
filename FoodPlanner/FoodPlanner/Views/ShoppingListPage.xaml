@@ -23,7 +23,7 @@
         </Grid.RowDefinitions>
 
 
-        <ListView Grid.Row="1" Grid.RowSpan="1" Grid.ColumnSpan="2" ItemsSource="{Binding}">
+        <ListView Grid.Row="1" Grid.RowSpan="1" Grid.ColumnSpan="2" ItemsSource="{Binding ShoppingListCollection}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="Auto" Header="Name" CellTemplate="{StaticResource ShoppingListNameCell}"/>

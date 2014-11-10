@@ -43,9 +43,9 @@ namespace FoodPlanner
 
             foreach (IGrouping<int, RecipeIngredient> recipeGroup in recipeIngredient)
             {
-                SearchResults recipeResult = new SearchResults(allRecipes.Where(ar => ar.ID == recipeGroup.FirstOrDefault().RecipeID).FirstOrDefault());
+                SearchResults recipeResult = new SearchResults(allRecipes.Where(ar => ar.ID == recipeGroup.FirstOrDefault().RecipeID).FirstOrDefault(), recipeGroup.Count());
 
-                if (searchQuery.Any(s => recipeResult.Recipe.Title.Contains(s)))
+                if (searchQuery.Any(s => recipeResult.recipe.Title.Contains(s)))
                 {
                     recipeResult.keyWordMatch++;
                 }
@@ -73,14 +73,14 @@ namespace FoodPlanner
                 results.Add(recipeResult);
             }
 
-            listResults.ItemsSource = results.OrderByDescending(x => x.fullMatch).ThenByDescending(x => x.partialMatch).ThenByDescending(x => x.keyWordMatch).ThenBy(x => x.Recipe.Title);
+            listResults.ItemsSource = results.OrderByDescending(x => x.fullMatch).ThenByDescending(x => x.partialMatch).ThenByDescending(x => x.keyWordMatch).ThenBy(x => x.recipe.Title);
         }
 
         private void listResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                var showRecipe = new ShowRecipe(((SearchResults)listResults.SelectedItem).Recipe);
+                var showRecipe = new ShowRecipe(((SearchResults)listResults.SelectedItem).recipe);
                 showRecipe.ShowDialog();
             }
 

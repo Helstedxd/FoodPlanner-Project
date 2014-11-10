@@ -27,7 +27,7 @@
         </StackPanel>
         <DataGrid x:Name="inventoryIngredientsDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="5" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False" Grid.Row="1">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="ingredientColumn" Width="Auto" Header="Ingredient" Binding="{Binding Ingredient}"/>
+                <DataGridTextColumn x:Name="ingredientColumn" Width="Auto" Header="Ingredient" IsReadOnly="True" Binding="{Binding Ingredient}"/>
                 <DataGridTextColumn x:Name="quantityColumn" Width="Auto" Header="Quantity" Binding="{Binding Quantity}"/>
                 <DataGridTemplateColumn x:Name="purchaseDateColumn" Width="Auto" Header="Purchase Date">
                     <DataGridTemplateColumn.CellTemplate>

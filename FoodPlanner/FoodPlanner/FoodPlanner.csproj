@@ -79,8 +79,6 @@
     <Compile Include="FoodPlanPage.xaml.cs">
       <DependentUpon>FoodPlanPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Images\Helper Classes\ObservableObject.cs" />
-    <Compile Include="Images\Helper Classes\RelayCommand.cs" />
     <Compile Include="Ingredient.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
@@ -98,12 +96,14 @@
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\RecipeIngredient.cs" />
     <Compile Include="Models\SearchResults.cs" />
+    <Compile Include="Helper Classes\ObservableObject.cs" />
     <Compile Include="Recipe.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="RecipeIngredient.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Helper Classes\RelayCommand.cs" />
     <Compile Include="ViewModels\FoodPlanViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\RecipesViewModel.cs" />

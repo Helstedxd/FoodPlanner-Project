@@ -82,7 +82,7 @@
                             <ColumnDefinition Width="275"/>
                         </Grid.ColumnDefinitions>
 
-                        <Image Grid.Column="0" Height="75" Width="75" Stretch="UniformToFill" Source="/FoodPlanner;component/Images/181.jpg" />
+                        <Image Grid.Column="0" Height="75" Width="75" Stretch="UniformToFill" Source="{Binding ImageCache}" />
 
                         <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
@@ -95,10 +95,10 @@
                                 <ColumnDefinition Width="100"/>
                             </Grid.ColumnDefinitions>
 
-                            <Label Padding="5,0,0,0" Grid.Column="0" Grid.Row="0" FontSize="30" Content="Test"/>
-                            <Label Grid.Column="0" Grid.Row="1" Content="TEST"/>
+                            <Label Padding="5,0,0,0" Grid.Column="0" Grid.Row="0" FontSize="30" Content="{Binding recipe.Title}"/>
+                            <Label Grid.Column="0" Grid.Row="1" Content="Stor FED PIKKEMAND"/>
 
-                            <Label Padding="0,0,5,0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" HorizontalContentAlignment="Right" FontSize="50" Content="1/2"/>
+                            <Label Padding="0,0,5,0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" HorizontalContentAlignment="Right" FontSize="50" Content="{Binding getMatchPercentage}"/>
                         </Grid>
                     </Grid>
                 </Border>

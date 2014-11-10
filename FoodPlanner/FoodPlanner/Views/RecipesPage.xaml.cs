@@ -24,7 +24,15 @@ namespace FoodPlanner.Views
         public Recipes()
         {
             InitializeComponent();
-            listBoxRecipes.ItemsSource = MainWindow.db.Recipes.Take(20).ToList();
+            List<SearchResults> testtest = new List<SearchResults>();
+            List<Recipe> test2 = MainWindow.db.Recipes.Take(20).ToList();
+
+            foreach (Recipe r in test2)
+            {
+                testtest.Add(new SearchResults(r, 1) { fullMatch=0, partialMatch=0, keyWordMatch=0 });
+            }
+
+            listBoxRecipes.ItemsSource = testtest;
         }
     }
 }

@@ -28,7 +28,7 @@ namespace FoodPlanner.Views {
         public ShoppingListPage() {
 
             InitializeComponent();
-            this.DataContext = ShoppingList;
+            //this.DataContext = ShoppingList;
 
             db = new FoodContext();
             CurrentUser = db.Users.First();

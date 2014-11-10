@@ -76,14 +76,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Foodplan.xaml.cs">
-      <DependentUpon>Foodplan.xaml</DependentUpon>
-    </Compile>
     <Compile Include="FoodPlanPage.xaml.cs">
       <DependentUpon>FoodPlanPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helper Classes\ObservableObject.cs" />
-    <Compile Include="Helper Classes\RelayCommand.cs" />
+    <Compile Include="Images\Helper Classes\ObservableObject.cs" />
+    <Compile Include="Images\Helper Classes\RelayCommand.cs" />
     <Compile Include="Ingredient.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
@@ -107,6 +104,7 @@
     <Compile Include="RecipeIngredient.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\FoodPlanViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\RecipesViewModel.cs" />
     <Compile Include="Views\MealPlanPage.xaml.cs">
@@ -140,10 +138,6 @@
     <Compile Include="Views\InventoryPage.xaml.cs">
       <DependentUpon>InventoryPage.xaml</DependentUpon>
     </Compile>
-    <Page Include="Foodplan.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="FoodPlanPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

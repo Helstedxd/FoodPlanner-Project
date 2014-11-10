@@ -115,8 +115,4 @@ namespace FoodPlanner.ViewModels
 
 
     }
-
-
-
-
 }

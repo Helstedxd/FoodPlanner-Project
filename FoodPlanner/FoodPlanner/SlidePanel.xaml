@@ -66,7 +66,7 @@
                         <ImageBrush ImageSource="Images/Calender.png"/>
                     </Button.Background>
                 </Button>
-                <Button Margin="5" Grid.Row="1" Grid.Column="1" Style="{DynamicResource ButtonIconTemplate}">
+                <Button Margin="5" Grid.Row="1" Grid.Column="1" Style="{DynamicResource ButtonIconTemplate}" Command="{Binding GoToMealPlanCommand}">
                     <Button.Background>
 						<ImageBrush ImageSource="Images/Foodplan.png"/>
 					</Button.Background>

@@ -25,6 +25,7 @@ namespace FoodPlanner.ViewModels
         public FoodPlanViewModel()
         {
             ActiveDate = DateTime.Now;
+            
         }
 
         private DateTime _activeDate;
@@ -123,8 +124,7 @@ namespace FoodPlanner.ViewModels
             }
             string result;
 
-
-            return result = ActiveDate.AddDays(-diff).Date.ToString("dddd\ndd/MM");
+            return result = ActiveDate.AddDays(-diff).Date.ToString("dddd\ndd/MM",CultureInfo.CreateSpecificCulture("en-US"));
         }
 
 

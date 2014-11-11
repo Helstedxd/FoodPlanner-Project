@@ -29,22 +29,12 @@ namespace FoodPlanner.ViewModels
 
         public InventoryViewModel()
         {
-            InventoryIngredientsCollectionViewSource.Source = App.CurrentUser.InventoryIngredients;
+            InventoryIngredients = App.CurrentUser.InventoryIngredients;
         }
 
-        #region Properties/Commands
+        #region Properties & Commands
 
-        public CollectionViewSource InventoryIngredientsCollectionViewSource
-        {
-            get
-            {
-                if (_inventoryIngredientsCollectionViewSource == null)
-                {
-                    _inventoryIngredientsCollectionViewSource = new CollectionViewSource();
-                }
-                return _inventoryIngredientsCollectionViewSource;
-            }
-        }
+        public ObservableCollection<InventoryIngredient> InventoryIngredients { get; set; }
 
         public IEnumerable<Ingredient> FoundIngredients
         {

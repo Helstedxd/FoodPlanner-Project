@@ -46,10 +46,29 @@ namespace FoodPlanner
         {
             List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
 
-            var test = (from ri in App.db.RecipeIngredients join i in App.db.Ingredients on ri.IngredientID equals i.ID join r in App.db.Recipes on ri.RecipeID equals r.ID select ri);
+            try
+            {
+                var test = (from ri in App.db.RecipeIngredients
+                            join i in App.db.Ingredients on ri.IngredientID equals i.ID
+                            join r in App.db.Recipes on ri.RecipeID equals r.ID
+                            where searchQuery.Any(s => r.Title.Contains(s)) || searchQuery.Any(s => i.Name.Contains(s))
+                            group ri by ri.RecipeID into rig
+                            select new SearchResults2() { recipe = rig.FirstOrDefault().Recipe });
+                //select rif);
+                MessageBox.Show(test.Count().ToString());
+
+                listResults.ItemsSource = test.ToList();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.InnerException.Message);
+            }
+            /*
+            MessageBox.Show(test.Count().ToString());
 
             listResults.ItemsSource = test.ToList();
-
+            */
 
 
 

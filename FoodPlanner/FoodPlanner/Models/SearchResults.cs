@@ -80,6 +80,10 @@ namespace FoodPlanner.Models
             {
                 _ingredients = value;
             }
+            get
+            {
+                return _ingredients;
+            }
         }
 
         public void addIngredient(Ingredient ingredient)

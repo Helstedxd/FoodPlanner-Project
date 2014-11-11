@@ -53,7 +53,7 @@ namespace FoodPlanner
                             join r in App.db.Recipes on ri.RecipeID equals r.ID
                             where searchQuery.Any(s => r.Title.Contains(s)) || searchQuery.Any(s => i.Name.Contains(s))
                             group ri by ri.RecipeID into rig
-                            select new SearchResults2() { recipe = rig.FirstOrDefault().Recipe });
+                            select new SearchResults2() { recipe = rig.FirstOrDefault().Recipe, ingredients = rig.Select(i => i.Ingredient).ToList() });
                 //select rif);
                 MessageBox.Show(test.Count().ToString());
 

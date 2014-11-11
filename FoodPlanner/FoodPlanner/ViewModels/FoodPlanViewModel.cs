@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -14,89 +13,146 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Globalization;
 using FoodPlanner.Models;
+using FoodPlanner.Helper_Classes;
 
 
 namespace FoodPlanner.ViewModels
 {
-    public class FoodPlanViewModel
+    public class FoodPlanViewModel : ObservableObject
     {
+        private ICommand _goWeekUp, 
+                         _goWeekDown;
         public FoodPlanViewModel()
         {
-            activeDate = DateTime.Now;
+            ActiveDate = DateTime.Now;
         }
 
-        private DateTime activeDate
+        private DateTime _activeDate;
+        private DateTime ActiveDate
         {
-            get;
-            set;
-        }
-
-        public string mondayString
-        {
-            get
-            {
-                return day(DayOfWeek.Monday);
-            }
-        }
-        public string tuesdayString
-        {
-            get
-            {
-                return day(DayOfWeek.Tuesday);
-            }
-        }
-        public string wednesdayString
-        {
-            get
-            {
-                return day(DayOfWeek.Wednesday);
-            }
-        }
-        public string thursdayString
-        {
-            get
-            {
-                return day(DayOfWeek.Thursday);
-            }
-        }
-        public string fridatString
-        {
-            get
-            {
-                return day(DayOfWeek.Friday);
-            }
-        }
-        public string saturdayString
-        {
-            get
-            {
-                return day(DayOfWeek.Saturday);
-            }
-        }
-        public string sundayString
-        {
-            get
-            {
-                return day(DayOfWeek.Sunday);
+            get { return _activeDate; }
+            set { 
+                _activeDate = value;
+                OnPropertyChanged("MondayString");
+                OnPropertyChanged("TuesdayString");
+                OnPropertyChanged("WednesdayString");
+                OnPropertyChanged("ThursdayString");
+                OnPropertyChanged("FridayString");
+                OnPropertyChanged("SaturdayString");
+                OnPropertyChanged("SundayString");
+                OnPropertyChanged("WeekString");
             }
         }
 
-
-        public void weekUp()
+        public string MondayString
         {
-            activeDate = activeDate.AddDays(7);
+            get
+            {
+                return Day(DayOfWeek.Monday);
+            }
         }
-        public void weekDown()
+        public string TuesdayString
         {
-            activeDate = activeDate.AddDays(-7);
+            get
+            {
+                return Day(DayOfWeek.Tuesday);
+            }
         }
-        private string day(DayOfWeek day)
+        public string WednesdayString
         {
+            get
+            {
+                return Day(DayOfWeek.Wednesday);
+            }
+        }
+        public string ThursdayString
+        {
+            get
+            {
+                return Day(DayOfWeek.Thursday);
+            }
+        }
+        public string FridayString
+        {
+            get
+            {
+                return Day(DayOfWeek.Friday);
+            }
+        }
+        public string SaturdayString
+        {
+            get
+            {
+                return Day(DayOfWeek.Saturday);
+            }
+        }
+        public string SundayString
+        {
+            get
+            {
+                return Day(DayOfWeek.Sunday);
+            }
+        }
+        public string WeekString
+        {
+            get
+            {
+                DateTimeFormatInfo timeFormat = DateTimeFormatInfo.CurrentInfo;
+                Calendar calendar = timeFormat.Calendar;
+                return "Week " + calendar.GetWeekOfYear(ActiveDate, timeFormat.CalendarWeekRule, timeFormat.FirstDayOfWeek).ToString();
+            }
+        }
+        public void WeekUp()
+        {
+            ActiveDate = ActiveDate.AddDays(7);
+        }
+        public void WeekDown()
+        {
+            ActiveDate = ActiveDate.AddDays(-7);
+        }
+        private string Day(DayOfWeek day)
+        {
+            int diff;
+            if (day == DayOfWeek.Sunday)
+            {
+                diff = Convert.ToInt16(ActiveDate.DayOfWeek) - 7;
+            }
+            else
+            {
+                diff = ActiveDate.DayOfWeek - day;
+            }
             string result;
-            int diff = activeDate.DayOfWeek - day;
 
-            return result = activeDate.AddDays(-diff).Date.ToString();
+
+            return result = ActiveDate.AddDays(-diff).Date.ToString("dddd\ndd/MM");
         }
+
+
+        public ICommand GoAWeekUpCommand
+        {
+            get
+            {
+                if (_goWeekUp == null)
+                {
+                    _goWeekUp = new RelayCommand(p => WeekUp());
+                }
+
+                return _goWeekUp;
+            }
+        }
+        public ICommand GoAWeekDownCommand
+        {
+            get
+            {
+                if (_goWeekDown == null)
+                {
+                    _goWeekDown = new RelayCommand(p => WeekDown());
+                }
+
+                return _goWeekDown;
+            }
+        }
+
 
         /*        
         private string getStringDay(int day)

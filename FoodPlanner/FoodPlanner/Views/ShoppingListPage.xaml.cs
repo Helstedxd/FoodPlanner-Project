@@ -15,25 +15,41 @@ using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using FoodPlanner.Models;
 
-namespace FoodPlanner.Views {
+namespace FoodPlanner.Views
+{
     /// <summary>
     /// Interaction logic for ShoppingListPage.xaml
     /// </summary>
-    public partial class ShoppingListPage : Page {
+    public partial class ShoppingListPage : Page
+    {
 
         /*public static FoodContext db;
         public static User CurrentUser { get; set; }
         public ObservableCollection<RecipeIngredient> ShoppingList = new ObservableCollection<RecipeIngredient>();*/
 
-        public ShoppingListPage() {
+        public ShoppingListPage()
+        {
 
             InitializeComponent();
             //this.DataContext = ShoppingList;
 
-           /* db = new FoodContext();
-            CurrentUser = db.Users.First();
+            var MealRecipeIngredientsTotalQuantity =
+                from ri in App.db.RecipeIngredients
+                where App.db.Meals.Any(m => m.UserID == App.CurrentUser.ID && m.RecipeID == ri.RecipeID)
+                group ri by ri.IngredientID into rig
+                select new
+                {
+                    IngredientID = rig.FirstOrDefault().IngredientID,
+                    TotalQuantity = rig.Sum(i => i.Quantity)
+                };
 
-            CreateShoppingList();*/
+            var gideonblegmand = MealRecipeIngredientsTotalQuantity.ToList();
+
+
+            /* db = new FoodContext();
+             CurrentUser = db.Users.First();
+
+             CreateShoppingList();*/
         }
 
         /*private void CreateShoppingList() {

@@ -14,19 +14,25 @@ namespace FoodPlanner.ViewModels
 
     public class InventoryViewModel : ObservableObject
     {
-        private CollectionViewSource _inventoryIngredientsCollectionViewSource;
-        private ICommand _saveInventoryCommand;
 
+        #region Fields
+
+        private CollectionViewSource _inventoryIngredientsCollectionViewSource;
         private int _maximumAutoCompleteItems = 10;
         private List<Ingredient> _queriedIngredients;
         private string _searchText;
-        private string _lastSearchText = ""; // when we last queried the db
+        private string _lastSearchText; // when we last queried the db
 
+        private ICommand _saveInventoryCommand;
+
+        #endregion
 
         public InventoryViewModel()
         {
-            InventoryIngredientsCollectionViewSource.Source = MainWindow.CurrentUser.InventoryIngredients;
+            InventoryIngredientsCollectionViewSource.Source = App.CurrentUser.InventoryIngredients;
         }
+
+        #region Properties/Commands
 
         public CollectionViewSource InventoryIngredientsCollectionViewSource
         {
@@ -52,7 +58,10 @@ namespace FoodPlanner.ViewModels
             }
         }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
         public string SearchText
         {
             get
@@ -82,20 +91,22 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-        // Methods
+        #endregion
+
+        #region Methods
 
         private void SaveInventory()
         {
             // Remove unlinked items from the database
-            foreach (var inventoryItem in MainWindow.db.InventoryIngredients.Local.ToList())
+            foreach (var inventoryItem in App.db.InventoryIngredients.Local.ToList())
             {
                 if (inventoryItem.Ingredient == null)
                 {
-                    MainWindow.db.InventoryIngredients.Remove(inventoryItem);
+                    App.db.InventoryIngredients.Remove(inventoryItem);
                 }
             }
 
-            MainWindow.db.SaveChanges();
+            App.db.SaveChanges();
 
             // Refresh the grids so the database generated values show up. 
             //this.inventoryIngredientsDataGrid.Items.Refresh();
@@ -116,10 +127,10 @@ namespace FoodPlanner.ViewModels
 
             // Only query the database if the search string has changed
             // and a continues search string could change the previously fetched items.
-            if (_lastSearchText != "" &&
+            if (_lastSearchText != null && _lastSearchText != "" &&
                 SearchText.StartsWith(_lastSearchText, StringComparison.OrdinalIgnoreCase) &&
                 //  _queriedIngredients.Count != 0 &&
-              _queriedIngredients.OfType<object>().Count() < _maximumAutoCompleteItems)
+              _queriedIngredients.Count() < _maximumAutoCompleteItems)
             {
                 Console.WriteLine("Just avoided a unnecessary db lookup ;)");
             }
@@ -135,7 +146,7 @@ namespace FoodPlanner.ViewModels
         {
             string originalSearchText = SearchText;
 
-            var foundIngredientsInDb = MainWindow.db.Ingredients
+            var foundIngredientsInDb = App.db.Ingredients
                 .Where(i => i.Name.ToLower().Contains(originalSearchText.ToLower()))
                 .Take(_maximumAutoCompleteItems)
                 .OrderBy(i => i.Name.ToLower().IndexOf(originalSearchText));
@@ -153,6 +164,7 @@ namespace FoodPlanner.ViewModels
 
         }
 
+        #endregion
 
     }
 }

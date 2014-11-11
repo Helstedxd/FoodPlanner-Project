@@ -22,8 +22,8 @@ namespace FoodPlanner
     /// </summary>
     public partial class Search : Window
     {
-        private List<inventoryListCombinedByQuantity> inventoryList = (from ii in MainWindow.db.InventoryIngredients
-                                                                       where ii.UserID == MainWindow.CurrentUser.ID
+        private List<inventoryListCombinedByQuantity> inventoryList = (from ii in App.db.InventoryIngredients
+                                                                       where ii.UserID == App.CurrentUser.ID
                                                                        group ii by ii.IngredientID into iig
                                                                        select new inventoryListCombinedByQuantity()
                                                                        {
@@ -46,7 +46,7 @@ namespace FoodPlanner
         {
             List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
 
-            var test = (from ri in MainWindow.db.RecipeIngredients join i in MainWindow.db.Ingredients on ri.IngredientID equals i.ID join r in MainWindow.db.Recipes on ri.RecipeID equals r.ID select ri);
+            var test = (from ri in App.db.RecipeIngredients join i in App.db.Ingredients on ri.IngredientID equals i.ID join r in App.db.Recipes on ri.RecipeID equals r.ID select ri);
 
             listResults.ItemsSource = test.ToList();
 

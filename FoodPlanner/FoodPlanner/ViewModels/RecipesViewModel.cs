@@ -11,7 +11,7 @@ namespace FoodPlanner.ViewModels
 {
     class RecipesViewModel
     {
-        private List<InventoryIngredient> inventoryList = MainWindow.db.InventoryIngredients.Where(ii => ii.UserID == MainWindow.CurrentUser.ID).ToList();
+        private List<InventoryIngredient> inventoryList = App.db.InventoryIngredients.Where(ii => ii.UserID == App.CurrentUser.ID).ToList();
 
         public RecipesViewModel()
         {
@@ -26,11 +26,11 @@ namespace FoodPlanner.ViewModels
 
                 List<string> searchQuery = value.Split(',').Select(s => s.Trim()).ToList();
 
-                IQueryable<Recipe> recipes = MainWindow.db.Recipes.Where(r => searchQuery.Any(s => r.Title.Contains(s)));
-                IQueryable<Ingredient> ingredients = MainWindow.db.Ingredients.Where(i => searchQuery.Any(s => i.Name.Contains(s)));
-                IQueryable<IGrouping<int, RecipeIngredient>> recipeIngredient = MainWindow.db.RecipeIngredients.Where(ri => recipes.Any(r => r.ID == ri.RecipeID) || ingredients.Any(i => i.ID == ri.IngredientID)).GroupBy(ri => ri.RecipeID);
+                IQueryable<Recipe> recipes = App.db.Recipes.Where(r => searchQuery.Any(s => r.Title.Contains(s)));
+                IQueryable<Ingredient> ingredients = App.db.Ingredients.Where(i => searchQuery.Any(s => i.Name.Contains(s)));
+                IQueryable<IGrouping<int, RecipeIngredient>> recipeIngredient = App.db.RecipeIngredients.Where(ri => recipes.Any(r => r.ID == ri.RecipeID) || ingredients.Any(i => i.ID == ri.IngredientID)).GroupBy(ri => ri.RecipeID);
 
-                List<Recipe> allRecipes = MainWindow.db.Recipes.ToList();
+                List<Recipe> allRecipes = App.db.Recipes.ToList();
                 List<Ingredient> ingredientsList = ingredients.ToList();
 
                 foreach (IGrouping<int, RecipeIngredient> recipeGroup in recipeIngredient)
@@ -66,7 +66,7 @@ namespace FoodPlanner.ViewModels
                 }
 
 
-                List<Recipe> test2 = MainWindow.db.Recipes.Where(r => r.Title.Contains(value)).Take(20).ToList();
+                List<Recipe> test2 = App.db.Recipes.Where(r => r.Title.Contains(value)).Take(20).ToList();
 
                 foreach (Recipe r in test2)
                 {

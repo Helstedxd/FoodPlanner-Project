@@ -12,23 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using FoodPlanner.Models;
 
 namespace FoodPlanner.Views
 {
     /// <summary>
-    /// Interaction logic for InventoryPage.xaml
+    /// Interaction logic for RecipePage.xaml
     /// </summary>
-    public partial class InventoryPage : Page
+    public partial class RecipePage : Page
     {
-        public InventoryPage()
+        public RecipePage()
         {
             InitializeComponent();
-        }
-
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("I don't work yet nigga..");
         }
     }
 }

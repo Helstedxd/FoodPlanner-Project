@@ -41,8 +41,8 @@ namespace FoodPlanner
             */
 
             var InventoryIngredientsTotalQuantity =
-                from ii in MainWindow.db.InventoryIngredients
-                where ii.UserID == MainWindow.CurrentUser.ID
+                from ii in App.db.InventoryIngredients
+                where ii.UserID == App.CurrentUser.ID
                 group ii by ii.IngredientID into iig
                 select new
                 {
@@ -52,7 +52,7 @@ namespace FoodPlanner
 
             var RecipeIngredientsWithQuantityFromInventory =
                 from iitq in InventoryIngredientsTotalQuantity
-                join ri in MainWindow.db.RecipeIngredients on iitq.IngredientID equals ri.IngredientID
+                join ri in App.db.RecipeIngredients on iitq.IngredientID equals ri.IngredientID
                 group new
                 {
                     Recipe = ri.Recipe,

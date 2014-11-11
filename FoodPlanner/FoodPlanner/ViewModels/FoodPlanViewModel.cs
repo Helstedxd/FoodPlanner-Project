@@ -28,6 +28,7 @@ namespace FoodPlanner.ViewModels
             
         }
 
+        #region Propertie
         private DateTime _activeDate;
         private DateTime ActiveDate
         {
@@ -103,6 +104,9 @@ namespace FoodPlanner.ViewModels
                 return "Week " + calendar.GetWeekOfYear(ActiveDate, timeFormat.CalendarWeekRule, timeFormat.FirstDayOfWeek).ToString();
             }
         }
+        #endregion
+
+        #region Methods
         public void WeekUp()
         {
             ActiveDate = ActiveDate.AddDays(7);
@@ -126,8 +130,9 @@ namespace FoodPlanner.ViewModels
 
             return result = ActiveDate.AddDays(-diff).Date.ToString("dddd\ndd/MM",CultureInfo.CreateSpecificCulture("en-US"));
         }
+        #endregion
 
-
+        #region Commands
         public ICommand GoAWeekUpCommand
         {
             get
@@ -152,7 +157,7 @@ namespace FoodPlanner.ViewModels
                 return _goWeekDown;
             }
         }
-
+        #endregion
 
         /*        
         private string getStringDay(int day)

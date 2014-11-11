@@ -58,10 +58,6 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
         public string SearchText
         {
             get

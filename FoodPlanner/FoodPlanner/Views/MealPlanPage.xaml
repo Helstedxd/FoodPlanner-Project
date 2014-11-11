@@ -10,14 +10,14 @@
     d:DesignHeight="720" d:DesignWidth="405"
     Title="MealPlan">
 
-    <!--<Page.DataContext>
-        <ViewModels:FoodPlanViewModel/>    
-    </Page.DataContext>-->
+    <Page.DataContext>
+        <ViewModels:FoodPlanViewModel/>
+    </Page.DataContext>
 
     <Grid>
-	    <Grid.ColumnDefinitions>
-	        <ColumnDefinition Width="80"/>
-	        <ColumnDefinition/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -30,23 +30,24 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Style="{DynamicResource ButtonIconTemplate}">
+        <Button Command="{Binding GoAWeekDownCommand}" Grid.Row="0" Style="{DynamicResource ButtonIconTemplate}">
             <Button.Background>
                 <ImageBrush ImageSource="/Images/upArrowIcon.png" Stretch="Uniform"/>
             </Button.Background>
         </Button>
-        <Button Content="Monday" Grid.Row="1" Style="{DynamicResource ButtonTextTemplate}"/>
-        <Button Content="Tuesday" Grid.Row="2" Style="{DynamicResource ButtonTextTemplate}"/>
-        <Button Content="Wednesday" Grid.Row="3" Style="{DynamicResource ButtonTextTemplate}"/>
-        <Button Content="Thursday" Grid.Row="4" Style="{DynamicResource ButtonTextTemplate}"/>
-        <Button Content="Friday" Grid.Row="5" Style="{DynamicResource ButtonTextTemplate}"/>
-        <Button Content="Saturday" Grid.Row="6" Style="{DynamicResource ButtonTextTemplate}"/>
-        <Button Content="Sunday" Grid.Row="7" Style="{DynamicResource ButtonTextTemplate}"/>
-        <Button Content="\/" Grid.Row="8" Style="{DynamicResource ButtonIconTemplate}">
+        <Button Content="{Binding Path=MondayString, Mode=OneWay}" Grid.Row="1" Style="{DynamicResource ButtonTextTemplate}"/>
+        <Button Content="{Binding Path=TuesdayString, Mode=OneWay}" Grid.Row="2" Style="{DynamicResource ButtonTextTemplate}"/>
+        <Button Content="{Binding Path=WednesdayString, Mode=OneWay}" Grid.Row="3" Style="{DynamicResource ButtonTextTemplate}"/>
+        <Button Content="{Binding Path=ThursdayString, Mode=OneWay}" Grid.Row="4" Style="{DynamicResource ButtonTextTemplate}"/>
+        <Button Content="{Binding Path=FridayString, Mode=OneWay}" Grid.Row="5" Style="{DynamicResource ButtonTextTemplate}"/>
+        <Button Content="{Binding Path=SaturdayString, Mode=OneWay}" Grid.Row="6" Style="{DynamicResource ButtonTextTemplate}"/>
+        <Button Content="{Binding Path=SundayString, Mode=OneWay}" Grid.Row="7" Style="{DynamicResource ButtonTextTemplate}"/>
+        <Button Command="{Binding GoAWeekUpCommand}" Content="\/" Grid.Row="8" Style="{DynamicResource ButtonIconTemplate}">
             <Button.Background>
                 <ImageBrush ImageSource="/Images/downArrowIcon.png" Stretch="Uniform"/>
             </Button.Background>
         </Button>
-        <ListBox Grid.Column="1" Grid.RowSpan="9"></ListBox>
-    </Grid> 
+        <TextBlock Text="{Binding Path=WeekString, Mode=OneWay}"  TextWrapping="Wrap" Grid.Row="0" Grid.Column="1" FontSize="48" TextAlignment="Center"/>
+        <ListBox Grid.Row="1" Grid.RowSpan="8" Grid.ColumnSpan="2" Margin="78,-2,2,2"/>
+    </Grid>
 </Page>

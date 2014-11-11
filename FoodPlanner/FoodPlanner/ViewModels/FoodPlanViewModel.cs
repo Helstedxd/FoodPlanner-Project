@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -14,37 +13,173 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Globalization;
 using FoodPlanner.Models;
+using FoodPlanner.Helper_Classes;
 
 
 namespace FoodPlanner.ViewModels
 {
-    public class FoodPlanViewModel
+    public class FoodPlanViewModel : ObservableObject
     {
+        private ICommand _goWeekUp, 
+                         _goWeekDown;
+        public FoodPlanViewModel()
+        {
+            ActiveDate = DateTime.Now;
+        }
+
+        private DateTime _activeDate;
+        private DateTime ActiveDate
+        {
+            get { return _activeDate; }
+            set { 
+                _activeDate = value;
+                OnPropertyChanged("MondayString");
+                OnPropertyChanged("TuesdayString");
+                OnPropertyChanged("WednesdayString");
+                OnPropertyChanged("ThursdayString");
+                OnPropertyChanged("FridayString");
+                OnPropertyChanged("SaturdayString");
+                OnPropertyChanged("SundayString");
+                OnPropertyChanged("WeekString");
+            }
+        }
+
+        public string MondayString
+        {
+            get
+            {
+                return Day(DayOfWeek.Monday);
+            }
+        }
+        public string TuesdayString
+        {
+            get
+            {
+                return Day(DayOfWeek.Tuesday);
+            }
+        }
+        public string WednesdayString
+        {
+            get
+            {
+                return Day(DayOfWeek.Wednesday);
+            }
+        }
+        public string ThursdayString
+        {
+            get
+            {
+                return Day(DayOfWeek.Thursday);
+            }
+        }
+        public string FridayString
+        {
+            get
+            {
+                return Day(DayOfWeek.Friday);
+            }
+        }
+        public string SaturdayString
+        {
+            get
+            {
+                return Day(DayOfWeek.Saturday);
+            }
+        }
+        public string SundayString
+        {
+            get
+            {
+                return Day(DayOfWeek.Sunday);
+            }
+        }
+        public string WeekString
+        {
+            get
+            {
+                DateTimeFormatInfo timeFormat = DateTimeFormatInfo.CurrentInfo;
+                Calendar calendar = timeFormat.Calendar;
+                return "Week " + calendar.GetWeekOfYear(ActiveDate, timeFormat.CalendarWeekRule, timeFormat.FirstDayOfWeek).ToString();
+            }
+        }
+        public void WeekUp()
+        {
+            ActiveDate = ActiveDate.AddDays(7);
+        }
+        public void WeekDown()
+        {
+            ActiveDate = ActiveDate.AddDays(-7);
+        }
+        private string Day(DayOfWeek day)
+        {
+            int diff;
+            if (day == DayOfWeek.Sunday)
+            {
+                diff = Convert.ToInt16(ActiveDate.DayOfWeek) - 7;
+            }
+            else
+            {
+                diff = ActiveDate.DayOfWeek - day;
+            }
+            string result;
+
+
+            return result = ActiveDate.AddDays(-diff).Date.ToString("dddd\ndd/MM");
+        }
+
+
+        public ICommand GoAWeekUpCommand
+        {
+            get
+            {
+                if (_goWeekUp == null)
+                {
+                    _goWeekUp = new RelayCommand(p => WeekUp());
+                }
+
+                return _goWeekUp;
+            }
+        }
+        public ICommand GoAWeekDownCommand
+        {
+            get
+            {
+                if (_goWeekDown == null)
+                {
+                    _goWeekDown = new RelayCommand(p => WeekDown());
+                }
+
+                return _goWeekDown;
+            }
+        }
+
+
+        /*        
         private string getStringDay(int day)
         {
             string stringDay;
             switch (day)
             {
                 case 1:
-                    stringDay = "Mon";
+                    stringDay = "Monday";
                     break;
                 case 2:
-                    stringDay = "Tue";
+                    stringDay = "Tuesday";
                     break;
                 case 3:
-                    stringDay = "Wed";
+                    stringDay = "Wednesday";
                     break;
                 case 4:
-                    stringDay = "Thu";
+                    stringDay = "Thursday";
                     break;
                 case 5:
-                    stringDay = "Fri";
+                    stringDay = "Friday";
                     break;
                 case 6:
-                    stringDay = "Sat";
+                    stringDay = "Saturday";
                     break;
                 case 7:
-                    stringDay = "Sun";
+                    stringDay = "Sunday";
                     break;
                 default:
                     stringDay = "Error, out of reach";
@@ -213,5 +348,23 @@ namespace FoodPlanner.ViewModels
                 butDown.Content = "v week: " + (newWeek(pastWeek, false)).ToString(); //gets an updated 'number' and updates the text on the butDown
             }
         }
+        private string updateDate(string date, bool goesUp) 
+        { 
+            string[] split = date.Split('.'); //date 23.02.2014
+            string result;
+            int day = Convert.ToInt16(split[0]), month = Convert.ToInt16(split[1]), year = Convert.ToInt16(split[2]);
+            DateTime moment = new DateTime(year, month, day);
+
+            if (goesUp)
+            {
+                moment = moment.AddDays(7);
+            }
+            else
+            {
+                moment = moment.AddDays(-7);
+            }
+            return result = getStringDay(Convert.ToInt16(moment.DayOfWeek)) + "\n" + moment.Day + "." + moment.Month;
+        }
+        */
     }
 }

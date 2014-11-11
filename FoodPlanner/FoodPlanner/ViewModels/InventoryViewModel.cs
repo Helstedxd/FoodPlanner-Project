@@ -21,7 +21,7 @@ namespace FoodPlanner.ViewModels
         private List<Ingredient> _queriedIngredients;
         private string _searchText;
         private string _lastSearchText = ""; // when we last queried the db
-  
+
 
         public InventoryViewModel()
         {
@@ -52,7 +52,7 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-      
+
         public string SearchText
         {
             get
@@ -106,7 +106,8 @@ namespace FoodPlanner.ViewModels
         {
 
             // fix this
-            if (SearchText == "") {
+            if (SearchText == "")
+            {
                 _lastSearchText = "";
                 _queriedIngredients.Clear();
                 OnPropertyChanged("FoundIngredients");

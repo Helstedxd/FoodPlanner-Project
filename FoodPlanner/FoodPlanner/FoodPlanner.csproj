@@ -93,6 +93,7 @@
     </Compile>
     <Compile Include="Models\Ingredient.cs" />
     <Compile Include="Models\InventoryIngredient.cs" />
+    <Compile Include="Models\inventoryListCombinedByQuantity.cs" />
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\RecipeIngredient.cs" />
     <Compile Include="Models\SearchResults.cs" />

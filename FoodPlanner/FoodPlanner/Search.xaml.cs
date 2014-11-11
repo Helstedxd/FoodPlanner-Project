@@ -22,7 +22,20 @@ namespace FoodPlanner
     /// </summary>
     public partial class Search : Window
     {
-        private List<InventoryIngredient> inventoryList = MainWindow.db.InventoryIngredients.Where(ii => ii.UserID == MainWindow.CurrentUser.ID).ToList();
+        private List<inventoryListCombinedByQuantity> inventoryList = (from ii in MainWindow.db.InventoryIngredients
+                                                                       where ii.UserID == MainWindow.CurrentUser.ID
+                                                                       group ii by ii.IngredientID into iig
+                                                                       select new inventoryListCombinedByQuantity()
+                                                                       {
+                                                                           IngredientID = iig.FirstOrDefault().IngredientID,
+                                                                           Quantity = iig.Sum(i => i.Quantity),
+                                                                           Ingredient = iig.FirstOrDefault().Ingredient,
+                                                                           ExpirationDate = iig.FirstOrDefault().ExpirationDate,
+                                                                           PurchaseDate = iig.FirstOrDefault().PurchaseDate,
+                                                                           User = iig.FirstOrDefault().User,
+                                                                           UserID = iig.FirstOrDefault().UserID
+                                                                       }).ToList();
+
 
         public Search()
         {
@@ -33,47 +46,15 @@ namespace FoodPlanner
         {
             List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
 
-            IQueryable<Recipe> recipes = MainWindow.db.Recipes.Where(r => searchQuery.Any(s => r.Title.Contains(s)));
-            IQueryable<Ingredient> ingredients = MainWindow.db.Ingredients.Where(i => searchQuery.Any(s => i.Name.Contains(s)));
-            IQueryable<IGrouping<int, RecipeIngredient>> recipeIngredient = MainWindow.db.RecipeIngredients.Where(ri => recipes.Any(r => r.ID == ri.RecipeID) || ingredients.Any(i => i.ID == ri.IngredientID)).GroupBy(ri => ri.RecipeID);
-            
-            List<Recipe> allRecipes = MainWindow.db.Recipes.ToList();
-            List<Ingredient> ingredientsList = ingredients.ToList();
-            List<SearchResults> results = new List<SearchResults>();
+            var test = (from ri in MainWindow.db.RecipeIngredients join i in MainWindow.db.Ingredients on ri.IngredientID equals i.ID join r in MainWindow.db.Recipes on ri.RecipeID equals r.ID select ri);
 
-            foreach (IGrouping<int, RecipeIngredient> recipeGroup in recipeIngredient)
-            {
-                SearchResults recipeResult = new SearchResults(allRecipes.Where(ar => ar.ID == recipeGroup.FirstOrDefault().RecipeID).FirstOrDefault(), recipeGroup.Count());
+            listResults.ItemsSource = test.ToList();
 
-                if (searchQuery.Any(s => recipeResult.recipe.Title.Contains(s)))
-                {
-                    recipeResult.keyWordMatch++;
-                }
 
-                foreach (RecipeIngredient ingredient in recipeGroup)
-                {
-                    if (ingredientsList.Any(iID => iID.ID == ingredient.IngredientID))
-                    {
-                        recipeResult.keyWordMatch++;
-                    }
 
-                    if (inventoryList.Where(il => il.IngredientID == ingredient.IngredientID).Count() != 0)
-                    {
-                        if (inventoryList.Where(il => il.IngredientID == ingredient.IngredientID).Sum(iq => iq.Quantity) >= ingredient.Quantity)
-                        {
-                            recipeResult.fullMatch++;
-                        }
-                        else
-                        {
-                            recipeResult.partialMatch++;
-                        }
-                    }
-                }
 
-                results.Add(recipeResult);
-            }
-
-            listResults.ItemsSource = results.OrderByDescending(x => x.fullMatch).ThenByDescending(x => x.partialMatch).ThenByDescending(x => x.keyWordMatch).ThenBy(x => x.recipe.Title);
+            //List<Ingredient> test = MainWindow.db.Ingredients.Where(i => i.ID != -1).ToList();
+            //List<Recipe> test2 = MainWindow.db.Recipes.Where(r => r.ID != -1).ToList();
         }
 
         private void listResults_SelectionChanged(object sender, SelectionChangedEventArgs e)

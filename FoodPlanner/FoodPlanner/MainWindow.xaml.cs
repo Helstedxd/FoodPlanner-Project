@@ -21,13 +21,17 @@ namespace FoodPlanner
     /// </summary>
     public partial class MainWindow : Window
     {
+        [Obsolete("Brug App.db istedet!")]
         public static FoodContext db;
+        [Obsolete("Brug App.CurrentUser istedet!")]
         public static User CurrentUser { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
             App.NavigationService = this.Frame.NavigationService;
+            App.db = new FoodContext();
+            App.CurrentUser = App.db.Users.First();
 
             db = new FoodContext();
             CurrentUser = db.Users.First();
@@ -36,6 +40,7 @@ namespace FoodPlanner
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             db.Dispose();
+            App.db.Dispose();
         }
 
         //TODO: remove these click handlers.

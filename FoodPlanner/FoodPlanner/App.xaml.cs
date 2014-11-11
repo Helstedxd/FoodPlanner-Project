@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using FoodPlanner.Models;
 
 namespace FoodPlanner
 {
@@ -18,5 +19,8 @@ namespace FoodPlanner
         //TODO: Implement proper NavigationService and maybe IOC.
         //public static Frame MainFrame { get; set; }
         public static NavigationService NavigationService { get; set; }
+    
+        public static FoodContext db { get; set; }
+        public static User CurrentUser { get; set; }
     }
 }

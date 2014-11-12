@@ -8,7 +8,7 @@
         <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
         <SolidColorBrush x:Key="Button.Blue.Border" Color="#FF3C7FB1"/>
         <SolidColorBrush x:Key="Button.Text.Background" Color="#FFDDDDDD"/>
-        
+
         <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
         <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
         <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
@@ -112,7 +112,7 @@
         </Style>
         <!--End: Template for recipes list-->
         <!--End: Template for recipes list-->
-        
+
         <!--Start: Template for Shopping List (element Listview)-->
         <DataTemplate x:Key="ShoppingListNameCell">
             <TextBlock Text="{Binding Path=Ingredient}" Foreground="Black"/>
@@ -124,24 +124,23 @@
             <TextBlock Text="{Binding Path=Ingredient.Unit}" Foreground="Black"/>
         </DataTemplate>
         <!-- End: Template for Shopping List (element Listview)-->
-        
+
         <!--Start: Meal planning Page Template for day listboxes-->
         <DataTemplate x:Key="MealsListBoxTemplate">
-                <Grid>
-
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseDoubleClick">
-                        <i:InvokeCommandAction Command="{Binding ShowRecipeCommand}" CommandParameter="{Binding ElementName=mealBox, Path=SelectedItem}"  />
+            <Grid>
+               <!-- <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseUp">
+                        <i:InvokeCommandAction Command="{Binding GoToRecipeCommand}" CommandParameter="{Binding SelectedItem,  RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" />
                     </i:EventTrigger>
-                </i:Interaction.Triggers>
+                </i:Interaction.Triggers>-->
 
                 <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Label Content="{Binding Title}" FontSize="12"/>
-                    <Label Content="{Binding Persons}" ContentStringFormat="Planned for {0} person(s)" FontSize="10" Grid.Row="1"/>
-                </Grid>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Content="{Binding Title}" FontSize="12"/>
+                <Label Content="{Binding Persons}" ContentStringFormat="Planned for {0} person(s)" FontSize="10" Grid.Row="1"/>
+            </Grid>
         </DataTemplate>
         <ItemsPanelTemplate x:Key="WrapPanelHorizontalTemplate">
             <WrapPanel Orientation="Horizontal"/>

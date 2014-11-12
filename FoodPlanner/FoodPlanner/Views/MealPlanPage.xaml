@@ -11,24 +11,6 @@
     d:DesignHeight="720" d:DesignWidth="405"
     Title="MealPlan">
 
-    <Page.Resources>
-        <Style x:Key="{x:Type ListBox}" TargetType="ListBox">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate  TargetType="ListBox">
-                        <ItemsControl>
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseUp">
-                                    <i:InvokeCommandAction Command="{Binding GoToRecipeCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource TemplatedParent}}"  />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </ItemsControl>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Page.Resources>
-
     <Page.DataContext>
         <ViewModels:FoodPlanViewModel/>
     </Page.DataContext>
@@ -69,7 +51,13 @@
         <TextBlock Text="{Binding Path=WeekString, Mode=OneWay}"  TextWrapping="Wrap" Grid.Row="0" Grid.Column="1" FontSize="48" TextAlignment="Center"/>
         <ListBox Grid.Row="1" Grid.RowSpan="8" Grid.ColumnSpan="2" Margin="78,-2,2,2"/>
 
-        <ListBox x:Name="MondayMealsListBox" Grid.Row="1" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding MondayMeals, Mode=OneWay}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>
+        <ListBox x:Name="MondayMealsListBox" Grid.Row="1" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding MondayMeals, Mode=OneWay}" ItemTemplate="{StaticResource MealsListBoxTemplate}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseUp">
+                    <i:InvokeCommandAction Command="{Binding GoToRecipeCommand}" CommandParameter="{Binding SelectedItem,  RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ListBox>
         <ListBox x:Name="TuesdayMealsListBox" Grid.Row="2" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding TuesdayMeals, Mode=OneWay}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>
         <ListBox x:Name="WednesdayMealsListBox" Grid.Row="3" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding WednesdayMeals, Mode=OneWay}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>
         <ListBox x:Name="ThursdayMealsListBox" Grid.Row="4" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding ThursdayMeals, Mode=OneWay}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>

@@ -107,6 +107,7 @@
         </Style>
         <!--End: Template for recipes list-->
         <!--End: Template for recipes list-->
+        
         <!--Start: Template for Shopping List (element Listview)-->
         <DataTemplate x:Key="ShoppingListNameCell">
             <TextBlock Text="{Binding Path=Ingredient}" Foreground="Black"/>
@@ -118,19 +119,21 @@
             <TextBlock Text="{Binding Path=Ingredient.Unit}" Foreground="Black"/>
         </DataTemplate>
         <!-- End: Template for Shopping List (element Listview)-->
+        
         <!--Start: Meal planning Page Template for day listboxes-->
         <DataTemplate x:Key="MealsListBoxTemplate">
-            <WrapPanel>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Label Content="{Binding Title}" FontSize="10"/>
-                    <Label Content="{Binding Persons}" ContentStringFormat="Planned for {0} person(s)" FontSize="8" Grid.Row="1"/>
+                    <Label Content="{Binding Title}" FontSize="12"/>
+                    <Label Content="{Binding Persons}" ContentStringFormat="Planned for {0} person(s)" FontSize="10" Grid.Row="1"/>
                 </Grid>
-            </WrapPanel>
         </DataTemplate>
+        <ItemsPanelTemplate x:Key="WrapPanelHorizontalTemplate">
+            <WrapPanel Orientation="Horizontal"/>
+        </ItemsPanelTemplate>
         <!--End: Meal planning Page Template for day listboxes-->
     </Application.Resources>
 </Application>

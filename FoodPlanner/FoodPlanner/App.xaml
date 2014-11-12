@@ -133,8 +133,8 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Label Content="{Binding Title}"/>
-                    <Label Content="{Binding Persons}" ContentStringFormat="This meal is planned for {0} person(s)" Grid.Row="1"/>
+                    <Label Content="{Binding Title}" FontSize="10"/>
+                    <Label Content="{Binding Persons}" ContentStringFormat="Planned for {0} person(s)" FontSize="8" Grid.Row="1"/>
                 </Grid>
             </WrapPanel>
         </DataTemplate>

@@ -34,7 +34,7 @@ namespace FoodPlanner.ViewModels
             SundayMeals = new ObservableCollection<Recipe>();
 
             ActiveDate = DateTime.Now;
-            //TestMethod();
+            TestMethod();
             ShowMeals();
         }
 
@@ -156,9 +156,9 @@ namespace FoodPlanner.ViewModels
         private void TestMethod()
         {//Disse meals er allerede lagt ind: AddDays(7) AddDays(9) AddDays(-5)
             List<Recipe> recipes = App.db.Recipes.Where(r => r.Title.Contains("beef")).ToList();
-            AddMealToMeals(ActiveDate.AddDays(7), recipes[0], 3);
-            AddMealToMeals(ActiveDate.AddDays(9), recipes[7], 2);
-            AddMealToMeals(ActiveDate.AddDays(-5), recipes[4], 9);
+            AddMealToMeals(ActiveDate, recipes[0], 3);
+            AddMealToMeals(ActiveDate, recipes[7], 2);
+            AddMealToMeals(ActiveDate, recipes[4], 9);
         }
 
         public void WeekUp()

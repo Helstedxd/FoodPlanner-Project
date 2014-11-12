@@ -44,69 +44,78 @@ namespace FoodPlanner
 
         private void startSearch_Click(object sender, RoutedEventArgs e)
         {
-            List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
-            List<SearchResults2> results = new List<SearchResults2>();
-
-            DateTime now = DateTime.Now;
-
-            List<int> recipeIDs = (from ri in App.db.RecipeIngredients
-                                   join i in App.db.Ingredients on ri.IngredientID equals i.ID
-                                   join r in App.db.Recipes on ri.RecipeID equals r.ID
-                                   where searchQuery.Any(s => i.Name.Contains(s)) || searchQuery.Any(s => r.Title.Contains(s))
-                                   select ri.RecipeID).ToList().Distinct().ToList();
-
-            IQueryable<IGrouping<int, Result>> recipeIngredients = from ri in App.db.RecipeIngredients
-                                                                   join i in App.db.Ingredients on ri.IngredientID equals i.ID
-                                                                   join r in App.db.Recipes on ri.RecipeID equals r.ID
-                                                                   where recipeIDs.Any(rid => rid == ri.RecipeID)
-                                                                   group new Result()
-                                                                   {
-                                                                       recipe = ri.Recipe,
-                                                                       ingredient = ri.Ingredient,
-                                                                       quantity = ri.Quantity
-                                                                   } by ri.RecipeID;
-
-            foreach (IGrouping<int, Result> ri in recipeIngredients)
+            try
             {
-                Recipe recipe = ri.FirstOrDefault().recipe;
+                List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
+                List<SearchResults2> results = new List<SearchResults2>();
 
-                SearchResults2 result = new SearchResults2(recipe);
+                DateTime now = DateTime.Now;
 
-                if (searchQuery.Any(s => recipe.Title.ToLower().Contains(s.ToLower())))
+                IQueryable<int> recipeIDs = (from ri in App.db.RecipeIngredients
+                                             join i in App.db.Ingredients on ri.IngredientID equals i.ID
+                                             join r in App.db.Recipes on ri.RecipeID equals r.ID
+                                             where searchQuery.Any(s => i.Name.Contains(s)) || searchQuery.Any(s => r.Title.Contains(s))
+                                             group ri by ri.RecipeID into rofl
+                                             select rofl.FirstOrDefault().RecipeID);
+
+                IQueryable<IGrouping<int, Result>> recipeIngredients = from ri in App.db.RecipeIngredients
+                                                                       join i in App.db.Ingredients on ri.IngredientID equals i.ID
+                                                                       join r in App.db.Recipes on ri.RecipeID equals r.ID
+                                                                       where recipeIDs.Any(rid => rid == ri.RecipeID)
+                                                                       group new Result()
+                                                                       {
+                                                                           recipe = ri.Recipe,
+                                                                           ingredient = ri.Ingredient,
+                                                                           quantity = ri.Quantity
+                                                                       } by ri.RecipeID;
+
+                foreach (IGrouping<int, Result> ri in recipeIngredients)
                 {
-                    result.keyWordMatch++;
-                }
+                    Recipe recipe = ri.FirstOrDefault().recipe;
 
+                    SearchResults2 result = new SearchResults2(recipe);
 
-                foreach (Result res in ri)
-                {
-                    result.addIngredient(res.ingredient);
-
-                    if (inventoryList.Where(il => il.IngredientID == res.ingredient.ID).Count() != 0)
-                    {
-                        if (inventoryList.Where(il => il.IngredientID == res.ingredient.ID).First().Quantity >= res.quantity)
-                        {
-                            result.fullMatch++;
-                        }
-                        else
-                        {
-                            result.partialMatch++;
-                        }
-                    }
-
-                    if (searchQuery.Any(s => res.ingredient.Name.ToLower().Contains(s.ToLower())))
+                    if (searchQuery.Any(s => recipe.Title.ToLower().Contains(s.ToLower())))
                     {
                         result.keyWordMatch++;
                     }
 
+
+                    foreach (Result res in ri)
+                    {
+                        result.addIngredient(res.ingredient);
+
+                        if (inventoryList.Where(il => il.IngredientID == res.ingredient.ID).Count() != 0)
+                        {
+                            if (inventoryList.Where(il => il.IngredientID == res.ingredient.ID).First().Quantity >= res.quantity)
+                            {
+                                result.fullMatch++;
+                            }
+                            else
+                            {
+                                result.partialMatch++;
+                            }
+                        }
+
+                        if (searchQuery.Any(s => res.ingredient.Name.ToLower().Contains(s.ToLower())))
+                        {
+                            result.keyWordMatch++;
+                        }
+
+                    }
+
+                    results.Add(result);
                 }
 
-                results.Add(result);
+                listResults.ItemsSource = results.OrderByDescending(res => res.fullMatch).ThenByDescending(res => res.partialMatch).ThenByDescending(res => res.keyWordMatch).ThenByDescending(res => res.recipe.Title);
+
+                MessageBox.Show("Our super optimized search algorithm took only " + ((DateTime.Now - now).Milliseconds) + "ms to process your request");
             }
 
-            listResults.ItemsSource = results.OrderByDescending(res => res.fullMatch).ThenByDescending(res => res.partialMatch).ThenByDescending(res => res.keyWordMatch).ThenByDescending(res => res.recipe.Title);
-
-            MessageBox.Show("Our super optimized search algorithm took only " + ((DateTime.Now - now).Milliseconds) + "ms to process your request");
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.InnerException.Message);
+            }
         }
 
         private void listResults_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -8,9 +8,9 @@
       d:DesignHeight="300" d:DesignWidth="300"
 	Title="RecipePage">
 
-    <Page.DataContext>
+   <!-- <Page.DataContext>
         <ViewModels:RecipeViewModel/>
-    </Page.DataContext>
+    </Page.DataContext>-->
 
     <Grid DataContext="{Binding Recipe}">
         <Grid.RowDefinitions>

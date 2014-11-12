@@ -12,8 +12,8 @@ namespace FoodPlanner.ViewModels
 
         public Recipe Recipe { get; set; }
 
-        public RecipeViewModel(/*Recipe recipe*/) {
-            this.Recipe = App.db.Recipes.First(); //recipe;
+        public RecipeViewModel(Recipe recipe) {
+            this.Recipe = recipe;
         }
 
     }

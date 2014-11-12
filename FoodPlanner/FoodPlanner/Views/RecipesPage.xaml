@@ -3,11 +3,12 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:ViewModels="clr-namespace:FoodPlanner.ViewModels" x:Class="FoodPlanner.Views.Recipes" 
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="405"
 	Title="Recipes">
-
+ 
     <Page.DataContext>
         <ViewModels:RecipesViewModel/>
     </Page.DataContext>
@@ -29,10 +30,16 @@
             </Label.Background>
         </Label>
 
-        <TextBox Grid.Column="1" FontSize="19" Name="Search" Text="{Binding Path=SearchDefine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=1000}"/>
+        <TextBox Grid.Column="1" FontSize="19" Name="Search" Text="{Binding Path=SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=1000}"/>
 
         <ComboBox Grid.Column="2"/>
 
-        <ListBox Name="listBoxRecipes" Grid.Row="1" Grid.ColumnSpan="3" ItemTemplate="{StaticResource ListRecipesTemplate}"  ItemsSource="{Binding Path=listOfSearchResults, Mode=OneWay}"/>
+        <ListBox Name="recipeListBox" Grid.Row="1" Grid.ColumnSpan="3" ItemTemplate="{StaticResource ListRecipesTemplate}"  ItemsSource="{Binding Path=listOfSearchResults, Mode=OneWay}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding GoToRecipeCommand}" CommandParameter="{Binding ElementName=recipeListBox, Path=SelectedItem}"  />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ListBox>
     </Grid>
 </Page>

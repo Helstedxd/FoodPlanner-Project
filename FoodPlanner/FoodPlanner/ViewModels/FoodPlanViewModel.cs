@@ -14,7 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Globalization;
 using FoodPlanner.Models;
-using FoodPlanner.Helper_Classes;
 
 
 namespace FoodPlanner.ViewModels

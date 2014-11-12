@@ -9,9 +9,9 @@ namespace FoodPlanner.Models
     public partial class InventoryIngredient
     {
 
-        protected InventoryIngredient() { }
+        public InventoryIngredient() { }
 
-        public InventoryIngredient(Ingredient ingredient, int quantity)
+        public InventoryIngredient(Ingredient ingredient, decimal quantity)
         {
             this.Ingredient = ingredient;
             this.Quantity = quantity;

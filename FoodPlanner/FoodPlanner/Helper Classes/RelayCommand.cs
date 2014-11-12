@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Input;
 
-namespace FoodPlanner.Helper_Classes
+namespace FoodPlanner
 {
     //http://msdn.microsoft.com/en-us/magazine/dd419663.aspx#id0090030
 

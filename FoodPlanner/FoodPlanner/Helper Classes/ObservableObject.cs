@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Collections;
 using System.ComponentModel;
 
-namespace FoodPlanner.Helper_Classes
+namespace FoodPlanner
 {
     public abstract class ObservableObject : INotifyPropertyChanged
     {

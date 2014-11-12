@@ -15,85 +15,73 @@ using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using FoodPlanner.Models;
 
-namespace FoodPlanner.ViewModels {
+namespace FoodPlanner.ViewModels
+{
 
-    public class ShoppingListViewModel {
+    public class ShoppingListViewModel
+    {
 
         public List<InventoryIngredient> ShoppingList { get; set; }
 
-        public ShoppingListViewModel() {
+        public ShoppingListViewModel()
+        {
+
+            ShoppingList = new List<InventoryIngredient>();
 
             AssembleShoppingList();
-            
+
         }
 
-        private void AssembleShoppingList() {
+        private void AssembleShoppingList()
+        {
+            //TODO: somehow store these common queries...
             var InventoryIngredientsTotalQuantity =
                 from ii in App.db.InventoryIngredients
                 join i in App.db.Ingredients on ii.IngredientID equals i.ID
                 where ii.UserID == App.CurrentUser.ID
                 group ii by ii.IngredientID into iig
-                select new {
+                select new
+                {
                     IngredientID = iig.FirstOrDefault().IngredientID,
-                    Ingredient = iig.FirstOrDefault().Ingredient,
                     Unit = iig.FirstOrDefault().Ingredient.Unit,
                     TotalQuantity = iig.Sum(i => i.Quantity)
                 };
 
-    
             var MealRecipeIngredientsTotalQuantity =
                 from ri in App.db.RecipeIngredients
                 where App.db.Meals.Any(m => m.UserID == App.CurrentUser.ID && m.RecipeID == ri.RecipeID)
                 group ri by ri.IngredientID into rig
-                select new {
+                select new
+                {
                     IngredientID = rig.FirstOrDefault().IngredientID,
+                    Ingredient = rig.FirstOrDefault().Ingredient,
                     Unit = rig.FirstOrDefault().Ingredient.Unit,
                     TotalQuantity = rig.Sum(i => i.Quantity),
                 };
 
-        /*    var gideonblegmand =
-                from iitq in InventoryIngredientsTotalQuantity
-                join mritq in MealRecipeIngredientsTotalQuantity on iitq.IngredientID equals mritq.IngredientID
-                select new { idd = iitq.IngredientID, iiq = iitq.TotalQuantity, mriq = mritq.TotalQuantity };
+            var InventoryMealIngredientQuantityDifferences =
+                from mritq in MealRecipeIngredientsTotalQuantity
+                join iitq in InventoryIngredientsTotalQuantity on mritq.IngredientID equals iitq.IngredientID into j
+                from iitqOrNull in j.DefaultIfEmpty()
+                select new
+                {
+                    Ingredient = mritq.Ingredient,
+                    InventoryQuantityDifference = iitqOrNull != null ? mritq.TotalQuantity - iitqOrNull.TotalQuantity : mritq.TotalQuantity,
+                    Unit = mritq.Ingredient.Unit
+                };
 
-            var gideonb = gideonblegmand.ToList();*/
-
-            var InventoryIngredientsTotalQuantityList = InventoryIngredientsTotalQuantity.ToList();
-
-            var MealRecipeIngredientsTotalQuantityList = MealRecipeIngredientsTotalQuantity.ToList();
-
-            List<ShoppingList> ShoppingList = new List<ShoppingList>();
-
-            MessageBox.Show(MealRecipeIngredientsTotalQuantityList.Count().ToString());
-            MessageBox.Show(InventoryIngredientsTotalQuantityList.Count().ToString());
-
-            foreach (var ii in InventoryIngredientsTotalQuantityList) {
-                foreach(var mri in MealRecipeIngredientsTotalQuantityList) {
-                    if (mri.IngredientID == ii.IngredientID /*&& mri.TotalQuantity - ii.TotalQuantity > 0*/) {
-
-                        //Ingredient newIngredient = new Ingredient();
-
-                        ShoppingList newInventoryIngredient = new ShoppingList() { ingredient = ii.Ingredient, quantity = (mri.TotalQuantity - ii.TotalQuantity) };
-
-                        ShoppingList.Add(newInventoryIngredient);
-                    }
+            foreach (var IngredientDifference in InventoryMealIngredientQuantityDifferences)
+            {
+                if (IngredientDifference.InventoryQuantityDifference > 0)
+                {
+                    // TODO: the purchase- and expiration date will have to be updated if we add this item to the inventory
+                    InventoryIngredient newShoppingListIngredient = new InventoryIngredient(IngredientDifference.Ingredient, IngredientDifference.InventoryQuantityDifference);
+                    ShoppingList.Add(newShoppingListIngredient);
                 }
             }
 
+
         }
     }
 
-    class ShoppingList {
-        public Ingredient ingredient {
-            get;
-            set;
-        }
-
-        public decimal quantity {
-            get;
-            set;
-        }
-
-        public ShoppingList() { }
-    }
 }

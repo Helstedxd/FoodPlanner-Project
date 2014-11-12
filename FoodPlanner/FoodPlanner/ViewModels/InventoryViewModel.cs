@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using FoodPlanner.Models;
 using System.Windows.Input;
-using FoodPlanner.Helper_Classes;
 using System.Collections.ObjectModel;
 
 namespace FoodPlanner.ViewModels

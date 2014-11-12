@@ -19,36 +19,81 @@ namespace FoodPlanner.ViewModels {
 
     public class ShoppingListViewModel {
 
-        public FoodContext db;
-        public static User CurrentUser { get; set; }
-        public ObservableCollection<RecipeIngredient> ShoppingListCollection { get; set; }
+        public List<InventoryIngredient> ShoppingList { get; set; }
 
         public ShoppingListViewModel() {
 
-            db = new FoodContext();
-            CurrentUser = db.Users.First();
-            CreateShoppingList();
+            AssembleShoppingList();
             
         }
 
-        private void CreateShoppingList() {
-            List<InventoryIngredient> inventoryIngrdients = db.InventoryIngredients.Where(m => m.UserID == CurrentUser.ID).ToList();
+        private void AssembleShoppingList() {
+            var InventoryIngredientsTotalQuantity =
+                from ii in App.db.InventoryIngredients
+                join i in App.db.Ingredients on ii.IngredientID equals i.ID
+                where ii.UserID == App.CurrentUser.ID
+                group ii by ii.IngredientID into iig
+                select new {
+                    IngredientID = iig.FirstOrDefault().IngredientID,
+                    Ingredient = iig.FirstOrDefault().Ingredient,
+                    Unit = iig.FirstOrDefault().Ingredient.Unit,
+                    TotalQuantity = iig.Sum(i => i.Quantity)
+                };
 
-            List<RecipeIngredient> recipeIngredients = db.RecipeIngredients.Where(ri => db.Meals.Where(m => m.UserID == CurrentUser.ID).Any(m => m.RecipeID == ri.RecipeID)).ToList();
+    
+            var MealRecipeIngredientsTotalQuantity =
+                from ri in App.db.RecipeIngredients
+                where App.db.Meals.Any(m => m.UserID == App.CurrentUser.ID && m.RecipeID == ri.RecipeID)
+                group ri by ri.IngredientID into rig
+                select new {
+                    IngredientID = rig.FirstOrDefault().IngredientID,
+                    Unit = rig.FirstOrDefault().Ingredient.Unit,
+                    TotalQuantity = rig.Sum(i => i.Quantity),
+                };
 
-            ShoppingListCollection = new ObservableCollection<RecipeIngredient>();
+        /*    var gideonblegmand =
+                from iitq in InventoryIngredientsTotalQuantity
+                join mritq in MealRecipeIngredientsTotalQuantity on iitq.IngredientID equals mritq.IngredientID
+                select new { idd = iitq.IngredientID, iiq = iitq.TotalQuantity, mriq = mritq.TotalQuantity };
 
-            //Tilføj elementer til shopping list med fælgende kriterie
-            //RecipeIngrediensen er ikke i Inventory, recipeingrediensen har fratrukket hvad der er i Inventory
-            foreach (InventoryIngredient invenIn in inventoryIngrdients) {
-            foreach (RecipeIngredient ri in recipeIngredients) {
+            var gideonb = gideonblegmand.ToList();*/
 
-                    if (invenIn.ID != ri.ID) {
-                        ShoppingListCollection.Add(ri);
+            var InventoryIngredientsTotalQuantityList = InventoryIngredientsTotalQuantity.ToList();
+
+            var MealRecipeIngredientsTotalQuantityList = MealRecipeIngredientsTotalQuantity.ToList();
+
+            List<ShoppingList> ShoppingList = new List<ShoppingList>();
+
+            MessageBox.Show(MealRecipeIngredientsTotalQuantityList.Count().ToString());
+            MessageBox.Show(InventoryIngredientsTotalQuantityList.Count().ToString());
+
+            foreach (var ii in InventoryIngredientsTotalQuantityList) {
+                foreach(var mri in MealRecipeIngredientsTotalQuantityList) {
+                    if (mri.IngredientID == ii.IngredientID /*&& mri.TotalQuantity - ii.TotalQuantity > 0*/) {
+
+                        //Ingredient newIngredient = new Ingredient();
+
+                        ShoppingList newInventoryIngredient = new ShoppingList() { ingredient = ii.Ingredient, quantity = (mri.TotalQuantity - ii.TotalQuantity) };
+
+                        ShoppingList.Add(newInventoryIngredient);
                     }
                 }
             }
 
         }
+    }
+
+    class ShoppingList {
+        public Ingredient ingredient {
+            get;
+            set;
+        }
+
+        public decimal quantity {
+            get;
+            set;
+        }
+
+        public ShoppingList() { }
     }
 }

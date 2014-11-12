@@ -49,5 +49,14 @@
         </Button>
         <TextBlock Text="{Binding Path=WeekString, Mode=OneWay}"  TextWrapping="Wrap" Grid.Row="0" Grid.Column="1" FontSize="48" TextAlignment="Center"/>
         <ListBox Grid.Row="1" Grid.RowSpan="8" Grid.ColumnSpan="2" Margin="78,-2,2,2"/>
+
+        <ListBox x:Name="MondayMealsListBox" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding MondayMeals, Mode=OneWay}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>
+        <ListBox x:Name="TuesdayMealsListBox" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding TuesdayMeals, Mode=OneWay}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>
+        <ListBox x:Name="WednesdayMealsListBox" Grid.Row="3" Grid.Column="1" ItemsSource="{Binding WednesdayMeals, Mode=OneWay}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>
+        <ListBox x:Name="ThursdayMealsListBox" Grid.Row="4" Grid.Column="1" ItemsSource="{Binding ThursdayMeals, Mode=OneWay}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>
+        <ListBox x:Name="FridayMealsListBox" Grid.Row="5" Grid.Column="1" ItemsSource="{Binding FridayMeals, Mode=OneWay}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>
+        <ListBox x:Name="SaturdayMealsListBox" Grid.Row="6" Grid.Column="1" ItemsSource="{Binding SaturdyMeals, Mode=OneWay}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>
+        <ListBox x:Name="SundayMealsListBox" Grid.Row="7" Grid.Column="1" ItemsSource="{Binding SundayMeals, Mode=OneWay}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>
+        
     </Grid>
 </Page>

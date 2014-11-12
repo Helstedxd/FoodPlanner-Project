@@ -7,7 +7,7 @@
         <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
         <SolidColorBrush x:Key="Button.Blue.Border" Color="#FF3C7FB1"/>
         <SolidColorBrush x:Key="Button.Text.Background" Color="#FFDDDDDD"/>
-
+        
         <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
         <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
         <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
@@ -15,6 +15,11 @@
         <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
         <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
         <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <!--Start: Template for Title text-->
+        <Style TargetType="Label" x:Key="LabelTitle">
+            <Setter Property="FontSize" Value="30"/>
+        </Style>
+        <!--End: Template for Title text-->
         <!--Start: Template for Image buttons-->
         <Style x:Key="ButtonIconTemplate" TargetType="{x:Type Button}">
             <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
@@ -73,7 +78,6 @@
             </Setter>
         </Style>
         <!--Start: Template for recipes list-->
-        <!--Start: Template for recipes list-->
         <DataTemplate x:Key="ListRecipesTemplate">
             <Grid>
                 <Border Margin="3" BorderBrush="#909090" BorderThickness="1" Padding="2">
@@ -89,7 +93,7 @@
 
                         <Image Grid.RowSpan="2" Height="75" Width="75" Stretch="UniformToFill" Source="{Binding recipe.Image}" />
 
-                        <Label Grid.Column="1" FontSize="30" Content="{Binding recipe.Title}"/>
+                        <Label Grid.Column="1" Style="{StaticResource LabelTitle}" Content="{Binding recipe.Title}"/>
                         <Label Grid.Column="1" Grid.Row="1" Content="{Binding getMatchPercentage}" ContentStringFormat="You have {0} of the needed ingredients"/>
 
                     </Grid>

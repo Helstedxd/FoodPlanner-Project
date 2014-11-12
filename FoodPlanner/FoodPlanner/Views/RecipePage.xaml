@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:ViewModels="clr-namespace:FoodPlanner.ViewModels" x:Class="FoodPlanner.Views.RecipePage" 
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="720" d:DesignWidth="405"
 	Title="RecipePage">
 
    <!-- <Page.DataContext>
@@ -21,13 +21,13 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        
+        <Image Height="100" Width="100" Source="{Binding Image}"/>
+        
+        <Label Grid.Column="1" Style="{StaticResource LabelTitle}" Content="{Binding Title}"/>
 
-        <StackPanel Grid.Column="1" Grid.RowSpan="2">
-            <Label Content="{Binding Title}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
-            <TextBlock Text="{Binding Preparation}" Grid.Column="1" Margin="0" TextWrapping="Wrap"/>
-        </StackPanel>
-
-        <Image HorizontalAlignment="Left" Height="100" Margin="5" VerticalAlignment="Top" Width="100"/>
-        <ListBox ItemsSource="{Binding RecipeIngredients}" Margin="5" Grid.Row="1"/>
+        <TextBlock Text="{Binding RecipesPreparation.Preparation}" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap"/>
+        
+        <ListBox ItemsSource="{Binding RecipeIngredients}" Grid.Row="1"/>
     </Grid>
 </Page>

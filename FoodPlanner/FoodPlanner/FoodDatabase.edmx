@@ -224,7 +224,7 @@
           <NavigationProperty Name="Meals" Relationship="Self.Meals_ibfk_1" FromRole="Recipes" ToRole="Meals" />
           <NavigationProperty Name="RecipeIngredients" Relationship="Self.RecipeIngredients_ibfk_1" FromRole="Recipes" ToRole="RecipeIngredients" />
           <Property Name="Image" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Preparation" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="Preparation" Type="String" Nullable="false" MaxLength="8191" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>

@@ -96,6 +96,9 @@
     <Compile Include="Models\inventoryListCombinedByQuantity.cs" />
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\RecipeIngredient.cs" />
+    <Compile Include="RecipesPreparation.cs">
+      <DependentUpon>FoodDatabase.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\RecipeViewModel.cs" />
     <Compile Include="Models\SearchResults.cs" />
     <Compile Include="Helper Classes\ObservableObject.cs" />

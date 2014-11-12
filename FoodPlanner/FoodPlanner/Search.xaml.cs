@@ -50,22 +50,16 @@ namespace FoodPlanner
             try
             {
 
-                List<int> recipeIDsFromIngredients = (from ri in App.db.RecipeIngredients
-                                                      join i in App.db.Ingredients on ri.IngredientID equals i.ID
-                                                      where searchQuery.Any(s => i.Name.Contains(s))
-                                                      select ri.RecipeID).ToList();
-
-                List<int> recipeIDsFromRecipes = (from ri in App.db.RecipeIngredients
-                                                  join r in App.db.Recipes on ri.RecipeID equals r.ID
-                                                  where searchQuery.Any(s => r.Title.Contains(s))
-                                                  select ri.RecipeID).ToList();
-
-                List<int> union = recipeIDsFromIngredients.Union(recipeIDsFromRecipes).Distinct().ToList();
+                List<int> recipeIDs = (from ri in App.db.RecipeIngredients
+                                       join i in App.db.Ingredients on ri.IngredientID equals i.ID
+                                       join r in App.db.Recipes on ri.RecipeID equals r.ID
+                                       where searchQuery.Any(s => i.Name.Contains(s)) || searchQuery.Any(s => r.Title.Contains(s))
+                                       select ri.RecipeID).ToList().Distinct().ToList();
 
                 IQueryable<IGrouping<int, Result>> recipeIngredients = from ri in App.db.RecipeIngredients
                                                                        join i in App.db.Ingredients on ri.IngredientID equals i.ID
                                                                        join r in App.db.Recipes on ri.RecipeID equals r.ID
-                                                                       where union.Any(rid => rid == ri.RecipeID)
+                                                                       where recipeIDs.Any(rid => rid == ri.RecipeID)
                                                                        group new Result()
                                                                        {
                                                                            recipe = ri.Recipe,
@@ -126,7 +120,6 @@ namespace FoodPlanner
         {
             try
             {
-
                 var showRecipe = new ShowRecipe(((SearchResults2)listResults.SelectedItem).recipe);
                 showRecipe.ShowDialog();
             }

@@ -48,21 +48,39 @@ namespace FoodPlanner
 
             try
             {
-                var test = (from ri in App.db.RecipeIngredients
-                            join i in App.db.Ingredients on ri.IngredientID equals i.ID
-                            join r in App.db.Recipes on ri.RecipeID equals r.ID
-                            where searchQuery.Any(s => r.Title.Contains(s)) || searchQuery.Any(s => i.Name.Contains(s))
-                            group ri by ri.RecipeID into rig
-                            select new SearchResults2() { recipe = rig.FirstOrDefault().Recipe, ingredients = rig.Select(i => i.Ingredient).ToList() });
-                //select rif);
-                MessageBox.Show(test.Count().ToString());
+                List<SearchResults2> results = new List<SearchResults2>();
 
-                listResults.ItemsSource = test.ToList();
+                List<IGrouping<int, RecipeIngredient>> test = (from ri in App.db.RecipeIngredients
+                                                               join i in App.db.Ingredients on ri.IngredientID equals i.ID
+                                                               join r in App.db.Recipes on ri.RecipeID equals r.ID
+                                                               where searchQuery.Any(s => r.Title.Contains(s)) || searchQuery.Any(s => i.Name.Contains(s))
+                                                               group ri by ri.RecipeID into rig
+                                                               select rig).ToList();
+                //select new { recipe = rig.FirstOrDefault().Recipe, ingredients = string.Join(", ", rig) });
+
+                foreach (IGrouping<int, RecipeIngredient> q1 in test)
+                {
+                    SearchResults2 result = new SearchResults2(q1.FirstOrDefault().Recipe);
+
+                    DateTime now = DateTime.Now;
+
+                    foreach (RecipeIngredient ri in q1)
+                    {
+                        result.addIngredient(ri.Ingredient);
+                    }
+
+                    MessageBox.Show((DateTime.Now - now).Milliseconds.ToString() + ", " + result.numIngredients.ToString());
+
+                    results.Add(result);
+                }
+
+                listResults.ItemsSource = results;
+
             }
 
             catch (Exception ex)
             {
-                MessageBox.Show(ex.InnerException.Message);
+                MessageBox.Show(ex.Message);
             }
             /*
             MessageBox.Show(test.Count().ToString());

@@ -21,10 +21,6 @@ namespace FoodPlanner.Models
             {
                 return _recipe;
             }
-            set
-            {
-                _recipe = value;
-            }
         }
 
         public int fullMatch
@@ -74,25 +70,14 @@ namespace FoodPlanner.Models
             }
         }
 
-        public List<Ingredient> ingredients
-        {
-            set
-            {
-                _ingredients = value;
-            }
-            get
-            {
-                return _ingredients;
-            }
-        }
-
         public void addIngredient(Ingredient ingredient)
         {
             _ingredients.Add(ingredient);
         }
 
-        public SearchResults2()
+        public SearchResults2(Recipe recipe)
         {
+            _recipe = recipe;
             _ingredients = new List<Ingredient>();
         }
     }

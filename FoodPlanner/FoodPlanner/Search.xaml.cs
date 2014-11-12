@@ -50,33 +50,41 @@ namespace FoodPlanner
             {
                 List<SearchResults2> results = new List<SearchResults2>();
 
-                List<IGrouping<int, RecipeIngredient>> test = (from ri in App.db.RecipeIngredients
-                                                               join i in App.db.Ingredients on ri.IngredientID equals i.ID
-                                                               join r in App.db.Recipes on ri.RecipeID equals r.ID
-                                                               where searchQuery.Any(s => r.Title.Contains(s)) || searchQuery.Any(s => i.Name.Contains(s))
-                                                               group ri by ri.RecipeID into rig
-                                                               select rig).ToList();
-                //select new { recipe = rig.FirstOrDefault().Recipe, ingredients = string.Join(", ", rig) });
+                var horse = from ri in App.db.RecipeIngredients
+                            join i in App.db.Ingredients on ri.IngredientID equals i.ID
+                            join r in App.db.Recipes on ri.RecipeID equals r.ID
+                            where searchQuery.Any(s => r.Title.Contains(s)) || searchQuery.Any(s => i.Name.Contains(s))
+                            group new
+                            {
+                                Recipe = ri.Recipe,
+                                Ingredient = ri.Ingredient
+                            } by ri.RecipeID;
 
-                foreach (IGrouping<int, RecipeIngredient> q1 in test)
+                DateTime now = DateTime.Now;
+                foreach (var frog in horse)
                 {
-                    SearchResults2 result = new SearchResults2(q1.FirstOrDefault().Recipe);
+                    var r = frog.FirstOrDefault().Recipe;
 
-                    DateTime now = DateTime.Now;
+                    SearchResults2 result = new SearchResults2(r);
 
-                    foreach (RecipeIngredient ri in q1)
+                    foreach (var duck in frog)
                     {
-                        result.addIngredient(ri.Ingredient);
+                        result.addIngredient(duck.Ingredient);
                     }
 
-                    MessageBox.Show((DateTime.Now - now).Milliseconds.ToString() + ", " + result.numIngredients.ToString());
+                    // Console.WriteLine((DateTime.Now - now).Milliseconds.ToString() + ", " + result.numIngredients.ToString());
+                    // MessageBox.Show((DateTime.Now - now).Milliseconds.ToString() + ", " + result.numIngredients.ToString());
 
                     results.Add(result);
                 }
 
+                Console.WriteLine((DateTime.Now - now).ToString() + " for " + horse.Count() + " items...");
+                 
                 listResults.ItemsSource = results;
 
             }
+
+
 
             catch (Exception ex)
             {

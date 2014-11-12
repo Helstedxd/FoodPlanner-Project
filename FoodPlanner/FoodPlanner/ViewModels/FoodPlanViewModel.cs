@@ -163,13 +163,13 @@ namespace FoodPlanner.ViewModels
         public void WeekUp()
         {
             ActiveDate = ActiveDate.AddDays(7);
-            FlushMeals()
+            FlushMeals();
             ShowMeals();
         }
         public void WeekDown()
         {
             ActiveDate = ActiveDate.AddDays(-7);
-            FlushMeals()
+            FlushMeals();
             ShowMeals();
         }
         private void FlushMeals()

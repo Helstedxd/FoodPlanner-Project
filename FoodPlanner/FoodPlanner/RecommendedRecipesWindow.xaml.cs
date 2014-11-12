@@ -32,11 +32,11 @@ namespace FoodPlanner
             InitializeComponent();
 
             /*var combined_query = 
-                from ii in MainWindow.db.InventoryIngredients
+                from ii in App.db.InventoryIngredients
                 where ii.UserID == MainWindow.CurrentUser.ID
                 group ii by ii.IngredientID into iig
                 select new { IngredientID = iig.FirstOrDefault().IngredientID, TotalQuantity = iig.Sum(i => i.Quantity) } into iig
-                join ri in MainWindow.db.RecipeIngredients on iig.IngredientID equals ri.IngredientID
+                join ri in App.db.RecipeIngredients on iig.IngredientID equals ri.IngredientID
                 group new { Recipe = ri.Recipe, RecipeQuantity = ri.Quantity, InventoryQuantity = iig.TotalQuantity, IngredientCount = ri.Recipe.RecipeIngredients.Count() } by ri.RecipeID;
             */
 

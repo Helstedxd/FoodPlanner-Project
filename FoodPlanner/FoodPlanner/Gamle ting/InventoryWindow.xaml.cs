@@ -32,22 +32,22 @@ namespace FoodPlanner
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource userViewSource = ((CollectionViewSource)(this.FindResource("userViewSource")));
-            MainWindow.db.Users.Load();
-            userViewSource.Source = MainWindow.db.Users.Local;
+            App.db.Users.Load();
+            userViewSource.Source = App.db.Users.Local;
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             // Remove unlinked items from the database
-            foreach (var inventoryItem in MainWindow.db.InventoryIngredients.Local.ToList())
+            foreach (var inventoryItem in App.db.InventoryIngredients.Local.ToList())
             {
                 if (inventoryItem.Ingredient == null)
                 {
-                    MainWindow.db.InventoryIngredients.Remove(inventoryItem);
+                    App.db.InventoryIngredients.Remove(inventoryItem);
                 }
             }
 
-            MainWindow.db.SaveChanges();
+            App.db.SaveChanges();
 
             // Refresh the grids so the database generated values show up. 
             this.inventoryIngredientsDataGrid.Items.Refresh();
@@ -89,7 +89,7 @@ namespace FoodPlanner
         {
             string originalSearchText = acb.SearchText;
 
-            var foundIngredients = MainWindow.db.Ingredients
+            var foundIngredients = App.db.Ingredients
                 .Where(i => i.Name.ToLower().Contains(originalSearchText.ToLower()))
                 .Take(_maximumAutoCompleteItems)
                 //.OrderBy(ii => ii.Ingredient.Name.IndexOf(originalSearchText, StringComparison.InvariantCultureIgnoreCase));

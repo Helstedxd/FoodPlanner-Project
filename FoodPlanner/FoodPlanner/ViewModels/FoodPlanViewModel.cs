@@ -270,7 +270,7 @@ namespace FoodPlanner.ViewModels
                 {
                     newMeal.Recipe = recipeForMeal;
                     mealIDsucces = true;
-                    //newMeal.Recipe.ID = MainWindow.db.Recipes.Where(r => r.ID == 1);
+                    //newMeal.Recipe.ID = App.db.Recipes.Where(r => r.ID == 1);
                 }
                 else
                 {

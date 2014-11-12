@@ -73,33 +73,25 @@
             </Setter>
         </Style>
         <!--Start: Template for recipes list-->
+        <!--Start: Template for recipes list-->
         <DataTemplate x:Key="ListRecipesTemplate">
             <Grid>
                 <Border Margin="3" BorderBrush="#909090" BorderThickness="1" Padding="2">
                     <Grid>
-                        <Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions >
                             <ColumnDefinition Width="75"/>
-                            <ColumnDefinition Width="275"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
 
-                        <Image Grid.Column="0" Height="75" Width="75" Stretch="UniformToFill" Source="{Binding recipe.Image}" />
+                        <Image Grid.RowSpan="2" Height="75" Width="75" Stretch="UniformToFill" Source="{Binding recipe.Image}" />
 
-                        <Grid Grid.Column="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="25"/>
-                            </Grid.RowDefinitions>
+                        <Label Grid.Column="1" FontSize="30" Content="{Binding recipe.Title}"/>
+                        <Label Grid.Column="1" Grid.Row="1" Content="{Binding getMatchPercentage}" ContentStringFormat="You have {0} of the needed ingredients"/>
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="100"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Label Padding="5,0,0,0" Grid.Column="0" Grid.Row="0" FontSize="30" Content="{Binding recipe.Title}"/>
-                            <Label Grid.Column="0" Grid.Row="1" Content="Stor FED PIKKEMAND"/>
-
-                            <Label Padding="0,0,5,0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" HorizontalContentAlignment="Right" FontSize="50" Content="{Binding getMatchPercentage}"/>
-                        </Grid>
                     </Grid>
                 </Border>
             </Grid>
@@ -113,6 +105,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <!--End: Template for recipes list-->
         <!--End: Template for recipes list-->
         <!--Start: Template for Shopping List (element Listview)-->
         <DataTemplate x:Key="ShoppingListNameCell">

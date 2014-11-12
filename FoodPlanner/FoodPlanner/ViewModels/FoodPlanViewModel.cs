@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,13 +25,13 @@ namespace FoodPlanner.ViewModels
                          _goWeekDown;
         public FoodPlanViewModel()
         {
-            MondayMeals = new List<Recipe>();
-            TuesdayMeals = new List<Recipe>();
-            WednesdayMeals = new List<Recipe>();
-            ThursdayMeals = new List<Recipe>();
-            FridayMeals = new List<Recipe>();
-            SaturdayMeals = new List<Recipe>();
-            SundayMeals = new List<Recipe>();
+            MondayMeals = new ObservableCollection<Recipe>();//ObservableCollection allows for updates in the view
+            TuesdayMeals = new ObservableCollection<Recipe>();
+            WednesdayMeals = new ObservableCollection<Recipe>();
+            ThursdayMeals = new ObservableCollection<Recipe>();
+            FridayMeals = new ObservableCollection<Recipe>();
+            SaturdayMeals = new ObservableCollection<Recipe>();
+            SundayMeals = new ObservableCollection<Recipe>();
 
             ActiveDate = DateTime.Now;
             //TestMethod();
@@ -62,7 +63,7 @@ namespace FoodPlanner.ViewModels
                 return Day(DayOfWeek.Monday);
             }
         }
-        public List<Recipe> MondayMeals
+        public ObservableCollection<Recipe> MondayMeals
         {
             get;
             private set;
@@ -74,7 +75,7 @@ namespace FoodPlanner.ViewModels
                 return Day(DayOfWeek.Tuesday);
             }
         }
-        public List<Recipe> TuesdayMeals
+        public ObservableCollection<Recipe> TuesdayMeals
         {
             get;
             private set;
@@ -86,7 +87,7 @@ namespace FoodPlanner.ViewModels
                 return Day(DayOfWeek.Wednesday);
             }
         }
-        public List<Recipe> WednesdayMeals
+        public ObservableCollection<Recipe> WednesdayMeals
         {
             get;
             private set;
@@ -98,7 +99,7 @@ namespace FoodPlanner.ViewModels
                 return Day(DayOfWeek.Thursday);
             }
         }
-        public List<Recipe> ThursdayMeals
+        public ObservableCollection<Recipe> ThursdayMeals
         {
             get;
             private set;
@@ -110,7 +111,7 @@ namespace FoodPlanner.ViewModels
                 return Day(DayOfWeek.Friday);
             }
         }
-        public List<Recipe> FridayMeals
+        public ObservableCollection<Recipe> FridayMeals
         {
             get;
             private set;
@@ -122,7 +123,7 @@ namespace FoodPlanner.ViewModels
                 return Day(DayOfWeek.Saturday);
             }
         }
-        public List<Recipe> SaturdayMeals
+        public ObservableCollection<Recipe> SaturdayMeals
         {
             get;
             private set;
@@ -134,7 +135,7 @@ namespace FoodPlanner.ViewModels
                 return Day(DayOfWeek.Sunday);
             }
         }
-        public List<Recipe> SundayMeals
+        public ObservableCollection<Recipe> SundayMeals
         {
             get;
             private set;

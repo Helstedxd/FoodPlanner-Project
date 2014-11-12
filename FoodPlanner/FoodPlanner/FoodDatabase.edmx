@@ -50,7 +50,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Persons" Type="int" Nullable="false" />
-          <Property Name="Preparation" Type="varchar" MaxLength="8191" Nullable="false" />
+          <Property Name="PreparationID" Type="int" Nullable="false" />
           <Property Name="Image" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
@@ -224,7 +224,7 @@
           <NavigationProperty Name="Meals" Relationship="Self.Meals_ibfk_1" FromRole="Recipes" ToRole="Meals" />
           <NavigationProperty Name="RecipeIngredients" Relationship="Self.RecipeIngredients_ibfk_1" FromRole="Recipes" ToRole="RecipeIngredients" />
           <Property Name="Image" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Preparation" Type="String" Nullable="false" MaxLength="8191" FixedLength="false" Unicode="false" />
+          <Property Name="PreparationID" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -390,7 +390,7 @@
           <EntitySetMapping Name="Recipes">
             <EntityTypeMapping TypeName="FoodModel.Recipe">
               <MappingFragment StoreEntitySet="Recipes">
-                <ScalarProperty Name="Preparation" ColumnName="Preparation" />
+                <ScalarProperty Name="PreparationID" ColumnName="PreparationID" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />

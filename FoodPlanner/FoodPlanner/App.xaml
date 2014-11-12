@@ -125,5 +125,18 @@
             <TextBlock Text="{Binding Path=Ingredient.Unit}" Foreground="Black"/>
         </DataTemplate>
         <!-- End: Template for Shopping List (element Listview)-->
+        <!--Start: Meal planning Page Template for day listboxes-->
+        <DataTemplate x:Key="MealsListBoxTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <Label Content="{Binding Title}"/>
+                <Label Content="{Binding Persons}" Grid.Row="1"/>
+            </Grid>
+        </DataTemplate>
+        <!--End: Meal planning Page Template for day listboxes-->
     </Application.Resources>
 </Application>

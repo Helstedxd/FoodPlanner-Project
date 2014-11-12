@@ -1,5 +1,6 @@
 ﻿<Application x:Class="FoodPlanner.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
@@ -127,7 +128,14 @@
         <!--Start: Meal planning Page Template for day listboxes-->
         <DataTemplate x:Key="MealsListBoxTemplate">
                 <Grid>
-                    <Grid.RowDefinitions>
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding ShowRecipeCommand}" CommandParameter="{Binding ElementName=mealBox, Path=SelectedItem}"  />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+                <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>

@@ -33,7 +33,7 @@ namespace FoodPlanner.ViewModels
             SundayMeals = new ObservableCollection<Recipe>();
 
             ActiveDate = DateTime.Now;
-            TestMethod();
+            //TestMethod();
             ShowMeals();
         }
 

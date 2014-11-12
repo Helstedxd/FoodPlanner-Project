@@ -107,9 +107,9 @@ namespace FoodPlanner
                     results.Add(result);
                 }
 
-                listResults.ItemsSource = results.OrderByDescending(res => res.fullMatch).ThenByDescending(res => res.partialMatch).ThenByDescending(res => res.keyWordMatch).ThenByDescending(res => res.recipe.Title);
+                listResults.ItemsSource = results.OrderByDescending(res => res.fullMatch).ThenByDescending(res => res.partialMatch).ThenByDescending(res => res.keyWordMatch).ThenByDescending(res => res.recipe.Title).Take(150);
 
-                MessageBox.Show("Our super optimized search algorithm took only " + ((DateTime.Now - now).Milliseconds) + "ms to process your request");
+                MessageBox.Show("Our super optimized search algorithm took only " + (DateTime.Parse((DateTime.Now - now).ToString()).ToString("ss.fff")) + "s to process your request, for a total of " + results.Count() + " results", "Awsome", MessageBoxButton.YesNoCancel, MessageBoxImage.Hand);
             }
 
             catch (Exception ex)

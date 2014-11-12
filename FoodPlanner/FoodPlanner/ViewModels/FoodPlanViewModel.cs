@@ -24,8 +24,17 @@ namespace FoodPlanner.ViewModels
                          _goWeekDown;
         public FoodPlanViewModel()
         {
+            MondayMeals = new List<Recipe>();
+            TuesdayMeals = new List<Recipe>();
+            WednesdayMeals = new List<Recipe>();
+            ThursdayMeals = new List<Recipe>();
+            FridayMeals = new List<Recipe>();
+            SaturdayMeals = new List<Recipe>();
+            SundayMeals = new List<Recipe>();
+
             ActiveDate = DateTime.Now;
-            
+            //TestMethod();
+            ShowMeals();
         }
 
         #region Propertie
@@ -53,12 +62,22 @@ namespace FoodPlanner.ViewModels
                 return Day(DayOfWeek.Monday);
             }
         }
+        public List<Recipe> MondayMeals
+        {
+            get;
+            private set;
+        }
         public string TuesdayString
         {
             get
             {
                 return Day(DayOfWeek.Tuesday);
             }
+        }
+        public List<Recipe> TuesdayMeals
+        {
+            get;
+            private set;
         }
         public string WednesdayString
         {
@@ -67,12 +86,22 @@ namespace FoodPlanner.ViewModels
                 return Day(DayOfWeek.Wednesday);
             }
         }
+        public List<Recipe> WednesdayMeals
+        {
+            get;
+            private set;
+        }
         public string ThursdayString
         {
             get
             {
                 return Day(DayOfWeek.Thursday);
             }
+        }
+        public List<Recipe> ThursdayMeals
+        {
+            get;
+            private set;
         }
         public string FridayString
         {
@@ -81,6 +110,11 @@ namespace FoodPlanner.ViewModels
                 return Day(DayOfWeek.Friday);
             }
         }
+        public List<Recipe> FridayMeals
+        {
+            get;
+            private set;
+        }
         public string SaturdayString
         {
             get
@@ -88,12 +122,22 @@ namespace FoodPlanner.ViewModels
                 return Day(DayOfWeek.Saturday);
             }
         }
+        public List<Recipe> SaturdayMeals
+        {
+            get;
+            private set;
+        }
         public string SundayString
         {
             get
             {
                 return Day(DayOfWeek.Sunday);
             }
+        }
+        public List<Recipe> SundayMeals
+        {
+            get;
+            private set;
         }
         public string WeekString
         {
@@ -107,28 +151,171 @@ namespace FoodPlanner.ViewModels
         #endregion
 
         #region Methods
+
+        private void TestMethod()
+        {//Disse meals er allerede lagt ind: AddDays(7) AddDays(9) AddDays(-5)
+            List<Recipe> recipes = App.db.Recipes.Where(r => r.Title.Contains("beef")).ToList();
+            AddMealToMeals(ActiveDate.AddDays(7), recipes[0], 3);
+            AddMealToMeals(ActiveDate.AddDays(9), recipes[7], 2);
+            AddMealToMeals(ActiveDate.AddDays(-5), recipes[4], 9);
+        }
+
         public void WeekUp()
         {
             ActiveDate = ActiveDate.AddDays(7);
+            FlushMeals()
+            ShowMeals();
         }
         public void WeekDown()
         {
             ActiveDate = ActiveDate.AddDays(-7);
+            FlushMeals()
+            ShowMeals();
+        }
+        private void FlushMeals()
+        {
+            MondayMeals.Clear();
+            TuesdayMeals.Clear();
+            WednesdayMeals.Clear();
+            ThursdayMeals.Clear();
+            FridayMeals.Clear();
+            SaturdayMeals.Clear();
+            SundayMeals.Clear();
         }
         private string Day(DayOfWeek day)
         {
-            int diff;
+            int difference = GetDdayDifference(day);
+            string result;
+
+            return result = ActiveDate.AddDays(-difference).Date.ToString("dddd\ndd/MM",CultureInfo.CreateSpecificCulture("en-US"));
+        }
+        private int GetDdayDifference(DayOfWeek day)
+        {
+            int difference;
+
             if (day == DayOfWeek.Sunday)
             {
-                diff = Convert.ToInt16(ActiveDate.DayOfWeek) - 7;
+                difference = Convert.ToInt16(ActiveDate.DayOfWeek) - 7;
             }
             else
             {
-                diff = ActiveDate.DayOfWeek - day;
+                difference = ActiveDate.DayOfWeek - day;
             }
-            string result;
 
-            return result = ActiveDate.AddDays(-diff).Date.ToString("dddd\ndd/MM",CultureInfo.CreateSpecificCulture("en-US"));
+            return difference;
+        }
+        private void ShowMeals()
+        {
+            int mondayDifference = GetDdayDifference(DayOfWeek.Monday), sundayDifference = GetDdayDifference(DayOfWeek.Sunday);
+            DateTime mondayDate = ActiveDate.AddDays(-mondayDifference), sundayDate = ActiveDate.AddDays(-sundayDifference);
+
+            List<Meal> mealList = App.db.Meals.Where(m => m.Date >= mondayDate && m.Date <= sundayDate).ToList();
+            foreach (Meal m in mealList)
+            {
+                if (m.Date.DayOfWeek == DayOfWeek.Monday)
+                {
+                    MondayMeals.Add(m.Recipe);
+                }
+                else if (m.Date.DayOfWeek == DayOfWeek.Tuesday)
+                {
+                    TuesdayMeals.Add(m.Recipe);
+                }
+                else if (m.Date.DayOfWeek == DayOfWeek.Wednesday)
+                {
+                    WednesdayMeals.Add(m.Recipe);
+                }
+                else if (m.Date.DayOfWeek == DayOfWeek.Thursday)
+                {
+                    ThursdayMeals.Add(m.Recipe);
+                }
+                else if (m.Date.DayOfWeek == DayOfWeek.Friday)
+                {
+                    FridayMeals.Add(m.Recipe);
+                }
+                else if (m.Date.DayOfWeek == DayOfWeek.Saturday)
+                {
+                    SaturdayMeals.Add(m.Recipe);
+                }
+                else if (m.Date.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    SundayMeals.Add(m.Recipe);
+                }
+            }
+        }
+
+        private void AddMealToMeals(DateTime dateForMeal, Recipe recipeForMeal, int Participants)
+        {
+            Meal newMeal = new Meal();
+            bool userIDsucces = false, mealIDsucces = false, participantsSucces = false, dateSucces = false;
+            try//CurrentUser.ID
+            {
+                if (App.CurrentUser.ID > 0) // CurrentUser ID  
+                {
+                    newMeal.User = App.CurrentUser;
+                    userIDsucces = true;
+                }
+                else
+                {
+                    IDexceptionBox("ArgumentOutOfRangeException", "valid (value is below 0)");
+                }
+            }
+            catch (Exception)
+            {
+                IDexceptionBox("An unknown exception", "valid");
+            }
+
+            try//recipeForMeal.ID 
+            {
+                if (recipeForMeal.ID > 0)  // RecipeForMeal ID
+                {
+                    newMeal.Recipe = recipeForMeal;
+                    mealIDsucces = true;
+                    //newMeal.Recipe.ID = MainWindow.db.Recipes.Where(r => r.ID == 1);
+                }
+                else
+                {
+                    IDexceptionBox("ArgumentOutOfRangeException", "valid (value is below 0)");
+                }
+            }
+            catch (Exception)
+            {
+                IDexceptionBox("An unknown exception", "valid");
+            }
+            try//newMeal.Date
+            {
+                newMeal.Date = dateForMeal;
+                dateSucces = true;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "newMeal.Date error");
+            }
+            try//Participants
+            {
+                if (Participants > 0)
+                {
+                    newMeal.Participants = Participants;
+                    participantsSucces = true;
+                }
+                else
+                {
+                    MessageBox.Show("ERROR\nInvalidParticipantsNumber:\nThe given participants value is not accepted. It must be above zero", "addMealToMeals: InvalidParticipantsNumber");
+                }
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Participants error");
+            }
+            if (userIDsucces && mealIDsucces && participantsSucces && dateSucces) // If all previously assignments were succesful, the DB will be updated
+            {
+                App.db.Meals.Add(newMeal);
+                App.db.SaveChanges();
+            }
+        }
+        private void IDexceptionBox(string errorType, string faultType)
+        {
+            MessageBox.Show("ERROR\n" + errorType + ":\nThe given ID is not " + faultType, "addMealToMeals: " + errorType);
         }
         #endregion
 
@@ -160,6 +347,17 @@ namespace FoodPlanner.ViewModels
         #endregion
 
         /*        
+          
+        private bool IsMatchDateMeal(Meal mealToCompare)
+        {
+            bool match = false;
+            if (mealToCompare.Date == ActiveDate.AddDays(-GetDdayDifference(mealToCompare.Date.DayOfWeek)).Date)
+            {
+                match = true;
+            }
+            return match;
+        } 
+         
         private string getStringDay(int day)
         {
             string stringDay;
@@ -192,104 +390,7 @@ namespace FoodPlanner.ViewModels
             }
             return stringDay;
         }
-        private void addMealToMeals(DateTime dateForMeal, Recipe recipeForMeal, int Participants)
-        {
-            Meal newMeal = new Meal();
-            bool userIDsucces = false, mealIDsucces = false, participantsSucces = false, dateSucces = false;
-            try
-            {
-                if (MainWindow.CurrentUser.ID > 0) // CurrentUser ID  
-                {
-                    newMeal.User = MainWindow.CurrentUser;
-                    userIDsucces = true;
-                }
-                else
-                {
-                    IDexceptionBox("ArgumentOutOfRangeException", "valid (value is below 0)");
-                }
-            }
-            catch (ArgumentNullException)
-            {
-                IDexceptionBox("ArgumentNullException", "valid");
-            }
-            catch (NotFiniteNumberException)
-            {
-                IDexceptionBox("NotFiniteNumberException", "a number");
-            }
-            catch (Exception)
-            {
-                IDexceptionBox("An unknown exception", "valid");
-            }
 
-            try
-            {
-                if (recipeForMeal.ID > 0)  // RecipeForMeal ID
-                {
-                    newMeal.Recipe = recipeForMeal;
-                    mealIDsucces = true;
-                    //newMeal.Recipe.ID = MainWindow.db.Recipes.Where(r => r.ID == 1);
-                }
-                else
-                {
-                    IDexceptionBox("ArgumentOutOfRangeException", "valid (value is below 0)");
-                }
-            }
-            catch (ArgumentNullException)
-            {
-                IDexceptionBox("ArgumentNullException", "valid");
-            }
-            catch (NotFiniteNumberException)
-            {
-                IDexceptionBox("NotFiniteNumberException", "a number");
-            }
-            catch (Exception)
-            {
-                IDexceptionBox("An unknown exception", "valid");
-            }
-
-            try
-            {
-                newMeal.Date = dateForMeal;
-                dateSucces = true;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message + "\nHow is that exception even possible?!?", "What have you done??");
-            }
-
-            try
-            {
-                if (Participants > 0)
-                {
-                    newMeal.Participants = Participants;
-                    participantsSucces = true;
-                }
-                else
-                {
-                    MessageBox.Show("ERROR\nInvalidParticipantsNumber:\nThe given participants value is not accepted. It must be above zero", "addMealToMeals: InvalidParticipantsNumber");
-                }
-
-            }
-            catch (NotFiniteNumberException)
-            {
-                MessageBox.Show("ERROR\nNotFiniteNumberException:\nThe given participants value is not a number.", "addMealToMeals: NotFiniteNumberException");
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message + "\nHow is that exception even possible?!?", "What have you done??");
-            }
-
-
-            if (userIDsucces && mealIDsucces && participantsSucces && dateSucces) // If all previously assignments were succesful, the DB will be updated
-            {
-                MainWindow.db.Meals.Add(newMeal);
-                MainWindow.db.SaveChanges();
-            }
-        }
-        private void IDexceptionBox(string errorType, string faultType)
-        {
-            MessageBox.Show("ERROR\n" + errorType + ":\nThe given ID is not " + faultType, "addMealToMeals: " + errorType);
-        }
         public int getWeeksInYear(int year)
         {
             DateTimeFormatInfo format = DateTimeFormatInfo.CurrentInfo;

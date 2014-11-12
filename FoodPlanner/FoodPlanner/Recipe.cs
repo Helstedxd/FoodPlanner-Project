@@ -24,9 +24,10 @@ namespace FoodPlanner.Models
         public string Title { get; set; }
         public int Persons { get; set; }
         public string Image { get; set; }
-        public string Preparation { get; set; }
+        public int PreparationID { get; set; }
     
         public virtual ObservableCollection<Meal> Meals { get; set; }
         public virtual ObservableCollection<RecipeIngredient> RecipeIngredients { get; set; }
+        public virtual RecipesPreparation RecipesPreparation { get; set; }
     }
 }

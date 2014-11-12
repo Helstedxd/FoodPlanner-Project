@@ -50,8 +50,15 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Persons" Type="int" Nullable="false" />
-          <Property Name="Preparation" Type="varchar" MaxLength="8191" Nullable="false" />
+          <Property Name="PreparationID" Type="int" Nullable="false" />
           <Property Name="Image" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RecipesPreparation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Preparation" Type="text" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -60,6 +67,18 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
+        <Association Name="hmmRandomName">
+          <End Role="RecipesPreparation" Type="Self.RecipesPreparation" Multiplicity="1" />
+          <End Role="Recipes" Type="Self.Recipes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RecipesPreparation">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Recipes">
+              <PropertyRef Name="PreparationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="InventoryIngredients_ibfk_1">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="InventoryIngredients" Type="Self.InventoryIngredients" Multiplicity="*" />
@@ -138,7 +157,12 @@
           <EntitySet Name="Meals" EntityType="Self.Meals" Schema="foodplan" store:Type="Tables" />
           <EntitySet Name="RecipeIngredients" EntityType="Self.RecipeIngredients" Schema="foodplan" store:Type="Tables" />
           <EntitySet Name="Recipes" EntityType="Self.Recipes" Schema="foodplan" store:Type="Tables" />
+          <EntitySet Name="RecipesPreparation" EntityType="Self.RecipesPreparation" Schema="foodplan" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="foodplan" store:Type="Tables" />
+          <AssociationSet Name="hmmRandomName" Association="Self.hmmRandomName">
+            <End Role="RecipesPreparation" EntitySet="RecipesPreparation" />
+            <End Role="Recipes" EntitySet="Recipes" />
+          </AssociationSet>
           <AssociationSet Name="InventoryIngredients_ibfk_1" Association="Self.InventoryIngredients_ibfk_1">
             <End Role="Users" EntitySet="Users" />
             <End Role="InventoryIngredients" EntitySet="InventoryIngredients" />
@@ -224,7 +248,8 @@
           <NavigationProperty Name="Meals" Relationship="Self.Meals_ibfk_1" FromRole="Recipes" ToRole="Meals" />
           <NavigationProperty Name="RecipeIngredients" Relationship="Self.RecipeIngredients_ibfk_1" FromRole="Recipes" ToRole="RecipeIngredients" />
           <Property Name="Image" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Preparation" Type="String" Nullable="false" MaxLength="8191" FixedLength="false" Unicode="false" />
+          <Property Name="PreparationID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RecipesPreparation" Relationship="FoodModel.hmmRandomName" FromRole="Recipe" ToRole="RecipesPreparation" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -338,7 +363,32 @@
             <End Role="Recipes" EntitySet="Recipes" />
             <End Role="RecipeIngredients" EntitySet="RecipeIngredients" />
           </AssociationSet>
+          <EntitySet Name="RecipesPreparations" EntityType="FoodModel.RecipesPreparation" />
+          <AssociationSet Name="hmmRandomName" Association="FoodModel.hmmRandomName">
+            <End Role="RecipesPreparation" EntitySet="RecipesPreparations" />
+            <End Role="Recipe" EntitySet="Recipes" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="RecipesPreparation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Preparation" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Recipes" Relationship="FoodModel.hmmRandomName" FromRole="RecipesPreparation" ToRole="Recipe" />
+        </EntityType>
+        <Association Name="hmmRandomName">
+          <End Type="FoodModel.RecipesPreparation" Role="RecipesPreparation" Multiplicity="1" />
+          <End Type="FoodModel.Recipe" Role="Recipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RecipesPreparation">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Recipe">
+              <PropertyRef Name="PreparationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -390,7 +440,7 @@
           <EntitySetMapping Name="Recipes">
             <EntityTypeMapping TypeName="FoodModel.Recipe">
               <MappingFragment StoreEntitySet="Recipes">
-                <ScalarProperty Name="Preparation" ColumnName="Preparation" />
+                <ScalarProperty Name="PreparationID" ColumnName="PreparationID" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -403,6 +453,14 @@
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RecipesPreparations">
+            <EntityTypeMapping TypeName="FoodModel.RecipesPreparation">
+              <MappingFragment StoreEntitySet="RecipesPreparation">
+                <ScalarProperty Name="Preparation" ColumnName="Preparation" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

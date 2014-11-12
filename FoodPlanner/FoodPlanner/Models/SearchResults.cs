@@ -9,6 +9,14 @@ using System.Threading.Tasks;
 
 namespace FoodPlanner.Models
 {
+    class Result
+    {
+        public Result() { }
+        public Recipe recipe { get; set; }
+        public Ingredient ingredient { get; set; }
+        public decimal quantity { get; set; }
+
+    }
     class SearchResults2
     {
         private int _fullMatch = 0, _partialMatch = 0, _keyWordMatch = 0;
@@ -59,6 +67,14 @@ namespace FoodPlanner.Models
             set
             {
                 _keyWordMatch = value;
+            }
+        }
+
+        public List<Ingredient> ingredient
+        {
+            get
+            {
+                return _ingredients;
             }
         }
 

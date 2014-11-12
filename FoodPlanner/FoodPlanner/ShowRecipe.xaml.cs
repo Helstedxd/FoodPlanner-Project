@@ -41,8 +41,8 @@ namespace FoodPlanner
         {
             InitializeComponent();
 
-            showIngredients.ItemsSource = MainWindow.db.RecipeIngredients.Where(ri => ri.Recipe.ID == recipe.ID).ToList();
-            //showSteps.Text = recipe.Preparation;
+            showIngredients.ItemsSource = App.db.RecipeIngredients.Where(ri => ri.Recipe.ID == recipe.ID).ToList();
+            showSteps.Text = recipe.RecipesPreparation.Preparation;
 
             imageSource.DataContext = ImageCache(recipe);
         }

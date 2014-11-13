@@ -19,10 +19,11 @@ namespace FoodPlanner.ViewModels
         private CollectionViewSource _inventoryIngredientsCollectionViewSource;
         private int _maximumAutoCompleteItems = 10;
         private List<Ingredient> _queriedIngredients;
+        private Ingredient _selectedItem = null;
         private string _searchText;
         private string _lastSearchText; // when we last queried the db
 
-        private ICommand _saveInventoryCommand;
+        private ICommand _saveInventoryCommand, _addToInventory;
 
         #endregion
 
@@ -43,7 +44,32 @@ namespace FoodPlanner.ViewModels
                 {
                     _queriedIngredients = new List<Ingredient>();
                 }
+
+                OnPropertyChanged("disableAddButton");
                 return _queriedIngredients.Where(i => i.Name.ToLower().Contains(SearchText.ToLower()));
+            }
+        }
+
+        public bool disableAddButton
+        {
+            get
+            {
+                if (_queriedIngredients != null)
+                {
+                    if (_queriedIngredients.Count() != 0)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+
+        public Ingredient SetSelectedItem
+        {
+            set
+            {
+                _selectedItem = (Ingredient)value;
             }
         }
 
@@ -76,6 +102,19 @@ namespace FoodPlanner.ViewModels
             }
         }
 
+        public ICommand AddToInventory
+        {
+            get
+            {
+                if (_addToInventory == null)
+                {
+                    _addToInventory = new RelayCommand(p => AddItemToInventory());
+                }
+
+                return _addToInventory;
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -83,6 +122,7 @@ namespace FoodPlanner.ViewModels
         private void SaveInventory()
         {
             // Remove unlinked items from the database
+            /*
             foreach (var inventoryItem in App.db.InventoryIngredients.Local.ToList())
             {
                 if (inventoryItem.Ingredient == null)
@@ -90,12 +130,10 @@ namespace FoodPlanner.ViewModels
                     App.db.InventoryIngredients.Remove(inventoryItem);
                 }
             }
-
+            */
             App.db.SaveChanges();
 
-            // Refresh the grids so the database generated values show up. 
-            //this.inventoryIngredientsDataGrid.Items.Refresh();
-            Console.WriteLine("Inventory saved!");
+            Console.WriteLine("Trying to save");
         }
 
         private void TryToRepopulateTheList()
@@ -147,6 +185,14 @@ namespace FoodPlanner.ViewModels
                 Console.WriteLine("Search text changed before repopulation...");
             }
 
+        }
+
+        private void AddItemToInventory()
+        {
+            if (_selectedItem != null)
+            {
+                App.CurrentUser.InventoryIngredients.Add(new InventoryIngredient(_selectedItem, 50));
+            }
         }
 
         #endregion

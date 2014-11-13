@@ -49,8 +49,6 @@ namespace FoodPlanner
                 List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
                 List<SearchResults2> results = new List<SearchResults2>();
 
-                DateTime now = DateTime.Now;
-
                 IQueryable<int> recipeIDs = (from ri in App.db.RecipeIngredients
                                              join i in App.db.Ingredients on ri.IngredientID equals i.ID
                                              join r in App.db.Recipes on ri.RecipeID equals r.ID
@@ -68,6 +66,7 @@ namespace FoodPlanner
                                                                            ingredient = ri.Ingredient,
                                                                            quantity = ri.Quantity
                                                                        } by ri.RecipeID;
+
 
                 foreach (IGrouping<int, Result> ri in recipeIngredients)
                 {
@@ -108,8 +107,6 @@ namespace FoodPlanner
                 }
 
                 listResults.ItemsSource = results.OrderByDescending(res => res.fullMatch).ThenByDescending(res => res.partialMatch).ThenByDescending(res => res.keyWordMatch).ThenByDescending(res => res.recipe.Title).Take(150);
-
-                MessageBox.Show("Our super optimized search algorithm took only " + (DateTime.Parse((DateTime.Now - now).ToString()).ToString("ss.fff")) + "s to process your request, for a total of " + results.Count() + " results", "Awsome", MessageBoxButton.YesNoCancel, MessageBoxImage.Hand);
             }
 
             catch (Exception ex)

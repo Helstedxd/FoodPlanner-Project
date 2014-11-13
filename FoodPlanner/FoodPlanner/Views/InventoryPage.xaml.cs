@@ -25,10 +25,5 @@ namespace FoodPlanner.Views
         {
             InitializeComponent();
         }
-
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("I don't work yet nigga..");
-        }
     }
 }

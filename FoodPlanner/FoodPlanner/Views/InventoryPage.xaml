@@ -24,11 +24,11 @@
                                          FilterMode="Contains" IsTextCompletionEnabled="True"
                                          MinimumPopulateDelay="500" MinimumPrefixLength="2" Populating="inventoryAutoCompleteBox_Populating" />-->
         <TextBox Margin="5 0 60 0" Text="{Binding SearchText, Mode=TwoWay, Delay=500, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
-        <Button x:Name="AddButton" Content="Add" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Margin="5" IsEnabled="False" />
+        <Button x:Name="AddButton" Content="Add" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Margin="0,0,5,0" IsEnabled="{Binding disableAddButton, Mode=OneWay}" Command="{Binding AddToInventory}" Height="32" />
         <!--</StackPanel>-->
-        <ListBox Margin="5" Grid.Row="1" ItemsSource="{Binding FoundIngredients}" />
-        
-        <DataGrid x:Name="inventoryIngredientsDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="5,4.832,5.063,4.896" ItemsSource="{Binding InventoryIngredients}" EnableRowVirtualization="True" AutoGenerateColumns="False" Grid.Row="2">
+        <ListBox Margin="5" Grid.Row="1" ItemsSource="{Binding FoundIngredients}" SelectedItem="{Binding SetSelectedItem}" />
+
+        <DataGrid x:Name="inventoryIngredientsDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="5,4.832,5.063,4.896" ItemsSource="{Binding InventoryIngredients, Mode=OneWay}" EnableRowVirtualization="True" AutoGenerateColumns="False" Grid.Row="2">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="ingredientColumn" Width="Auto" Header="Ingredient" IsReadOnly="True" Binding="{Binding Ingredient}"/>
                 <DataGridTextColumn x:Name="quantityColumn" Width="Auto" Header="Quantity" Binding="{Binding Quantity}"/>
@@ -48,6 +48,6 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Bottom" Width="75" Grid.Row="3" Click="SaveButton_Click"/>
+        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Bottom" Width="75" Grid.Row="3" Command="{Binding SaveInventoryCommand}"/>
     </Grid>
 </Page>

@@ -101,7 +101,7 @@ namespace FoodPlanner
                         Recipe r = (Recipe)param;
                         if (r != null)
                         {
-                            RecipeViewModel rvm = new RecipeViewModel((Recipe)p);
+                            RecipeViewModel rvm = new RecipeViewModel(r);
                             RecipePage rp = new RecipePage();
                             rp.DataContext = rvm;
                             Navigator.Navigate(rp);

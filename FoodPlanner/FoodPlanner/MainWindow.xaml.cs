@@ -39,6 +39,7 @@ namespace FoodPlanner
             /*
             var test = new Search();
             test.ShowDialog();
+            App.db.Dispose();
             Close();
             */
         }

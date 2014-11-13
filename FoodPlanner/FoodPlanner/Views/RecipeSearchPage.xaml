@@ -16,7 +16,8 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="30">
+            </ColumnDefinition>
             <ColumnDefinition/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
@@ -24,17 +25,19 @@
             <RowDefinition Height="30"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-
+        
         <Label Margin="5">
             <Label.Background>
                 <ImageBrush ImageSource="/Images/searchIcon.png" Stretch="Uniform"/>
             </Label.Background>
         </Label>
 
-        <TextBox Grid.Column="1" FontSize="19" Name="Search" Text="{Binding Path=SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=1000}"/>
-
         <ComboBox Grid.Column="2"/>
-
+        
+        <TextBox Grid.Column="1" FontSize="19" Name="Search" Text="{Binding Path=SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=1000}"/>
+        <Border Grid.Column="0"  BorderThickness=" 2,2,1,2" BorderBrush="Black"/>
+        <Border Grid.Column="1"  BorderThickness=" 1,2,1,2" BorderBrush="Black"/>
+        <Border Grid.Column="2"  BorderThickness=" 1,2,2,2" BorderBrush="Black"/>
         <ListBox Name="recipeListBox" Grid.Row="1" Grid.ColumnSpan="3" ItemTemplate="{StaticResource ListRecipesTemplate}"  ItemsSource="{Binding Path=listOfSearchResults, Mode=OneWay}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseUp">

@@ -25,7 +25,7 @@
         <!--Start: Template for Image buttons-->
         <Style x:Key="ButtonIconTemplate" TargetType="{x:Type Button}">
             <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="Margin" Value="2"/>
             <Setter Property="Template">
                 <Setter.Value>

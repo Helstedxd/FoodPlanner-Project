@@ -40,5 +40,7 @@
         </Button>
         <TextBlock TextWrapping="Wrap" TextAlignment="Center" Background="WhiteSmoke" Text="You are shopping for the next: x Days"/>
 
+        <Border Grid.Column="0"  BorderThickness=" 2,2,1,2" BorderBrush="Black"/>
+        <Border Grid.Column="1"  BorderThickness=" 1,2,2,2" BorderBrush="Black"/>
     </Grid>
 </Page>

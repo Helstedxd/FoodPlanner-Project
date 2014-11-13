@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="FoodModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BlacklistIngredients">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IngredientID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Ingredients">
           <Key>
             <PropertyRef Name="ID" />
@@ -60,13 +68,48 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Preparation" Type="text" Nullable="false" />
         </EntityType>
+        <EntityType Name="StockQuantities">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IngredientID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="decimal" Precision="50" Scale="0" Nullable="false" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="PersonsInHouseHold" Type="int" Nullable="false" />
+          <Property Name="ShopAhead" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="BlacklistIngredients_ibfk_1">
+          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="1" />
+          <End Role="BlacklistIngredients" Type="Self.BlacklistIngredients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredients">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BlacklistIngredients">
+              <PropertyRef Name="IngredientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BlacklistIngredients_ibfk_2">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="BlacklistIngredients" Type="Self.BlacklistIngredients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BlacklistIngredients">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="hmmRandomName">
           <End Role="RecipesPreparation" Type="Self.RecipesPreparation" Multiplicity="1" />
           <End Role="Recipes" Type="Self.Recipes" Multiplicity="*" />
@@ -151,14 +194,48 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="StockQuantities_ibfk_1">
+          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="1" />
+          <End Role="StockQuantities" Type="Self.StockQuantities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredients">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockQuantities">
+              <PropertyRef Name="IngredientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StockQuantities_ibfk_2">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="StockQuantities" Type="Self.StockQuantities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockQuantities">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="FoodModelStoreContainer">
+          <EntitySet Name="BlacklistIngredients" EntityType="Self.BlacklistIngredients" Schema="foodplan" store:Type="Tables" />
           <EntitySet Name="Ingredients" EntityType="Self.Ingredients" Schema="foodplan" store:Type="Tables" />
           <EntitySet Name="InventoryIngredients" EntityType="Self.InventoryIngredients" Schema="foodplan" store:Type="Tables" />
           <EntitySet Name="Meals" EntityType="Self.Meals" Schema="foodplan" store:Type="Tables" />
           <EntitySet Name="RecipeIngredients" EntityType="Self.RecipeIngredients" Schema="foodplan" store:Type="Tables" />
           <EntitySet Name="Recipes" EntityType="Self.Recipes" Schema="foodplan" store:Type="Tables" />
           <EntitySet Name="RecipesPreparation" EntityType="Self.RecipesPreparation" Schema="foodplan" store:Type="Tables" />
+          <EntitySet Name="StockQuantities" EntityType="Self.StockQuantities" Schema="foodplan" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="foodplan" store:Type="Tables" />
+          <AssociationSet Name="BlacklistIngredients_ibfk_1" Association="Self.BlacklistIngredients_ibfk_1">
+            <End Role="Ingredients" EntitySet="Ingredients" />
+            <End Role="BlacklistIngredients" EntitySet="BlacklistIngredients" />
+          </AssociationSet>
+          <AssociationSet Name="BlacklistIngredients_ibfk_2" Association="Self.BlacklistIngredients_ibfk_2">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="BlacklistIngredients" EntitySet="BlacklistIngredients" />
+          </AssociationSet>
           <AssociationSet Name="hmmRandomName" Association="Self.hmmRandomName">
             <End Role="RecipesPreparation" EntitySet="RecipesPreparation" />
             <End Role="Recipes" EntitySet="Recipes" />
@@ -187,6 +264,14 @@
             <End Role="Recipes" EntitySet="Recipes" />
             <End Role="RecipeIngredients" EntitySet="RecipeIngredients" />
           </AssociationSet>
+          <AssociationSet Name="StockQuantities_ibfk_1" Association="Self.StockQuantities_ibfk_1">
+            <End Role="Ingredients" EntitySet="Ingredients" />
+            <End Role="StockQuantities" EntitySet="StockQuantities" />
+          </AssociationSet>
+          <AssociationSet Name="StockQuantities_ibfk_2" Association="Self.StockQuantities_ibfk_2">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="StockQuantities" EntitySet="StockQuantities" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -201,6 +286,8 @@
           <Property Name="Unit" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="InventoryIngredients" Relationship="Self.InventoryIngredients_ibfk_2" FromRole="Ingredients" ToRole="InventoryIngredients" />
           <NavigationProperty Name="RecipeIngredients" Relationship="Self.RecipeIngredients_ibfk_2" FromRole="Ingredients" ToRole="RecipeIngredients" />
+          <NavigationProperty Name="BlacklistIngredients" Relationship="FoodModel.BlacklistIngredients_ibfk_1" FromRole="Ingredient" ToRole="BlacklistIngredient" />
+          <NavigationProperty Name="StockQuantities" Relationship="FoodModel.StockQuantities_ibfk_1" FromRole="Ingredient" ToRole="StockQuantity" />
         </EntityType>
         <EntityType Name="InventoryIngredient" a:TypeAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
           <Key>
@@ -259,6 +346,10 @@
           <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="InventoryIngredients" Relationship="Self.InventoryIngredients_ibfk_1" FromRole="Users" ToRole="InventoryIngredients" />
           <NavigationProperty Name="Meals" Relationship="Self.Meals_ibfk_2" FromRole="Users" ToRole="Meals" />
+          <Property Name="PersonsInHouseHold" Type="Int32" Nullable="false" />
+          <Property Name="ShopAhead" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BlacklistIngredients" Relationship="FoodModel.BlacklistIngredients_ibfk_2" FromRole="User" ToRole="BlacklistIngredient" />
+          <NavigationProperty Name="StockQuantities" Relationship="FoodModel.StockQuantities_ibfk_2" FromRole="User" ToRole="StockQuantity" />
         </EntityType>
         <Association Name="InventoryIngredients_ibfk_2">
           <End Role="Ingredients" Type="Self.Ingredient" Multiplicity="1" />
@@ -368,6 +459,24 @@
             <End Role="RecipesPreparation" EntitySet="RecipesPreparations" />
             <End Role="Recipe" EntitySet="Recipes" />
           </AssociationSet>
+          <EntitySet Name="BlacklistIngredients" EntityType="FoodModel.BlacklistIngredient" />
+          <EntitySet Name="StockQuantities" EntityType="FoodModel.StockQuantity" />
+          <AssociationSet Name="BlacklistIngredients_ibfk_1" Association="FoodModel.BlacklistIngredients_ibfk_1">
+            <End Role="Ingredient" EntitySet="Ingredients" />
+            <End Role="BlacklistIngredient" EntitySet="BlacklistIngredients" />
+          </AssociationSet>
+          <AssociationSet Name="BlacklistIngredients_ibfk_2" Association="FoodModel.BlacklistIngredients_ibfk_2">
+            <End Role="User" EntitySet="Users" />
+            <End Role="BlacklistIngredient" EntitySet="BlacklistIngredients" />
+          </AssociationSet>
+          <AssociationSet Name="StockQuantities_ibfk_1" Association="FoodModel.StockQuantities_ibfk_1">
+            <End Role="Ingredient" EntitySet="Ingredients" />
+            <End Role="StockQuantity" EntitySet="StockQuantities" />
+          </AssociationSet>
+          <AssociationSet Name="StockQuantities_ibfk_2" Association="FoodModel.StockQuantities_ibfk_2">
+            <End Role="User" EntitySet="Users" />
+            <End Role="StockQuantity" EntitySet="StockQuantities" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="RecipesPreparation">
           <Key>
@@ -386,6 +495,75 @@
             </Principal>
             <Dependent Role="Recipe">
               <PropertyRef Name="PreparationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="BlacklistIngredient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IngredientID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ingredient" Relationship="FoodModel.BlacklistIngredients_ibfk_1" FromRole="BlacklistIngredient" ToRole="Ingredient" />
+          <NavigationProperty Name="User" Relationship="FoodModel.BlacklistIngredients_ibfk_2" FromRole="BlacklistIngredient" ToRole="User" />
+        </EntityType>
+        <EntityType Name="StockQuantity">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IngredientID" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="Ingredient" Relationship="FoodModel.StockQuantities_ibfk_1" FromRole="StockQuantity" ToRole="Ingredient" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="FoodModel.StockQuantities_ibfk_2" FromRole="StockQuantity" ToRole="User" />
+        </EntityType>
+        <Association Name="BlacklistIngredients_ibfk_1">
+          <End Type="FoodModel.Ingredient" Role="Ingredient" Multiplicity="1" />
+          <End Type="FoodModel.BlacklistIngredient" Role="BlacklistIngredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BlacklistIngredient">
+              <PropertyRef Name="IngredientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BlacklistIngredients_ibfk_2">
+          <End Type="FoodModel.User" Role="User" Multiplicity="1" />
+          <End Type="FoodModel.BlacklistIngredient" Role="BlacklistIngredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BlacklistIngredient">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StockQuantities_ibfk_1">
+          <End Type="FoodModel.Ingredient" Role="Ingredient" Multiplicity="1" />
+          <End Type="FoodModel.StockQuantity" Role="StockQuantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockQuantity">
+              <PropertyRef Name="IngredientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StockQuantities_ibfk_2">
+          <End Type="FoodModel.User" Role="User" Multiplicity="1" />
+          <End Type="FoodModel.StockQuantity" Role="StockQuantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockQuantity">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -451,6 +629,8 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="FoodModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ShopAhead" ColumnName="ShopAhead" />
+                <ScalarProperty Name="PersonsInHouseHold" ColumnName="PersonsInHouseHold" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
@@ -460,6 +640,25 @@
             <EntityTypeMapping TypeName="FoodModel.RecipesPreparation">
               <MappingFragment StoreEntitySet="RecipesPreparation">
                 <ScalarProperty Name="Preparation" ColumnName="Preparation" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BlacklistIngredients">
+            <EntityTypeMapping TypeName="FoodModel.BlacklistIngredient">
+              <MappingFragment StoreEntitySet="BlacklistIngredients">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="IngredientID" ColumnName="IngredientID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockQuantities">
+            <EntityTypeMapping TypeName="FoodModel.StockQuantity">
+              <MappingFragment StoreEntitySet="StockQuantities">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="IngredientID" ColumnName="IngredientID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

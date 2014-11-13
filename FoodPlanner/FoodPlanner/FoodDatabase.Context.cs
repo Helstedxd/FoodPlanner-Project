@@ -32,5 +32,7 @@ namespace FoodPlanner.Models
         public virtual DbSet<Recipe> Recipes { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<RecipesPreparation> RecipesPreparations { get; set; }
+        public virtual DbSet<BlacklistIngredient> BlacklistIngredients { get; set; }
+        public virtual DbSet<StockQuantity> StockQuantities { get; set; }
     }
 }

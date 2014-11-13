@@ -71,6 +71,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BlacklistIngredient.cs">
+      <DependentUpon>FoodDatabase.tt</DependentUpon>
+    </Compile>
     <Compile Include="FoodDatabase.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -95,6 +98,9 @@
     <Compile Include="Models\RecipeIngredient.cs" />
     <Compile Include="Navigator.cs" />
     <Compile Include="RecipesPreparation.cs">
+      <DependentUpon>FoodDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockQuantity.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\RecipeViewModel.cs" />

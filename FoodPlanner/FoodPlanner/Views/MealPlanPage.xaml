@@ -32,7 +32,7 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button Command="{Binding GoAWeekDownCommand}" Grid.Row="0" Style="{DynamicResource ButtonIconTemplate}">
+        <Button Command="{Binding PreviousWeekCommand}" Grid.Row="0" Style="{DynamicResource ButtonIconTemplate}">
             <Button.Background>
                 <ImageBrush ImageSource="/Images/upArrowIcon.png" Stretch="Uniform"/>
             </Button.Background>
@@ -44,7 +44,7 @@
         <Button Content="{Binding Path=FridayString, Mode=OneWay}" Grid.Row="5" Style="{DynamicResource ButtonTextTemplate}"/>
         <Button Content="{Binding Path=SaturdayString, Mode=OneWay}" Grid.Row="6" Style="{DynamicResource ButtonTextTemplate}"/>
         <Button Content="{Binding Path=SundayString, Mode=OneWay}" Grid.Row="7" Style="{DynamicResource ButtonTextTemplate}"/>
-        <Button Command="{Binding GoAWeekUpCommand}" Content="\/" Grid.Row="8" Style="{DynamicResource ButtonIconTemplate}">
+        <Button Command="{Binding NextWeekCommand}" Content="\/" Grid.Row="8" Style="{DynamicResource ButtonIconTemplate}">
             <Button.Background>
                 <ImageBrush ImageSource="/Images/downArrowIcon.png" Stretch="Uniform"/>
             </Button.Background>

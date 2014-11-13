@@ -20,8 +20,8 @@ namespace FoodPlanner.ViewModels
 {
     public class FoodPlanViewModel : ObservableObject
     {
-        private ICommand _goWeekUp, 
-                         _goWeekDown;
+        private ICommand _nextWeek,
+                         _previousWeek;
         public FoodPlanViewModel()
         {
             MondayMeals = new ObservableCollection<Meal>();//ObservableCollection allows for updates in the view
@@ -155,19 +155,20 @@ namespace FoodPlanner.ViewModels
         private void TestMethod()
         {//Disse meals er allerede lagt ind: AddDays(7) AddDays(9) AddDays(-5)
             List<Recipe> recipes = App.db.Recipes.Where(r => r.Title.Contains("beef")).ToList();
-            DateTime sørensFøds = new DateTime(2014, 11, 13);
-            AddMealToMeals(sørensFøds.AddDays(7), recipes[3], 4);
-            AddMealToMeals(sørensFøds.AddDays(8), recipes[3], 5);
-            AddMealToMeals(sørensFøds.AddDays(9), recipes[3], 2);
+            DateTime sørensFøds = new DateTime(2014, 11, 10);
+            AddMealToMeals(sørensFøds, recipes[9], 4);
+            AddMealToMeals(sørensFøds.AddDays(1), recipes[5], 4);
+            AddMealToMeals(sørensFøds.AddDays(2), recipes[6], 2);
+            AddMealToMeals(sørensFøds.AddDays(6), recipes[7], 3);
         }
 
-        public void WeekUp()
+        public void NextWeek()
         {
             ActiveDate = ActiveDate.AddDays(7);
             FlushMeals();
             ShowMeals();
         }
-        public void WeekDown()
+        public void PreviousWeek()
         {
             ActiveDate = ActiveDate.AddDays(-7);
             FlushMeals();
@@ -209,8 +210,11 @@ namespace FoodPlanner.ViewModels
         {
             int mondayDifference = GetDdayDifference(DayOfWeek.Monday), sundayDifference = GetDdayDifference(DayOfWeek.Sunday);
             DateTime mondayDate = ActiveDate.AddDays(-mondayDifference), sundayDate = ActiveDate.AddDays(-sundayDifference);
-
-            List<Meal> mealList = App.db.Meals.Where(m => m.Date >= mondayDate && m.Date <= sundayDate).ToList();
+            mondayDate = mondayDate.AddHours(-mondayDate.Hour);
+            mondayDate = mondayDate.AddMinutes(-mondayDate.Minute);
+            mondayDate = mondayDate.AddSeconds(-mondayDate.Second);
+            mondayDate = mondayDate.AddMilliseconds(-mondayDate.Millisecond);
+            List<Meal> mealList = App.db.Meals.Where(m => m.Date >= mondayDate.Date && m.Date <= sundayDate.Date).ToList();
             foreach (Meal m in mealList)
             {
                 if (m.Date.DayOfWeek == DayOfWeek.Monday)
@@ -321,28 +325,28 @@ namespace FoodPlanner.ViewModels
         #endregion
 
         #region Commands
-        public ICommand GoAWeekUpCommand
+        public ICommand NextWeekCommand
         {
             get
             {
-                if (_goWeekUp == null)
+                if (_nextWeek == null)
                 {
-                    _goWeekUp = new RelayCommand(p => WeekUp());
+                    _nextWeek = new RelayCommand(p => NextWeek());
                 }
 
-                return _goWeekUp;
+                return _nextWeek;
             }
         }
-        public ICommand GoAWeekDownCommand
+        public ICommand PreviousWeekCommand
         {
             get
             {
-                if (_goWeekDown == null)
+                if (_previousWeek == null)
                 {
-                    _goWeekDown = new RelayCommand(p => WeekDown());
+                    _previousWeek = new RelayCommand(p => PreviousWeek());
                 }
 
-                return _goWeekDown;
+                return _previousWeek;
             }
         }
 

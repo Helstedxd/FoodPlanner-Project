@@ -50,7 +50,6 @@
             </Button.Background>
         </Button>
         <TextBlock Text="{Binding Path=WeekString, Mode=OneWay}"  TextWrapping="Wrap" Grid.Row="0" Grid.Column="1" FontSize="48" TextAlignment="Center"/>
-        <ListBox Grid.Row="1" Grid.RowSpan="8" Grid.ColumnSpan="2" Margin="78,-2,2,2"/>
 
         <ListBox x:Name="MondayMealsListBox" Grid.Row="1" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding MondayMeals, Mode=OneWay}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>
         <ListBox x:Name="TuesdayMealsListBox" Grid.Row="2" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding TuesdayMeals, Mode=OneWay}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>

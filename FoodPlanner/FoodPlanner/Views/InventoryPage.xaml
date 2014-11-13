@@ -23,8 +23,8 @@
         <!--<toolkit:AutoCompleteBox x:Name="inventoryAutoCompleteBox" Width="475" Margin="5" VerticalAlignment="Center"
                                          FilterMode="Contains" IsTextCompletionEnabled="True"
                                          MinimumPopulateDelay="500" MinimumPrefixLength="2" Populating="inventoryAutoCompleteBox_Populating" />-->
-        <TextBox Margin="5 0 60 0" Text="{Binding SearchText, Mode=TwoWay, Delay=500, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
-        <Button x:Name="AddButton" Content="Add" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Margin="0,0,5,0" IsEnabled="{Binding disableAddButton, Mode=OneWay}" Command="{Binding AddToInventory}" Height="32" />
+        <TextBox Margin="5 5 60 0" Text="{Binding SearchText, Mode=TwoWay, Delay=500, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button x:Name="AddButton" Content="Add" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Margin="0,5,5,0" IsEnabled="{Binding disableAddButton, Mode=OneWay}" Command="{Binding AddToInventory}" Height="32" />
         <!--</StackPanel>-->
         <ListBox Margin="5" Grid.Row="1" ItemsSource="{Binding FoundIngredients}" SelectedItem="{Binding SetSelectedItem}" />
 
@@ -48,6 +48,6 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Bottom" Width="75" Grid.Row="3" Command="{Binding SaveInventoryCommand}"/>
+        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Right" Margin="0,0,5,5" VerticalAlignment="Bottom" Width="75" Grid.Row="3" Command="{Binding SaveInventoryCommand}"/>
     </Grid>
 </Page>

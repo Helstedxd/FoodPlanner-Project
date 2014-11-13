@@ -121,19 +121,18 @@ namespace FoodPlanner.ViewModels
 
         private void SaveInventory()
         {
-            // Remove unlinked items from the database
-            /*
-            foreach (var inventoryItem in App.db.InventoryIngredients.Local.ToList())
+            List<InventoryIngredient> currentUserInventory = App.CurrentUser.InventoryIngredients.ToList();
+
+            foreach (InventoryIngredient ii in App.db.InventoryIngredients.Where(ii => ii.UserID == App.CurrentUser.ID))
             {
-                if (inventoryItem.Ingredient == null)
+                if (currentUserInventory.Where(ci => ci.ID == ii.ID).Count() == 0)
                 {
-                    App.db.InventoryIngredients.Remove(inventoryItem);
+                    App.db.InventoryIngredients.Remove(ii);
                 }
             }
-            */
-            App.db.SaveChanges();
 
-            Console.WriteLine("Trying to save");
+
+            App.db.SaveChanges();
         }
 
         private void TryToRepopulateTheList()

@@ -138,8 +138,8 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Label Content="{Binding Title}" FontSize="12"/>
-                <Label Content="{Binding Persons}" ContentStringFormat="Planned for {0} person(s)" FontSize="10" Grid.Row="1"/>
+                <Label Content="{Binding Recipe.Title}" FontSize="12"/>
+                <Label Content="{Binding Participants}" ContentStringFormat="Planned for {0} person(s)" FontSize="10" Grid.Row="1"/>
             </Grid>
         </DataTemplate>
         <ItemsPanelTemplate x:Key="WrapPanelHorizontalTemplate">

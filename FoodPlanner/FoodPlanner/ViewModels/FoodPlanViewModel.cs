@@ -24,16 +24,16 @@ namespace FoodPlanner.ViewModels
                          _goWeekDown;
         public FoodPlanViewModel()
         {
-            MondayMeals = new ObservableCollection<Recipe>();//ObservableCollection allows for updates in the view
-            TuesdayMeals = new ObservableCollection<Recipe>();
-            WednesdayMeals = new ObservableCollection<Recipe>();
-            ThursdayMeals = new ObservableCollection<Recipe>();
-            FridayMeals = new ObservableCollection<Recipe>();
-            SaturdayMeals = new ObservableCollection<Recipe>();
-            SundayMeals = new ObservableCollection<Recipe>();
+            MondayMeals = new ObservableCollection<Meal>();//ObservableCollection allows for updates in the view
+            TuesdayMeals = new ObservableCollection<Meal>();
+            WednesdayMeals = new ObservableCollection<Meal>();
+            ThursdayMeals = new ObservableCollection<Meal>();
+            FridayMeals = new ObservableCollection<Meal>();
+            SaturdayMeals = new ObservableCollection<Meal>();
+            SundayMeals = new ObservableCollection<Meal>();
 
             ActiveDate = DateTime.Now;
-            ///TestMethod();
+            //TestMethod();
             ShowMeals();
         }
 
@@ -62,7 +62,7 @@ namespace FoodPlanner.ViewModels
                 return Day(DayOfWeek.Monday);
             }
         }
-        public ObservableCollection<Recipe> MondayMeals
+        public ObservableCollection<Meal> MondayMeals
         {
             get;
             private set;
@@ -74,7 +74,7 @@ namespace FoodPlanner.ViewModels
                 return Day(DayOfWeek.Tuesday);
             }
         }
-        public ObservableCollection<Recipe> TuesdayMeals
+        public ObservableCollection<Meal> TuesdayMeals
         {
             get;
             private set;
@@ -86,7 +86,7 @@ namespace FoodPlanner.ViewModels
                 return Day(DayOfWeek.Wednesday);
             }
         }
-        public ObservableCollection<Recipe> WednesdayMeals
+        public ObservableCollection<Meal> WednesdayMeals
         {
             get;
             private set;
@@ -98,7 +98,7 @@ namespace FoodPlanner.ViewModels
                 return Day(DayOfWeek.Thursday);
             }
         }
-        public ObservableCollection<Recipe> ThursdayMeals
+        public ObservableCollection<Meal> ThursdayMeals
         {
             get;
             private set;
@@ -110,7 +110,7 @@ namespace FoodPlanner.ViewModels
                 return Day(DayOfWeek.Friday);
             }
         }
-        public ObservableCollection<Recipe> FridayMeals
+        public ObservableCollection<Meal> FridayMeals
         {
             get;
             private set;
@@ -122,7 +122,7 @@ namespace FoodPlanner.ViewModels
                 return Day(DayOfWeek.Saturday);
             }
         }
-        public ObservableCollection<Recipe> SaturdayMeals
+        public ObservableCollection<Meal> SaturdayMeals
         {
             get;
             private set;
@@ -134,7 +134,7 @@ namespace FoodPlanner.ViewModels
                 return Day(DayOfWeek.Sunday);
             }
         }
-        public ObservableCollection<Recipe> SundayMeals
+        public ObservableCollection<Meal> SundayMeals
         {
             get;
             private set;
@@ -154,11 +154,11 @@ namespace FoodPlanner.ViewModels
 
         private void TestMethod()
         {//Disse meals er allerede lagt ind: AddDays(7) AddDays(9) AddDays(-5)
-            List<Recipe> recipes = App.db.Recipes.Where(r => r.Title.Contains("Buttermilk Pancakes")).ToList();
-            DateTime sørensFøds = new DateTime(2014, 11, 15);
-            AddMealToMeals(sørensFøds, recipes[0], 8);
-            AddMealToMeals(sørensFøds, recipes[0], 8);
-            AddMealToMeals(sørensFøds, recipes[0], 8);
+            List<Recipe> recipes = App.db.Recipes.Where(r => r.Title.Contains("beef")).ToList();
+            DateTime sørensFøds = new DateTime(2014, 11, 13);
+            AddMealToMeals(sørensFøds.AddDays(7), recipes[3], 4);
+            AddMealToMeals(sørensFøds.AddDays(8), recipes[3], 5);
+            AddMealToMeals(sørensFøds.AddDays(9), recipes[3], 2);
         }
 
         public void WeekUp()
@@ -215,31 +215,31 @@ namespace FoodPlanner.ViewModels
             {
                 if (m.Date.DayOfWeek == DayOfWeek.Monday)
                 {
-                    MondayMeals.Add(m.Recipe);
+                    MondayMeals.Add(m);
                 }
                 else if (m.Date.DayOfWeek == DayOfWeek.Tuesday)
                 {
-                    TuesdayMeals.Add(m.Recipe);
+                    TuesdayMeals.Add(m);
                 }
                 else if (m.Date.DayOfWeek == DayOfWeek.Wednesday)
                 {
-                    WednesdayMeals.Add(m.Recipe);
+                    WednesdayMeals.Add(m);
                 }
                 else if (m.Date.DayOfWeek == DayOfWeek.Thursday)
                 {
-                    ThursdayMeals.Add(m.Recipe);
+                    ThursdayMeals.Add(m);
                 }
                 else if (m.Date.DayOfWeek == DayOfWeek.Friday)
                 {
-                    FridayMeals.Add(m.Recipe);
+                    FridayMeals.Add(m);
                 }
                 else if (m.Date.DayOfWeek == DayOfWeek.Saturday)
                 {
-                    SaturdayMeals.Add(m.Recipe);
+                    SaturdayMeals.Add(m);
                 }
                 else if (m.Date.DayOfWeek == DayOfWeek.Sunday)
                 {
-                    SundayMeals.Add(m.Recipe);
+                    SundayMeals.Add(m);
                 }
             }
         }

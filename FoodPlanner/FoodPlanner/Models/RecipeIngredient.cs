@@ -10,13 +10,17 @@ namespace FoodPlanner.Models
     {
         public override string ToString()
         {
-            if (this.Quantity == 0)//Så der ikke står " g salt" men bare "salt"
+            if (this.Quantity == 0)//Eliminate if there is no quantity
             {
                 return Convert.ToString(this.Ingredient.Name);
             }
+            else if (string.IsNullOrWhiteSpace(this.Ingredient.Unit)) //Eliminate the double space that can occour when there is no unit 
+            {
+                return Convert.ToString(this.Quantity + " " + this.Ingredient.Name);
+            }
             else
             {
-                return Convert.ToString(this.Quantity + this.Ingredient.Unit + " " + this.Ingredient.Name);
+                return Convert.ToString(this.Quantity + " " + this.Ingredient.Unit + " " + this.Ingredient.Name);
             }
         }
     }

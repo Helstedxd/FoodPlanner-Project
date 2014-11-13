@@ -29,7 +29,7 @@ namespace FoodPlanner
         public MainWindow()
         {
             InitializeComponent();
-            App.NavigationService = this.Frame.NavigationService;
+            Navigator.NavigationService = this.Frame.NavigationService;
             App.db = new FoodContext();
             App.CurrentUser = App.db.Users.First();
 

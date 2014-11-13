@@ -93,6 +93,7 @@
     <Compile Include="Models\inventoryListCombinedByQuantity.cs" />
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\RecipeIngredient.cs" />
+    <Compile Include="Navigator.cs" />
     <Compile Include="RecipesPreparation.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
@@ -116,8 +117,8 @@
     <Compile Include="Views\RecipePage.xaml.cs">
       <DependentUpon>RecipePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RecipesPage.xaml.cs">
-      <DependentUpon>RecipesPage.xaml</DependentUpon>
+    <Compile Include="Views\RecipeSearchPage.xaml.cs">
+      <DependentUpon>RecipeSearchPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="RecommendedRecipesWindow.xaml.cs">
       <DependentUpon>RecommendedRecipesWindow.xaml</DependentUpon>
@@ -178,7 +179,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RecipesPage.xaml">
+    <Page Include="Views\RecipeSearchPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

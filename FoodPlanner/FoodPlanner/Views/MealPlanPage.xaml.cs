@@ -12,7 +12,7 @@ using System.Windows.Shapes;
 
 namespace FoodPlanner
 {
-	public partial class MealPlanPage
+	public partial class MealPlanPage : Page
 	{
 		public MealPlanPage()
 		{

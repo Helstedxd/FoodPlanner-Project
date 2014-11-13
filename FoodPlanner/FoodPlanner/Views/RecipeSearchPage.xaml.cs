@@ -19,9 +19,9 @@ namespace FoodPlanner.Views
     /// <summary>
     /// Interaction logic for Recipes.xaml
     /// </summary>
-    public partial class Recipes : Page
+    public partial class RecipeSearchPage : Page
     {
-        public Recipes()
+        public RecipeSearchPage()
         {
             InitializeComponent();
         }

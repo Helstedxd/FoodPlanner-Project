@@ -15,8 +15,6 @@ namespace FoodPlanner.ViewModels
     {
 
         #region Fields
-
-        private CollectionViewSource _inventoryIngredientsCollectionViewSource;
         private int _maximumAutoCompleteItems = 10;
         private List<Ingredient> _queriedIngredients;
         private Ingredient _selectedItem = null;

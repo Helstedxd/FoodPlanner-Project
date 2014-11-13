@@ -96,12 +96,16 @@ namespace FoodPlanner
             {
                 if (_goToRecipeCommand == null)
                 {
-                    _goToRecipeCommand = new RelayCommand(p =>
+                    _goToRecipeCommand = new RelayCommand(param =>
                     {
-                        RecipeViewModel rvm = new RecipeViewModel((Recipe)p);
-                        RecipePage rp = new RecipePage();
-                        rp.DataContext = rvm;
-                        Navigator.Navigate(rp);
+                        Recipe r = (Recipe)param;
+                        if (r != null)
+                        {
+                            RecipeViewModel rvm = new RecipeViewModel((Recipe)p);
+                            RecipePage rp = new RecipePage();
+                            rp.DataContext = rvm;
+                            Navigator.Navigate(rp);
+                        }
                     });
                 }
                 return _goToRecipeCommand;

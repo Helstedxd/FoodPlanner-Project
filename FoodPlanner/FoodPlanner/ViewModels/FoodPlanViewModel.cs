@@ -151,17 +151,6 @@ namespace FoodPlanner.ViewModels
         #endregion
 
         #region Methods
-
-        private void TestMethod()
-        {//Disse meals er allerede lagt ind: AddDays(7) AddDays(9) AddDays(-5)
-            List<Recipe> recipes = App.db.Recipes.Where(r => r.Title.Contains("beef")).ToList();
-            DateTime sørensFøds = new DateTime(2014, 11, 10);
-            AddMealToMeals(sørensFøds, recipes[9], 4);
-            AddMealToMeals(sørensFøds.AddDays(1), recipes[5], 4);
-            AddMealToMeals(sørensFøds.AddDays(2), recipes[6], 2);
-            AddMealToMeals(sørensFøds.AddDays(6), recipes[7], 3);
-        }
-
         public void NextWeek()
         {
             ActiveDate = ActiveDate.AddDays(7);
@@ -247,80 +236,13 @@ namespace FoodPlanner.ViewModels
                 }
             }
         }
-
-        private void AddMealToMeals(DateTime dateForMeal, Recipe recipeForMeal, int Participants)
+        private void GoToRecipe(Recipe recipe)
         {
-            Meal newMeal = new Meal();
-            bool userIDsucces = false, mealIDsucces = false, participantsSucces = false, dateSucces = false;
-            try//CurrentUser.ID
-            {
-                if (App.CurrentUser.ID > 0) // CurrentUser ID  
-                {
-                    newMeal.User = App.CurrentUser;
-                    userIDsucces = true;
-                }
-                else
-                {
-                    IDexceptionBox("ArgumentOutOfRangeException", "valid (value is below 0)");
-                }
-            }
-            catch (Exception)
-            {
-                IDexceptionBox("An unknown exception", "valid");
-            }
-
-            try//recipeForMeal.ID 
-            {
-                if (recipeForMeal.ID > 0)  // RecipeForMeal ID
-                {
-                    newMeal.Recipe = recipeForMeal;
-                    mealIDsucces = true;
-                    //newMeal.Recipe.ID = App.db.Recipes.Where(r => r.ID == 1);
-                }
-                else
-                {
-                    IDexceptionBox("ArgumentOutOfRangeException", "valid (value is below 0)");
-                }
-            }
-            catch (Exception)
-            {
-                IDexceptionBox("An unknown exception", "valid");
-            }
-            try//newMeal.Date
-            {
-                newMeal.Date = dateForMeal;
-                dateSucces = true;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, "newMeal.Date error");
-            }
-            try//Participants
-            {
-                if (Participants > 0)
-                {
-                    newMeal.Participants = Participants;
-                    participantsSucces = true;
-                }
-                else
-                {
-                    MessageBox.Show("ERROR\nInvalidParticipantsNumber:\nThe given participants value is not accepted. It must be above zero", "addMealToMeals: InvalidParticipantsNumber");
-                }
-
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, "Participants error");
-            }
-            if (userIDsucces && mealIDsucces && participantsSucces && dateSucces) // If all previously assignments were succesful, the DB will be updated
-            {
-                App.db.Meals.Add(newMeal);
-                App.db.SaveChanges();
-            }
-        }
-        private void IDexceptionBox(string errorType, string faultType)
-        {
-            MessageBox.Show("ERROR\n" + errorType + ":\nThe given ID is not " + faultType, "addMealToMeals: " + errorType);
+            //TODO: fuck mvvm basically
+            RecipeViewModel rvm = new RecipeViewModel(recipe);
+            Views.RecipePage rp = new Views.RecipePage();
+            rp.DataContext = rvm;
+            App.NavigationService.Navigate(rp);
         }
         #endregion
 
@@ -364,14 +286,6 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-        private void GoToRecipe(Recipe recipe)
-        {
-            //TODO: fuck mvvm basically
-            RecipeViewModel rvm = new RecipeViewModel(recipe);
-            Views.RecipePage rp = new Views.RecipePage();
-            rp.DataContext = rvm;
-            App.NavigationService.Navigate(rp);
-        }
         #endregion
 
         /*        

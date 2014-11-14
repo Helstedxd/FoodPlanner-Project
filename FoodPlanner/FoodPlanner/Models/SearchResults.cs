@@ -17,7 +17,8 @@ namespace FoodPlanner.Models
         public decimal quantity { get; set; }
 
     }
-    class SearchResults2
+
+    class SearchResults
     {
         private int _fullMatch = 0, _partialMatch = 0, _keyWordMatch = 0;
         private List<Ingredient> _ingredients;
@@ -30,6 +31,15 @@ namespace FoodPlanner.Models
                 return _recipe;
             }
         }
+
+        public string getMatchPercentage
+        {
+            get
+            {
+                return string.Format("{0}/{1}", _fullMatch, _ingredients.Count());
+            }
+        }
+
 
         public int fullMatch
         {
@@ -91,14 +101,14 @@ namespace FoodPlanner.Models
             _ingredients.Add(ingredient);
         }
 
-        public SearchResults2(Recipe recipe)
+        public SearchResults(Recipe recipe)
         {
             _recipe = recipe;
             _ingredients = new List<Ingredient>();
         }
     }
 
-    class SearchResults
+    class SearchResults1
     {
         private int _ingredients = 0, _fullMatch = 0, _partialMatch = 0, _keyWordMatch = 0;
         private Recipe _recipe;
@@ -167,7 +177,7 @@ namespace FoodPlanner.Models
             }
         }
 
-        public SearchResults(Recipe recipe, int ingredients)
+        public SearchResults1(Recipe recipe, int ingredients)
         {
             _recipe = recipe;
             _ingredients = ingredients;

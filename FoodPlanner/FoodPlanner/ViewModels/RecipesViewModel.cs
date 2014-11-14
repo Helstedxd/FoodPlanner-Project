@@ -12,7 +12,23 @@ namespace FoodPlanner.ViewModels
 {
     class RecipesViewModel
     {
-        private List<InventoryIngredient> inventoryList = App.db.InventoryIngredients.Where(ii => ii.UserID == App.CurrentUser.ID).ToList();
+        private List<inventoryListCombinedByQuantity> inventoryList = (from ii in App.db.InventoryIngredients
+                                                                       where ii.UserID == App.CurrentUser.ID
+                                                                       group ii by ii.IngredientID into iig
+                                                                       select new inventoryListCombinedByQuantity()
+                                                                       {
+                                                                           IngredientID = iig.FirstOrDefault().IngredientID,
+                                                                           Quantity = iig.Sum(i => i.Quantity),
+                                                                           Ingredient = iig.FirstOrDefault().Ingredient,
+                                                                           ExpirationDate = iig.FirstOrDefault().ExpirationDate,
+                                                                           PurchaseDate = iig.FirstOrDefault().PurchaseDate,
+                                                                           User = iig.FirstOrDefault().User,
+                                                                           UserID = iig.FirstOrDefault().UserID
+                                                                       }).ToList();
+
+        private List<int> blacklistedRecipes = (from bl in App.db.BlacklistIngredients
+                                                join ri in App.db.RecipeIngredients on bl.IngredientID equals ri.IngredientID
+                                                select ri.RecipeID).ToList();
 
         public RecipesViewModel()
         {
@@ -40,79 +56,63 @@ namespace FoodPlanner.ViewModels
 
             List<string> searchQuery = query.Split(',').Select(s => s.Trim()).ToList();
 
-            IQueryable<Recipe> recipes = App.db.Recipes.Where(r => searchQuery.Any(s => r.Title.Contains(s)));
-            IQueryable<Ingredient> ingredients = App.db.Ingredients.Where(i => searchQuery.Any(s => i.Name.Contains(s)));
-            IQueryable<IGrouping<int, RecipeIngredient>> recipeIngredient = App.db.RecipeIngredients.Where(ri => recipes.Any(r => r.ID == ri.RecipeID) || ingredients.Any(i => i.ID == ri.IngredientID)).GroupBy(ri => ri.RecipeID);
+            IQueryable<int> recipeIDs = (from ri in App.db.RecipeIngredients
+                                         join i in App.db.Ingredients on ri.IngredientID equals i.ID
+                                         join r in App.db.Recipes on ri.RecipeID equals r.ID
+                                         where searchQuery.Any(s => i.Name.Contains(s)) || searchQuery.Any(s => r.Title.Contains(s))
+                                         group ri by ri.RecipeID into rofl
+                                         select rofl.FirstOrDefault().RecipeID);
 
-            List<Recipe> allRecipes = App.db.Recipes.ToList();
-            List<Ingredient> ingredientsList = ingredients.ToList();
+            IQueryable<IGrouping<int, Result>> recipeIngredients = from ri in App.db.RecipeIngredients
+                                                                   join i in App.db.Ingredients on ri.IngredientID equals i.ID
+                                                                   join r in App.db.Recipes on ri.RecipeID equals r.ID
+                                                                   where recipeIDs.Any(rid => rid == ri.RecipeID && blacklistedRecipes.Where(bl => bl == rid).Count() == 0)
+                                                                   group new Result()
+                                                                   {
+                                                                       recipe = ri.Recipe,
+                                                                       ingredient = ri.Ingredient,
+                                                                       quantity = ri.Quantity
+                                                                   } by ri.RecipeID;
 
-            foreach (IGrouping<int, RecipeIngredient> recipeGroup in recipeIngredient)
+            foreach (IGrouping<int, Result> ri in recipeIngredients)
             {
-                SearchResults recipeResult = new SearchResults(allRecipes.Where(ar => ar.ID == recipeGroup.FirstOrDefault().RecipeID).FirstOrDefault(), recipeGroup.Count());
+                Recipe recipe = ri.FirstOrDefault().recipe;
 
-                if (searchQuery.Any(s => recipeResult.recipe.Title.Contains(s)))
+                SearchResults result = new SearchResults(recipe);
+
+                if (searchQuery.Any(s => recipe.Title.ToLower().Contains(s.ToLower())))
                 {
-                    recipeResult.keyWordMatch++;
+                    result.keyWordMatch++;
                 }
 
-                foreach (RecipeIngredient ingredient in recipeGroup)
-                {
-                    if (ingredientsList.Any(iID => iID.ID == ingredient.IngredientID))
-                    {
-                        recipeResult.keyWordMatch++;
-                    }
 
-                    if (inventoryList.Where(il => il.IngredientID == ingredient.IngredientID).Count() != 0)
+                foreach (Result res in ri)
+                {
+                    result.addIngredient(res.ingredient);
+
+                    if (inventoryList.Where(il => il.IngredientID == res.ingredient.ID).Count() != 0)
                     {
-                        if (inventoryList.Where(il => il.IngredientID == ingredient.IngredientID).Sum(iq => iq.Quantity) >= ingredient.Quantity)
+                        if (inventoryList.Where(il => il.IngredientID == res.ingredient.ID).First().Quantity >= res.quantity)
                         {
-                            recipeResult.fullMatch++;
+                            result.fullMatch++;
                         }
                         else
                         {
-                            recipeResult.partialMatch++;
+                            result.partialMatch++;
                         }
                     }
+
+                    if (searchQuery.Any(s => res.ingredient.Name.ToLower().Contains(s.ToLower())))
+                    {
+                        result.keyWordMatch++;
+                    }
+
                 }
 
-                listOfSearchResults.Add(recipeResult);
-            }
-
-
-            List<Recipe> test2 = App.db.Recipes.Where(r => r.Title.Contains(query)).Take(20).ToList();
-
-            foreach (Recipe r in test2)
-            {
-                listOfSearchResults.Add(new SearchResults(r, 1) { fullMatch = 0, partialMatch = 0, keyWordMatch = 0 });
-            }
-
-
-        }
-
-        /*
-        public string ImageCache
-        {
-            get
-            {
-                WebClient client = new WebClient();
-                string path = Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString() + "/imageCache";
-
-                if (!Directory.Exists(path))
-                    Directory.CreateDirectory(path);
-
-                if (!File.Exists(path + "/" + _recipe.ID + ".jpg"))
-                {
-                    client.DownloadFileAsync(new Uri(recipe.Image), path + "/" + _recipe.ID + ".jpg");
-                    return recipe.Image;
-                }
-                else
-                {
-                    return path + "/" + _recipe.ID + ".jpg";
-                }
+                listOfSearchResults.Add(result);
             }
         }
-        */
+
         private ICommand _goToRecipeCommand;
         public ICommand GoToRecipeCommand
         {

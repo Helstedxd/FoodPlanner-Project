@@ -11,19 +11,26 @@ namespace FoodPlanner.Models
 {
     class Result
     {
-        public Result() { }
+        #region Properties
         public Recipe recipe { get; set; }
         public Ingredient ingredient { get; set; }
         public decimal quantity { get; set; }
+        #endregion
 
+        #region Methods & Constructor
+        public Result() { }
+        #endregion
     }
 
     public class SearchResults
     {
+        #region Fields
         private int _fullMatch = 0, _partialMatch = 0, _keyWordMatch = 0;
         private List<Ingredient> _ingredients;
         private Recipe _recipe;
+        #endregion
 
+        #region Properties
         public Recipe recipe
         {
             get
@@ -95,7 +102,9 @@ namespace FoodPlanner.Models
                 return _ingredients.Count();
             }
         }
+        #endregion
 
+        #region Methods & Constructor
         public void addIngredient(Ingredient ingredient)
         {
             _ingredients.Add(ingredient);
@@ -106,5 +115,6 @@ namespace FoodPlanner.Models
             _recipe = recipe;
             _ingredients = new List<Ingredient>();
         }
+        #endregion
     }
 }

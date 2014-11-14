@@ -115,7 +115,7 @@
     <Compile Include="Helper Classes\RelayCommand.cs" />
     <Compile Include="ViewModels\FoodPlanViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\RecipesViewModel.cs" />
+    <Compile Include="ViewModels\RecipeSearchViewModel.cs" />
     <Compile Include="ViewModels\ShoppingListViewModel.cs" />
     <Compile Include="Views\MealPlanPage.xaml.cs">
       <DependentUpon>MealPlanPage.xaml</DependentUpon>

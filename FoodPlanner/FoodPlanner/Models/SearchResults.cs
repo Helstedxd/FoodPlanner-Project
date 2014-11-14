@@ -98,7 +98,7 @@ namespace FoodPlanner.Models
         }
     }
 
-    class SearchResults
+    public class SearchResults
     {
         private int _ingredients = 0, _fullMatch = 0, _partialMatch = 0, _keyWordMatch = 0;
         private Recipe _recipe;

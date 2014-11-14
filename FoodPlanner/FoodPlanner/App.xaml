@@ -129,15 +129,10 @@
         <!--Start: Meal planning Page Template for day listboxes-->
         <DataTemplate x:Key="MealsListBoxTemplate">
             <Grid>
-               <!-- <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseUp">
-                        <i:InvokeCommandAction Command="{Binding GoToRecipeCommand}" CommandParameter="{Binding SelectedItem,  RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>-->
-
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseUp">
-                        <i:InvokeCommandAction Command="{Binding Source={x:Static local:Navigator.GoToRecipeCommand}}" CommandParameter="{Binding SelectedItem.Recipe, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" />
+                        <i:InvokeCommandAction Command="{Binding Source={x:Static local:Navigator.GoToRecipeCommand}}" 
+                                               CommandParameter="{Binding Content.Recipe, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
 

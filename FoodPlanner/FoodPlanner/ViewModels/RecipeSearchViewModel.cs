@@ -10,11 +10,11 @@ using System.Windows.Input;
 
 namespace FoodPlanner.ViewModels
 {
-    class RecipesViewModel
+    public class RecipeSearchViewModel
     {
         private List<InventoryIngredient> inventoryList = App.db.InventoryIngredients.Where(ii => ii.UserID == App.CurrentUser.ID).ToList();
 
-        public RecipesViewModel()
+        public RecipeSearchViewModel()
         {
             this.listOfSearchResults = new ObservableCollection<SearchResults>();
         }

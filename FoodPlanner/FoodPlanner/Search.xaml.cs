@@ -36,6 +36,10 @@ namespace FoodPlanner
                                                                            UserID = iig.FirstOrDefault().UserID
                                                                        }).ToList();
 
+        private List<int> blacklistedRecipes = (from bl in App.db.BlacklistIngredients
+                                                join ri in App.db.RecipeIngredients on bl.IngredientID equals ri.IngredientID
+                                                select ri.RecipeID).ToList();
+
 
         public Search()
         {
@@ -59,7 +63,7 @@ namespace FoodPlanner
                 IQueryable<IGrouping<int, Result>> recipeIngredients = from ri in App.db.RecipeIngredients
                                                                        join i in App.db.Ingredients on ri.IngredientID equals i.ID
                                                                        join r in App.db.Recipes on ri.RecipeID equals r.ID
-                                                                       where recipeIDs.Any(rid => rid == ri.RecipeID)
+                                                                       where recipeIDs.Any(rid => rid == ri.RecipeID && blacklistedRecipes.Where(bl => bl == rid).Count() == 0)
                                                                        group new Result()
                                                                        {
                                                                            recipe = ri.Recipe,
@@ -106,7 +110,7 @@ namespace FoodPlanner
                     results.Add(result);
                 }
 
-                listResults.ItemsSource = results.OrderByDescending(res => res.fullMatch).ThenByDescending(res => res.partialMatch).ThenByDescending(res => res.keyWordMatch).ThenByDescending(res => res.recipe.Title).Take(150);
+                listResults.ItemsSource = results.OrderByDescending(res => res.fullMatch).ThenByDescending(res => res.partialMatch).ThenByDescending(res => res.keyWordMatch).ThenByDescending(res => res.recipe.Title);
             }
 
             catch (Exception ex)

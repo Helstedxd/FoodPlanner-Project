@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace FoodPlanner.ViewModels
 {
-    class RecipesViewModel
+    public class RecipeSearchViewModel
     {
         private List<inventoryListCombinedByQuantity> inventoryList = (from ii in App.db.InventoryIngredients
                                                                        where ii.UserID == App.CurrentUser.ID
@@ -30,7 +30,7 @@ namespace FoodPlanner.ViewModels
                                                 join ri in App.db.RecipeIngredients on bl.IngredientID equals ri.IngredientID
                                                 select ri.RecipeID).ToList();
 
-        public RecipesViewModel()
+        public RecipeSearchViewModel()
         {
             this.listOfSearchResults = new ObservableCollection<SearchResults>();
         }

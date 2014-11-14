@@ -51,7 +51,7 @@ namespace FoodPlanner
             try
             {
                 List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
-                List<SearchResults2> results = new List<SearchResults2>();
+                List<SearchResults> results = new List<SearchResults>();
 
                 IQueryable<int> recipeIDs = (from ri in App.db.RecipeIngredients
                                              join i in App.db.Ingredients on ri.IngredientID equals i.ID
@@ -76,7 +76,7 @@ namespace FoodPlanner
                 {
                     Recipe recipe = ri.FirstOrDefault().recipe;
 
-                    SearchResults2 result = new SearchResults2(recipe);
+                    SearchResults result = new SearchResults(recipe);
 
                     if (searchQuery.Any(s => recipe.Title.ToLower().Contains(s.ToLower())))
                     {
@@ -123,7 +123,7 @@ namespace FoodPlanner
         {
             try
             {
-                var showRecipe = new ShowRecipe(((SearchResults2)listResults.SelectedItem).recipe);
+                var showRecipe = new ShowRecipe(((SearchResults)listResults.SelectedItem).recipe);
                 showRecipe.ShowDialog();
             }
 

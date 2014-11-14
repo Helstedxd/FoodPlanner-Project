@@ -3,20 +3,15 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ViewModels="clr-namespace:FoodPlanner.ViewModels"
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="405"
 	Title="SettingsPage">
+    <Page.DataContext>
+        <ViewModels:SettingsViewModel/>
+    </Page.DataContext>
 
     <Grid>
-        <ListBox Grid.Row="1" Grid.RowSpan="8" Grid.ColumnSpan="1" Margin="2,-2,2,2"/>
-        <ListBox x:Name="Example1" Grid.Row="1" Grid.Column="1">
-            <Expander Header="User">
-                <TextBlock>GAAAAAY</TextBlock>
-               
-            </Expander>
-            <Expander>
-                <TextBlock>JAAAAAY</TextBlock>
-            </Expander>
-        </ListBox>
+        <StackPanel/>
     </Grid>
 </Page>

@@ -26,8 +26,16 @@
         
         <Label Grid.Column="1" Style="{StaticResource LabelTitle}" Content="{Binding Title}"/>
 
-        <TextBlock Text="{Binding RecipesPreparation.Preparation}" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap"/>
-        
-        <ListBox ItemsSource="{Binding RecipeIngredients}" Grid.Row="1"/>
+        <TextBlock Text="{Binding RecipesPreparation.Preparation}" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap"  Margin="5,0,-5,0"/>
+
+        <ListBox ItemsSource="{Binding RecipeIngredients}" Grid.Row="1" Width="100" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding}" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Page>

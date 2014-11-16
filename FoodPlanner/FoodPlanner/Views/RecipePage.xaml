@@ -23,12 +23,17 @@
         </Grid.ColumnDefinitions>
         
         <Image Height="100" Width="100" Source="{Binding Image}"/>
-        
-        <Label Grid.Column="1" Style="{StaticResource LabelTitle}" Content="{Binding Title}"/>
 
-        <TextBlock Text="{Binding RecipesPreparation.Preparation}" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap"  Margin="5,0,-5,0"/>
+        <Label Grid.Column="1" Grid.Row="0" Style="{StaticResource LabelTitle}">
+            <Label.Content>
+                <AccessText TextWrapping="Wrap" Text="{Binding Title}"/>
+            </Label.Content>
+        </Label>
 
-        <ListBox ItemsSource="{Binding RecipeIngredients}" Grid.Row="1" Width="100" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch">
+        <ScrollViewer Grid.Column="1" Grid.Row="1" Margin="5,0,-5,0">
+            <TextBlock Text="{Binding RecipesPreparation.Preparation}" TextWrapping="Wrap"/>
+        </ScrollViewer>
+        <ListBox ItemsSource="{Binding RecipeIngredients}" Grid.Row="1" Width="100" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>

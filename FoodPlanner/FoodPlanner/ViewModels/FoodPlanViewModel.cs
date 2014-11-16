@@ -33,6 +33,10 @@ namespace FoodPlanner.ViewModels
             SundayMeals = new ObservableCollection<Meal>();
 
             ActiveDate = DateTime.Now;
+            if (ActiveDate.DayOfWeek == DayOfWeek.Sunday) //This is done in order to get the GetDdayDifference method to make ene when it's Sunday
+            {
+                ActiveDate = ActiveDate.AddDays(-1);
+            }
             //TestMethod();
             ShowMeals();
         }
@@ -177,7 +181,6 @@ namespace FoodPlanner.ViewModels
         {
             int difference = GetDdayDifference(day);
             string result;
-
             return result = ActiveDate.AddDays(-difference).Date.ToString("dddd\ndd/MM",CultureInfo.CreateSpecificCulture("en-US"));
         }
         private int GetDdayDifference(DayOfWeek day)
@@ -198,11 +201,8 @@ namespace FoodPlanner.ViewModels
         private void ShowMeals()
         {
             int mondayDifference = GetDdayDifference(DayOfWeek.Monday), sundayDifference = GetDdayDifference(DayOfWeek.Sunday);
-            DateTime mondayDate = ActiveDate.AddDays(-mondayDifference), sundayDate = ActiveDate.AddDays(-sundayDifference);
-            mondayDate = mondayDate.AddHours(-mondayDate.Hour);
-            mondayDate = mondayDate.AddMinutes(-mondayDate.Minute);
-            mondayDate = mondayDate.AddSeconds(-mondayDate.Second);
-            mondayDate = mondayDate.AddMilliseconds(-mondayDate.Millisecond);
+            DateTime mondayDate = ActiveDate.AddDays(-mondayDifference), 
+                    sundayDate = ActiveDate.AddDays(-sundayDifference);
             List<Meal> mealList = App.db.Meals.Where(m => m.Date >= mondayDate.Date && m.Date <= sundayDate.Date).ToList();
             foreach (Meal m in mealList)
             {

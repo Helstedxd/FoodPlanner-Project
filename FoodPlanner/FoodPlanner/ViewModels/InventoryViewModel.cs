@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows;
 using FoodPlanner.Models;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
@@ -17,11 +18,11 @@ namespace FoodPlanner.ViewModels
         #region Fields
         private int _maximumAutoCompleteItems = 10;
         private List<Ingredient> _queriedIngredients;
-        private Ingredient _selectedItem = null;
         private string _searchText;
         private string _lastSearchText; // when we last queried the db
 
-        private ICommand _saveInventoryCommand, _addToInventory;
+        private ICommand _saveInventoryCommand;
+        private ICommand _addIngredientToInventory;
 
         #endregion
 
@@ -43,33 +44,24 @@ namespace FoodPlanner.ViewModels
                     _queriedIngredients = new List<Ingredient>();
                 }
 
-                OnPropertyChanged("disableAddButton");
+                // OnPropertyChanged("disableAddButton"); //TODO: fix
                 return _queriedIngredients.Where(i => i.Name.ToLower().Contains(SearchText.ToLower()));
             }
         }
 
-        public bool disableAddButton
+        public Visibility AutoCompleteListVisibility
         {
             get
             {
-                if (_queriedIngredients != null)
+                if (FoundIngredients.Count() > 0)
                 {
-                    if (_queriedIngredients.Count() != 0)
-                    {
-                        return true;
-                    }
+                    return Visibility.Visible;
                 }
-                return false;
+                return Visibility.Collapsed;
             }
         }
 
-        public Ingredient SetSelectedItem
-        {
-            set
-            {
-                _selectedItem = (Ingredient)value;
-            }
-        }
+        public Ingredient SelectedIngredient { get; set; }
 
         public string SearchText
         {
@@ -82,10 +74,10 @@ namespace FoodPlanner.ViewModels
                 _searchText = value;
                 OnPropertyChanged("SearchText");
                 OnPropertyChanged("FoundIngredients");
+                OnPropertyChanged("AutoCompleteListVisibility");
                 TryToRepopulateTheList();
             }
         }
-
 
         public ICommand SaveInventoryCommand
         {
@@ -95,21 +87,19 @@ namespace FoodPlanner.ViewModels
                 {
                     _saveInventoryCommand = new RelayCommand(p => SaveInventory());
                 }
-
                 return _saveInventoryCommand;
             }
         }
 
-        public ICommand AddToInventory
+        public ICommand AddIngredientToInventoryCommand
         {
             get
             {
-                if (_addToInventory == null)
+                if (_addIngredientToInventory == null)
                 {
-                    _addToInventory = new RelayCommand(p => AddItemToInventory());
+                    _addIngredientToInventory = new RelayCommand(p => AddIngredientToInventory(SelectedIngredient));
                 }
-
-                return _addToInventory;
+                return _addIngredientToInventory;
             }
         }
 
@@ -119,6 +109,7 @@ namespace FoodPlanner.ViewModels
 
         private void SaveInventory()
         {
+            //TODO: stuff (Inventory is not saved if you leave the page..)
             List<InventoryIngredient> currentUserInventory = App.CurrentUser.InventoryIngredients.ToList();
 
             foreach (InventoryIngredient ii in App.db.InventoryIngredients.Where(ii => ii.UserID == App.CurrentUser.ID))
@@ -129,19 +120,18 @@ namespace FoodPlanner.ViewModels
                 }
             }
 
-
             App.db.SaveChanges();
         }
 
         private void TryToRepopulateTheList()
         {
-
             // fix this
             if (SearchText == "")
             {
                 _lastSearchText = "";
                 _queriedIngredients.Clear();
                 OnPropertyChanged("FoundIngredients");
+                OnPropertyChanged("AutoCompleteListVisibility");
                 return;
             }
 
@@ -176,6 +166,7 @@ namespace FoodPlanner.ViewModels
             {
                 _queriedIngredients = foundIngredientsInDb.ToList();
                 OnPropertyChanged("FoundIngredients");
+                OnPropertyChanged("AutoCompleteListVisibility");
             }
             else
             {
@@ -184,12 +175,13 @@ namespace FoodPlanner.ViewModels
 
         }
 
-        private void AddItemToInventory()
+        private void AddIngredientToInventory(Ingredient ingredient)
         {
-            if (_selectedItem != null)
+            if (ingredient != null)
             {
-                App.CurrentUser.InventoryIngredients.Add(new InventoryIngredient(_selectedItem, 50));
+                App.CurrentUser.InventoryIngredients.Add(new InventoryIngredient(ingredient, 1));
             }
+            SearchText = "";
         }
 
         #endregion

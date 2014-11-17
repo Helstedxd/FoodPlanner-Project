@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace FoodPlanner.Models
 {
@@ -17,7 +16,7 @@ namespace FoodPlanner.Models
             this.Quantity = quantity;
             // TODO: These dates should probably be chosen in a more clever way.
             this.PurchaseDate = DateTime.Now;
-            this.ExpirationDate = DateTime.Now;
+            this.ExpirationDate = DateTime.Now.AddDays(7);
         }
 
         public override string ToString()

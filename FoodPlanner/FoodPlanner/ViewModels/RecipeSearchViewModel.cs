@@ -12,10 +12,10 @@ namespace FoodPlanner.ViewModels
 {
     public class RecipeSearchViewModel
     {
-        private List<inventoryListCombinedByQuantity> inventoryList = (from ii in App.db.InventoryIngredients
+        private List<inventoryListGroupedByQuantity> inventoryList = (from ii in App.db.InventoryIngredients
                                                                        where ii.UserID == App.CurrentUser.ID
                                                                        group ii by ii.IngredientID into iig
-                                                                       select new inventoryListCombinedByQuantity()
+                                                                       select new inventoryListGroupedByQuantity()
                                                                        {
                                                                            IngredientID = iig.FirstOrDefault().IngredientID,
                                                                            Quantity = iig.Sum(i => i.Quantity),

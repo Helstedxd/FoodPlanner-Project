@@ -22,10 +22,19 @@ namespace FoodPlanner.Models
         #endregion
     }
 
+    class tmpRandomTest
+    {
+        public tmpRandomTest() { }
+
+        public int test { get; set; }
+
+        public int test2 { get; set; }
+    }
+
     public class SearchResults
     {
         #region Fields
-        private int _fullMatch = 0, _partialMatch = 0, _keyWordMatch = 0;
+        private int _fullMatch = 0, _partialMatch = 0, _keyWordMatch = 0, _prevIngredients = 0;
         private List<Ingredient> _ingredients;
         private Recipe _recipe;
         #endregion
@@ -100,6 +109,18 @@ namespace FoodPlanner.Models
             get
             {
                 return _ingredients.Count();
+            }
+        }
+
+        public int prevIngredients
+        {
+            get
+            {
+                return _prevIngredients;
+            }
+            set
+            {
+                _prevIngredients = value;
             }
         }
         #endregion

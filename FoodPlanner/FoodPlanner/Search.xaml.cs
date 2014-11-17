@@ -22,23 +22,38 @@ namespace FoodPlanner
     /// </summary>
     public partial class Search : Window
     {
-        private List<inventoryListCombinedByQuantity> inventoryList = (from ii in App.db.InventoryIngredients
-                                                                       where ii.UserID == App.CurrentUser.ID
-                                                                       group ii by ii.IngredientID into iig
-                                                                       select new inventoryListCombinedByQuantity()
-                                                                       {
-                                                                           IngredientID = iig.FirstOrDefault().IngredientID,
-                                                                           Quantity = iig.Sum(i => i.Quantity),
-                                                                           Ingredient = iig.FirstOrDefault().Ingredient,
-                                                                           ExpirationDate = iig.FirstOrDefault().ExpirationDate,
-                                                                           PurchaseDate = iig.FirstOrDefault().PurchaseDate,
-                                                                           User = iig.FirstOrDefault().User,
-                                                                           UserID = iig.FirstOrDefault().UserID
-                                                                       }).ToList();
+        private List<inventoryListGroupedByQuantity> inventoryList = (from ii in App.db.InventoryIngredients
+                                                                      where ii.UserID == App.CurrentUser.ID
+                                                                      group ii by ii.IngredientID into iig
+                                                                      select new inventoryListGroupedByQuantity()
+                                                                      {
+                                                                          IngredientID = iig.FirstOrDefault().IngredientID,
+                                                                          Quantity = iig.Sum(i => i.Quantity),
+                                                                          Ingredient = iig.FirstOrDefault().Ingredient,
+                                                                          ExpirationDate = iig.FirstOrDefault().ExpirationDate,
+                                                                          PurchaseDate = iig.FirstOrDefault().PurchaseDate,
+                                                                          User = iig.FirstOrDefault().User,
+                                                                          UserID = iig.FirstOrDefault().UserID
+                                                                      }).ToList();
 
         private List<int> blacklistedRecipes = (from bl in App.db.BlacklistIngredients
                                                 join ri in App.db.RecipeIngredients on bl.IngredientID equals ri.IngredientID
                                                 select ri.RecipeID).ToList();
+
+        private static IQueryable<int> lastMeals = (from meals in App.db.Meals
+                                                    where meals.UserID == App.CurrentUser.ID && meals.Date <= DateTime.Now
+                                                    orderby meals.ID descending
+                                                    select meals.RecipeID).Take(5);
+
+        private List<tmpRandomTest> ingredientFromLatestMeals = (from i in App.db.Ingredients
+                                                                 join ri in App.db.RecipeIngredients on i.ID equals ri.IngredientID
+                                                                 where lastMeals.Any(lm => lm == ri.RecipeID)
+                                                                 group i by i.ID into igrouped
+                                                                 select new tmpRandomTest()
+                                                                 {
+                                                                     test = igrouped.FirstOrDefault().ID,
+                                                                     test2 = igrouped.Count()
+                                                                 }).ToList();
 
 
         public Search()
@@ -105,12 +120,21 @@ namespace FoodPlanner
                             result.keyWordMatch++;
                         }
 
+                        if (ingredientFromLatestMeals.Where(iflm => iflm.test == res.ingredient.ID).Count() != 0)
+                        {
+                            result.prevIngredients += ingredientFromLatestMeals.Where(iflm => iflm.test == res.ingredient.ID).Single().test2;
+                        }
                     }
 
                     results.Add(result);
                 }
 
-                listResults.ItemsSource = results.OrderByDescending(res => res.fullMatch).ThenByDescending(res => res.partialMatch).ThenByDescending(res => res.keyWordMatch).ThenByDescending(res => res.recipe.Title);
+                listResults.ItemsSource = results
+                                          .OrderByDescending(res => res.fullMatch)
+                                          .ThenByDescending(res => res.partialMatch)
+                                          .ThenByDescending(res => res.keyWordMatch)
+                                          .ThenByDescending(res => res.prevIngredients)
+                                          .ThenByDescending(res => res.recipe.Title);
             }
 
             catch (Exception ex)

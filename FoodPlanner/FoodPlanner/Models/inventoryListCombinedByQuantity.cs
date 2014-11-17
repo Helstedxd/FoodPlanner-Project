@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FoodPlanner.Models
 {
-    class inventoryListCombinedByQuantity
+    class inventoryListGroupedByQuantity
     {
         public int IngredientID { get; set; }
 
@@ -22,6 +22,6 @@ namespace FoodPlanner.Models
 
         public int UserID { get; set; }
 
-        public inventoryListCombinedByQuantity() { }
+        public inventoryListGroupedByQuantity() { }
     }
 }

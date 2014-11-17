@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using FoodPlanner.Models;
+using System.Data.Entity.Core;
 
 namespace FoodPlanner
 {
@@ -21,20 +22,22 @@ namespace FoodPlanner
     /// </summary>
     public partial class MainWindow : Window
     {
-        [Obsolete("Brug App.db istedet!")]
-        public static FoodContext db;
-        [Obsolete("Brug App.CurrentUser istedet!")]
-        public static User CurrentUser { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
             Navigator.NavigationService = this.Frame.NavigationService;
             App.db = new FoodContext();
-            App.CurrentUser = App.db.Users.First();
 
-            db = new FoodContext();
-            CurrentUser = db.Users.First();
+            try
+            {
+                App.CurrentUser = App.db.Users.First();
+            }
+            catch (EntityException ex)
+            {
+                //TODO: Handle
+                //MessageBox.Show(ex.Message);
+            }
 
             /*
             var test = new Search();
@@ -46,7 +49,6 @@ namespace FoodPlanner
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            db.Dispose();
             App.db.Dispose();
         }
 
@@ -60,13 +62,6 @@ namespace FoodPlanner
         private void openFoodplan_Click(object sender, RoutedEventArgs e)
         {
             //openFoodplan.Show();
-        }
-
-        private void openInventory_Click(object sender, RoutedEventArgs e)
-        {
-            var openInventory = new InventoryWindow();
-            openInventory.Show();
-
         }
 
         private void openRecommendedRecipes_Click(object sender, RoutedEventArgs e)

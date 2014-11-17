@@ -37,13 +37,13 @@
                 <ImageBrush ImageSource="/Images/upArrowIcon.png" Stretch="Uniform"/>
             </Button.Background>
         </Button>
-        <Button Content="{Binding Path=MondayString, Mode=OneWay}" Grid.Row="1" Style="{DynamicResource ButtonTextTemplate}"/>
-        <Button Content="{Binding Path=TuesdayString, Mode=OneWay}" Grid.Row="2" Style="{DynamicResource ButtonTextTemplate}"/>
-        <Button Content="{Binding Path=WednesdayString, Mode=OneWay}" Grid.Row="3" Style="{DynamicResource ButtonTextTemplate}"/>
-        <Button Content="{Binding Path=ThursdayString, Mode=OneWay}" Grid.Row="4" Style="{DynamicResource ButtonTextTemplate}"/>
-        <Button Content="{Binding Path=FridayString, Mode=OneWay}" Grid.Row="5" Style="{DynamicResource ButtonTextTemplate}"/>
-        <Button Content="{Binding Path=SaturdayString, Mode=OneWay}" Grid.Row="6" Style="{DynamicResource ButtonTextTemplate}"/>
-        <Button Content="{Binding Path=SundayString, Mode=OneWay}" Grid.Row="7" Style="{DynamicResource ButtonTextTemplate}"/>
+        <Label Content="{Binding Path=MondayString, Mode=OneWay}" Grid.Row="1" Style="{DynamicResource TextLabelTemplate}"/>
+        <Label Content="{Binding Path=TuesdayString, Mode=OneWay}" Grid.Row="2" Style="{DynamicResource TextLabelTemplate}"/>
+        <Label Content="{Binding Path=WednesdayString, Mode=OneWay}" Grid.Row="3" Style="{DynamicResource TextLabelTemplate}"/>
+        <Label Content="{Binding Path=ThursdayString, Mode=OneWay}" Grid.Row="4" Style="{DynamicResource TextLabelTemplate}"/>
+        <Label Content="{Binding Path=FridayString, Mode=OneWay}" Grid.Row="5" Style="{DynamicResource TextLabelTemplate}"/>
+        <Label Content="{Binding Path=SaturdayString, Mode=OneWay}" Grid.Row="6" Style="{DynamicResource TextLabelTemplate}"/>
+        <Label Content="{Binding Path=SundayString, Mode=OneWay}" Grid.Row="7" Style="{DynamicResource TextLabelTemplate}"/>
         <Button Command="{Binding NextWeekCommand}" Content="\/" Grid.Row="8" Style="{DynamicResource ButtonIconTemplate}">
             <Button.Background>
                 <ImageBrush ImageSource="/Images/downArrowIcon.png" Stretch="Uniform"/>

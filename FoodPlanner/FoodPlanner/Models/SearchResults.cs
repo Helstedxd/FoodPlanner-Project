@@ -22,15 +22,6 @@ namespace FoodPlanner.Models
         #endregion
     }
 
-    class tmpRandomTest
-    {
-        public tmpRandomTest() { }
-
-        public int test { get; set; }
-
-        public int test2 { get; set; }
-    }
-
     public class SearchResults
     {
         #region Fields
@@ -137,5 +128,14 @@ namespace FoodPlanner.Models
             _ingredients = new List<Ingredient>();
         }
         #endregion
+    }
+
+    class tmpRandomTest
+    {
+        public tmpRandomTest() { }
+
+        public int test { get; set; }
+
+        public int test2 { get; set; }
     }
 }

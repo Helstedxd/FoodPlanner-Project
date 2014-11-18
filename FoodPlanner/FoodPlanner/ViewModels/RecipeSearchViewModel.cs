@@ -60,8 +60,8 @@ namespace FoodPlanner.ViewModels
                                          join i in App.db.Ingredients on ri.IngredientID equals i.ID
                                          join r in App.db.Recipes on ri.RecipeID equals r.ID
                                          where searchQuery.Any(s => i.Name.Contains(s)) || searchQuery.Any(s => r.Title.Contains(s))
-                                         group ri by ri.RecipeID into rofl
-                                         select rofl.FirstOrDefault().RecipeID);
+                                         group ri by ri.RecipeID into searchRecipeID
+                                         select searchRecipeID.FirstOrDefault().RecipeID);
 
             IQueryable<IGrouping<int, Result>> recipeIngredients = from ri in App.db.RecipeIngredients
                                                                    join i in App.db.Ingredients on ri.IngredientID equals i.ID

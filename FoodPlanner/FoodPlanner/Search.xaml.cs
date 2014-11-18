@@ -36,10 +36,6 @@ namespace FoodPlanner
                                                                           UserID = iig.FirstOrDefault().UserID
                                                                       }).ToList();
 
-        private List<int> blacklistedRecipes = (from bl in App.db.BlacklistIngredients
-                                                join ri in App.db.RecipeIngredients on bl.IngredientID equals ri.IngredientID
-                                                select ri.RecipeID).ToList();
-
         private static IQueryable<int> lastMeals = (from meals in App.db.Meals
                                                     where meals.UserID == App.CurrentUser.ID && meals.Date <= DateTime.Now
                                                     orderby meals.ID descending
@@ -55,6 +51,19 @@ namespace FoodPlanner
                                                                      test2 = igrouped.Count()
                                                                  }).ToList();
 
+        private List<int> blacklistedRecipes = (from bl in App.db.BlacklistIngredients
+                                                join ri in App.db.RecipeIngredients on bl.IngredientID equals ri.IngredientID
+                                                where bl.UserID == App.CurrentUser.ID
+                                                select ri.RecipeID).ToList();
+
+        private List<GrayList> grayList = (from gl in App.db.GraylistIngredients
+                                           join i in App.db.Ingredients on gl.IngredientID equals i.ID
+                                           where gl.UserID == App.CurrentUser.ID
+                                           select new GrayList()
+                                           {
+                                               ingredient = i,
+                                               rating = gl.IngredientValue
+                                           }).ToList();
 
         public Search()
         {
@@ -72,8 +81,8 @@ namespace FoodPlanner
                                              join i in App.db.Ingredients on ri.IngredientID equals i.ID
                                              join r in App.db.Recipes on ri.RecipeID equals r.ID
                                              where searchQuery.Any(s => i.Name.Contains(s)) || searchQuery.Any(s => r.Title.Contains(s))
-                                             group ri by ri.RecipeID into rofl
-                                             select rofl.FirstOrDefault().RecipeID);
+                                             group ri by ri.RecipeID into searchRecipeID
+                                             select searchRecipeID.FirstOrDefault().RecipeID);
 
                 IQueryable<IGrouping<int, Result>> recipeIngredients = from ri in App.db.RecipeIngredients
                                                                        join i in App.db.Ingredients on ri.IngredientID equals i.ID
@@ -123,6 +132,15 @@ namespace FoodPlanner
                         if (ingredientFromLatestMeals.Where(iflm => iflm.test == res.ingredient.ID).Count() != 0)
                         {
                             result.prevIngredients += ingredientFromLatestMeals.Where(iflm => iflm.test == res.ingredient.ID).Single().test2;
+                        }
+
+                        if (grayList.Where(gl => res.ingredient.ID == gl.ingredient.ID).Count() != 0)
+                        {
+
+                        }
+                        else
+                        {
+
                         }
                     }
 

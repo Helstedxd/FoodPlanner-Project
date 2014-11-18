@@ -5,8 +5,8 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="5063aff712da4d4e869c59ea303b5cb1" Name="Diagram1">
-        <EntityTypeShape EntityType="FoodModel.Ingredient" Width="1.5" PointX="4.375" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FoodModel.InventoryIngredient" Width="1.5" PointX="4.375" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FoodModel.Ingredient" Width="1.5" PointX="4.5" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FoodModel.InventoryIngredient" Width="1.5" PointX="4.5" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FoodModel.Meal" Width="1.5" PointX="2.25" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="FoodModel.RecipeIngredient" Width="1.5" PointX="2.375" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FoodModel.Recipe" Width="1.5" PointX="2.25" PointY="3.875" IsExpanded="true" />
@@ -19,12 +19,15 @@
         <AssociationConnector Association="FoodModel.RecipeIngredients_ibfk_1" ManuallyRouted="false" />
         <EntityTypeShape EntityType="FoodModel.RecipesPreparation" Width="1.5" PointX="0.5" PointY="4.125" />
         <AssociationConnector Association="FoodModel.hmmRandomName" />
-        <EntityTypeShape EntityType="FoodModel.BlacklistIngredient" Width="1.5" PointX="7" PointY="3.625" />
-        <EntityTypeShape EntityType="FoodModel.StockQuantity" Width="1.5" PointX="9.625" PointY="3.25" />
+        <EntityTypeShape EntityType="FoodModel.BlacklistIngredient" Width="1.5" PointX="8.875" PointY="3.25" />
+        <EntityTypeShape EntityType="FoodModel.StockQuantity" Width="1.5" PointX="7.25" PointY="3.25" />
         <AssociationConnector Association="FoodModel.BlacklistIngredients_ibfk_1" />
         <AssociationConnector Association="FoodModel.BlacklistIngredients_ibfk_2" />
-        <AssociationConnector Association="FoodModel.StockQuantities_ibfk_1" />
+        <AssociationConnector Association="FoodModel.StockQuantities_ibfk_1" ></AssociationConnector>
         <AssociationConnector Association="FoodModel.StockQuantities_ibfk_2" />
+        <EntityTypeShape EntityType="FoodModel.GraylistIngredient" Width="1.5" PointX="10.5" PointY="3.25" />
+        <AssociationConnector Association="FoodModel.GraylistIngredients_ibfk_1" />
+        <AssociationConnector Association="FoodModel.GraylistIngredients_ibfk_2" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

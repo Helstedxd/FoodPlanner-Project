@@ -51,10 +51,10 @@ namespace FoodPlanner
                                                                 ingredientCount = igrouped.Count()
                                                             }).ToList();
 
-        private List<int> blacklistedRecipes = (from bl in App.db.BlacklistIngredients
-                                                join ri in App.db.RecipeIngredients on bl.IngredientID equals ri.IngredientID
-                                                where bl.UserID == App.CurrentUser.ID
-                                                select ri.RecipeID).ToList();
+        private List<Recipe> blackList = (from bl in App.db.BlacklistIngredients
+                                                       join ri in App.db.RecipeIngredients on bl.IngredientID equals ri.IngredientID
+                                                       where bl.UserID == App.CurrentUser.ID
+                                                       select ri.Recipe).ToList();
 
         private List<GrayList> grayList = (from gl in App.db.GraylistIngredients
                                            join i in App.db.Ingredients on gl.IngredientID equals i.ID
@@ -87,7 +87,7 @@ namespace FoodPlanner
                 IQueryable<IGrouping<int, Result>> recipeIngredients = from ri in App.db.RecipeIngredients
                                                                        join i in App.db.Ingredients on ri.IngredientID equals i.ID
                                                                        join r in App.db.Recipes on ri.RecipeID equals r.ID
-                                                                       where recipeIDs.Any(rid => rid == ri.RecipeID && blacklistedRecipes.Where(bl => bl == rid).Count() == 0)
+                                                                       where recipeIDs.Any(rid => rid == ri.RecipeID && blackList.Where(bl => bl.ID == rid).Count() == 0)
                                                                        group new Result()
                                                                        {
                                                                            recipe = ri.Recipe,
@@ -129,9 +129,9 @@ namespace FoodPlanner
                             result.keyWordMatch++;
                         }
 
-                        if (ingredientFromLatestMeals.Where(iflm => iflm.test == res.ingredient.ID).Count() != 0)
+                        if (ingredientFromLatestMeals.Where(iflm => iflm.ingredientID == res.ingredient.ID).Count() != 0)
                         {
-                            result.prevIngredients += ingredientFromLatestMeals.Where(iflm => iflm.test == res.ingredient.ID).Single().test2;
+                            result.prevIngredients += ingredientFromLatestMeals.Where(iflm => iflm.ingredientID == res.ingredient.ID).Single().ingredientCount;
                         }
 
                         if (grayList.Where(gl => res.ingredient.ID == gl.ingredient.ID).Count() != 0)

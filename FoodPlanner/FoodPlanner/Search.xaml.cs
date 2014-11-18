@@ -41,15 +41,15 @@ namespace FoodPlanner
                                                     orderby meals.ID descending
                                                     select meals.RecipeID).Take(5);
 
-        private List<tmpRandomTest> ingredientFromLatestMeals = (from i in App.db.Ingredients
-                                                                 join ri in App.db.RecipeIngredients on i.ID equals ri.IngredientID
-                                                                 where lastMeals.Any(lm => lm == ri.RecipeID)
-                                                                 group i by i.ID into igrouped
-                                                                 select new tmpRandomTest()
-                                                                 {
-                                                                     test = igrouped.FirstOrDefault().ID,
-                                                                     test2 = igrouped.Count()
-                                                                 }).ToList();
+        private List<LastMeal> ingredientFromLatestMeals = (from i in App.db.Ingredients
+                                                            join ri in App.db.RecipeIngredients on i.ID equals ri.IngredientID
+                                                            where lastMeals.Any(lm => lm == ri.RecipeID)
+                                                            group i by i.ID into igrouped
+                                                            select new LastMeal()
+                                                            {
+                                                                ingredientID = igrouped.FirstOrDefault().ID,
+                                                                ingredientCount = igrouped.Count()
+                                                            }).ToList();
 
         private List<int> blacklistedRecipes = (from bl in App.db.BlacklistIngredients
                                                 join ri in App.db.RecipeIngredients on bl.IngredientID equals ri.IngredientID
@@ -136,25 +136,27 @@ namespace FoodPlanner
 
                         if (grayList.Where(gl => res.ingredient.ID == gl.ingredient.ID).Count() != 0)
                         {
-
+                            result.setRating = grayList.Where(gl => res.ingredient.ID == gl.ingredient.ID).Single().rating;
                         }
                         else
                         {
-
+                            //50 is the default value of nonrated items
+                            result.setRating = 50;
                         }
                     }
 
                     results.Add(result);
                 }
 
+
                 listResults.ItemsSource = results
                                           .OrderByDescending(res => res.fullMatch)
                                           .ThenByDescending(res => res.partialMatch)
                                           .ThenByDescending(res => res.keyWordMatch)
+                                          .ThenByDescending(res => res.getRating)
                                           .ThenByDescending(res => res.prevIngredients)
                                           .ThenByDescending(res => res.recipe.Title);
             }
-
             catch (Exception ex)
             {
                 MessageBox.Show(ex.InnerException.Message);

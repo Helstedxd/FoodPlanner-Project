@@ -2,6 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:t="http://schemas.microsoft.com/winfx/2006/xaml/presentation, http://schemas.microsoft.com/netfx/2007/xaml/presentation"
              xmlns:local="clr-namespace:FoodPlanner"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
@@ -10,18 +11,23 @@
         <SolidColorBrush x:Key="Button.Blue.Border" Color="#FF3C7FB1"/>
         <SolidColorBrush x:Key="Button.Text.Background" Color="#FFDDDDDD"/>
 
-        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
-        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
-        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
-        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
-        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
-        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
-        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
         <!--Start: Template for Title text-->
         <Style TargetType="Label" x:Key="LabelTitle">
             <Setter Property="FontSize" Value="30"/>
         </Style>
         <!--End: Template for Title text-->
+
+        <!--Start: Template for text label-->
+        <Style x:Key="TextLabelTemplate" TargetType="{x:Type Label}">
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="BorderThickness" Value="5"/>
+            <Setter Property="Background" Value="{StaticResource Button.Text.Background}"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <!--End: Template for text label-->
+        
         <!--Start: Template for Image buttons-->
         <Style x:Key="ButtonIconTemplate" TargetType="{x:Type Button}">
             <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
@@ -44,64 +50,30 @@
             </Setter>
         </Style>
         <!--End: Template for Image buttons-->
-        <Style x:Key="ButtonTextTemplate" TargetType="{x:Type Button}">
-            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
-            <Setter Property="Background" Value="{StaticResource Button.Text.Background}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
-            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-            <Setter Property="BorderThickness" Value="5"/>
-            <Setter Property="Margin" Value="2"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsDefaulted" Value="true">
-                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
-                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+
         <!--Start: Template for recipes list-->
         <DataTemplate x:Key="ListRecipesTemplate">
             <Grid>
-                <Border Margin="3" BorderBrush="#909090" BorderThickness="1" Padding="2">
-                    <Grid>
-                        <Grid.ColumnDefinitions >
-                            <ColumnDefinition Width="75"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-
-                        <Image Grid.RowSpan="2" Height="75" Width="75" Stretch="UniformToFill" Source="{Binding recipe.Image}" />
-
-                        <Label Grid.Column="1" Style="{StaticResource LabelTitle}" Content="{Binding recipe.Title}"/>
-                        <Label Grid.Column="1" Grid.Row="1" Content="{Binding getMatchPercentage}" ContentStringFormat="You have {0} of the needed ingredients"/>
-
-                    </Grid>
-                </Border>
+                <StackPanel  HorizontalAlignment="Stretch">
+                    <Border Name="ItemBorder" Margin="3" BorderBrush="#909090" BorderThickness="1" Padding="2" HorizontalAlignment="Stretch">
+                        <Grid Name="ItemGrid" Width="{Binding ElementName=ItemBorder,Path=ActualWidth}">
+                            <Grid.ColumnDefinitions >
+                                <ColumnDefinition Width="75"/>
+                                <ColumnDefinition Width="{Binding ElementName=ItemGrid,Path=MaxWidth}"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Image Grid.RowSpan="2" Height="75" Width="75" Stretch="UniformToFill" Source="{Binding recipe.Image}" />
+                            <Label Grid.Column="1" Grid.Row="1" Content="{Binding getMatchPercentage}" ContentStringFormat="You have {0} of the needed ingredients"/>
+                            <TextBlock Grid.Column="1" Text="{Binding recipe.Title}" TextTrimming="CharacterEllipsis" FontSize="30" />
+                        </Grid>
+                    </Border>
+                </StackPanel>
             </Grid>
         </DataTemplate>
+
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
                 <Setter.Value>
@@ -111,7 +83,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <!--End: Template for recipes list-->
         <!--End: Template for recipes list-->
 
         <!--Start: Template for Shopping List (element Listview)-->

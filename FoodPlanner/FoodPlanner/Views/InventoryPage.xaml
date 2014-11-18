@@ -11,7 +11,7 @@
     <Page.DataContext>
         <ViewModels:InventoryViewModel/>
     </Page.DataContext>
-    <Grid>
+    <Grid Name="InventoryGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="Auto"/>
@@ -68,12 +68,17 @@
             </DataGrid.Columns>
         </DataGrid>-->
         
-        <ListView Margin="5" Grid.Row="2" ItemsSource="{Binding InventoryIngredients}">
+        <ListView Margin="5" Grid.Row="2" MaxWidth="{Binding ElementName=InventoryGrid, Path=MaxWidth}" ItemsSource="{Binding InventoryIngredients}" Background="{DynamicResource BackgroundColour}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Ingredient" DisplayMemberBinding="{Binding Ingredient.Name}" Width="Auto" />
-                    <GridViewColumn Header="Quantity" DisplayMemberBinding="{Binding QuantityString}" Width="Auto"/>
-                    <GridViewColumn Header="Expiration Date" Width="Auto">
+                    <GridViewColumn DisplayMemberBinding="{Binding Ingredient.Name}" Width="Auto">
+                        <GridViewColumnHeader Content="Ingredient" IsHitTestVisible="False"/>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding QuantityString}" Width="Auto">
+                        <GridViewColumnHeader Content="Quantity" IsHitTestVisible="False"/>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto">
+                        <GridViewColumnHeader Content="Expiration Date" IsHitTestVisible="False"/>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <DatePicker SelectedDate="{Binding ExpirationDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>

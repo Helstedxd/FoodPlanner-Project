@@ -8,7 +8,7 @@
     xmlns:ViewModels="clr-namespace:FoodPlanner.ViewModels"
     xmlns:Views="clr-namespace:FoodPlanner.Views"
     mc:Ignorable="d" x:Class="FoodPlanner.MainWindow"
-    Title="MainWindow" d:DesignHeight="720" d:DesingHeightWidth="405" ResizeMode="NoResize" WindowStyle="ToolWindow" Height="720" Width="405">
+    Title="MainWindow" d:DesignHeight="720" d:DesingHeightWidth="405" ResizeMode="NoResize" WindowStyle="ToolWindow" Height="720" Width="405" Background="#E2E2E2">
     <Window.Resources>
 
     </Window.Resources>

@@ -7,12 +7,16 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <!--Brushes used in templates-->
-        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
-        <SolidColorBrush x:Key="Button.Blue.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#898888"/>
+        <SolidColorBrush x:Key="Button.Static.Border.Light" Color="#D4D4D4"/>
+        <SolidColorBrush x:Key="Button.Colour.Border" Color="#FB4E00"/>
+        <SolidColorBrush x:Key="Text.Orange" Color="#FB4E00"/>
         <SolidColorBrush x:Key="Button.Text.Background" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="BackgroundColour" Color="#E2E2E2"/>
 
         <!--Start: Template for Title text-->
         <Style TargetType="Label" x:Key="LabelTitle">
+            <Setter Property="Foreground" Value="{StaticResource Text.Orange}"/>
             <Setter Property="FontSize" Value="30"/>
         </Style>
         <!--End: Template for Title text-->
@@ -39,10 +43,10 @@
                         <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"/>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Blue.Border}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Colour.Border}"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Blue.Border}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Colour.Border}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -55,7 +59,7 @@
         <DataTemplate x:Key="ListRecipesTemplate">
             <Grid>
                 <StackPanel  HorizontalAlignment="Stretch">
-                    <Border Name="ItemBorder" Margin="3" BorderBrush="#909090" BorderThickness="1" Padding="2" HorizontalAlignment="Stretch">
+                    <Border Name="ItemBorder" Margin="3" BorderBrush="{StaticResource Button.Static.Border}" BorderThickness="1" Padding="2" HorizontalAlignment="Stretch">
                         <Grid Name="ItemGrid" Width="{Binding ElementName=ItemBorder,Path=ActualWidth}">
                             <Grid.ColumnDefinitions >
                                 <ColumnDefinition Width="75"/>
@@ -65,9 +69,9 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <Image Grid.RowSpan="2" Height="75" Width="75" Stretch="UniformToFill" Source="{Binding recipe.Image}" />
+                            <Image  Grid.RowSpan="2" Height="75" Width="75" Stretch="UniformToFill" Source="{Binding recipe.Image}" />
                             <Label Grid.Column="1" Grid.Row="1" Content="{Binding getMatchPercentage}" ContentStringFormat="You have {0} of the needed ingredients"/>
-                            <TextBlock Grid.Column="1" Text="{Binding recipe.Title}" TextTrimming="CharacterEllipsis" FontSize="30" />
+                            <TextBlock Grid.Column="1" Text="{Binding recipe.Title}" Padding="5 0 5 0" TextTrimming="CharacterEllipsis" FontSize="30" Foreground="{StaticResource Text.Orange}"/>
                         </Grid>
                     </Border>
                 </StackPanel>
@@ -109,7 +113,7 @@
 
         <!--Start: Meal planning Page Template for day listboxes-->
         <DataTemplate x:Key="MealsListBoxTemplate">
-            <Grid>
+            <Grid Background="{StaticResource Button.Static.Border.Light}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseUp">
                         <i:InvokeCommandAction Command="{Binding Source={x:Static local:Navigator.GoToRecipeCommand}}" 
@@ -126,7 +130,7 @@
             </Grid>
         </DataTemplate>
         <ItemsPanelTemplate x:Key="WrapPanelHorizontalTemplate">
-            <WrapPanel Orientation="Horizontal"/>
+            <WrapPanel Orientation="Horizontal" Background="{StaticResource BackgroundColour}"/>
         </ItemsPanelTemplate>
         <!--End: Meal planning Page Template for day listboxes-->
         

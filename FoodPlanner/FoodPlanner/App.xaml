@@ -153,7 +153,7 @@
                                     <TextBlock Text="Days to shop:" Grid.Row="1"/>
                                     
                                     <TextBlock Text="Name:" Grid.Row="2"/>
-                                    <TextBlock Text="{Binding Path=Name}" Grid.Row="2" Grid.Column="1"/>
+                                    <TextBlock Text="{Binding Name}" Grid.Row="2" Grid.Column="1"/>
                                 </Grid>
                             </Expander>
                             <Expander Header="Mere"></Expander>

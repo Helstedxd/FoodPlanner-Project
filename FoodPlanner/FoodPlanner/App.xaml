@@ -129,5 +129,39 @@
             <WrapPanel Orientation="Horizontal"/>
         </ItemsPanelTemplate>
         <!--End: Meal planning Page Template for day listboxes-->
+        
+        <!--Start: Settings Page StackPanel Template-->
+        <Style x:Key="STester" TargetType="{x:Type ListBox}">
+            <Setter Property="BorderThickness" Value="20"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <StackPanel>
+                            <Expander Header="User Information">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <TextBlock Text="Persons in the household:"/>
+                                    <TextBlock Text="{Binding Path=PersonsInHouseHold}" Grid.Column="1"/>
+                                    <TextBlock Text="Days to shop:" Grid.Row="1"/>
+                                    
+                                    <TextBlock Text="Name:" Grid.Row="2"/>
+                                    <TextBlock Text="{Binding Path=Name}" Grid.Row="2" Grid.Column="1"/>
+                                </Grid>
+                            </Expander>
+                            <Expander Header="Mere"></Expander>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--End: Settings Page StackPanel Template-->
     </Application.Resources>
 </Application>

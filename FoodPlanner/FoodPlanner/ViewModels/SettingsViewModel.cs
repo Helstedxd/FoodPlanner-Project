@@ -17,5 +17,11 @@ using FoodPlanner.Models;
 
 namespace FoodPlanner.ViewModels {
     class SettingsViewModel {
+        private User CurrentUser { get; set; }
+
+        public SettingsViewModel() {
+            CurrentUser = App.CurrentUser;
+        }
+
     }
 }

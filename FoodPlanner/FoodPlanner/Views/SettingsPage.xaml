@@ -12,25 +12,8 @@
     </Page.DataContext>
 
     <Grid>
-        <StackPanel Margin="0,0,0,0">
-            <ListBox SelectedIndex="1">
-                <ListBoxItem HorizontalContentAlignment="Stretch">
-                    <Expander Header="Allergies / Unwanted ingredients">
-                        <ListBox>
-                            <ListBoxItem Content="Unit 1"/>
-                            <ListBoxItem Content="Unit 2"/>
-                        </ListBox>
-                    </Expander>
-                </ListBoxItem>
-                <ListBoxItem HorizontalContentAlignment="Stretch">
-                    <Expander Header="Test 2" >
-                        <ListBox>
-                            <ListBoxItem Content="Unit 3"/>
-                            <ListBoxItem Content="Unit 4"/>
-                        </ListBox>
-                    </Expander>
-                </ListBoxItem>
-            </ListBox>
-        </StackPanel>
+        <ListBox Style="{StaticResource STester}">
+            
+        </ListBox>
     </Grid>
 </Page>

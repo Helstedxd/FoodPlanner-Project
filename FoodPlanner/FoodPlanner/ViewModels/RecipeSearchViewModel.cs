@@ -113,29 +113,6 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-        private ICommand _goToRecipeCommand;
-        public ICommand GoToRecipeCommand
-        {
-            get
-            {
-                if (_goToRecipeCommand == null)
-                {
-                    _goToRecipeCommand = new RelayCommand(p => GoToRecipe(((SearchResults)p).recipe));
-                }
-
-                return _goToRecipeCommand;
-            }
-        }
-
-        private void GoToRecipe(Recipe recipe)
-        {
-            //TODO: fuck mvvm basically
-            RecipeViewModel rvm = new RecipeViewModel(recipe);
-            Views.RecipePage rp = new Views.RecipePage();
-            rp.DataContext = rvm;
-            App.NavigationService.Navigate(rp);
-        }
-
         public ObservableCollection<SearchResults> listOfSearchResults { get; private set; }
 
     }

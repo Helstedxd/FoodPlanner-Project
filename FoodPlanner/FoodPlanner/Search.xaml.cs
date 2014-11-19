@@ -52,9 +52,9 @@ namespace FoodPlanner
                                                             }).ToList();
 
         private List<Recipe> blackList = (from bl in App.db.BlacklistIngredients
-                                                       join ri in App.db.RecipeIngredients on bl.IngredientID equals ri.IngredientID
-                                                       where bl.UserID == App.CurrentUser.ID
-                                                       select ri.Recipe).ToList();
+                                          join ri in App.db.RecipeIngredients on bl.IngredientID equals ri.IngredientID
+                                          where bl.UserID == App.CurrentUser.ID
+                                          select ri.Recipe).ToList();
 
         private List<GrayList> grayList = (from gl in App.db.GraylistIngredients
                                            join i in App.db.Ingredients on gl.IngredientID equals i.ID
@@ -68,6 +68,74 @@ namespace FoodPlanner
         public Search()
         {
             InitializeComponent();
+        }
+
+        private void getRecommend_Click(object sender, RoutedEventArgs e)
+        {
+            List<int> itemsUsedBefore = ingredientFromLatestMeals.OrderByDescending(iflm => iflm.ingredientCount).Take(10).Select(i => i.ingredientID).ToList();
+
+            IQueryable<IGrouping<int, Result>> recipeIngredients = from ri in App.db.RecipeIngredients
+                                                                   join i in App.db.Ingredients on ri.IngredientID equals i.ID
+                                                                   join r in App.db.Recipes on ri.RecipeID equals r.ID
+                                                                   where itemsUsedBefore.Any(iflm => iflm == ri.IngredientID)
+                                                                   group new Result()
+                                                                   {
+                                                                       recipe = ri.Recipe,
+                                                                       ingredient = ri.Ingredient,
+                                                                       quantity = ri.Quantity
+                                                                   } by ri.RecipeID;
+
+            List<SearchResults> results = new List<SearchResults>();
+
+            foreach (IGrouping<int, Result> ri in recipeIngredients)
+            {
+                Recipe recipe = ri.FirstOrDefault().recipe;
+
+                SearchResults result = new SearchResults(recipe);
+
+
+                foreach (Result res in ri)
+                {
+                    result.addIngredient(res.ingredient);
+
+                    if (inventoryList.Where(il => il.IngredientID == res.ingredient.ID).Count() != 0)
+                    {
+                        if (inventoryList.Where(il => il.IngredientID == res.ingredient.ID).First().Quantity >= res.quantity)
+                        {
+                            result.fullMatch++;
+                        }
+                        else
+                        {
+                            result.partialMatch++;
+                        }
+                    }
+
+                    if (ingredientFromLatestMeals.Where(iflm => iflm.ingredientID == res.ingredient.ID).Count() != 0)
+                    {
+                        result.prevIngredients += ingredientFromLatestMeals.Where(iflm => iflm.ingredientID == res.ingredient.ID).Single().ingredientCount;
+                    }
+
+                    if (grayList.Where(gl => res.ingredient.ID == gl.ingredient.ID).Count() != 0)
+                    {
+                        result.setRating = grayList.Where(gl => res.ingredient.ID == gl.ingredient.ID).Single().rating;
+                    }
+                    else
+                    {
+                        //50 is the default value of nonrated items
+                        result.setRating = 50;
+                    }
+                }
+
+                results.Add(result);
+            }
+
+            listResults.ItemsSource = results
+                          .OrderByDescending(res => res.fullMatch)
+                          .ThenByDescending(res => res.partialMatch)
+                          .ThenByDescending(res => res.getRating)
+                          .ThenByDescending(res => res.prevIngredients)
+                          .ThenByDescending(res => res.recipe.Title);
+
         }
 
         private void startSearch_Click(object sender, RoutedEventArgs e)
@@ -173,5 +241,6 @@ namespace FoodPlanner
 
             catch (Exception ex) { }
         }
+
     }
 }

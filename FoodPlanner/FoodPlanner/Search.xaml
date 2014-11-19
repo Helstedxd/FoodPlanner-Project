@@ -7,8 +7,11 @@
         <CollectionViewSource x:Key="recipeViewSource" d:DesignSource="{d:DesignInstance {x:Type Models:Recipe}, CreateList=True}"/>
     </Window.Resources>
     <Grid DataContext="{StaticResource recipeViewSource}">
-        <TextBox Height="23" Margin="10,10,90,0" TextWrapping="Wrap" VerticalAlignment="Top" Name="searchBox"/>
-        <Button Content="Search" HorizontalAlignment="Right" Margin="10,10,10,0" VerticalAlignment="Top" Width="75" Name="startSearch" Click="startSearch_Click"/>
+        <TextBox Height="23" Margin="10,10,170,0" TextWrapping="Wrap" VerticalAlignment="Top" Name="searchBox"/>
+
+        <Button Content="Search" HorizontalAlignment="Right" Margin="10,10,90,0" VerticalAlignment="Top" Width="75" Name="startSearch" Click="startSearch_Click"/>
+
+        <Button Content="Recommend" HorizontalAlignment="Right" Margin="10,10,10,0" VerticalAlignment="Top" Width="75" Name="getRecommend" Click="getRecommend_Click"/>
 
         <DataGrid Margin="10,48,10,10" Name="listResults" SelectionChanged="listResults_SelectionChanged"/>
 

@@ -8,7 +8,7 @@
       d:DesignHeight="720" d:DesignWidth="405"
 	Title="RecipePage">
 
-   <!-- <Page.DataContext>
+    <!-- <Page.DataContext>
         <ViewModels:RecipeViewModel/>
     </Page.DataContext>-->
 
@@ -18,10 +18,10 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
+
         <Image Height="100" Width="100" Source="{Binding Image}"/>
 
         <Label Grid.Column="1" Grid.Row="0" Style="{StaticResource LabelTitle}">
@@ -33,12 +33,14 @@
         <ScrollViewer Grid.Column="1" Grid.Row="1" Margin="5,0,-5,0">
             <TextBlock Text="{Binding RecipesPreparation.Preparation}" TextWrapping="Wrap"/>
         </ScrollViewer>
-        
-        <ListBox ItemsSource="{Binding RecipeIngredients}" Grid.Row="1" Width="100" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
+
+        <ListBox x:Name="IngredientListbox" ItemsSource="{Binding RecipeIngredients}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Row="1" Width="100" Background="{StaticResource BackgroundColour}">
+            <ListBox.ItemTemplate>    
+            <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="{Binding}" TextWrapping="Wrap"/>
+                        <Border x:Name="IngredientBorder" BorderBrush="{StaticResource Button.Static.Border}" BorderThickness="0 0 0 1" Width="{Binding ElementName=IngredientText}">
+                            <TextBlock Width="100" Name="IngredientText"  Text="{Binding}" TextWrapping="Wrap"/>
+                        </Border>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

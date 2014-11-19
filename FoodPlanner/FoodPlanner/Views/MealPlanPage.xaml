@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ViewModels="clr-namespace:FoodPlanner.ViewModels"
     xmlns:local="clr-namespace:FoodPlanner"
-	x:Class="FoodPlanner.MealPlanPage"
+	x:Class="FoodPlanner.Views.MealPlanPage"
     mc:Ignorable="d"
 	FlowDirection="LeftToRight"
     d:DesignHeight="720" d:DesignWidth="405"

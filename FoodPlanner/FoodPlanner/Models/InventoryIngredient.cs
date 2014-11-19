@@ -19,15 +19,6 @@ namespace FoodPlanner.Models
             this.ExpirationDate = DateTime.Now.AddDays(7);
         }
 
-        public string QuantityString
-        {
-            get
-            {
-                //TODO: null check
-                return this.Quantity + " " + this.Ingredient.Unit;
-            }
-        }
-
         public override string ToString()
         {
             if (!Convert.ToBoolean(this.Quantity))

@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:ViewModels="clr-namespace:FoodPlanner.ViewModels"
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       x:Class="FoodPlanner.Views.InventoryPage"
       mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300"
       Title="InventoryPage">
@@ -72,7 +73,22 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Ingredient" DisplayMemberBinding="{Binding Ingredient.Name}" Width="Auto" />
-                    <GridViewColumn Header="Quantity" DisplayMemberBinding="{Binding QuantityString}" Width="Auto"/>
+                    <GridViewColumn Header="Quantity">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <!-- TODO: implement/create up/down functionality -->
+                                <!--<xctk:DecimalUpDown Value="{Binding Quantity}" FormatString="{Binding Ingredient.Unit, StringFormat=0 {0}}" Width="100" />-->
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1}">
+                                            <Binding Path="Quantity" />
+                                            <Binding Path="Ingredient.Unit" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="Expiration Date" Width="Auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>

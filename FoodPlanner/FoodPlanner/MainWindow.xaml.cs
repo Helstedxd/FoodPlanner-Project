@@ -69,5 +69,14 @@ namespace FoodPlanner
             new RecommendedRecipesWindow().Show();
         }
 
+        private void Frame_Navigated(object sender, NavigationEventArgs e)
+        {
+            // Only allow back-navigation back from the Recipe page
+            if (e.Content.GetType() != typeof(FoodPlanner.Views.RecipePage))
+            {
+                this.Frame.NavigationService.RemoveBackEntry();
+            }
+        }
+
     }
 }

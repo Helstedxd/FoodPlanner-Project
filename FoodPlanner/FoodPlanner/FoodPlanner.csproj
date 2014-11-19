@@ -108,6 +108,9 @@
     <Compile Include="StockQuantity.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\SlidePanel.xaml.cs">
+      <DependentUpon>SlidePanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\RecipeViewModel.cs" />
     <Compile Include="Models\SearchResults.cs" />
     <Compile Include="Recipe.cs">
@@ -145,9 +148,6 @@
     <Compile Include="ShowRecipe.xaml.cs">
       <DependentUpon>ShowRecipe.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SlidePanel.xaml.cs">
-      <DependentUpon>SlidePanel.xaml</DependentUpon>
-    </Compile>
     <Compile Include="User.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
@@ -177,6 +177,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UserControls\SlidePanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MealPlanPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -208,10 +212,6 @@
     <Page Include="ShowRecipe.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SlidePanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\InventoryPage.xaml">
       <SubType>Designer</SubType>

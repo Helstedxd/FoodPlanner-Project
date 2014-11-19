@@ -25,7 +25,8 @@ namespace FoodPlanner.Models
     public class SearchResults
     {
         #region Fields
-        private int _fullMatch = 0, _partialMatch = 0, _keyWordMatch = 0;
+        private int _fullMatch = 0, _partialMatch = 0, _keyWordMatch = 0, _prevIngredients = 0;
+        private decimal _rating = 0;
         private List<Ingredient> _ingredients;
         private Recipe _recipe;
         #endregion
@@ -47,6 +48,21 @@ namespace FoodPlanner.Models
             }
         }
 
+        public decimal setRating
+        {
+            set
+            {
+                _rating += value;
+            }
+        }
+
+        public decimal getRating
+        {
+            get
+            {
+                return _rating / _ingredients.Count();
+            }
+        }
 
         public int fullMatch
         {
@@ -102,6 +118,18 @@ namespace FoodPlanner.Models
                 return _ingredients.Count();
             }
         }
+
+        public int prevIngredients
+        {
+            get
+            {
+                return _prevIngredients;
+            }
+            set
+            {
+                _prevIngredients = value;
+            }
+        }
         #endregion
 
         #region Methods & Constructor
@@ -116,5 +144,14 @@ namespace FoodPlanner.Models
             _ingredients = new List<Ingredient>();
         }
         #endregion
+    }
+
+    class LastMeal
+    {
+        public LastMeal() { }
+
+        public int ingredientID { get; set; }
+
+        public int ingredientCount { get; set; }
     }
 }

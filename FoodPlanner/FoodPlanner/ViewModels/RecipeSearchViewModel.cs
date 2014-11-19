@@ -12,10 +12,10 @@ namespace FoodPlanner.ViewModels
 {
     public class RecipeSearchViewModel
     {
-        private List<inventoryListCombinedByQuantity> inventoryList = (from ii in App.db.InventoryIngredients
+        private List<inventoryListGroupedByQuantity> inventoryList = (from ii in App.db.InventoryIngredients
                                                                        where ii.UserID == App.CurrentUser.ID
                                                                        group ii by ii.IngredientID into iig
-                                                                       select new inventoryListCombinedByQuantity()
+                                                                       select new inventoryListGroupedByQuantity()
                                                                        {
                                                                            IngredientID = iig.FirstOrDefault().IngredientID,
                                                                            Quantity = iig.Sum(i => i.Quantity),
@@ -60,8 +60,8 @@ namespace FoodPlanner.ViewModels
                                          join i in App.db.Ingredients on ri.IngredientID equals i.ID
                                          join r in App.db.Recipes on ri.RecipeID equals r.ID
                                          where searchQuery.Any(s => i.Name.Contains(s)) || searchQuery.Any(s => r.Title.Contains(s))
-                                         group ri by ri.RecipeID into rofl
-                                         select rofl.FirstOrDefault().RecipeID);
+                                         group ri by ri.RecipeID into searchRecipeID
+                                         select searchRecipeID.FirstOrDefault().RecipeID);
 
             IQueryable<IGrouping<int, Result>> recipeIngredients = from ri in App.db.RecipeIngredients
                                                                    join i in App.db.Ingredients on ri.IngredientID equals i.ID

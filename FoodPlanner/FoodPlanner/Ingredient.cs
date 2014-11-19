@@ -20,6 +20,7 @@ namespace FoodPlanner.Models
             this.RecipeIngredients = new ObservableCollection<RecipeIngredient>();
             this.BlacklistIngredients = new ObservableCollection<BlacklistIngredient>();
             this.StockQuantities = new ObservableCollection<StockQuantity>();
+            this.GraylistIngredients = new ObservableCollection<GraylistIngredient>();
         }
     
         public int ID { get; set; }
@@ -30,5 +31,6 @@ namespace FoodPlanner.Models
         public virtual ObservableCollection<RecipeIngredient> RecipeIngredients { get; set; }
         public virtual ObservableCollection<BlacklistIngredient> BlacklistIngredients { get; set; }
         public virtual ObservableCollection<StockQuantity> StockQuantities { get; set; }
+        public virtual ObservableCollection<GraylistIngredient> GraylistIngredients { get; set; }
     }
 }

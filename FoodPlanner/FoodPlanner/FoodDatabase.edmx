@@ -13,6 +13,15 @@
           <Property Name="IngredientID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="GraylistIngredients">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IngredientID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="IngredientValue" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Ingredients">
           <Key>
             <PropertyRef Name="ID" />
@@ -106,6 +115,30 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="BlacklistIngredients">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GraylistIngredients_ibfk_1">
+          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="1" />
+          <End Role="GraylistIngredients" Type="Self.GraylistIngredients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredients">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GraylistIngredients">
+              <PropertyRef Name="IngredientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GraylistIngredients_ibfk_2">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="GraylistIngredients" Type="Self.GraylistIngredients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GraylistIngredients">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -220,6 +253,7 @@
         </Association>
         <EntityContainer Name="FoodModelStoreContainer">
           <EntitySet Name="BlacklistIngredients" EntityType="Self.BlacklistIngredients" Schema="foodplan" store:Type="Tables" />
+          <EntitySet Name="GraylistIngredients" EntityType="Self.GraylistIngredients" Schema="foodplan" store:Type="Tables" />
           <EntitySet Name="Ingredients" EntityType="Self.Ingredients" Schema="foodplan" store:Type="Tables" />
           <EntitySet Name="InventoryIngredients" EntityType="Self.InventoryIngredients" Schema="foodplan" store:Type="Tables" />
           <EntitySet Name="Meals" EntityType="Self.Meals" Schema="foodplan" store:Type="Tables" />
@@ -235,6 +269,14 @@
           <AssociationSet Name="BlacklistIngredients_ibfk_2" Association="Self.BlacklistIngredients_ibfk_2">
             <End Role="Users" EntitySet="Users" />
             <End Role="BlacklistIngredients" EntitySet="BlacklistIngredients" />
+          </AssociationSet>
+          <AssociationSet Name="GraylistIngredients_ibfk_1" Association="Self.GraylistIngredients_ibfk_1">
+            <End Role="Ingredients" EntitySet="Ingredients" />
+            <End Role="GraylistIngredients" EntitySet="GraylistIngredients" />
+          </AssociationSet>
+          <AssociationSet Name="GraylistIngredients_ibfk_2" Association="Self.GraylistIngredients_ibfk_2">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="GraylistIngredients" EntitySet="GraylistIngredients" />
           </AssociationSet>
           <AssociationSet Name="hmmRandomName" Association="Self.hmmRandomName">
             <End Role="RecipesPreparation" EntitySet="RecipesPreparation" />
@@ -288,6 +330,7 @@
           <NavigationProperty Name="RecipeIngredients" Relationship="Self.RecipeIngredients_ibfk_2" FromRole="Ingredients" ToRole="RecipeIngredients" />
           <NavigationProperty Name="BlacklistIngredients" Relationship="FoodModel.BlacklistIngredients_ibfk_1" FromRole="Ingredient" ToRole="BlacklistIngredient" />
           <NavigationProperty Name="StockQuantities" Relationship="FoodModel.StockQuantities_ibfk_1" FromRole="Ingredient" ToRole="StockQuantity" />
+          <NavigationProperty Name="GraylistIngredients" Relationship="FoodModel.GraylistIngredients_ibfk_1" FromRole="Ingredient" ToRole="GraylistIngredient" />
         </EntityType>
         <EntityType Name="InventoryIngredient" a:TypeAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
           <Key>
@@ -350,6 +393,7 @@
           <Property Name="ShopAhead" Type="Int32" Nullable="false" />
           <NavigationProperty Name="BlacklistIngredients" Relationship="FoodModel.BlacklistIngredients_ibfk_2" FromRole="User" ToRole="BlacklistIngredient" />
           <NavigationProperty Name="StockQuantities" Relationship="FoodModel.StockQuantities_ibfk_2" FromRole="User" ToRole="StockQuantity" />
+          <NavigationProperty Name="GraylistIngredients" Relationship="FoodModel.GraylistIngredients_ibfk_2" FromRole="User" ToRole="GraylistIngredient" />
         </EntityType>
         <Association Name="InventoryIngredients_ibfk_2">
           <End Role="Ingredients" Type="Self.Ingredient" Multiplicity="1" />
@@ -477,6 +521,15 @@
             <End Role="User" EntitySet="Users" />
             <End Role="StockQuantity" EntitySet="StockQuantities" />
           </AssociationSet>
+          <EntitySet Name="GraylistIngredients" EntityType="FoodModel.GraylistIngredient" />
+          <AssociationSet Name="GraylistIngredients_ibfk_1" Association="FoodModel.GraylistIngredients_ibfk_1">
+            <End Role="Ingredient" EntitySet="Ingredients" />
+            <End Role="GraylistIngredient" EntitySet="GraylistIngredients" />
+          </AssociationSet>
+          <AssociationSet Name="GraylistIngredients_ibfk_2" Association="FoodModel.GraylistIngredients_ibfk_2">
+            <End Role="User" EntitySet="Users" />
+            <End Role="GraylistIngredient" EntitySet="GraylistIngredients" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="RecipesPreparation">
           <Key>
@@ -563,6 +616,41 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="StockQuantity">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="GraylistIngredient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IngredientID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="IngredientValue" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ingredient" Relationship="FoodModel.GraylistIngredients_ibfk_1" FromRole="GraylistIngredient" ToRole="Ingredient" />
+          <NavigationProperty Name="User" Relationship="FoodModel.GraylistIngredients_ibfk_2" FromRole="GraylistIngredient" ToRole="User" />
+        </EntityType>
+        <Association Name="GraylistIngredients_ibfk_1">
+          <End Type="FoodModel.Ingredient" Role="Ingredient" Multiplicity="1" />
+          <End Type="FoodModel.GraylistIngredient" Role="GraylistIngredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GraylistIngredient">
+              <PropertyRef Name="IngredientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GraylistIngredients_ibfk_2">
+          <End Type="FoodModel.User" Role="User" Multiplicity="1" />
+          <End Type="FoodModel.GraylistIngredient" Role="GraylistIngredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GraylistIngredient">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -660,6 +748,16 @@
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="IngredientID" ColumnName="IngredientID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GraylistIngredients">
+            <EntityTypeMapping TypeName="FoodModel.GraylistIngredient">
+              <MappingFragment StoreEntitySet="GraylistIngredients">
+                <ScalarProperty Name="IngredientValue" ColumnName="IngredientValue" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="IngredientID" ColumnName="IngredientID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

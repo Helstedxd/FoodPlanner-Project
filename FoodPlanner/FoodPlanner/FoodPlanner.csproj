@@ -80,6 +80,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="GraylistIngredient.cs">
+      <DependentUpon>FoodDatabase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Ingredient.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
@@ -89,6 +92,7 @@
     <Compile Include="Meal.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Graylist.cs" />
     <Compile Include="Models\Ingredient.cs" />
     <Compile Include="Models\InventoryIngredient.cs" />
     <Compile Include="Models\inventoryListCombinedByQuantity.cs" />

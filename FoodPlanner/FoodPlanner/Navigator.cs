@@ -18,6 +18,7 @@ namespace FoodPlanner
 
         #region Fields
 
+        private static NavigationService _navigationService;
         private static ICommand _goToInventoryCommand;
         private static ICommand _goToShoppingListCommand;
         private static ICommand _goToRecipeSearchCommand;
@@ -29,7 +30,18 @@ namespace FoodPlanner
 
         #region Properties & Commands
 
-        public static NavigationService NavigationService { private get; set; }
+        public static NavigationService NavigationService
+        {
+            private get
+            {
+                return _navigationService;
+            }
+            set
+            {
+                _navigationService = value;
+                _navigationService.Navigated += NavigationService_Navigated;
+            }
+        }
 
         public static ICommand GoToInventoryCommand
         {
@@ -123,6 +135,15 @@ namespace FoodPlanner
             {
                 //TODO: should this be handled?
                 Console.WriteLine("Navigation Service not available!");
+            }
+        }
+
+        private static void NavigationService_Navigated(object sender, NavigationEventArgs e)
+        {
+            // Only allow back-navigation from the Recipe page
+            if (e.Content.GetType() != typeof(FoodPlanner.Views.RecipePage))
+            {
+                _navigationService.RemoveBackEntry();
             }
         }
 

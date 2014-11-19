@@ -44,6 +44,9 @@
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions" />
+    <Reference Include="MvvmFoundation.Wpf">
+      <HintPath>..\packages\MvvmFoundation.Wpf.1.0.0\lib\net40\MvvmFoundation.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data.Entity.EF6, Version=6.9.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\MySQL\MySQL Connector Net 6.9.4\Assemblies\v4.5\MySql.Data.Entity.EF6.dll</HintPath>
@@ -107,14 +110,12 @@
     </Compile>
     <Compile Include="ViewModels\RecipeViewModel.cs" />
     <Compile Include="Models\SearchResults.cs" />
-    <Compile Include="Helper Classes\ObservableObject.cs" />
     <Compile Include="Recipe.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="RecipeIngredient.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Helper Classes\RelayCommand.cs" />
     <Compile Include="ViewModels\FoodPlanViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />

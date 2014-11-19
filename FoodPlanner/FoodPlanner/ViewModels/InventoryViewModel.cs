@@ -8,6 +8,7 @@ using System.Windows;
 using FoodPlanner.Models;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
+using MvvmFoundation.Wpf;
 
 namespace FoodPlanner.ViewModels
 {
@@ -72,9 +73,9 @@ namespace FoodPlanner.ViewModels
             set
             {
                 _searchText = value;
-                OnPropertyChanged("SearchText");
-                OnPropertyChanged("FoundIngredients");
-                OnPropertyChanged("AutoCompleteListVisibility");
+                RaisePropertyChanged("SearchText");
+                RaisePropertyChanged("FoundIngredients");
+                RaisePropertyChanged("AutoCompleteListVisibility");
                 TryToRepopulateTheList();
             }
         }
@@ -85,7 +86,7 @@ namespace FoodPlanner.ViewModels
             {
                 if (_saveInventoryCommand == null)
                 {
-                    _saveInventoryCommand = new RelayCommand(p => SaveInventory());
+                    _saveInventoryCommand = new RelayCommand(() => SaveInventory());
                 }
                 return _saveInventoryCommand;
             }
@@ -97,7 +98,7 @@ namespace FoodPlanner.ViewModels
             {
                 if (_addIngredientToInventory == null)
                 {
-                    _addIngredientToInventory = new RelayCommand(p => AddIngredientToInventory(SelectedIngredient));
+                    _addIngredientToInventory = new RelayCommand(() => AddIngredientToInventory(SelectedIngredient));
                 }
                 return _addIngredientToInventory;
             }
@@ -130,8 +131,8 @@ namespace FoodPlanner.ViewModels
             {
                 _lastSearchText = "";
                 _queriedIngredients.Clear();
-                OnPropertyChanged("FoundIngredients");
-                OnPropertyChanged("AutoCompleteListVisibility");
+                RaisePropertyChanged("FoundIngredients");
+                RaisePropertyChanged("AutoCompleteListVisibility");
                 return;
             }
 
@@ -165,8 +166,8 @@ namespace FoodPlanner.ViewModels
             if (originalSearchText == SearchText)
             {
                 _queriedIngredients = foundIngredientsInDb.ToList();
-                OnPropertyChanged("FoundIngredients");
-                OnPropertyChanged("AutoCompleteListVisibility");
+                RaisePropertyChanged("FoundIngredients");
+                RaisePropertyChanged("AutoCompleteListVisibility");
             }
             else
             {

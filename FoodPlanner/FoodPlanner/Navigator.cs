@@ -9,6 +9,7 @@ using FoodPlanner.ViewModels;
 using FoodPlanner.Views;
 using System.Windows.Input;
 using System.Windows.Controls;
+using MvvmFoundation.Wpf;
 
 namespace FoodPlanner
 {
@@ -36,7 +37,7 @@ namespace FoodPlanner
             {
                 if (_goToInventoryCommand == null)
                 {
-                    _goToInventoryCommand = new RelayCommand(p => Navigator.Navigate(new InventoryPage()));
+                    _goToInventoryCommand = new RelayCommand(() => Navigator.Navigate(new InventoryPage()));
                 }
                 return _goToInventoryCommand;
             }
@@ -48,7 +49,7 @@ namespace FoodPlanner
             {
                 if (_goToShoppingListCommand == null)
                 {
-                    _goToShoppingListCommand = new RelayCommand(p => Navigator.Navigate(new ShoppingListPage()));
+                    _goToShoppingListCommand = new RelayCommand(() => Navigator.Navigate(new ShoppingListPage()));
                 }
                 return _goToShoppingListCommand;
             }
@@ -60,7 +61,7 @@ namespace FoodPlanner
             {
                 if (_goToRecipeSearchCommand == null)
                 {
-                    _goToRecipeSearchCommand = new RelayCommand(p => Navigator.Navigate(new RecipeSearchPage()));
+                    _goToRecipeSearchCommand = new RelayCommand(() => Navigator.Navigate(new RecipeSearchPage()));
                 }
                 return _goToRecipeSearchCommand;
             }
@@ -72,7 +73,7 @@ namespace FoodPlanner
             {
                 if (_goToSettingsCommand == null)
                 {
-                    _goToSettingsCommand = new RelayCommand(p => Navigator.Navigate(new SettingsPage()));
+                    _goToSettingsCommand = new RelayCommand(() => Navigator.Navigate(new SettingsPage()));
                 }
                 return _goToSettingsCommand;
             }
@@ -84,7 +85,7 @@ namespace FoodPlanner
             {
                 if (_goToMealPlanCommand == null)
                 {
-                    _goToMealPlanCommand = new RelayCommand(p => Navigator.Navigate(new MealPlanPage()));
+                    _goToMealPlanCommand = new RelayCommand(() => Navigator.Navigate(new MealPlanPage()));
                 }
                 return _goToMealPlanCommand;
             }
@@ -96,16 +97,12 @@ namespace FoodPlanner
             {
                 if (_goToRecipeCommand == null)
                 {
-                    _goToRecipeCommand = new RelayCommand(param =>
+                    _goToRecipeCommand = new RelayCommand<Recipe>(recipe =>
                     {
-                        Recipe r = (Recipe)param;
-                        if (r != null)
-                        {
-                            RecipeViewModel rvm = new RecipeViewModel(r);
-                            RecipePage rp = new RecipePage();
-                            rp.DataContext = rvm;
-                            Navigator.Navigate(rp);
-                        }
+                        RecipeViewModel rvm = new RecipeViewModel(recipe);
+                        RecipePage rp = new RecipePage();
+                        rp.DataContext = rvm;
+                        Navigator.Navigate(rp);
                     });
                 }
                 return _goToRecipeCommand;

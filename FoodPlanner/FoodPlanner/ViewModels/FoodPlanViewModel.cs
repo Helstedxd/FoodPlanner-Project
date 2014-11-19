@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Globalization;
 using FoodPlanner.Models;
+using MvvmFoundation.Wpf;
 
 
 namespace FoodPlanner.ViewModels
@@ -48,14 +49,14 @@ namespace FoodPlanner.ViewModels
             get { return _activeDate; }
             set { 
                 _activeDate = value;
-                OnPropertyChanged("MondayString");
-                OnPropertyChanged("TuesdayString");
-                OnPropertyChanged("WednesdayString");
-                OnPropertyChanged("ThursdayString");
-                OnPropertyChanged("FridayString");
-                OnPropertyChanged("SaturdayString");
-                OnPropertyChanged("SundayString");
-                OnPropertyChanged("WeekString");
+                RaisePropertyChanged("MondayString");
+                RaisePropertyChanged("TuesdayString");
+                RaisePropertyChanged("WednesdayString");
+                RaisePropertyChanged("ThursdayString");
+                RaisePropertyChanged("FridayString");
+                RaisePropertyChanged("SaturdayString");
+                RaisePropertyChanged("SundayString");
+                RaisePropertyChanged("WeekString");
             }
         }
 
@@ -236,14 +237,6 @@ namespace FoodPlanner.ViewModels
                 }
             }
         }
-        private void GoToRecipe(Recipe recipe)
-        {
-            //TODO: fuck mvvm basically
-            RecipeViewModel rvm = new RecipeViewModel(recipe);
-            Views.RecipePage rp = new Views.RecipePage();
-            rp.DataContext = rvm;
-            App.NavigationService.Navigate(rp);
-        }
         #endregion
 
         #region Commands
@@ -253,7 +246,7 @@ namespace FoodPlanner.ViewModels
             {
                 if (_nextWeek == null)
                 {
-                    _nextWeek = new RelayCommand(p => NextWeek());
+                    _nextWeek = new RelayCommand(() => NextWeek());
                 }
 
                 return _nextWeek;
@@ -265,24 +258,10 @@ namespace FoodPlanner.ViewModels
             {
                 if (_previousWeek == null)
                 {
-                    _previousWeek = new RelayCommand(p => PreviousWeek());
+                    _previousWeek = new RelayCommand(() => PreviousWeek());
                 }
 
                 return _previousWeek;
-            }
-        }
-
-        private ICommand _goToRecipeCommand;
-        public ICommand GoToRecipeCommand
-        {
-            get
-            {
-                if (_goToRecipeCommand == null)
-                {
-                    _goToRecipeCommand = new RelayCommand(p => GoToRecipe((Recipe)p));
-                }
-
-                return _goToRecipeCommand;
             }
         }
 

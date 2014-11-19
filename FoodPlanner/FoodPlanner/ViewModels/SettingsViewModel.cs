@@ -17,12 +17,10 @@ using FoodPlanner.Models;
 
 namespace FoodPlanner.ViewModels {
     class SettingsViewModel {
-        private User CurrentUser { get; set; }
-        private string TestString { get; set; }
+        public User CurrentUser { get; set; }
 
         public SettingsViewModel() {
             CurrentUser = App.CurrentUser;
-            TestString = "Test string";
         }
 
     }

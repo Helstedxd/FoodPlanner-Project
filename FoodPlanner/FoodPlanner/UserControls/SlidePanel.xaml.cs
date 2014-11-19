@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FoodPlanner
+namespace FoodPlanner.UserControls
 {
 	/// <summary>
 	/// Interaction logic for SlidePanel.xaml

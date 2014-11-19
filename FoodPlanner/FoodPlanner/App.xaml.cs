@@ -17,8 +17,8 @@ namespace FoodPlanner
     /// </summary>
     public partial class App : Application
     {
-        public static FoodContext db { get; set; }
-        public static User CurrentUser { get; set; }
+        public static FoodContext db { get; private set; }
+        public static User CurrentUser { get; private set; }
 
         private void ApplicationStartup(object sender, StartupEventArgs args)
         {
@@ -34,10 +34,11 @@ namespace FoodPlanner
                 //MessageBox.Show(ex.Message);
             }
 
-            MainWindow mw = new MainWindow();
-            Navigator.NavigationService = mw.Frame.NavigationService;
- 
-            mw.Show();
+            MainWindow mainWindow = new MainWindow();
+            Navigator.NavigationService = mainWindow.Frame.NavigationService;
+            Navigator.GoToMealPlanCommand.Execute(null);
+
+            mainWindow.Show();
         }
 
         private void ApplicationExit(object sender, ExitEventArgs args)

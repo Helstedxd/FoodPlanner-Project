@@ -17,11 +17,12 @@ namespace FoodPlanner.ViewModels
     {
 
         #region Fields
-        private int _maximumAutoCompleteItems = 10;
+
+        private int _maximumAutoCompleteItems = 10; //TODO: this might not be the right place.
+
         private List<Ingredient> _queriedIngredients;
         private string _searchText;
-        private string _lastSearchText; // when we last queried the db
-
+        private string _lastSearchText;
         private ICommand _saveInventoryCommand;
         private ICommand _addIngredientToInventory;
 
@@ -32,7 +33,7 @@ namespace FoodPlanner.ViewModels
             InventoryIngredients = App.CurrentUser.InventoryIngredients;
         }
 
-        #region Properties & Commands
+        #region Properties
 
         public ObservableCollection<InventoryIngredient> InventoryIngredients { get; set; }
 
@@ -80,6 +81,10 @@ namespace FoodPlanner.ViewModels
             }
         }
 
+        #endregion
+
+        #region Commands
+
         public ICommand SaveInventoryCommand
         {
             get
@@ -108,6 +113,15 @@ namespace FoodPlanner.ViewModels
 
         #region Methods
 
+        private void AddIngredientToInventory(Ingredient ingredient)
+        {
+            if (ingredient != null)
+            {
+                App.CurrentUser.InventoryIngredients.Add(new InventoryIngredient(ingredient, 1));
+            }
+            SearchText = "";
+        }
+
         private void SaveInventory()
         {
             //TODO: stuff (Inventory is not saved if you leave the page..)
@@ -126,35 +140,34 @@ namespace FoodPlanner.ViewModels
 
         private void TryToRepopulateTheList()
         {
-            // fix this
-            if (SearchText == "")
-            {
-                _lastSearchText = "";
-                _queriedIngredients.Clear();
-                RaisePropertyChanged("FoundIngredients");
-                RaisePropertyChanged("AutoCompleteListVisibility");
-                return;
-            }
-
             // Only query the database if the search string has changed
             // and a continues search string could change the previously fetched items.
-            if (_lastSearchText != null && _lastSearchText != "" &&
-                SearchText.StartsWith(_lastSearchText, StringComparison.OrdinalIgnoreCase) &&
-                //  _queriedIngredients.Count != 0 &&
-              _queriedIngredients.Count() < _maximumAutoCompleteItems)
+            if (string.IsNullOrEmpty(_lastSearchText) ||
+                !SearchText.StartsWith(_lastSearchText, StringComparison.OrdinalIgnoreCase) ||
+                _queriedIngredients.Count() >= _maximumAutoCompleteItems)
             {
-                Console.WriteLine("Just avoided a unnecessary db lookup ;)");
+                _lastSearchText = SearchText;
+                if (SearchText == "")
+                {
+                    _queriedIngredients.Clear();
+                    RaisePropertyChanged("FoundIngredients");
+                    RaisePropertyChanged("AutoCompleteListVisibility");
+                }
+                else
+                {
+                    Console.WriteLine("Fetching data from db! " + DateTime.Now.ToLongTimeString());
+                    PopulateListWithIngredientsFromDatabase();
+                }
             }
             else
             {
-                _lastSearchText = SearchText;
-                Console.WriteLine("Fetching data from db! " + DateTime.Now.ToLongTimeString());
-                PopulateListWithIngredientsFromDatabase();
+                Console.WriteLine("Avoided an unnecessary db lookup");
             }
         }
 
         private void PopulateListWithIngredientsFromDatabase()
         {
+            //TODO: this function should run asynchronously - and not block user interaction.
             string originalSearchText = SearchText;
 
             var foundIngredientsInDb = App.db.Ingredients
@@ -173,16 +186,6 @@ namespace FoodPlanner.ViewModels
             {
                 Console.WriteLine("Search text changed before repopulation...");
             }
-
-        }
-
-        private void AddIngredientToInventory(Ingredient ingredient)
-        {
-            if (ingredient != null)
-            {
-                App.CurrentUser.InventoryIngredients.Add(new InventoryIngredient(ingredient, 1));
-            }
-            SearchText = "";
         }
 
         #endregion

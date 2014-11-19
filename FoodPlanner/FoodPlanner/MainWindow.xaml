@@ -3,15 +3,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:Models="clr-namespace:FoodPlanner.Models" 
-    xmlns:local="clr-namespace:FoodPlanner"
+    xmlns:UserControls="clr-namespace:FoodPlanner.UserControls"
     xmlns:ViewModels="clr-namespace:FoodPlanner.ViewModels"
-    xmlns:Views="clr-namespace:FoodPlanner.Views"
     mc:Ignorable="d" x:Class="FoodPlanner.MainWindow"
     Title="MainWindow" d:DesignHeight="720" d:DesingHeightWidth="405" ResizeMode="NoResize" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen" Height="720" Width="405" Background="{StaticResource BackgroundColour}">
-    <Window.Resources>
-
-    </Window.Resources>
     <Window.DataContext>
         <ViewModels:MainViewModel/>
     </Window.DataContext>
@@ -19,25 +14,9 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <!--
-        <Button Content="Open Search" Name="openSearch" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="167" Click="openSearch_Click"/>
-        <Button Content="Open Foodplan" Name="openFoodplan" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="167" Click="openFoodplan_Click"/>
-        <Button Content="Open Inventory" Name="openInventory" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Width="167" Click="openInventory_Click"/>
-        <Button Content="Open Recommended Recipes" Name="openRecommendedRecipes" HorizontalAlignment="Left" Margin="10,91,0,0" VerticalAlignment="Top" Width="167" Click="openRecommendedRecipes_Click"/>
-
-        <Label Content="Slide Panel Testing" Margin="195,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
-        -->
         
-        <Frame x:Name="Frame" Source="Views/MealPlanPage.xaml" Grid.Row="0" NavigationUIVisibility="Hidden"></Frame>
-        
-        <local:SlidePanel VerticalAlignment="Bottom" Grid.Row="2"/>
-
-        <!--<Image HorizontalAlignment="Left" Height="200" Margin="207,10,0,0" VerticalAlignment="Top" Width="300" Source="http://viskalspise.dk/sites/default/files/imagecache/image_300x300r/hakkebf-og-bnnesalat-med-olive.jpg" Stretch="Fill" />-->
-
-        <!--<ComboBox Margin="10,10,10,0" VerticalAlignment="Top" x:Name="selectRecipe" ItemsSource="{Binding}" SelectedValuePath="ID" />
-        <ListBox HorizontalAlignment="Right" Margin="0,42,10,10" Width="200" x:Name="listIngredients" ItemsSource="{Binding Source={StaticResource recipeRecipeIngredientsViewSource}}" SelectedValuePath="ID"/>
-        <ListBox Margin="10,42,220,10" x:Name="cookingSteps" ItemsSource="{Binding Source={StaticResource recipeCookingStepsViewSource}}" SelectedValuePath="ID"/>-->
+        <Frame x:Name="Frame" Grid.Row="0" NavigationUIVisibility="Hidden"/>
+        <UserControls:SlidePanel Grid.Row="1"/>
     </Grid>
 </Window>

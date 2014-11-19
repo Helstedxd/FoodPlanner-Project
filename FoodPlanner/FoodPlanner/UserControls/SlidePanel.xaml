@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:FoodPlanner"
 	xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 	mc:Ignorable="d"
-	x:Class="FoodPlanner.SlidePanel"
+	x:Class="FoodPlanner.UserControls.SlidePanel"
 	x:Name="UserControl"
 	d:DesignWidth="405" d:DesignHeight="115">
 
@@ -64,27 +64,27 @@
 
                 <Button Margin="5" Grid.Row="1" Grid.Column="0" Style="{DynamicResource ButtonIconTemplate}" Command="{Binding Source={x:Static local:Navigator.GoToMealPlanCommand}}">
                     <Button.Background>
-                        <ImageBrush ImageSource="Images/Calender.png"/>
+                        <ImageBrush ImageSource="../Images/Calender.png"/>
                     </Button.Background>
                 </Button>
                 <Button Margin="5" Grid.Row="1" Grid.Column="1" Style="{DynamicResource ButtonIconTemplate}" Command="{Binding Source={x:Static local:Navigator.GoToRecipeSearchCommand}}">
                     <Button.Background>
-						<ImageBrush ImageSource="Images/Foodplan.png"/>
+						<ImageBrush ImageSource="../Images/Foodplan.png"/>
 					</Button.Background>
 				</Button>
                 <Button Margin="5" Grid.Row="1" Grid.Column="2" Style="{DynamicResource ButtonIconTemplate}" Command="{Binding Source={x:Static local:Navigator.GoToShoppingListCommand}}">
                     <Button.Background>
-						<ImageBrush ImageSource="Images/Shoppinglist.png"/>
+						<ImageBrush ImageSource="../Images/Shoppinglist.png"/>
 					</Button.Background>
 				</Button>
                 <Button Margin="5" Grid.Row="1" Grid.Column="3" Style="{DynamicResource ButtonIconTemplate}" Command="{Binding Source={x:Static local:Navigator.GoToInventoryCommand}}">
                     <Button.Background>
-                        <ImageBrush ImageSource="Images/refrigeratorIcon.png"/>
+                        <ImageBrush ImageSource="../Images/refrigeratorIcon.png"/>
 					</Button.Background>
 				</Button>
                 <Button Margin="5" Grid.Row="1" Grid.Column="4" Style="{DynamicResource ButtonIconTemplate}" Command="{Binding Source={x:Static local:Navigator.GoToSettingsCommand}}">
                         <Button.Background>
-                            <ImageBrush ImageSource="Images/Settings.png"/>
+                            <ImageBrush ImageSource="../Images/Settings.png"/>
 					</Button.Background>
 				</Button>
 			</Grid>

@@ -34,12 +34,12 @@
             <TextBlock Text="{Binding RecipesPreparation.Preparation}" TextWrapping="Wrap"/>
         </ScrollViewer>
 
-        <ListBox x:Name="IngredientListbox" ItemsSource="{Binding RecipeIngredients}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Row="1" Width="100" Background="{StaticResource BackgroundColour}" FocusManager.FocusedElement="{Binding RelativeSource={RelativeSource Self}}">
+        <ListBox x:Name="IngredientListbox" ItemsSource="{Binding RecipeIngredients}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Row="1" Width="100" Background="{StaticResource BackgroundColour}" BorderThickness="0">
             <ListBox.ItemTemplate>    
             <DataTemplate>
                     <StackPanel>
-                        <Border x:Name="IngredientBorder" BorderBrush="{StaticResource Button.Static.Border}" BorderThickness="0 0 0 1" Width="{Binding ElementName=IngredientText}">
-                            <TextBlock Width="100" Name="IngredientText"  Text="{Binding}" TextWrapping="Wrap"/>
+                        <Border x:Name="IngredientBorder" BorderBrush="{StaticResource Text.Orange}" BorderThickness="0 0 0 1" Width="80">
+                            <TextBlock Width="80" Name="IngredientText"  Text="{Binding}" TextWrapping="Wrap"/>
                         </Border>
                     </StackPanel>
                 </DataTemplate>

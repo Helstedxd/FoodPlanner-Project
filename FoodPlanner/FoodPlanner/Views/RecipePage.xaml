@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:ViewModels="clr-namespace:FoodPlanner.ViewModels" x:Class="FoodPlanner.Views.RecipePage" 
+      xmlns:local="clr-namespace:FoodPlanner"
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="405"
 	Title="RecipePage">
@@ -26,7 +27,7 @@
         
         <Border Grid.ColumnSpan="2" BorderThickness="0 0 0 2" BorderBrush="Black"/>
 
-        <Button x:Name="TopBarButton" Style="{StaticResource ButtonIconTemplate}" HorizontalAlignment="Left" Width="{Binding ElementName=TopBarButton, Path=ActualHeight}">
+        <Button x:Name="TopBarButton" Command="{Binding Source={x:Static local:Navigator.GoBackCommand}}" Style="{StaticResource ButtonIconTemplate}" HorizontalAlignment="Left" Width="{Binding ElementName=TopBarButton, Path=ActualHeight}">
             <Button.Background>
                 <ImageBrush ImageSource="../Images/backArrowIcon.png" Stretch="Uniform"/>
             </Button.Background>

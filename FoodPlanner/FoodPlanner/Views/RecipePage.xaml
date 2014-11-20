@@ -34,7 +34,7 @@
             <TextBlock Text="{Binding RecipesPreparation.Preparation}" TextWrapping="Wrap"/>
         </ScrollViewer>
 
-        <ListBox x:Name="IngredientListbox" ItemsSource="{Binding RecipeIngredients}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Row="1" Width="100" Background="{StaticResource BackgroundColour}">
+        <ListBox x:Name="IngredientListbox" ItemsSource="{Binding RecipeIngredients}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Row="1" Width="100" Background="{StaticResource BackgroundColour}" FocusManager.FocusedElement="{Binding RelativeSource={RelativeSource Self}}">
             <ListBox.ItemTemplate>    
             <DataTemplate>
                     <StackPanel>

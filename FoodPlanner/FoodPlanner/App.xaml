@@ -122,10 +122,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
 
-                <Image Source="{Binding Recipe.Image}" Stretch="Uniform"/>
-                <TextBlock FontSize="10" TextTrimming="CharacterEllipsis" VerticalAlignment="Bottom">
                 <Grid.RowDefinitions>
-                        <MultiBinding StringFormat="{}{0}: {1}">
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
@@ -133,7 +130,6 @@
                 <Label Content="{Binding Participants}" ContentStringFormat="Planned for {0} person(s)" FontSize="10" Grid.Row="1"/>
             </Grid>
         </DataTemplate>
-        
         <ItemsPanelTemplate x:Key="WrapPanelHorizontalTemplate">
             <WrapPanel Orientation="Horizontal" Background="{StaticResource BackgroundColour}"/>
         </ItemsPanelTemplate>

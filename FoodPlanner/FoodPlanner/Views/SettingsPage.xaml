@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:ViewModels="clr-namespace:FoodPlanner.ViewModels"
+      xmlns:UserControls="clr-namespace:FoodPlanner.UserControls"
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="405"
 	Title="SettingsPage">
@@ -13,7 +14,7 @@
 
     <Grid>
         <ListBox>
-            <Expander Header="User speficics" DataContext="{Binding Path=CurrentUser}">
+            <Expander Header="User speficics">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -30,12 +31,12 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Text="Persons in the household:" Padding="0,5,5,5"/>
-                    <TextBlock Text="{Binding PersonsInHouseHold}" Grid.Column="1" Padding="5"/>
+                    <TextBlock Text="{Binding CurrentUser.PersonsInHouseHold}" Grid.Column="1" Padding="5"/>
                     <Button Content="Plus" Grid.Column="3" Padding="5"/>
                     <Button Content="Minus" Grid.Column="2" Padding="5"/>
                     
                     <TextBlock Text="Number of days to shop for:" Grid.Row="1" Padding="0,5,5,5"/>
-                    <TextBlock Text="{Binding ShopAhead}" Grid.Row="1" Grid.Column="1" Padding="5"/>
+                    <TextBlock Text="{Binding CurrentUser.ShopAhead}" Grid.Row="1" Grid.Column="1" Padding="5"/>
                     <Button Content="Plus" Grid.Column="3" Grid.Row="1" Padding="5"/>
                     <Button Content="Minus" Grid.Column="2" Grid.Row="1" Padding="5"/>
 
@@ -45,7 +46,7 @@
                     <Button Content="Save changes" Grid.Row="3" Grid.Column="4"/>
                 </Grid>
             </Expander>
-            <Expander Header="Stock management" DataContext="{Binding Path=CurrentUser}">
+            <Expander Header="Stock management">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -65,7 +66,7 @@
 
 
                     <TextBlock Text="Stock List" Grid.Column="1" FontSize="14" TextDecorations="Underline"/>
-                    <ListView Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding StockQuantities}">
+                    <ListView Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding CurrentUser.StockQuantities}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="Auto" Header="Name" CellTemplate="{StaticResource ShoppingListNameCell}"/>
@@ -79,17 +80,11 @@
                     <TextBlock Text="Name" Grid.Row="4"/>
                     <TextBlock Text="Quantity" Grid.Row="4" Grid.Column="1"/>
                     <TextBlock Text="Unit" Grid.Row="4" Grid.Column="2"/>
-                    <TextBox Text="{Binding SearchText, Mode=TwoWay, Delay=500, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5"/>
-                    <ListBox Grid.Row="6" ItemsSource="{Binding FoundIngredients}" SelectedItem="{Binding SelectedIngredient}" Visibility="{Binding AutoCompleteListVisibility}">
-                        <!--<i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseUp">
-                                <i:InvokeCommandAction Command="{Binding AddIngredientToInventoryCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>-->
-                    </ListBox>
+                    <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveListItemCommand}"
+                                             MaximumItems="10" Grid.Row="5" Grid.RowSpan="3"/>
 
-                    <TextBox Grid.Row="5" Grid.Column="1"/>
-                    <ComboBox Grid.Row="5" Grid.Column="2"/>
+                    <TextBox x:Name="QuantityTextBox" Grid.Row="5" Grid.Column="1"/>
+                    <TextBlock Text="{Binding InventoryIngredient.Ingredient.Unit, Mode=OneWay}" Grid.Row="5" Grid.Column="2"/>
                     <Button Grid.Row="6" Content="Add Ingredient" Grid.Column="3"/>
                 </Grid>
             </Expander>
@@ -107,15 +102,6 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBox Text="{Binding SearchText, Mode=TwoWay, Delay=500, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2"/>
-                    <ListBox ItemsSource="{Binding FoundIngredients}" SelectedItem="{Binding SelectedIngredient}" Visibility="{Binding AutoCompleteListVisibility}" Grid.Row="1" Grid.ColumnSpan="2">
-                        <!--<i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseUp">
-                                <i:InvokeCommandAction Command="{Binding AddIngredientToInventoryCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>-->
-                    </ListBox>
-
                     <TextBlock Text="Favorite ingredients list" FontSize="14" TextDecorations="Underline" Grid.Row="2" Grid.ColumnSpan="2"/>
                     <ListBox ItemsSource="{Binding Path=GraylistIngredients}" Grid.Row="3" Grid.ColumnSpan="2">
                         <ListBox.ItemTemplate>
@@ -128,7 +114,7 @@
                     <Button Content="Remove" Grid.Row="4" Grid.Column="1"/>
                 </Grid>
             </Expander>
-            <Expander Header="Unwanted ingredients" DataContext="{Binding Path=CurrentUser}">
+            <Expander Header="Unwanted ingredients">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -142,17 +128,8 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBox Text="{Binding SearchText, Mode=TwoWay, Delay=500, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2"/>
-                    <ListBox ItemsSource="{Binding FoundIngredients}" SelectedItem="{Binding SelectedIngredient}" Visibility="{Binding AutoCompleteListVisibility}" Grid.Row="1" Grid.ColumnSpan="2">
-                        <!--<i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseUp">
-                                <i:InvokeCommandAction Command="{Binding AddIngredientToInventoryCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>-->
-                    </ListBox>
-
                     <TextBlock Text="Favorite ingredients list" FontSize="14" TextDecorations="Underline" Grid.Row="2" Grid.ColumnSpan="2"/>
-                    <ListBox ItemsSource="{Binding Path=GraylistIngredients}" Grid.Row="3" Grid.ColumnSpan="2">
+                    <ListBox ItemsSource="{Binding Path=CurrentUser.GraylistIngredients}" Grid.Row="3" Grid.ColumnSpan="2">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Path=Ingredient.Name}"/>

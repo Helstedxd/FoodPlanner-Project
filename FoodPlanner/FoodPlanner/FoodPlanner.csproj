@@ -289,9 +289,6 @@
     <Resource Include="Images\completeShoppingListIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\181.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Calender.png" />
   </ItemGroup>
   <ItemGroup>

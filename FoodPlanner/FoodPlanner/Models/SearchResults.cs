@@ -25,8 +25,7 @@ namespace FoodPlanner.Models
     public class SearchResults
     {
         #region Fields
-        private int _fullMatch = 0, _partialMatch = 0, _keyWordMatch = 0, _prevIngredients = 0;
-        private decimal _rating = 0;
+        private decimal _fullMatch = 0, _partialMatch = 0, _keyWordMatch = 0, _prevIngredients = 0, _rating = 0;
         private List<Ingredient> _ingredients;
         private Recipe _recipe;
         #endregion
@@ -64,11 +63,11 @@ namespace FoodPlanner.Models
             }
         }
 
-        public int fullMatch
+        public decimal fullMatch
         {
             get
             {
-                return _fullMatch;
+                return _fullMatch / _ingredients.Count();
             }
 
             set
@@ -77,11 +76,11 @@ namespace FoodPlanner.Models
             }
         }
 
-        public int partialMatch
+        public decimal partialMatch
         {
             get
             {
-                return _partialMatch;
+                return _partialMatch / _ingredients.Count();
             }
 
             set
@@ -90,7 +89,7 @@ namespace FoodPlanner.Models
             }
         }
 
-        public int keyWordMatch
+        public decimal keyWordMatch
         {
             get
             {
@@ -119,7 +118,7 @@ namespace FoodPlanner.Models
             }
         }
 
-        public int prevIngredients
+        public decimal prevIngredients
         {
             get
             {

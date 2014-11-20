@@ -79,7 +79,7 @@
             <TextBlock Text="Quantity" Grid.Row="5" Grid.Column="1"/>
             <TextBlock Text="Unit" Grid.Row="5" Grid.Column="2"/>
             <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveListItemCommand}"
-                                             MaximumItems="20" Grid.Row="6" Grid.RowSpan="3"/>
+                                             MaximumItems="10" Grid.Row="6" Grid.RowSpan="3"/>
 
             <TextBox x:Name="QuantityTextBox" Grid.Row="6" Grid.Column="1"/>
             <TextBlock Text="{Binding InventoryIngredient.Ingredient.Unit, Mode=OneWay}" Grid.Row="6" Grid.Column="2"/>
@@ -87,6 +87,8 @@
         </Grid>
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -106,8 +108,11 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-
             <Button Content="Remove" Grid.Row="3" Grid.Column="1"/>
+            
+            <TextBlock Text="Add new favorite ingredient" TextDecorations="Underline" Grid.Row="4"/>
+            <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveListItemCommand}"
+                                             MaximumItems="10" Grid.Row="5" Grid.RowSpan="5"/>
         </Grid>
         <Grid>
             <Grid.RowDefinitions>

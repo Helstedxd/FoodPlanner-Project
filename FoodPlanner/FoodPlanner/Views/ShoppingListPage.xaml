@@ -34,7 +34,7 @@
             </ListView.View>
         </ListView>
 
-        <Button Grid.Column="2" Style="{DynamicResource ButtonIconTemplate}">
+        <Button Grid.Column="2" Style="{StaticResource ButtonIconTemplate}">
             <Button.Background>
                 <ImageBrush ImageSource="/FoodPlanner;component/Images/completeShoppingListIcon.png"/>
             </Button.Background>

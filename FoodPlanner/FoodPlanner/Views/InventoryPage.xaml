@@ -62,7 +62,7 @@
             </DataGrid.Columns>
         </DataGrid>-->
         
-        <ListView Margin="5" Grid.Row="1" MaxWidth="{Binding ElementName=InventoryGrid, Path=MaxWidth}" ItemsSource="{Binding InventoryIngredients}" Background="{DynamicResource BackgroundColour}">
+        <ListView Margin="5" Grid.Row="1" MaxWidth="{Binding ElementName=InventoryGrid, Path=MaxWidth}" ItemsSource="{Binding InventoryIngredients}" Background="{StaticResource BackgroundColour}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Ingredient" DisplayMemberBinding="{Binding Ingredient.Name}" Width="Auto" />

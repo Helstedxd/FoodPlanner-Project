@@ -188,7 +188,7 @@ namespace FoodPlanner
                             }
                             else
                             {
-                                result.partialMatch++;
+                                result.partialMatch += inventoryList.Where(il => il.IngredientID == res.ingredient.ID).First().Quantity / res.quantity;
                             }
                         }
 

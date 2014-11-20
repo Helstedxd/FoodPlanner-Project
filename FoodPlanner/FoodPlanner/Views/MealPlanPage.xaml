@@ -51,13 +51,13 @@
         </Button>
         <Label Style="{StaticResource LabelTitle}" Content="{Binding Path=WeekString}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-        <ListBox x:Name="MondayMealsListBox" Grid.Row="1" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding MondayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>
-        <ListBox x:Name="TuesdayMealsListBox" Grid.Row="2" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding TuesdayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>
-        <ListBox x:Name="WednesdayMealsListBox" Grid.Row="3" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding WednesdayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>
-        <ListBox x:Name="ThursdayMealsListBox" Grid.Row="4" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding ThursdayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>
-        <ListBox x:Name="FridayMealsListBox" Grid.Row="5" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding FridayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>
-        <ListBox x:Name="SaturdayMealsListBox" Grid.Row="6" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding SaturdayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>
-        <ListBox x:Name="SundayMealsListBox" Grid.Row="7" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding SundayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>
+        <ListBox x:Name="MondayMealsListBox" Grid.Row="1" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding MondayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
+        <ListBox x:Name="TuesdayMealsListBox" Grid.Row="2" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding TuesdayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
+        <ListBox x:Name="WednesdayMealsListBox" Grid.Row="3" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding WednesdayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
+        <ListBox x:Name="ThursdayMealsListBox" Grid.Row="4" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding ThursdayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
+        <ListBox x:Name="FridayMealsListBox" Grid.Row="5" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding FridayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
+        <ListBox x:Name="SaturdayMealsListBox" Grid.Row="6" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding SaturdayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
+        <ListBox x:Name="SundayMealsListBox" Grid.Row="7" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding SundayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
 
     </Grid>
 </Page>

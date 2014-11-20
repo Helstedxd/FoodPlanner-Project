@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:ViewModels="clr-namespace:FoodPlanner.ViewModels"
+      xmlns:UserControls="clr-namespace:FoodPlanner.UserControls"
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       x:Class="FoodPlanner.Views.InventoryPage"
       mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300"
@@ -14,7 +15,6 @@
     </Page.DataContext>
     <Grid Name="InventoryGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
@@ -38,16 +38,9 @@
         <Border Grid.Column="1"  BorderThickness=" 1,2,2,2" BorderBrush="Black"/>
         <!--</StackPanel>-->
 
-        <!-- AutoComplete -->
-        <TextBox Text="{Binding SearchText, Mode=TwoWay, Delay=500, UpdateSourceTrigger=PropertyChanged}"/>
-        <ListBox Grid.ColumnSpan="2" Grid.Row="1" ItemsSource="{Binding FoundIngredients}" SelectedItem="{Binding SelectedIngredient}" Visibility="{Binding AutoCompleteListVisibility}">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseUp">
-                    <i:InvokeCommandAction Command="{Binding AddIngredientToInventoryCommand}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </ListBox>
-
+        <UserControls:IngredientAutoComplete SelectItemCommand="{Binding AddIngredientToInventoryCommand}"
+                                             MaximumItems="10" Grid.Row="0" />
+        
         <!--<DataGrid x:Name="inventoryIngredientsDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="139,4.77,5.063,4.895" ItemsSource="{Binding InventoryIngredients, Mode=OneWay}" EnableRowVirtualization="True" AutoGenerateColumns="False" Grid.Row="2">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="ingredientColumn" Width="Auto" Header="Ingredient" IsReadOnly="True" Binding="{Binding Ingredient}"/>
@@ -69,7 +62,7 @@
             </DataGrid.Columns>
         </DataGrid>-->
         
-        <ListView Margin="5" Grid.Row="2" MaxWidth="{Binding ElementName=InventoryGrid, Path=MaxWidth}" ItemsSource="{Binding InventoryIngredients}" Background="{DynamicResource BackgroundColour}">
+        <ListView Margin="5" Grid.Row="1" MaxWidth="{Binding ElementName=InventoryGrid, Path=MaxWidth}" ItemsSource="{Binding InventoryIngredients}" Background="{DynamicResource BackgroundColour}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Ingredient" DisplayMemberBinding="{Binding Ingredient.Name}" Width="Auto" />
@@ -100,7 +93,7 @@
             </ListView.View>
         </ListView>
 
-        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Bottom" Width="75" Grid.Row="3" Command="{Binding SaveInventoryCommand}" Grid.ColumnSpan="2"/>
+        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Bottom" Width="75" Grid.Row="2" Command="{Binding SaveInventoryCommand}" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Page>

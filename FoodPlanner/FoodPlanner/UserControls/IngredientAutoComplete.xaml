@@ -6,11 +6,11 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="300">
-    <StackPanel  DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}" >
+    <StackPanel DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}" >
         
         <TextBox Text="{Binding SearchText, Mode=TwoWay, Delay=500, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <ListBox ItemsSource="{Binding FoundIngredients}" Visibility="{Binding AutoCompleteListVisibility}" SelectionChanged="ListBox_SelectionChanged" />
+        <ListBox ItemsSource="{Binding FoundIngredients}" Visibility="{Binding AutoCompleteListVisibility}" MouseUp="ListBox_MouseUp" />
 
     </StackPanel>
 </UserControl>

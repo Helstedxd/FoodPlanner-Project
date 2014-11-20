@@ -26,8 +26,6 @@ namespace FoodPlanner.UserControls
 
         #region Fields
 
-        // private int _maximumAutoCompleteItems = 10; //TODO: this might not be the right place.
-
         private List<Ingredient> _queriedIngredients;
         private string _searchText;
         private string _lastSearchText;
@@ -60,11 +58,10 @@ namespace FoodPlanner.UserControls
             set { SetValue(SelectItemCommandProperty, value); }
         }
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ListBox_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Console.WriteLine(sender);
             ListBox listBox = sender as ListBox;
-            if (SelectItemCommand != null && listBox != null)
+            if (SelectItemCommand != null && listBox != null && listBox.SelectedItem != null)
             {
                 SelectItemCommand.Execute(listBox.SelectedItem);
                 SearchText = "";
@@ -176,8 +173,7 @@ namespace FoodPlanner.UserControls
         {
             if (PropertyChanged != null)
             {
-                var e = new PropertyChangedEventArgs(propertyName);
-                PropertyChanged(this, e);
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 

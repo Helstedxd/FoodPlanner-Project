@@ -13,10 +13,65 @@
 
     <Grid>
         <ListBox>
-            <Expander Header="User speficics" DataContext="{Binding Path=CurrentUser}" ContentTemplate="{StaticResource UserSettingsDataTemplate}"/>
-            <Expander Header="Stock management" DataContext="{Binding Path=CurrentUser}" ContentTemplate="{StaticResource StockSettingsDataTemplate}"/>
-            <Expander Header="Favorite ingredients" DataContext="{Binding Path=CurrentUser}" ContentTemplate="{StaticResource FavoritIngredientDataTemplate}"/>
-            <Expander Header="Unwanted ingredients" DataContext="{Binding Path=CurrentUser}" ContentTemplate="{StaticResource UnwantedIngredientsDataTemplate}"/>
+            <Expander Header="User speficics" DataContext="{Binding Path=CurrentUser}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Persons in the household:"/>
+                    <TextBlock Text="{Binding PersonsInHouseHold}" Grid.Column="1"/>
+                    <TextBlock Text="Number of days to shop for:" Grid.Row="1"/>
+                    <TextBlock Text="{Binding ShopAhead}" Grid.Row="1" Grid.Column="1"/>
+                </Grid>
+            </Expander>
+            <Expander Header="Stock management" DataContext="{Binding Path=CurrentUser}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+
+                    <TextBlock Text="Stock List" Grid.Column="1" FontSize="14" TextDecorations="Underline"/>
+                    <ListView Grid.Row="1" ItemsSource="{Binding StockQuantities}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="Auto" Header="Name" CellTemplate="{StaticResource ShoppingListNameCell}"/>
+                                <GridViewColumn Width="Auto" Header="Quantity And Unit" CellTemplate="{StaticResource ShoppingListUnitAndQuantityCell}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Content="Remove Ingredient" Grid.Row="2"/>
+
+                    <TextBlock Text="Add a new stock ingredient" Grid.Row="3" Grid.Column="1" FontSize="14" TextDecorations="Underline"/>
+                    <TextBlock Text="Name" Grid.Row="4"/>
+                    <TextBlock Text="Quantity" Grid.Row="4" Grid.Column="1"/>
+                    <TextBlock Text="Unit" Grid.Row="4" Grid.Column="2"/>
+                    <TextBox Grid.Row="5"/>
+                    <TextBox Grid.Row="5" Grid.Column="1"/>
+                    <ComboBox Grid.Row="5" Grid.Column="2"/>
+                    <ListBox Grid.Row="6"/>
+                    <Button Grid.Row="6" Content="Add Ingredient" Grid.Column="2"/>
+                </Grid>
+            </Expander>
+            <Expander Header="Favorite ingredients" DataContext="{Binding Path=CurrentUser}"/>
+            <Expander Header="Unwanted ingredients" DataContext="{Binding Path=CurrentUser}"/>
         </ListBox>
     </Grid>
 </Page>

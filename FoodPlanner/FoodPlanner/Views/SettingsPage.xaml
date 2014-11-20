@@ -63,10 +63,17 @@
                     <TextBlock Text="Name" Grid.Row="4"/>
                     <TextBlock Text="Quantity" Grid.Row="4" Grid.Column="1"/>
                     <TextBlock Text="Unit" Grid.Row="4" Grid.Column="2"/>
-                    <TextBox Grid.Row="5"/>
+                    <TextBox Text="{Binding SearchText, Mode=TwoWay, Delay=500, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5"/>
+                    <ListBox Grid.Row="6" ItemsSource="{Binding FoundIngredients}" SelectedItem="{Binding SelectedIngredient}" Visibility="{Binding AutoCompleteListVisibility}">
+                        <!--<i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseUp">
+                                <i:InvokeCommandAction Command="{Binding AddIngredientToInventoryCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>-->
+                    </ListBox>
+
                     <TextBox Grid.Row="5" Grid.Column="1"/>
                     <ComboBox Grid.Row="5" Grid.Column="2"/>
-                    <ListBox Grid.Row="6"/>
                     <Button Grid.Row="6" Content="Add Ingredient" Grid.Column="2"/>
                 </Grid>
             </Expander>

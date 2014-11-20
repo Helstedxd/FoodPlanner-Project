@@ -49,7 +49,7 @@
 
 
                     <TextBlock Text="Stock List" Grid.Column="1" FontSize="14" TextDecorations="Underline"/>
-                    <ListView Grid.Row="1" ItemsSource="{Binding StockQuantities}">
+                    <ListView Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding StockQuantities}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="Auto" Header="Name" CellTemplate="{StaticResource ShoppingListNameCell}"/>

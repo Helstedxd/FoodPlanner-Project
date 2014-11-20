@@ -43,7 +43,7 @@ namespace FoodPlanner.UserControls
         #region Dependency Properties & Commands
 
         private static readonly DependencyProperty MaximumItemsProperty =
-            DependencyProperty.Register("MaximumItems", typeof(int), typeof(IngredientAutoComplete)
+            DependencyProperty.Register("MaximumItems", typeof(int), typeof(IngredientAutoComplete));
 
         private static readonly DependencyProperty SelectItemCommandProperty =
             DependencyProperty.Register("SelectItemCommand", typeof(ICommand), typeof(IngredientAutoComplete));

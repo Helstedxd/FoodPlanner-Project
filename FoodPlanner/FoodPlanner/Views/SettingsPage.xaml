@@ -11,7 +11,7 @@
     <Page.DataContext>
         <ViewModels:SettingsViewModel/>
     </Page.DataContext>
-    <StackPanel>
+    <ListBox> <!--Måske skal det laves som et grid, der indeholder alle elementer(men er en listbox så smart?)-->
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -79,7 +79,7 @@
             <TextBlock Text="Quantity" Grid.Row="5" Grid.Column="1"/>
             <TextBlock Text="Unit" Grid.Row="5" Grid.Column="2"/>
             <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveListItemCommand}"
-                                             MaximumItems="10" Grid.Row="6" Grid.RowSpan="3"/>
+                                             MaximumItems="20" Grid.Row="6" Grid.RowSpan="3"/>
 
             <TextBox x:Name="QuantityTextBox" Grid.Row="6" Grid.Column="1"/>
             <TextBlock Text="{Binding InventoryIngredient.Ingredient.Unit, Mode=OneWay}" Grid.Row="6" Grid.Column="2"/>
@@ -134,7 +134,7 @@
 
             <Button Content="Remove" Grid.Row="3" Grid.Column="1"/>
         </Grid>
-    </StackPanel>
+    </ListBox>
     <!--<Grid>
         <ListBox>
             <Expander Header="User speficics">

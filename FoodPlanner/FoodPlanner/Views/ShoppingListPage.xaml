@@ -39,7 +39,8 @@
                 <ImageBrush ImageSource="/FoodPlanner;component/Images/completeShoppingListIcon.png"/>
             </Button.Background>
         </Button>
-        <TextBlock TextWrapping="Wrap" TextAlignment="Center" Background="WhiteSmoke" Text="You are shopping for the next: x Days"/>
+        <TextBlock TextWrapping="Wrap" TextAlignment="Center" Background="WhiteSmoke" Text="{Binding Path=Artist.Fans.Count, 
+                 StringFormat= 'You are shopping for the next: {0} days'}"/>
 
         <Border Grid.Column="0"  BorderThickness=" 2,2,1,2" BorderBrush="Black"/>
         <Border Grid.Column="1"  BorderThickness=" 1,2,2,2" BorderBrush="Black"/>

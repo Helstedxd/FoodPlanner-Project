@@ -10,12 +10,6 @@ namespace FoodPlanner
         public MainWindow()
         {
             InitializeComponent();
-            /*
-            var test = new Search();
-            test.ShowDialog();
-            App.db.Dispose();
-            Close();
-            */
         }
     }
 }

@@ -53,6 +53,7 @@ namespace FoodPlanner.ViewModels
         private void SearchRecipes(string query)
         {
             listOfSearchResults.Clear();
+            List<SearchResults> testtest = new List<SearchResults>();
 
             List<string> searchQuery = query.Split(',').Select(s => s.Trim()).ToList();
 

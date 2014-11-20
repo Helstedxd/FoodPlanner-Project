@@ -43,7 +43,7 @@ namespace FoodPlanner.Models
         {
             get
             {
-                return string.Format("{0}/{1}", _fullMatch, _ingredients.Count());
+                return string.Format("{0}/{1}", Math.Round((getFullMatch * _ingredients.Count()), 2), _ingredients.Count());
             }
         }
 
@@ -63,11 +63,19 @@ namespace FoodPlanner.Models
             }
         }
 
-        public decimal fullMatch
+        public decimal getFullMatch
         {
             get
             {
                 return _fullMatch / _ingredients.Count();
+            }
+        }
+
+        public decimal fullMatch
+        {
+            get
+            {
+                return _fullMatch;
             }
 
             set
@@ -80,7 +88,7 @@ namespace FoodPlanner.Models
         {
             get
             {
-                return _partialMatch / _ingredients.Count();
+                return _partialMatch;
             }
 
             set

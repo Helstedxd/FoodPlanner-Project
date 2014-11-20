@@ -101,6 +101,7 @@
     <Compile Include="Models\inventoryListCombinedByQuantity.cs" />
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\RecipeIngredient.cs" />
+    <Compile Include="Models\StaticLists.cs" />
     <Compile Include="Navigator.cs" />
     <Compile Include="RecipesPreparation.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>

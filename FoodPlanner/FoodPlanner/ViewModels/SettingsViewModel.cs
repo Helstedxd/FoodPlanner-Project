@@ -21,12 +21,24 @@ namespace FoodPlanner.ViewModels {
         private ICommand _addIngredientToUnwantedIngredientsCommand;
         private ICommand _removeingredientFromUnwantedIngredientsCommand;
         private ICommand _saveNewFavoriteIngredientNameCommand;
+        private ICommand _incrementPersonsInHouseholdCommand;
+        private ICommand _decrementPersonsInHouseholdCommand;
         private User _currentUser;
         public User CurrentUser {
             get { return _currentUser; }
             set {
                 _currentUser = value;
                 RaisePropertyChanged("CurrentUser");
+            }
+        }
+        public int PersonsInHouseHold {
+            get {
+                return App.CurrentUser.PersonsInHouseHold;
+            }
+        }
+        public int ShopAhead {
+            get {
+                return App.CurrentUser.ShopAhead;
             }
         }
         private InventoryIngredient _inventoryIngredient;
@@ -75,6 +87,26 @@ namespace FoodPlanner.ViewModels {
 
         }
 
+        public ICommand IncrementPersonsInHouseholdCommand {
+            get {
+                if (_incrementPersonsInHouseholdCommand == null) {
+                    _incrementPersonsInHouseholdCommand = new RelayCommand(() => IncrementPersonsInHousehold());
+                }
+
+                return _incrementPersonsInHouseholdCommand;
+            }
+        }
+
+        public ICommand DecrementPersonsInHouseholdCommand {
+            get {
+                if (_decrementPersonsInHouseholdCommand == null) {
+                    _decrementPersonsInHouseholdCommand = new RelayCommand(() => DecrementPersonsInHousehold());
+                }
+
+                return _decrementPersonsInHouseholdCommand;
+            }
+        }
+
         public ICommand SaveNewFavoriteIngredientNameCommand {
             get {
                 if (_saveNewFavoriteIngredientNameCommand == null) {
@@ -113,8 +145,21 @@ namespace FoodPlanner.ViewModels {
             InventoryIngredient.Ingredient.ID = ingredient.ID;
         }
 
+        //Skal laves færdig
         private void SaveNewFavoriteIngredientName(Ingredient ingredient) {
             Console.Write("SaveName er kaldt!");
+        }
+
+        private void IncrementPersonsInHousehold() {
+            App.CurrentUser.PersonsInHouseHold++;
+            App.db.SaveChanges();
+            RaisePropertyChanged("PersonsInHouseHold");
+        }
+
+        private void DecrementPersonsInHousehold() {
+            App.CurrentUser.PersonsInHouseHold--;
+            App.db.SaveChanges();
+            RaisePropertyChanged("PersonsInHouseHold");
         }
 
         //Fix: Det skal sikres at man ikke kan tilføje den samme ingrediens flere gange.

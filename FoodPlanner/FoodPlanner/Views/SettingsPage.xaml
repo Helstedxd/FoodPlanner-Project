@@ -29,19 +29,19 @@
 
             <TextBlock Text="User Specifics" Style="{StaticResource TextblockTitle}"/>
 
-            <TextBlock Text="{Binding CurrentUser.PersonsInHouseHold, StringFormat='Persons in household: {0}'}" Grid.Row="1" VerticalAlignment="Center" Height="16" Margin="0,7"/>
-            <Button Style="{StaticResource ButtonIconTemplate}" Grid.Column="1" Grid.Row="1">
+            <TextBlock Text="{Binding PersonsInHouseHold, StringFormat='Persons in household: {0}', Mode=OneWay}" Grid.Row="1" VerticalAlignment="Center" Height="16" Margin="0,7"/>
+            <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding DecrementPersonsInHouseholdCommand}" Grid.Column="1" Grid.Row="1">
                 <Button.Background>
                     <ImageBrush ImageSource="../Images/minusIcon.png" Stretch="Uniform"/>
                 </Button.Background>
             </Button>
-            <Button Style="{StaticResource ButtonIconTemplate}" Grid.Column="2" Grid.Row="1">
+            <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding IncrementPersonsInHouseholdCommand}" Grid.Column="2" Grid.Row="1">
                 <Button.Background>
                     <ImageBrush ImageSource="../Images/plusIcon.png" Stretch="Uniform"/>
                 </Button.Background>
             </Button>
 
-            <TextBlock Text="{Binding CurrentUser.ShopAhead, StringFormat='Number of days to shop for: {0}'}" Grid.Row="2" VerticalAlignment="Center" Height="16" Margin="0,7"/>
+            <TextBlock Text="{Binding ShopAhead, StringFormat='Number of days to shop for: {0}', Mode=OneWay}" Grid.Row="2" VerticalAlignment="Center" Height="16" Margin="0,7"/>
             <Button Style="{StaticResource ButtonIconTemplate}" Grid.Column="1" Grid.Row="2">
                 <Button.Background>
                     <ImageBrush ImageSource="../Images/minusIcon.png" Stretch="Uniform"/>

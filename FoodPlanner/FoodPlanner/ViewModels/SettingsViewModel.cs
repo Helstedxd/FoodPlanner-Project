@@ -158,6 +158,7 @@ namespace FoodPlanner.ViewModels {
 
         #region Methods
 
+        //Crasher når "App.db.SaveChanges();" køres.  
         private void AddNewStockIngredient() {
             StockQuantity StockIngredientToBeAdded = new StockQuantity() { IngredientID = StockIngredient.IngredientID, ID = StockIngredient.ID };
             App.db.StockQuantities.Add(StockIngredientToBeAdded);

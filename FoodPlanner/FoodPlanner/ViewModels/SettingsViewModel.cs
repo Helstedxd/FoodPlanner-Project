@@ -24,6 +24,7 @@ namespace FoodPlanner.ViewModels {
         private ICommand _decrementShopAhead;
         private ICommand _incrementPersonsInHouseholdCommand;
         private ICommand _decrementPersonsInHouseholdCommand;
+        private ICommand _addNewStockIngredientCommand;
         private User _currentUser;
         public User CurrentUser {
             get { return _currentUser; }
@@ -42,8 +43,8 @@ namespace FoodPlanner.ViewModels {
                 return App.CurrentUser.ShopAhead;
             }
         }
-        private InventoryIngredient _inventoryIngredient;
-        public InventoryIngredient StockIngredient {
+        private StockQuantity _inventoryIngredient;
+        public StockQuantity StockIngredient {
             get { return _inventoryIngredient; }
             set {
                 _inventoryIngredient = value;
@@ -62,7 +63,7 @@ namespace FoodPlanner.ViewModels {
         #endregion
         
         public SettingsViewModel() {
-            StockIngredient = new InventoryIngredient();
+            StockIngredient = new StockQuantity();
             CurrentUser = App.CurrentUser;
             SelectedBlackListIngredient = new BlacklistIngredient();
             SelectedGreyListIngredient = new GraylistIngredient();
@@ -143,9 +144,25 @@ namespace FoodPlanner.ViewModels {
             }
         }
 
+        public ICommand AddNewStockIngredientCommand {
+            get {
+                if (_addNewStockIngredientCommand == null) {
+                    _addNewStockIngredientCommand = new RelayCommand(() => AddNewStockIngredient());
+                }
+
+                return _addNewStockIngredientCommand;
+            }
+        }
+
         #endregion
 
         #region Methods
+
+        private void AddNewStockIngredient() {
+            StockQuantity StockIngredientToBeAdded = new StockQuantity() { IngredientID = StockIngredient.IngredientID, ID = StockIngredient.ID };
+            App.db.StockQuantities.Add(StockIngredientToBeAdded);
+            App.db.SaveChanges();
+        }
 
         private void SaveNewStockIngredientName(Ingredient ingredient) {
             StockIngredient.Ingredient = ingredient;

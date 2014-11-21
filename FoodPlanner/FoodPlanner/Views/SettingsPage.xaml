@@ -11,7 +11,7 @@
     <Page.DataContext>
         <ViewModels:SettingsViewModel/>
     </Page.DataContext>
-    <StackPanel>
+    <ListBox>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -102,7 +102,7 @@
             <TextBox x:Name="QuantityTextBox" Text="{Binding StockIngredient.Quantity, Delay=300, Mode=TwoWay}" Grid.Row="8"/>
             
             <TextBlock Text="{Binding StockIngredient.Ingredient.Unit, Mode=OneWay, StringFormat=Unit: {0}}" Grid.Row="9"/>
-            <Button Grid.Row="10" Content="Add Ingredient"/>
+            <Button Content="Add Ingredient" Command="{Binding AddNewStockIngredientCommand}" Grid.Row="10"/>
         </Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -167,7 +167,7 @@
             <UserControls:IngredientAutoComplete SelectItemCommand="{Binding AddIngredientToUnwantedIngredientsCommand}"
                                              MaximumItems="5" Grid.Row="5"/>
         </Grid>
-    </StackPanel>
+    </ListBox>
     <!--<Grid>
         <ListBox>
             <Expander Header="User speficics">

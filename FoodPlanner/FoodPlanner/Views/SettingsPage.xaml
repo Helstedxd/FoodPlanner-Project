@@ -11,7 +11,7 @@
     <Page.DataContext>
         <ViewModels:SettingsViewModel/>
     </Page.DataContext>
-    <ListBox> <!--Måske skal det laves som et grid, der indeholder alle elementer(men er en listbox så smart?)-->
+    <ListBox>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -113,7 +113,6 @@
             <TextBlock Text="Add new favorite ingredient" TextDecorations="Underline" Grid.Row="4"/>
             <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveListItemCommand}"
                                              MaximumItems="10" Grid.Row="5" Grid.RowSpan="5"/>
-            <TextBlock Text="Set ingredient value" Grid.Row="6" Grid.Column="1"/>
         </Grid>
         <Grid>
             <Grid.RowDefinitions>

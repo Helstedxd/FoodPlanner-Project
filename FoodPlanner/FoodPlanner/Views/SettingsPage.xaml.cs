@@ -8,8 +8,6 @@ namespace FoodPlanner.Views
     /// </summary>
     public partial class SettingsPage : Page
     {
-        public BlacklistIngredient SelectedBlackListIngredient { get; set; }
-        
         public SettingsPage()
         {
             InitializeComponent();

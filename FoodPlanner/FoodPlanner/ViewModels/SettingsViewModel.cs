@@ -37,7 +37,7 @@ namespace FoodPlanner.ViewModels {
         public ICommand SaveListItemCommand {
             get {
                 if (_saveListItemCommand == null) {
-                    _saveListItemCommand = new RelayCommand<Ingredient>(i => SaveChosenListItemFromAutoCompleteList(i));
+                    _saveListItemCommand = new RelayCommand<Ingredient>(i => SaveNewStockIngredientName(i));
                 }
 
                 return _saveListItemCommand;
@@ -69,7 +69,7 @@ namespace FoodPlanner.ViewModels {
         #region Methods
 
         private void SaveChosenListItemFromAutoCompleteList(Ingredient ingredient) {
-            InventoryIngredient.Ingredient = ingredient;
+            InventoryIngredient.Ingredient.ID = ingredient.ID;
         }
 
         //Fix: Det skal sikres at man ikke kan tilføje den samme ingrediens flere gange.

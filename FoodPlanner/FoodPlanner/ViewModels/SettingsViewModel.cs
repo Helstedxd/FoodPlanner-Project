@@ -15,7 +15,10 @@ namespace FoodPlanner.ViewModels {
         #region Fields
 
         public User CurrentUser { get; set; }
+        public BlacklistIngredient SelectedBlackListIngredient { get; set; }
         private ICommand _saveListItemCommand;
+        private ICommand _addIngredientToUnwantedIngredientsCommand;
+        private ICommand _removeingredientFromUnwantedIngredientsCommand;
         public InventoryIngredient InventoryIngredient { get; set; }
 
         #endregion
@@ -23,6 +26,7 @@ namespace FoodPlanner.ViewModels {
         public SettingsViewModel() {
             InventoryIngredient = new InventoryIngredient();
             CurrentUser = App.CurrentUser;
+            SelectedBlackListIngredient = new BlacklistIngredient();
         }
 
         #region Properties
@@ -33,10 +37,34 @@ namespace FoodPlanner.ViewModels {
         public ICommand SaveListItemCommand {
             get {
                 if (_saveListItemCommand == null) {
-                    _saveListItemCommand = new RelayCommand<Ingredient>(i => SaveChosenListItemFromAutoCompleteList(i));
+                    _saveListItemCommand = new RelayCommand<Ingredient>(i => SaveNewStockIngredientName(i));
                 }
 
                 return _saveListItemCommand;
+            }
+        }
+
+        private object SaveNewStockIngredientName(Ingredient i) {
+            throw new NotImplementedException();
+        }
+
+        public ICommand AddIngredientToUnwantedIngredientsCommand {
+            get {
+                if (_addIngredientToUnwantedIngredientsCommand == null) {
+                    _addIngredientToUnwantedIngredientsCommand = new RelayCommand<Ingredient>(i => AddIngredientToUnwantedIngredients(i));
+                }
+
+                return _addIngredientToUnwantedIngredientsCommand;
+
+            }
+        }
+
+        public ICommand RemoveIngredientFromUnwantedIngredientsCommand {
+            get {
+                if (_removeingredientFromUnwantedIngredientsCommand == null) {
+                    _removeingredientFromUnwantedIngredientsCommand = new RelayCommand(() => RemoveIngredientFromUnwantedIngredients());
+                }
+                return _removeingredientFromUnwantedIngredientsCommand;
             }
         }
 
@@ -45,9 +73,23 @@ namespace FoodPlanner.ViewModels {
         #region Methods
 
         private void SaveChosenListItemFromAutoCompleteList(Ingredient ingredient) {
-            InventoryIngredient.Ingredient = ingredient;
+            InventoryIngredient.Ingredient.ID = ingredient.ID;
         }
 
+        //Fix: Det skal sikres at man ikke kan tilføje den samme ingrediens flere gange.
+        private void AddIngredientToUnwantedIngredients(Ingredient ingredient) {
+            BlacklistIngredient IngredientToBeAdded = new BlacklistIngredient() { IngredientID = ingredient.ID, UserID = App.CurrentUser.ID};
+            App.db.BlacklistIngredients.Add(IngredientToBeAdded);
+            App.db.SaveChanges();
+            Console.WriteLine("Hmm vi bliver kaldt");
+        }
+
+        //Fix: Metoden skal også sikre mod at der er valgt et element i listboxen.
+        private void RemoveIngredientFromUnwantedIngredients() {
+            App.db.BlacklistIngredients.RemoveRange(App.db.BlacklistIngredients.Where(bli => bli.Id == SelectedBlackListIngredient.Id && bli.UserID == App.CurrentUser.ID));
+            App.db.SaveChanges();
+        }
+            
         #endregion
     }
 }

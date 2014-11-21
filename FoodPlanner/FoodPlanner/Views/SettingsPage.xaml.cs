@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using FoodPlanner.Models;
 
 namespace FoodPlanner.Views
 {

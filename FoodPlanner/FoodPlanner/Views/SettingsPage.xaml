@@ -11,7 +11,7 @@
     <Page.DataContext>
         <ViewModels:SettingsViewModel/>
     </Page.DataContext>
-    <ListBox> <!--Måske skal det laves som et grid, der indeholder alle elementer(men er en listbox så smart?)-->
+    <ListBox>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -29,12 +29,12 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Text="User Specifics" Style="{StaticResource TextblockTitle}"/>
-            <TextBox VerticalAlignment="Center" Grid.Row="1" Text="{Binding CurrentUser.PersonsInHouseHold, StringFormat= 'Persons in household:{}'}"/>
+
             <Button Content="Plus" Grid.Row="1" Grid.Column="3" Padding="5"/>
             <Button Content="Minus" Grid.Row="1" Grid.Column="2" Padding="5"/>
 
             <TextBlock Text="Number of days to shop for:" Grid.Row="2" Padding="0,5,5,5"/>
-            <TextBlock Text="{Binding CurrentUser.ShopAhead}" Grid.Row="2" Grid.Column="1" Padding="5"/>
+            <TextBlock Text="{Binding CurrentUser.ShopAhead, Mode=OneWay}" Grid.Row="2" Grid.Column="1" Padding="5"/>
             <Button Content="Plus" Grid.Column="3" Grid.Row="2" Padding="5"/>
             <Button Content="Minus" Grid.Column="2" Grid.Row="2" Padding="5"/>
 
@@ -62,27 +62,28 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Text="Stock Management" Grid.ColumnSpan="2" Style="{StaticResource TextblockTitle}"/>
-            <TextBlock Text="Stock List" Grid.Row="1" Grid.Column="1" FontSize="14" TextDecorations="Underline"/>
-            <ListView Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding CurrentUser.StockQuantities}">
-                <ListView.View>
+            <TextBlock Text="Stock List" Grid.Row="1" FontSize="14" TextDecorations="Underline"/>
+                <ListView x:Name="StockListView" Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding CurrentUser.StockQuantities}">
+                    <ListView.View>
                     <GridView>
                         <GridViewColumn Width="Auto" Header="Name" CellTemplate="{StaticResource ShoppingListNameCell}"/>
                         <GridViewColumn Width="Auto" Header="Quantity And Unit" CellTemplate="{StaticResource ShoppingListUnitAndQuantityCell}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Button Content="Remove Ingredient" Grid.Row="3"/>
+            <Button Content="Remove Ingredient" Grid.Row="3" Grid.Column="2"/>
 
-            <TextBlock Text="Add a new stock ingredient" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" FontSize="14" TextDecorations="Underline"/>
+            <TextBlock Text="Add a new stock ingredient" Grid.Row="4" Grid.ColumnSpan="3" FontSize="14" TextDecorations="Underline"/>
             <TextBlock Text="Name" Grid.Row="5"/>
-            <TextBlock Text="Quantity" Grid.Row="5" Grid.Column="1"/>
             <TextBlock Text="Unit" Grid.Row="5" Grid.Column="2"/>
             <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveListItemCommand}"
                                              MaximumItems="10" Grid.Row="6" Grid.RowSpan="3"/>
-
-            <TextBox x:Name="QuantityTextBox" Grid.Row="6" Grid.Column="1"/>
+            
+            <TextBlock Text="{Binding InventoryIngredient.Quantity, StringFormat=Quantity: {0}}" Grid.Row="5" Grid.Column="1"/>
+            <TextBox x:Name="QuantityTextBox" Text="{Binding InventoryIngredient.Quantity, Mode=TwoWay}" Grid.Row="6" Grid.Column="1"/>
+            
             <TextBlock Text="{Binding InventoryIngredient.Ingredient.Unit, Mode=OneWay}" Grid.Row="6" Grid.Column="2"/>
-            <Button Grid.Row="7" Content="Add Ingredient" Grid.Column="3"/>
+                <Button Grid.Row="7" Content="Add Ingredient" Grid.Column="3"/>
         </Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -100,7 +101,7 @@
 
             <TextBlock Text="Favorite Ingredients" Grid.ColumnSpan="2" Style="{StaticResource TextblockTitle}"/>
             <TextBlock Text="Favorite ingredients list" FontSize="14" TextDecorations="Underline" Grid.Row="1" Grid.ColumnSpan="2"/>
-            <ListBox ItemsSource="{Binding Path=GraylistIngredients}" Grid.Row="2" Grid.ColumnSpan="2">
+            <ListBox x:Name="FavoriteIngredientsList" ItemsSource="{Binding Path=CurrentUser.GraylistIngredients}" Grid.Row="2" Grid.ColumnSpan="2">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Path=Ingredient.Name}"/>
@@ -120,15 +121,16 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-
+            
             <TextBlock Text="Unwanted Ingredients" Style="{StaticResource TextblockTitle}"/>
-            <TextBlock Text="Favorite ingredients list" FontSize="14" TextDecorations="Underline" Grid.Row="1" Grid.ColumnSpan="2"/>
-            <ListBox ItemsSource="{Binding Path=CurrentUser.GraylistIngredients}" Grid.Row="2" Grid.ColumnSpan="2">
+            <TextBlock Text="Unwanted ingredients list" FontSize="14" TextDecorations="Underline" Grid.Row="1" Grid.ColumnSpan="2"/>
+            <ListBox x:Name="UnwantedIngredientsList" SelectedItem="{Binding SelectedBlackListIngredient}"  ItemsSource="{Binding Path=CurrentUser.BlacklistIngredients}" Grid.Row="2" Grid.ColumnSpan="2">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Path=Ingredient.Name}"/>
@@ -136,7 +138,11 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <Button Content="Remove" Grid.Row="3" Grid.Column="1"/>
+            <Button Content="Remove" Command="{Binding RemoveIngredientFromUnwantedIngredientsCommand}" Grid.Row="3" Grid.Column="1"/>
+            <TextBlock Text="Add unwanted ingredient" TextDecorations="Underline" Grid.Row="4"/>
+            <!--Når denne bokses udvides vil der ske fejl klik!!!-->
+            <UserControls:IngredientAutoComplete SelectItemCommand="{Binding AddIngredientToUnwantedIngredientsCommand}"
+                                             MaximumItems="10" Grid.Row="5"/>
         </Grid>
     </ListBox>
     <!--<Grid>

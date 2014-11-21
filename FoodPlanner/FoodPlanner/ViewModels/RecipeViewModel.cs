@@ -62,6 +62,7 @@ namespace FoodPlanner.ViewModels
             App.CurrentUser.Meals.Add(newMeal);
             App.db.SaveChanges();
             afterString = "Meal added";
+            RaisePropertyChanged("SuccesText");
         }
         #endregion
 

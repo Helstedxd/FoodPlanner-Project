@@ -108,26 +108,32 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <TextBlock Text="Favorite Ingredients" Grid.ColumnSpan="2" Style="{StaticResource TextblockTitle}"/>
             <TextBlock Text="Favorite ingredients list" FontSize="14" TextDecorations="Underline" Grid.Row="1" Grid.ColumnSpan="2"/>
-            <ListBox x:Name="FavoriteIngredientsList" ItemsSource="{Binding Path=CurrentUser.GraylistIngredients}" Grid.Row="2" Grid.ColumnSpan="2">
+            <ListBox x:Name="FavoriteIngredientsList" SelectedItem="{Binding SelectedGreyListIngredient}" ItemsSource="{Binding Path=CurrentUser.GraylistIngredients}" Grid.Row="2" Grid.ColumnSpan="2">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Path=Ingredient.Name}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Content="Remove" Grid.Row="3" Grid.Column="1"/>
+            <Button Content="Remove" Grid.Row="3" Grid.Column="2"/>
 
             <TextBlock Text="Add new favorite ingredient" TextDecorations="Underline" Grid.Row="4"/>
+            <TextBlock Text="Rating:" Grid.Row="5" Grid.Column="1"/>
+            <TextBlock Text="Name:" Grid.Row="5"/>
+            <TextBox Grid.Row="6" Grid.Column="1"/>
             <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveListItemCommand}"
-                                             MaximumItems="10" Grid.Row="5" Grid.RowSpan="5"/>
+                                             MaximumItems="10" Grid.Row="6" Grid.RowSpan="5"/>
+            <Button Content="Add to FavList" Grid.Row="6" Grid.Column="2"/>
         </Grid>
         <Grid>
             <Grid.RowDefinitions>

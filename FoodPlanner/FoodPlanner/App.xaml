@@ -15,7 +15,7 @@
         <SolidColorBrush x:Key="Button.Text.Background" Color="#FFDDDDDD"/>
         <SolidColorBrush x:Key="BackgroundColour" Color="#E2E2E2"/>
 
-        <!--Start: Template for Title text-->
+        <!--Start: Templates for title text-->
         <Style TargetType="{x:Type Control}" x:Key="TextTitle">
             <Setter Property="Foreground" Value="{StaticResource Text.Orange}"/>
             <Setter Property="FontSize" Value="14"/>
@@ -25,7 +25,13 @@
             <Setter Property="Foreground" Value="{StaticResource Text.Orange}"/>
             <Setter Property="FontSize" Value="16"/>
         </Style>
-        <!--End: Template for Title text-->
+        <!--End: Templates for title text-->
+        <!--Start: Template for undertitle text-->
+        <Style TargetType="{x:Type TextBlock}" x:Key="TextUnderTitle">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="TextDecorations" Value="Underline"/>
+        </Style>
+        <!--End: Template for undertitle text-->
 
         <!--Start: Template for text label-->
         <Style x:Key="TextLabelTemplate" TargetType="{x:Type Label}">

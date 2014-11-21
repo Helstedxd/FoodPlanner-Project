@@ -16,6 +16,7 @@ namespace FoodPlanner.ViewModels {
         #region Fields
 
         public BlacklistIngredient SelectedBlackListIngredient { get; set; }
+        public GraylistIngredient SelectedGreyListIngredient { get; set; }
         private ICommand _saveListItemCommand;
         private ICommand _addIngredientToUnwantedIngredientsCommand;
         private ICommand _removeingredientFromUnwantedIngredientsCommand;       
@@ -35,6 +36,14 @@ namespace FoodPlanner.ViewModels {
                 RaisePropertyChanged("InventoryIngredient");
             }
         }
+        private GraylistIngredient _greyListInventoryIngredient;
+        public GraylistIngredient GreyListInventoryIngredient {
+            get { return _greyListInventoryIngredient; }
+            set {
+                _greyListInventoryIngredient = value;
+                RaisePropertyChanged("GreyListIngredient");
+            }
+        }
 
         #endregion
         
@@ -42,6 +51,7 @@ namespace FoodPlanner.ViewModels {
             InventoryIngredient = new InventoryIngredient();
             CurrentUser = App.CurrentUser;
             SelectedBlackListIngredient = new BlacklistIngredient();
+            SelectedGreyListIngredient = new GraylistIngredient();
         }
 
         #region Properties
@@ -63,6 +73,7 @@ namespace FoodPlanner.ViewModels {
             InventoryIngredient.ID = i.ID;
 
         }
+
 
         public ICommand AddIngredientToUnwantedIngredientsCommand {
             get {

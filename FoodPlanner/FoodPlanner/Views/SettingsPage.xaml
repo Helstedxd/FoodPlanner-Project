@@ -105,35 +105,53 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="30"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Favorite Ingredients" Grid.ColumnSpan="2" Style="{StaticResource TextblockTitle}"/>
-            <TextBlock Text="Favorite ingredients list" FontSize="14" TextDecorations="Underline" Grid.Row="1" Grid.ColumnSpan="2"/>
-            <ListBox x:Name="FavoriteIngredientsList" SelectedItem="{Binding SelectedGreyListIngredient}" ItemsSource="{Binding Path=CurrentUser.GraylistIngredients}" Grid.Row="2" Grid.ColumnSpan="2">
+            <TextBlock Text="Favorite Ingredients" Grid.Column="0" Style="{StaticResource TextblockTitle}"/>
+            <TextBlock Text="Favorite ingredients list" Style="{StaticResource TextUnderTitle}" Grid.Row="1"/>
+            <ListBox x:Name="FavoriteIngredientsList" SelectedItem="{Binding SelectedGreyListIngredient}" ItemsSource="{Binding Path=CurrentUser.GraylistIngredients}" Grid.Row="2" Grid.ColumnSpan="3">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Path=Ingredient.Name}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Content="Remove" Grid.Row="3" Grid.Column="2"/>
+            
+            <Button Style="{StaticResource ButtonIconTemplate}" Grid.Row="3" Grid.Column="2">
+                <Button.Background>
+                    <ImageBrush ImageSource="../Images/minusIcon.png"/>
+                </Button.Background>
+            </Button>
 
-            <TextBlock Text="Add new favorite ingredient" TextDecorations="Underline" Grid.Row="4"/>
-            <TextBlock Text="Rating:" Grid.Row="5" Grid.Column="1"/>
-            <TextBlock Text="Name:" Grid.Row="5"/>
-            <TextBox Grid.Row="6" Grid.Column="1"/>
-            <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveListItemCommand}"
-                                             MaximumItems="10" Grid.Row="6" Grid.RowSpan="5"/>
-            <Button Content="Add to FavList" Grid.Row="6" Grid.Column="2"/>
+            <TextBlock Text="Add new favorite ingredient" Style="{StaticResource TextUnderTitle}" Grid.Row="4"/>
+            <Grid Grid.ColumnSpan="3" Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+            <TextBlock Text="Rating:" Grid.Column="1"/>
+            <TextBlock Text="Name:"/>
+            <TextBox Grid.Row="1" Grid.Column="1"/>
+                <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveListItemCommand}" MaximumItems="10" Grid.Row="6" Grid.RowSpan="5"/>
+            </Grid>
+            <Button Style="{StaticResource ButtonIconTemplate}" Grid.Row="6" Grid.Column="2">
+                <Button.Background>
+                    <ImageBrush ImageSource="../Images/plusIcon.png"/>
+                </Button.Background>
+            </Button>
         </Grid>
         <Grid>
             <Grid.RowDefinitions>

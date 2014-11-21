@@ -44,6 +44,10 @@ namespace FoodPlanner.ViewModels {
             }
         }
 
+        private object SaveNewStockIngredientName(Ingredient i) {
+            throw new NotImplementedException();
+        }
+
         public ICommand AddIngredientToUnwantedIngredientsCommand {
             get {
                 if (_addIngredientToUnwantedIngredientsCommand == null) {

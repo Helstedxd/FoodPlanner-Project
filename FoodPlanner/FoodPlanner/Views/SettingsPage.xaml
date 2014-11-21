@@ -76,12 +76,13 @@
 
             <TextBlock Text="Add a new stock ingredient" Grid.Row="4" Grid.ColumnSpan="3" FontSize="14" TextDecorations="Underline"/>
             <TextBlock Text="Name" Grid.Row="5"/>
-            <TextBlock Text="Quantity" Grid.Row="5" Grid.Column="1"/>
             <TextBlock Text="Unit" Grid.Row="5" Grid.Column="2"/>
             <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveListItemCommand}"
                                              MaximumItems="10" Grid.Row="6" Grid.RowSpan="3"/>
-
-            <TextBox x:Name="QuantityTextBox" Grid.Row="6" Grid.Column="1"/>
+            
+            <TextBlock Text="{Binding InventoryIngredient.Quantity, StringFormat=Quantity: {0}}" Grid.Row="5" Grid.Column="1"/>
+            <TextBox x:Name="QuantityTextBox" Text="{Binding InventoryIngredient.Quantity, Mode=TwoWay}" Grid.Row="6" Grid.Column="1"/>
+            
             <TextBlock Text="{Binding InventoryIngredient.Ingredient.Unit, Mode=OneWay}" Grid.Row="6" Grid.Column="2"/>
                 <Button Grid.Row="7" Content="Add Ingredient" Grid.Column="3"/>
         </Grid>

@@ -46,7 +46,7 @@
 
         <Image Grid.Row="1" Grid.RowSpan="2" Height="100" Width="100" Source="{Binding Image}"/>
 
-        <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource LabelTitle}">
+        <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource TextTitle}">
             <Label.Content>
                 <AccessText TextWrapping="Wrap" Text="{Binding Title}"/>
             </Label.Content>

@@ -49,7 +49,7 @@
                 <ImageBrush ImageSource="/Images/downArrowIcon.png" Stretch="Uniform"/>
             </Button.Background>
         </Button>
-        <Label Style="{StaticResource LabelTitle}" Content="{Binding Path=WeekString}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label Style="{StaticResource TextTitle}" VerticalAlignment="Center" FontSize="30" Content="{Binding Path=WeekString}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center"/>
 
         <ListBox x:Name="MondayMealsListBox" Grid.Row="1" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding MondayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
         <ListBox x:Name="TuesdayMealsListBox" Grid.Row="2" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding TuesdayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>

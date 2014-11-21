@@ -25,12 +25,11 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="User Specifics" FontSize="16"/>
-            <TextBlock Text="Persons in the household:" Padding="0,5,5,5" Grid.Row="1"/>
-            <TextBlock Text="{Binding CurrentUser.PersonsInHouseHold}" Grid.Row="1" Grid.Column="1" Padding="5"/>
+            <TextBlock Text="User Specifics" Style="{StaticResource TextblockTitle}"/>
+            <TextBox VerticalAlignment="Center" Grid.Row="1" Text="{Binding CurrentUser.PersonsInHouseHold, StringFormat= 'Persons in household:{}'}"/>
             <Button Content="Plus" Grid.Row="1" Grid.Column="3" Padding="5"/>
             <Button Content="Minus" Grid.Row="1" Grid.Column="2" Padding="5"/>
 
@@ -62,7 +61,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Stock Management" FontSize="16" Grid.ColumnSpan="2"/>
+            <TextBlock Text="Stock Management" Grid.ColumnSpan="2" Style="{StaticResource TextblockTitle}"/>
             <TextBlock Text="Stock List" Grid.Row="1" Grid.Column="1" FontSize="14" TextDecorations="Underline"/>
             <ListView Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding CurrentUser.StockQuantities}">
                 <ListView.View>
@@ -99,7 +98,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Favorite Ingredients" FontSize="16" Grid.ColumnSpan="2"/>
+            <TextBlock Text="Favorite Ingredients" Grid.ColumnSpan="2" Style="{StaticResource TextblockTitle}"/>
             <TextBlock Text="Favorite ingredients list" FontSize="14" TextDecorations="Underline" Grid.Row="1" Grid.ColumnSpan="2"/>
             <ListBox ItemsSource="{Binding Path=GraylistIngredients}" Grid.Row="2" Grid.ColumnSpan="2">
                 <ListBox.ItemTemplate>
@@ -127,7 +126,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Unwanted Ingredients" FontSize="16" />
+            <TextBlock Text="Unwanted Ingredients" Style="{StaticResource TextblockTitle}"/>
             <TextBlock Text="Favorite ingredients list" FontSize="14" TextDecorations="Underline" Grid.Row="1" Grid.ColumnSpan="2"/>
             <ListBox ItemsSource="{Binding Path=CurrentUser.GraylistIngredients}" Grid.Row="2" Grid.ColumnSpan="2">
                 <ListBox.ItemTemplate>

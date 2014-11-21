@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using FoodPlanner.Models;
 
 namespace FoodPlanner.Views
 {
@@ -7,6 +8,8 @@ namespace FoodPlanner.Views
     /// </summary>
     public partial class SettingsPage : Page
     {
+        public BlacklistIngredient SelectedBlackListIngredient { get; set; }
+        
         public SettingsPage()
         {
             InitializeComponent();

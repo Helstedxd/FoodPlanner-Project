@@ -34,7 +34,7 @@ namespace FoodPlanner.ViewModels
             SundayMeals = new ObservableCollection<Meal>();
 
             ActiveDate = DateTime.Now;
-            if (ActiveDate.DayOfWeek == DayOfWeek.Sunday) //This is done in order to get the GetDdayDifference method to make ene when it's Sunday
+            if (ActiveDate.DayOfWeek == DayOfWeek.Sunday) //This is done in order to get the GetDdayDifference method to make sense when it's Sunday
             {
                 ActiveDate = ActiveDate.AddDays(-1);
             }

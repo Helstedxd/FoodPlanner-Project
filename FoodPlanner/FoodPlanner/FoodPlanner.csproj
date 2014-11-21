@@ -109,6 +109,9 @@
     <Compile Include="StockQuantity.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\IngredientAutoComplete.xaml.cs">
+      <DependentUpon>IngredientAutoComplete.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\SlidePanel.xaml.cs">
       <DependentUpon>SlidePanel.xaml</DependentUpon>
     </Compile>
@@ -178,6 +181,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UserControls\IngredientAutoComplete.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\SlidePanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -300,6 +307,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Foodplan.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\minusIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -25,6 +25,7 @@ namespace FoodPlanner
         private static ICommand _goToSettingsCommand;
         private static ICommand _goToMealPlanCommand;
         private static ICommand _goToRecipeCommand;
+        private static ICommand _goBackCommand;
 
         #endregion
 
@@ -121,6 +122,18 @@ namespace FoodPlanner
             }
         }
 
+        public static ICommand GoBackCommand
+        {
+            get
+            {
+                if (_goBackCommand == null)
+                {
+                    _goBackCommand = new RelayCommand(() => NavigationService.GoBack());
+                }
+                return _goBackCommand;
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -136,6 +149,10 @@ namespace FoodPlanner
                 //TODO: should this be handled?
                 Console.WriteLine("Navigation Service not available!");
             }
+        }
+        public static void GoBack()
+        {
+            NavigationService.GoBack();
         }
 
         private static void NavigationService_Navigated(object sender, NavigationEventArgs e)

@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:ViewModels="clr-namespace:FoodPlanner.ViewModels" x:Class="FoodPlanner.Views.RecipePage" 
+      xmlns:local="clr-namespace:FoodPlanner"
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="405"
 	Title="RecipePage">
@@ -14,32 +15,53 @@
 
     <Grid DataContext="{Binding Recipe}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
+        
+        <Border Grid.ColumnSpan="3" BorderThickness="0 0 0 2" BorderBrush="Black"/>
 
-        <Image Height="100" Width="100" Source="{Binding Image}"/>
+        <Button x:Name="TopBarButton" Command="{Binding Source={x:Static local:Navigator.GoBackCommand}}" Style="{StaticResource ButtonIconTemplate}" HorizontalAlignment="Left" Width="{Binding ElementName=TopBarButton, Path=ActualHeight}">
+            <Button.Background>
+                <ImageBrush ImageSource="../Images/backArrowIcon.png" Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
 
-        <Label Grid.Column="1" Grid.Row="0" Style="{StaticResource LabelTitle}">
+        <StackPanel Grid.Column="2" Orientation="Horizontal">
+            <DatePicker Height="{Binding ElementName=TopBarButton, Path=ActualHeight}" Visibility="Collapsed"/>
+            <Button Style="{StaticResource ButtonIconTemplate}" HorizontalAlignment="Right" Height="{Binding ElementName=TopBarButton, Path=ActualHeight}" Width="{Binding ElementName=TopBarButton, Path=ActualHeight}">
+                <Button.Background>
+                    <ImageBrush ImageSource="../Images/plusIcon.png" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>
+            
+        </StackPanel>
+
+        <Image Grid.Row="1" Grid.RowSpan="2" Height="100" Width="100" Source="{Binding Image}"/>
+
+        <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource TextTitle}">
             <Label.Content>
                 <AccessText TextWrapping="Wrap" Text="{Binding Title}"/>
             </Label.Content>
         </Label>
 
-        <ScrollViewer Grid.Column="1" Grid.Row="1" Padding="5,0,0,0">
+        <ScrollViewer Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="2" Padding="5,0,0,0">
             <TextBlock Text="{Binding RecipesPreparation.Preparation}" TextWrapping="Wrap"/>
         </ScrollViewer>
 
-        <ListBox x:Name="IngredientListbox" ItemsSource="{Binding RecipeIngredients}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Row="1" Width="100" Background="{StaticResource BackgroundColour}" FocusManager.FocusedElement="{Binding RelativeSource={RelativeSource Self}}">
+        <ListBox x:Name="IngredientListbox" ItemsSource="{Binding RecipeIngredients}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Row="3" Width="100" Background="{StaticResource BackgroundColour}" BorderThickness="0">
             <ListBox.ItemTemplate>    
             <DataTemplate>
                     <StackPanel>
-                        <Border x:Name="IngredientBorder" BorderBrush="{StaticResource Button.Static.Border}" BorderThickness="0 0 0 1" Width="{Binding ElementName=IngredientText}">
-                            <TextBlock Width="100" Name="IngredientText"  Text="{Binding}" TextWrapping="Wrap"/>
+                        <Border x:Name="IngredientBorder" BorderBrush="{StaticResource Text.Orange}" BorderThickness="0 0 0 1" Width="80">
+                            <TextBlock Width="80" Name="IngredientText"  Text="{Binding}" TextWrapping="Wrap"/>
                         </Border>
                     </StackPanel>
                 </DataTemplate>

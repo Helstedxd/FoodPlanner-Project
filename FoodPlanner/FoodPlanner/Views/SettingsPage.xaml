@@ -86,15 +86,22 @@
             <Button Content="Remove Ingredient" Grid.Row="3"/>
 
             <TextBlock Text="Add a new stock ingredient" Grid.Row="4" FontSize="14" TextDecorations="Underline"/>
-            <TextBlock Text="{Binding StockIngredient.Ingredient.Name, StringFormat=Name: {0}, Mode=OneWay}" Grid.Row="8"/>
-            
-            <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveListItemCommand}"
-                                             MaximumItems="5" Grid.Row="9"/>
+            <StackPanel Grid.Row="5" Orientation="Horizontal">
+                <TextBlock Text="Name: "/>
+                <TextBlock Text="{Binding StockIngredient.Ingredient.Name}"/>
+                <!--<TextBlock Text="{Binding StockIngredient.Ingredient.Name, StringFormat=Name: {0}, Mode=OneWay}" Grid.Row="5"/>-->
+            </StackPanel>
 
-            <TextBlock Text="{Binding InventoryIngredient.Quantity, StringFormat=Quantity: {0}}" Grid.Row="6"/>
-            <TextBox x:Name="QuantityTextBox" Text="{Binding InventoryIngredient.Quantity, Mode=TwoWay}" Grid.Row="7"/>
+            <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveNewStockIngredientNameCommand}"
+                                             MaximumItems="5" Grid.Row="6"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="7">
+                <TextBlock Text="Quantity: "/>
+                <TextBlock Text="{Binding StockIngredient.Quantity}"/>
+            <!--<TextBlock Text="{Binding InventoryIngredient.Quantity, StringFormat=Quantity: {0}}" Grid.Row="7"/>-->
+            </StackPanel>
+            <TextBox x:Name="QuantityTextBox" Text="{Binding StockIngredient.Quantity, Delay=300, Mode=TwoWay}" Grid.Row="8"/>
             
-            <TextBlock Text="{Binding InventoryIngredient.Ingredient.Unit, Mode=OneWay, StringFormat=Unit: {0}}" Grid.Row="5"/>
+            <TextBlock Text="{Binding StockIngredient.Ingredient.Unit, Mode=OneWay, StringFormat=Unit: {0}}" Grid.Row="9"/>
             <Button Grid.Row="10" Content="Add Ingredient"/>
         </Grid>
         <Grid>

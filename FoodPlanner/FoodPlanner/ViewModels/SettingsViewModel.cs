@@ -17,7 +17,7 @@ namespace FoodPlanner.ViewModels {
 
         public BlacklistIngredient SelectedBlackListIngredient { get; set; }
         public GraylistIngredient SelectedGreyListIngredient { get; set; }
-        private ICommand _saveListItemCommand;
+        private ICommand _saveNewStockIngredientNameCommand;
         private ICommand _addIngredientToUnwantedIngredientsCommand;
         private ICommand _removeingredientFromUnwantedIngredientsCommand;
         private ICommand _incrementShopAheadCommand;
@@ -73,19 +73,14 @@ namespace FoodPlanner.ViewModels {
         #endregion
 
         #region ICommands
-        public ICommand SaveListItemCommand {
+        public ICommand SaveNewStockIngredientNameCommand {
             get {
-                if (_saveListItemCommand == null) {
-                    _saveListItemCommand = new RelayCommand<Ingredient>(i => SaveNewStockIngredientName(i));
+                if (_saveNewStockIngredientNameCommand == null) {
+                    _saveNewStockIngredientNameCommand = new RelayCommand<Ingredient>(i => SaveNewStockIngredientName(i));
                 }
 
-                return _saveListItemCommand;
+                return _saveNewStockIngredientNameCommand;
             }
-        }
-
-        private void SaveNewStockIngredientName(Ingredient i) {
-            StockIngredient.ID = i.ID;
-
         }
 
         public ICommand IncrementShopAheadCommand {
@@ -152,11 +147,14 @@ namespace FoodPlanner.ViewModels {
 
         #region Methods
 
-        private void SaveChosenListItemFromAutoCompleteList(Ingredient ingredient) {
-            StockIngredient.Ingredient.ID = ingredient.ID;
+        private void SaveNewStockIngredientName(Ingredient ingredient) {
+            StockIngredient.Ingredient = ingredient;
+            //App.db.SaveChanges();
+            RaisePropertyChanged("StockIngredient");
+            Console.WriteLine("Der er givet et navn");
         }
 
-        //For alle in/decrement gølder det at de ikke må være 0> og >(eks)1000
+        //For alle in/decrement gælder det at de ikke må være 0> og >(eks)1000
         private void IncrementShopAhead() {
             App.CurrentUser.ShopAhead++;
             App.db.SaveChanges();

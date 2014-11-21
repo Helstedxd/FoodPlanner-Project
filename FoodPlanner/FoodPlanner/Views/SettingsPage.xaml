@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:t="http://schemas.microsoft.com/netfx/2007/xaml/presentation"
       xmlns:ViewModels="clr-namespace:FoodPlanner.ViewModels"
       xmlns:UserControls="clr-namespace:FoodPlanner.UserControls"
       mc:Ignorable="d" 
@@ -99,8 +100,16 @@
                 <TextBlock Text="{Binding StockIngredient.Quantity}"/>
             <!--<TextBlock Text="{Binding InventoryIngredient.Quantity, StringFormat=Quantity: {0}}" Grid.Row="7"/>-->
             </StackPanel>
-            <TextBox x:Name="QuantityTextBox" Text="{Binding StockIngredient.Quantity, Delay=300, Mode=TwoWay}" Grid.Row="8"/>
             
+            <!--Lav så source property opdateres ved key up (kan gøres med events/triggers)-->
+            <TextBox x:Name="QuantityTextBox" Text="{Binding StockIngredient.Quantity, Delay=300, Mode=TwoWay}" Grid.Row="8">
+                <!--<t:Interaction.Triggers>
+                    <i:EventTrigger EventName="KeyUp">
+                        <t:InvokeDataCommand Command="{Binding MyCommand}"/>
+                    </i:EventTrigger>
+                </t:Interaction.Triggers>-->
+            </TextBox>
+          
             <TextBlock Text="{Binding StockIngredient.Ingredient.Unit, Mode=OneWay, StringFormat=Unit: {0}}" Grid.Row="9"/>
             <Button Content="Add Ingredient" Command="{Binding AddNewStockIngredientCommand}" Grid.Row="10"/>
         </Grid>

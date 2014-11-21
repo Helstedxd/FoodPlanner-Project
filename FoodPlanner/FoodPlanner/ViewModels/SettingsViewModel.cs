@@ -20,7 +20,8 @@ namespace FoodPlanner.ViewModels {
         private ICommand _saveListItemCommand;
         private ICommand _addIngredientToUnwantedIngredientsCommand;
         private ICommand _removeingredientFromUnwantedIngredientsCommand;
-        private ICommand _saveNewFavoriteIngredientNameCommand;
+        private ICommand _incrementShopAheadCommand;
+        private ICommand _decrementShopAhead;
         private ICommand _incrementPersonsInHouseholdCommand;
         private ICommand _decrementPersonsInHouseholdCommand;
         private User _currentUser;
@@ -42,7 +43,7 @@ namespace FoodPlanner.ViewModels {
             }
         }
         private InventoryIngredient _inventoryIngredient;
-        public InventoryIngredient InventoryIngredient {
+        public InventoryIngredient StockIngredient {
             get { return _inventoryIngredient; }
             set {
                 _inventoryIngredient = value;
@@ -61,7 +62,7 @@ namespace FoodPlanner.ViewModels {
         #endregion
         
         public SettingsViewModel() {
-            InventoryIngredient = new InventoryIngredient();
+            StockIngredient = new InventoryIngredient();
             CurrentUser = App.CurrentUser;
             SelectedBlackListIngredient = new BlacklistIngredient();
             SelectedGreyListIngredient = new GraylistIngredient();
@@ -83,8 +84,28 @@ namespace FoodPlanner.ViewModels {
         }
 
         private void SaveNewStockIngredientName(Ingredient i) {
-            InventoryIngredient.ID = i.ID;
+            StockIngredient.ID = i.ID;
 
+        }
+
+        public ICommand IncrementShopAheadCommand {
+            get {
+                if (_incrementShopAheadCommand == null) {
+                    _incrementShopAheadCommand = new RelayCommand(() => IncrementShopAhead());
+                }
+
+                return _incrementShopAheadCommand;
+            }
+        }
+
+        public ICommand DecrementShopAheadCommmand {
+            get {
+                if (_decrementShopAhead == null) {
+                    _decrementShopAhead = new RelayCommand(() => DecrementShopAhead());
+                }
+
+                return _decrementShopAhead;
+            }
         }
 
         public ICommand IncrementPersonsInHouseholdCommand {
@@ -104,16 +125,6 @@ namespace FoodPlanner.ViewModels {
                 }
 
                 return _decrementPersonsInHouseholdCommand;
-            }
-        }
-
-        public ICommand SaveNewFavoriteIngredientNameCommand {
-            get {
-                if (_saveNewFavoriteIngredientNameCommand == null) {
-                    _saveNewFavoriteIngredientNameCommand = new RelayCommand<Ingredient>(i => SaveNewFavoriteIngredientName(i));
-                }
-
-                return _saveNewFavoriteIngredientNameCommand;
             }
         }
 
@@ -142,12 +153,20 @@ namespace FoodPlanner.ViewModels {
         #region Methods
 
         private void SaveChosenListItemFromAutoCompleteList(Ingredient ingredient) {
-            InventoryIngredient.Ingredient.ID = ingredient.ID;
+            StockIngredient.Ingredient.ID = ingredient.ID;
         }
 
-        //Skal laves færdig
-        private void SaveNewFavoriteIngredientName(Ingredient ingredient) {
-            Console.Write("SaveName er kaldt!");
+        //For alle in/decrement gølder det at de ikke må være 0> og >(eks)1000
+        private void IncrementShopAhead() {
+            App.CurrentUser.ShopAhead++;
+            App.db.SaveChanges();
+            RaisePropertyChanged("ShopAhead");
+        }
+
+        private void DecrementShopAhead() {
+            App.CurrentUser.ShopAhead--;
+            App.db.SaveChanges();
+            RaisePropertyChanged("ShopAhead");
         }
 
         private void IncrementPersonsInHousehold() {

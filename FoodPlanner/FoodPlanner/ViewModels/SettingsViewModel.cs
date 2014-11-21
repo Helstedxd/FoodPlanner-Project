@@ -19,7 +19,8 @@ namespace FoodPlanner.ViewModels {
         public GraylistIngredient SelectedGreyListIngredient { get; set; }
         private ICommand _saveListItemCommand;
         private ICommand _addIngredientToUnwantedIngredientsCommand;
-        private ICommand _removeingredientFromUnwantedIngredientsCommand;       
+        private ICommand _removeingredientFromUnwantedIngredientsCommand;
+        private ICommand _saveNewFavoriteIngredientNameCommand;
         private User _currentUser;
         public User CurrentUser {
             get { return _currentUser; }
@@ -74,6 +75,15 @@ namespace FoodPlanner.ViewModels {
 
         }
 
+        public ICommand SaveNewFavoriteIngredientNameCommand {
+            get {
+                if (_saveNewFavoriteIngredientNameCommand == null) {
+                    _saveNewFavoriteIngredientNameCommand = new RelayCommand<Ingredient>(i => SaveNewFavoriteIngredientName(i));
+                }
+
+                return _saveNewFavoriteIngredientNameCommand;
+            }
+        }
 
         public ICommand AddIngredientToUnwantedIngredientsCommand {
             get {
@@ -101,6 +111,10 @@ namespace FoodPlanner.ViewModels {
 
         private void SaveChosenListItemFromAutoCompleteList(Ingredient ingredient) {
             InventoryIngredient.Ingredient.ID = ingredient.ID;
+        }
+
+        private void SaveNewFavoriteIngredientName(Ingredient ingredient) {
+            Console.Write("SaveName er kaldt!");
         }
 
         //Fix: Det skal sikres at man ikke kan tilføje den samme ingrediens flere gange.

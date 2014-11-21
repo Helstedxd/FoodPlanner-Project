@@ -131,7 +131,7 @@
             <TextBlock Text="Rating:" Grid.Row="5" Grid.Column="1"/>
             <TextBlock Text="Name:" Grid.Row="5"/>
             <TextBox Grid.Row="6" Grid.Column="1"/>
-            <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveListItemCommand}"
+            <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveNewFavoriteIngredientNameCommand}"
                                              MaximumItems="10" Grid.Row="6" Grid.RowSpan="5"/>
             <Button Content="Add to FavList" Grid.Row="6" Grid.Column="2"/>
         </Grid>

@@ -105,12 +105,12 @@ namespace FoodPlanner
             PublicQuerys test = new PublicQuerys();
 
             List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
-            List<SearchResults> results = new List<SearchResults>();
 
-            MessageBox.Show(test.inventoryList.Count().ToString());
-            MessageBox.Show(test.lastMeals.Count().ToString());
-            MessageBox.Show(test.blackList.Count().ToString());
-            MessageBox.Show(test.grayList.Count().ToString());
+            IQueryable<IGrouping<int, Result>> test2 = test.search(App.db.Recipes.Where(r => r.Title.Contains("turk")).Select(r => r.ID).ToList());
+
+            List<SearchResults> test3 = test.addValuesToSearch(test2, searchQuery);
+
+            listResults.ItemsSource = test3.ToList();
 
         }
 

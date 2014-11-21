@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows;
+using System.ComponentModel;
 using FoodPlanner.Models;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
@@ -14,12 +15,26 @@ namespace FoodPlanner.ViewModels {
     class SettingsViewModel : ObservableObject {
         #region Fields
 
-        public User CurrentUser { get; set; }
         public BlacklistIngredient SelectedBlackListIngredient { get; set; }
         private ICommand _saveListItemCommand;
         private ICommand _addIngredientToUnwantedIngredientsCommand;
-        private ICommand _removeingredientFromUnwantedIngredientsCommand;
-        public InventoryIngredient InventoryIngredient { get; set; }
+        private ICommand _removeingredientFromUnwantedIngredientsCommand;       
+        private User _currentUser;
+        public User CurrentUser {
+            get { return _currentUser; }
+            set {
+                _currentUser = value;
+                RaisePropertyChanged("CurrentUser");
+            }
+        }
+        private InventoryIngredient _inventoryIngredient;
+        public InventoryIngredient InventoryIngredient {
+            get { return _inventoryIngredient; }
+            set {
+                _inventoryIngredient = value;
+                RaisePropertyChanged("InventoryIngredient");
+            }
+        }
 
         #endregion
         
@@ -44,8 +59,9 @@ namespace FoodPlanner.ViewModels {
             }
         }
 
-        private object SaveNewStockIngredientName(Ingredient i) {
-            throw new NotImplementedException();
+        private void SaveNewStockIngredientName(Ingredient i) {
+            InventoryIngredient.ID = i.ID;
+
         }
 
         public ICommand AddIngredientToUnwantedIngredientsCommand {
@@ -81,7 +97,6 @@ namespace FoodPlanner.ViewModels {
             BlacklistIngredient IngredientToBeAdded = new BlacklistIngredient() { IngredientID = ingredient.ID, UserID = App.CurrentUser.ID};
             App.db.BlacklistIngredients.Add(IngredientToBeAdded);
             App.db.SaveChanges();
-            Console.WriteLine("Hmm vi bliver kaldt");
         }
 
         //Fix: Metoden skal også sikre mod at der er valgt et element i listboxen.

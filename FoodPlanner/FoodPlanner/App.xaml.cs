@@ -36,7 +36,6 @@ namespace FoodPlanner
 
             var test = new Search();
             test.ShowDialog();
-            App.db.Dispose();
 
             MainWindow mainWindow = new MainWindow();
             Navigator.NavigationService = mainWindow.Frame.NavigationService;

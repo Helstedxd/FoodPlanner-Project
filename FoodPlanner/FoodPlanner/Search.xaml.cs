@@ -102,12 +102,16 @@ namespace FoodPlanner
 
         private void startSearch_Click(object sender, RoutedEventArgs e)
         {
+            PublicQuerys test = new PublicQuerys();
+
             List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
             List<SearchResults> results = new List<SearchResults>();
 
+            MessageBox.Show(test.inventoryList.Count().ToString());
+            MessageBox.Show(test.lastMeals.Count().ToString());
+            MessageBox.Show(test.blackList.Count().ToString());
+            MessageBox.Show(test.grayList.Count().ToString());
 
-
-            listResults.ItemsSource = StaticLists.blackList;
         }
 
         private void listResults_SelectionChanged(object sender, SelectionChangedEventArgs e)

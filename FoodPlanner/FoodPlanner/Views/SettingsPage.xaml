@@ -12,172 +12,205 @@
     <Page.DataContext>
         <ViewModels:SettingsViewModel/>
     </Page.DataContext>
-    <ListBox>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
 
-            <TextBlock Text="User Specifics" Style="{StaticResource TextblockTitle}"/>
+    <ScrollViewer>
+        <StackPanel Margin="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
 
-            <TextBlock Text="{Binding PersonsInHouseHold, StringFormat='Persons in household: {0}', Mode=OneWay}" Grid.Row="1" VerticalAlignment="Center" Height="16" Margin="0,7"/>
-            <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding DecrementPersonsInHouseholdCommand}" Grid.Column="1" Grid.Row="1">
-                <Button.Background>
-                    <ImageBrush ImageSource="../Images/minusIcon.png" Stretch="Uniform"/>
-                </Button.Background>
-            </Button>
-            <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding IncrementPersonsInHouseholdCommand}" Grid.Column="2" Grid.Row="1">
-                <Button.Background>
-                    <ImageBrush ImageSource="../Images/plusIcon.png" Stretch="Uniform"/>
-                </Button.Background>
-            </Button>
+                <TextBlock Text="User Specifics" Style="{StaticResource TextblockTitle}"/>
 
-            <TextBlock Text="{Binding ShopAhead, StringFormat='Number of days to shop for: {0}', Mode=OneWay}" Grid.Row="2" VerticalAlignment="Center" Height="16" Margin="0,7"/>
-            <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding DecrementShopAheadCommmand}" Grid.Column="1" Grid.Row="2">
-                <Button.Background>
-                    <ImageBrush ImageSource="../Images/minusIcon.png" Stretch="Uniform"/>
-                </Button.Background>
-            </Button>
-            <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding IncrementShopAheadCommand}" Grid.Column="2" Grid.Row="2">
-                <Button.Background>
-                    <ImageBrush ImageSource="../Images/plusIcon.png" Stretch="Uniform"/>
-                </Button.Background>
-            </Button>
+                <TextBlock Text="{Binding PersonsInHouseHold, StringFormat='Persons in household: {0}', Mode=OneWay}" Grid.Row="1" VerticalAlignment="Center" Height="16" Margin="0,7"/>
+                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding DecrementPersonsInHouseholdCommand}" Grid.Column="1" Grid.Row="1">
+                    <Button.Background>
+                        <ImageBrush ImageSource="../Images/minusIcon.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding IncrementPersonsInHouseholdCommand}" Grid.Column="2" Grid.Row="1">
+                    <Button.Background>
+                        <ImageBrush ImageSource="../Images/plusIcon.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
 
-            <TextBlock Text="Start up screen:" Grid.Row="3" VerticalAlignment="Center"/>
-            <ComboBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2"/>
-            <!--kan ændrigner ikke gemmes under run time? å kan knappen fjernes.-->
-            <Button Content="Save changes" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Width="75" HorizontalAlignment="Right" Margin="0 2 0 0"/>
-        </Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+                <TextBlock Text="{Binding ShopAhead, StringFormat='Number of days to shop for: {0}', Mode=OneWay}" Grid.Row="2" VerticalAlignment="Center" Height="16" Margin="0,7"/>
+                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding DecrementShopAheadCommmand}" Grid.Column="1" Grid.Row="2">
+                    <Button.Background>
+                        <ImageBrush ImageSource="../Images/minusIcon.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding IncrementShopAheadCommand}" Grid.Column="2" Grid.Row="2">
+                    <Button.Background>
+                        <ImageBrush ImageSource="../Images/plusIcon.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
 
-            <TextBlock Text="Stock Management" Style="{StaticResource TextblockTitle}"/>
-            <TextBlock Text="Stock List" Grid.Row="1" FontSize="14" TextDecorations="Underline"/>
-            <ListView x:Name="StockListView" Grid.Row="2" ItemsSource="{Binding CurrentUser.StockQuantities}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Width="Auto" Header="Name" CellTemplate="{StaticResource ShoppingListNameCell}"/>
-                        <GridViewColumn Width="Auto" Header="Quantity And Unit" CellTemplate="{StaticResource ShoppingListUnitAndQuantityCell}"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-            <Button Content="Remove Ingredient" Grid.Row="3"/>
+                <TextBlock Text="Start up screen:" Grid.Row="3" VerticalAlignment="Center"/>
+                <ComboBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2"/>
+                <!--kan ændrigner ikke gemmes under run time? så kan knappen fjernes.-->
+                <Button Content="Save changes" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Width="75" HorizontalAlignment="Right" Margin="0 2 0 0"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
 
-            <TextBlock Text="Add a new stock ingredient" Grid.Row="4" FontSize="14" TextDecorations="Underline"/>
-            <StackPanel Grid.Row="5" Orientation="Horizontal">
-                <TextBlock Text="Name: "/>
-                <TextBlock Text="{Binding StockIngredient.Ingredient.Name}"/>
-                <!--<TextBlock Text="{Binding StockIngredient.Ingredient.Name, StringFormat=Name: {0}, Mode=OneWay}" Grid.Row="5"/>-->
-            </StackPanel>
+                <TextBlock Text="Stock Management" Style="{StaticResource TextblockTitle}" Grid.ColumnSpan="2"/>
+                <TextBlock Text="Stock List" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource TextUnderTitle}"/>
+                <ListView x:Name="StockListView" Grid.Row="2" ItemsSource="{Binding CurrentUser.StockQuantities}" Grid.ColumnSpan="2">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="Auto" Header="Name" CellTemplate="{StaticResource ShoppingListNameCell}"/>
+                            <GridViewColumn Width="Auto" Header="Quantity And Unit" CellTemplate="{StaticResource ShoppingListUnitAndQuantityCell}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <Button Style="{StaticResource ButtonIconTemplate}" Grid.Row="3" Grid.Column="1">
+                    <Button.Background>
+                        <ImageBrush ImageSource="../Images/minusIcon.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
 
-            <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveNewStockIngredientNameCommand}"
-                                             MaximumItems="5" Grid.Row="6"/>
-            <StackPanel Orientation="Horizontal" Grid.Row="7">
-                <TextBlock Text="Quantity: "/>
-                <TextBlock Text="{Binding StockIngredient.Quantity}"/>
-            <!--<TextBlock Text="{Binding InventoryIngredient.Quantity, StringFormat=Quantity: {0}}" Grid.Row="7"/>-->
-            </StackPanel>
-            
-            <!--Lav så source property opdateres ved key up (kan gøres med events/triggers)-->
-            <TextBox x:Name="QuantityTextBox" Text="{Binding StockIngredient.Quantity, Delay=300, Mode=TwoWay}" Grid.Row="8">
-                <!--<t:Interaction.Triggers>
+                <TextBlock Text="Add a new stock ingredient" Grid.Row="4" Style="{StaticResource TextUnderTitle}" Grid.ColumnSpan="2"/>
+                <StackPanel Grid.Row="5" Orientation="Horizontal" Grid.ColumnSpan="2">
+                    <TextBlock Text="Name: "/>
+                    <TextBlock Text="{Binding StockIngredient.Ingredient.Name}"/>
+                    <!--<TextBlock Text="{Binding StockIngredient.Ingredient.Name, StringFormat=Name: {0}, Mode=OneWay}" Grid.Row="5"/>-->
+                </StackPanel>
+
+                <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveNewStockIngredientNameCommand}" MaximumItems="5" Grid.Row="6" Grid.ColumnSpan="2"/>
+                <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.ColumnSpan="2">
+                    <TextBlock Text="Quantity: "/>
+                    <TextBlock Text="{Binding StockIngredient.Quantity}"/>
+                    <!--<TextBlock Text="{Binding InventoryIngredient.Quantity, StringFormat=Quantity: {0}}" Grid.Row="7"/>-->
+                </StackPanel>
+
+                <!--Lav så source property opdateres ved key up (kan gøres med events/triggers)-->
+                <TextBox x:Name="QuantityTextBox" Text="{Binding StockIngredient.Quantity, Delay=300, Mode=TwoWay}" Grid.Row="8" Grid.ColumnSpan="2">
+                    <!--<t:Interaction.Triggers>
                     <i:EventTrigger EventName="KeyUp">
                         <t:InvokeDataCommand Command="{Binding MyCommand}"/>
                     </i:EventTrigger>
                 </t:Interaction.Triggers>-->
-            </TextBox>
-          
-            <TextBlock Text="{Binding StockIngredient.Ingredient.Unit, Mode=OneWay, StringFormat=Unit: {0}}" Grid.Row="9"/>
-            <Button Content="Add Ingredient" Command="{Binding AddNewStockIngredientCommand}" Grid.Row="10"/>
-        </Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+                </TextBox>
 
-            <TextBlock Text="Favorite Ingredients" Grid.ColumnSpan="2" Style="{StaticResource TextblockTitle}"/>
-            <TextBlock Text="Favorite ingredients list" FontSize="14" TextDecorations="Underline" Grid.Row="1" Grid.ColumnSpan="2"/>
-            <ListBox x:Name="FavoriteIngredientsList" SelectedItem="{Binding SelectedGreyListIngredient}" ItemsSource="{Binding Path=CurrentUser.GraylistIngredients}" Grid.Row="2" Grid.ColumnSpan="2">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Path=Ingredient.Name}"/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-            <Button Content="Remove" Grid.Row="3"/>
+                <TextBlock Text="{Binding StockIngredient.Ingredient.Unit, Mode=OneWay, StringFormat=Unit: {0}}" Grid.Row="9"/>
+                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding AddNewStockIngredientCommand}" Grid.Row="9" Grid.Column="1">
+                    <Button.Background>
+                        <ImageBrush ImageSource="../Images/plusIcon.png" Stretch="UniformToFill"/>
+                    </Button.Background>
+                </Button>
+            </Grid>
 
-            <TextBlock Text="Add new favorite ingredient" TextDecorations="Underline" Grid.Row="4"/>
-            <TextBlock Text="Rating:" Grid.Row="7"/>
-            <TextBlock Text="Name:" Grid.Row="5"/>
-            <TextBox Grid.Row="8"/>
-            <UserControls:IngredientAutoComplete SelectItemCommand="{}"
-                                             MaximumItems="5" Grid.Row="6"/>
-            <Button Content="Add to FavList" Grid.Row="9"/>
-        </Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition Height="30"/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
 
-            <TextBlock Text="Unwanted Ingredients" Style="{StaticResource TextblockTitle}"/>
-            <TextBlock Text="Unwanted ingredients list" Style="{StaticResource TextUnderTitle}" Grid.Row="1"/>
-            <ListBox x:Name="UnwantedIngredientsList" SelectedItem="{Binding SelectedBlackListIngredient}" ItemsSource="{Binding Path=CurrentUser.BlacklistIngredients}" Grid.Row="2" Grid.ColumnSpan="2">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Path=Ingredient.Name}"/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-            
-            <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding RemoveIngredientFromUnwantedIngredientsCommand}" Grid.Row="3">
-                <Button.Background>
-                    <ImageBrush ImageSource="../Images/minusIcon.png" Stretch="Uniform"/>
-                </Button.Background>
-            </Button>
-            
-            <TextBlock Text="Add unwanted ingredient" Style="{StaticResource TextUnderTitle}" Grid.Row="4"/>
-            <UserControls:IngredientAutoComplete SelectItemCommand="{Binding AddIngredientToUnwantedIngredientsCommand}"
-                                             MaximumItems="5" Grid.Row="5"/>
-        </Grid>
-    </ListBox>
-    <!--<Grid>
+                <TextBlock Text="Favorite Ingredients" Grid.ColumnSpan="2" Style="{StaticResource TextblockTitle}"/>
+                <TextBlock Text="Favorite ingredients list" Style="{StaticResource TextUnderTitle}" Grid.Row="1" Grid.ColumnSpan="2"/>
+                <ListBox x:Name="FavoriteIngredientsList" SelectedItem="{Binding SelectedGreyListIngredient}" ItemsSource="{Binding Path=CurrentUser.GraylistIngredients}" Grid.Row="2" Grid.ColumnSpan="2">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Ingredient.Name}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Button Style="{StaticResource ButtonIconTemplate}" Content="Remove" Grid.Row="3" Grid.Column="1">
+                    <Button.Background>
+                        <ImageBrush ImageSource="../Images/minusIcon.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+
+                <TextBlock Style="{StaticResource TextUnderTitle}" Text="Add new favorite ingredient" Grid.Row="4" Grid.ColumnSpan="2"/>
+                <TextBlock Text="Name:" Grid.Row="5" Grid.ColumnSpan="2"/>
+                <UserControls:IngredientAutoComplete SelectItemCommand="{}" MaximumItems="5" Grid.Row="6" Grid.ColumnSpan="2"/>
+                <TextBlock Text="Rating:" Grid.Row="7" Grid.ColumnSpan="2"/>
+                <TextBox Grid.Row="8" Grid.ColumnSpan="2"/>
+                <Button Style="{StaticResource ButtonIconTemplate}" Grid.Row="9" Grid.Column="1">
+                    <Button.Background>
+                        <ImageBrush ImageSource="../Images/plusIcon.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Unwanted Ingredients" Style="{StaticResource TextblockTitle}" Grid.ColumnSpan="2"/>
+                <TextBlock Text="Unwanted ingredients list" Style="{StaticResource TextUnderTitle}" Grid.Row="1" Grid.ColumnSpan="2"/>
+                <ListBox x:Name="UnwantedIngredientsList" SelectedItem="{Binding SelectedBlackListIngredient}" ItemsSource="{Binding Path=CurrentUser.BlacklistIngredients}" Grid.Row="2" Grid.ColumnSpan="2">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Ingredient.Name}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding RemoveIngredientFromUnwantedIngredientsCommand}" Grid.Row="3" Grid.Column="2">
+                    <Button.Background>
+                        <ImageBrush ImageSource="../Images/minusIcon.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+
+                <TextBlock Text="Add unwanted ingredient" Style="{StaticResource TextUnderTitle}" Grid.Row="4" Grid.ColumnSpan="2"/>
+                <UserControls:IngredientAutoComplete SelectItemCommand="{Binding AddIngredientToUnwantedIngredientsCommand}" MaximumItems="5" Grid.Row="5"  Grid.ColumnSpan="2"/>
+                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding AddIngredientToUnwantedIngredientsCommand}" Grid.Row="6" Grid.Column="1">
+                    <Button.Background>
+                        <ImageBrush ImageSource="../Images/plusIcon.png"/>
+                    </Button.Background>
+                </Button>
+            </Grid>
+        </StackPanel>
+        <!--<Grid>
         <ListBox>
             <Expander Header="User speficics">
                 <Grid>
@@ -307,4 +340,5 @@
             </Expander>
         </ListBox>
     </Grid>-->
+    </ScrollViewer>
 </Page>

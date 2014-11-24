@@ -32,7 +32,18 @@ namespace FoodPlanner
         private void getRecommend_Click(object sender, RoutedEventArgs e)
         {
             PublicQuerys publicQuerys = new PublicQuerys();
-            listResults.ItemsSource = null;
+
+            IQueryable<IGrouping<int, Result>> groupedRecipes = publicQuerys.search((from r in App.db.Meals where r.UserID == App.CurrentUser.ID && r.Date <= DateTime.Now select r.RecipeID).ToList());
+
+            List<SearchResults> orderedListOfSearchResults = publicQuerys.addValuesToSearch(groupedRecipes);
+
+            listResults.ItemsSource = orderedListOfSearchResults.OrderByDescending(res => res.fullMatch)
+                                                                .ThenByDescending(res => res.partialMatch)
+                                                                .ThenByDescending(res => res.getRating)
+                                                                .ThenByDescending(res => res.prevIngredients)
+                                                                .ThenByDescending(res => res.recipe.Title)
+                                                                .ToList();
+
         }
 
         private void startSearch_Click(object sender, RoutedEventArgs e)

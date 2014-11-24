@@ -24,16 +24,16 @@ namespace FoodPlanner.Models
                                                                          UserID = iig.FirstOrDefault().UserID
                                                                      }).ToList();
 
-        public List<LastMeal> lastMeals = (from meals in App.db.Meals
-                                           join ri in App.db.RecipeIngredients on meals.RecipeID equals ri.RecipeID
-                                           join i in App.db.Ingredients on ri.IngredientID equals i.ID
-                                           where meals.UserID == App.CurrentUser.ID && meals.Date <= DateTime.Now
-                                           group i by i.ID into igrouped
-                                           select new LastMeal()
-                                           {
-                                               ingredientID = igrouped.FirstOrDefault().ID,
-                                               ingredientCount = igrouped.Count()
-                                           }).ToList();
+        public List<LastMeal> ingredientsFromLastMeals = (from meals in App.db.Meals
+                                                          join ri in App.db.RecipeIngredients on meals.RecipeID equals ri.RecipeID
+                                                          join i in App.db.Ingredients on ri.IngredientID equals i.ID
+                                                          where meals.UserID == App.CurrentUser.ID && meals.Date <= DateTime.Now
+                                                          group i by i.ID into igrouped
+                                                          select new LastMeal()
+                                                          {
+                                                              ingredientID = igrouped.FirstOrDefault().ID,
+                                                              ingredientCount = igrouped.Count()
+                                                          }).ToList();
 
         public List<int> blackList = (from bl in App.db.BlacklistIngredients
                                       join ri in App.db.RecipeIngredients on bl.IngredientID equals ri.IngredientID
@@ -108,9 +108,9 @@ namespace FoodPlanner.Models
                         }
                     }
 
-                    if (lastMeals.Where(iflm => iflm.ingredientID == res.ingredient.ID).Count() != 0)
+                    if (ingredientsFromLastMeals.Where(iflm => iflm.ingredientID == res.ingredient.ID).Count() != 0)
                     {
-                        searchResult.prevIngredients += lastMeals.Where(iflm => iflm.ingredientID == res.ingredient.ID).Single().ingredientCount;
+                        searchResult.prevIngredients += ingredientsFromLastMeals.Where(iflm => iflm.ingredientID == res.ingredient.ID).Single().ingredientCount;
                     }
 
                     if (grayList.Where(gl => res.ingredient.ID == gl.ingredient.ID).Count() != 0)

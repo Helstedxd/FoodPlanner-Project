@@ -11,8 +11,10 @@ using System.Windows.Input;
 using System.Collections.ObjectModel;
 using MvvmFoundation.Wpf;
 
-namespace FoodPlanner.ViewModels {
-    class SettingsViewModel : ObservableObject {
+namespace FoodPlanner.ViewModels
+{
+    class SettingsViewModel : ObservableObject
+    {
         #region Fields
 
         public BlacklistIngredient SelectedBlackListIngredient { get; set; }
@@ -26,43 +28,78 @@ namespace FoodPlanner.ViewModels {
         private ICommand _decrementPersonsInHouseholdCommand;
         private ICommand _addNewStockIngredientCommand;
         private User _currentUser;
-        public User CurrentUser {
+        private Uri _selectedPage = new Uri(Properties.Settings.Default.StartPage, UriKind.Relative);
+        public User CurrentUser
+        {
             get { return _currentUser; }
-            set {
+            set
+            {
                 _currentUser = value;
                 RaisePropertyChanged("CurrentUser");
             }
         }
-        public int PersonsInHouseHold {
-            get {
+
+        public List<Uri> UriList 
+        {
+            get
+            {
+                return CreateUri();
+            }
+        }
+
+        public Uri SelectedPage
+        {
+            get
+            {
+                return _selectedPage;
+            }
+            set
+            {
+                _selectedPage = value;
+                Properties.Settings.Default.StartPage = value.ToString();
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        public int PersonsInHouseHold
+        {
+            get
+            {
                 return App.CurrentUser.PersonsInHouseHold;
             }
         }
-        public int ShopAhead {
-            get {
+        public int ShopAhead
+        {
+            get
+            {
                 return App.CurrentUser.ShopAhead;
             }
         }
         private StockQuantity _inventoryIngredient;
-        public StockQuantity StockIngredient {
+        public StockQuantity StockIngredient
+        {
             get { return _inventoryIngredient; }
-            set {
+            set
+            {
                 _inventoryIngredient = value;
                 RaisePropertyChanged("InventoryIngredient");
             }
         }
         private GraylistIngredient _greyListInventoryIngredient;
-        public GraylistIngredient GreyListInventoryIngredient {
+        public GraylistIngredient GreyListInventoryIngredient
+        {
             get { return _greyListInventoryIngredient; }
-            set {
+            set
+            {
                 _greyListInventoryIngredient = value;
                 RaisePropertyChanged("GreyListIngredient");
             }
         }
 
         #endregion
-        
-        public SettingsViewModel() {
+
+        public SettingsViewModel()
+        {
             StockIngredient = new StockQuantity();
             CurrentUser = App.CurrentUser;
             SelectedBlackListIngredient = new BlacklistIngredient();
@@ -74,9 +111,12 @@ namespace FoodPlanner.ViewModels {
         #endregion
 
         #region ICommands
-        public ICommand SaveNewStockIngredientNameCommand {
-            get {
-                if (_saveNewStockIngredientNameCommand == null) {
+        public ICommand SaveNewStockIngredientNameCommand
+        {
+            get
+            {
+                if (_saveNewStockIngredientNameCommand == null)
+                {
                     _saveNewStockIngredientNameCommand = new RelayCommand<Ingredient>(i => SaveNewStockIngredientName(i));
                 }
 
@@ -84,9 +124,12 @@ namespace FoodPlanner.ViewModels {
             }
         }
 
-        public ICommand IncrementShopAheadCommand {
-            get {
-                if (_incrementShopAheadCommand == null) {
+        public ICommand IncrementShopAheadCommand
+        {
+            get
+            {
+                if (_incrementShopAheadCommand == null)
+                {
                     _incrementShopAheadCommand = new RelayCommand(() => IncrementShopAhead());
                 }
 
@@ -94,9 +137,12 @@ namespace FoodPlanner.ViewModels {
             }
         }
 
-        public ICommand DecrementShopAheadCommmand {
-            get {
-                if (_decrementShopAhead == null) {
+        public ICommand DecrementShopAheadCommmand
+        {
+            get
+            {
+                if (_decrementShopAhead == null)
+                {
                     _decrementShopAhead = new RelayCommand(() => DecrementShopAhead());
                 }
 
@@ -104,9 +150,12 @@ namespace FoodPlanner.ViewModels {
             }
         }
 
-        public ICommand IncrementPersonsInHouseholdCommand {
-            get {
-                if (_incrementPersonsInHouseholdCommand == null) {
+        public ICommand IncrementPersonsInHouseholdCommand
+        {
+            get
+            {
+                if (_incrementPersonsInHouseholdCommand == null)
+                {
                     _incrementPersonsInHouseholdCommand = new RelayCommand(() => IncrementPersonsInHousehold());
                 }
 
@@ -114,9 +163,12 @@ namespace FoodPlanner.ViewModels {
             }
         }
 
-        public ICommand DecrementPersonsInHouseholdCommand {
-            get {
-                if (_decrementPersonsInHouseholdCommand == null) {
+        public ICommand DecrementPersonsInHouseholdCommand
+        {
+            get
+            {
+                if (_decrementPersonsInHouseholdCommand == null)
+                {
                     _decrementPersonsInHouseholdCommand = new RelayCommand(() => DecrementPersonsInHousehold());
                 }
 
@@ -124,9 +176,12 @@ namespace FoodPlanner.ViewModels {
             }
         }
 
-        public ICommand AddIngredientToUnwantedIngredientsCommand {
-            get {
-                if (_addIngredientToUnwantedIngredientsCommand == null) {
+        public ICommand AddIngredientToUnwantedIngredientsCommand
+        {
+            get
+            {
+                if (_addIngredientToUnwantedIngredientsCommand == null)
+                {
                     _addIngredientToUnwantedIngredientsCommand = new RelayCommand<Ingredient>(i => AddIngredientToUnwantedIngredients(i));
                 }
 
@@ -135,18 +190,24 @@ namespace FoodPlanner.ViewModels {
             }
         }
 
-        public ICommand RemoveIngredientFromUnwantedIngredientsCommand {
-            get {
-                if (_removeingredientFromUnwantedIngredientsCommand == null) {
+        public ICommand RemoveIngredientFromUnwantedIngredientsCommand
+        {
+            get
+            {
+                if (_removeingredientFromUnwantedIngredientsCommand == null)
+                {
                     _removeingredientFromUnwantedIngredientsCommand = new RelayCommand(() => RemoveIngredientFromUnwantedIngredients());
                 }
                 return _removeingredientFromUnwantedIngredientsCommand;
             }
         }
 
-        public ICommand AddNewStockIngredientCommand {
-            get {
-                if (_addNewStockIngredientCommand == null) {
+        public ICommand AddNewStockIngredientCommand
+        {
+            get
+            {
+                if (_addNewStockIngredientCommand == null)
+                {
                     _addNewStockIngredientCommand = new RelayCommand(() => AddNewStockIngredient());
                 }
 
@@ -159,13 +220,29 @@ namespace FoodPlanner.ViewModels {
         #region Methods
 
         //Crasher når "App.db.SaveChanges();" køres.  
-        private void AddNewStockIngredient() {
+
+        private void AddNewStockIngredient()
+        {
             StockQuantity StockIngredientToBeAdded = new StockQuantity() { IngredientID = StockIngredient.IngredientID, ID = StockIngredient.ID };
             App.db.StockQuantities.Add(StockIngredientToBeAdded);
             App.db.SaveChanges();
         }
 
-        private void SaveNewStockIngredientName(Ingredient ingredient) {
+        private List<Uri> CreateUri()
+        {
+            List<Uri> returnList = new List<Uri>()
+            {
+                new Uri("Views/InventoryPage.xaml", UriKind.Relative),
+                new Uri("Views/MealPlanPage.xaml", UriKind.Relative),
+                new Uri("Views/RecipeSearchPage.xaml", UriKind.Relative),
+                new Uri("Views/SettingsPage.xaml", UriKind.Relative),
+                new Uri("Views/ShoppingListPage.xaml", UriKind.Relative)
+            };
+            return returnList;
+        }
+
+        private void SaveNewStockIngredientName(Ingredient ingredient)
+        {
             StockIngredient.Ingredient = ingredient;
             //App.db.SaveChanges();
             RaisePropertyChanged("StockIngredient");
@@ -173,43 +250,49 @@ namespace FoodPlanner.ViewModels {
         }
 
         //For alle in/decrement gælder det at de ikke må være 0> og >(eks)1000
-        private void IncrementShopAhead() {
+        private void IncrementShopAhead()
+        {
             App.CurrentUser.ShopAhead++;
             App.db.SaveChanges();
             RaisePropertyChanged("ShopAhead");
         }
 
-        private void DecrementShopAhead() {
+        private void DecrementShopAhead()
+        {
             App.CurrentUser.ShopAhead--;
             App.db.SaveChanges();
             RaisePropertyChanged("ShopAhead");
         }
 
-        private void IncrementPersonsInHousehold() {
+        private void IncrementPersonsInHousehold()
+        {
             App.CurrentUser.PersonsInHouseHold++;
             App.db.SaveChanges();
             RaisePropertyChanged("PersonsInHouseHold");
         }
 
-        private void DecrementPersonsInHousehold() {
+        private void DecrementPersonsInHousehold()
+        {
             App.CurrentUser.PersonsInHouseHold--;
             App.db.SaveChanges();
             RaisePropertyChanged("PersonsInHouseHold");
         }
 
         //Fix: Det skal sikres at man ikke kan tilføje den samme ingrediens flere gange.
-        private void AddIngredientToUnwantedIngredients(Ingredient ingredient) {
-            BlacklistIngredient IngredientToBeAdded = new BlacklistIngredient() { IngredientID = ingredient.ID, UserID = App.CurrentUser.ID};
+        private void AddIngredientToUnwantedIngredients(Ingredient ingredient)
+        {
+            BlacklistIngredient IngredientToBeAdded = new BlacklistIngredient() { IngredientID = ingredient.ID, UserID = App.CurrentUser.ID };
             App.db.BlacklistIngredients.Add(IngredientToBeAdded);
             App.db.SaveChanges();
         }
 
         //Fix: Metoden skal også sikre mod at der er valgt et element i listboxen.
-        private void RemoveIngredientFromUnwantedIngredients() {
+        private void RemoveIngredientFromUnwantedIngredients()
+        {
             App.db.BlacklistIngredients.RemoveRange(App.db.BlacklistIngredients.Where(bli => bli.Id == SelectedBlackListIngredient.Id && bli.UserID == App.CurrentUser.ID));
             App.db.SaveChanges();
         }
-            
+
         #endregion
     }
 }

@@ -33,7 +33,7 @@ namespace FoodPlanner
 
         public static NavigationService NavigationService
         {
-            private get
+             get
             {
                 return _navigationService;
             }

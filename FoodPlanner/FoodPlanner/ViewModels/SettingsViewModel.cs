@@ -17,9 +17,14 @@ namespace FoodPlanner.ViewModels {
 
         public BlacklistIngredient SelectedBlackListIngredient { get; set; }
         public GraylistIngredient SelectedGreyListIngredient { get; set; }
-        private ICommand _saveListItemCommand;
+        private ICommand _saveNewStockIngredientNameCommand;
         private ICommand _addIngredientToUnwantedIngredientsCommand;
-        private ICommand _removeingredientFromUnwantedIngredientsCommand;       
+        private ICommand _removeingredientFromUnwantedIngredientsCommand;
+        private ICommand _incrementShopAheadCommand;
+        private ICommand _decrementShopAhead;
+        private ICommand _incrementPersonsInHouseholdCommand;
+        private ICommand _decrementPersonsInHouseholdCommand;
+        private ICommand _addNewStockIngredientCommand;
         private User _currentUser;
         public User CurrentUser {
             get { return _currentUser; }
@@ -28,8 +33,18 @@ namespace FoodPlanner.ViewModels {
                 RaisePropertyChanged("CurrentUser");
             }
         }
-        private InventoryIngredient _inventoryIngredient;
-        public InventoryIngredient InventoryIngredient {
+        public int PersonsInHouseHold {
+            get {
+                return App.CurrentUser.PersonsInHouseHold;
+            }
+        }
+        public int ShopAhead {
+            get {
+                return App.CurrentUser.ShopAhead;
+            }
+        }
+        private StockQuantity _inventoryIngredient;
+        public StockQuantity StockIngredient {
             get { return _inventoryIngredient; }
             set {
                 _inventoryIngredient = value;
@@ -48,7 +63,7 @@ namespace FoodPlanner.ViewModels {
         #endregion
         
         public SettingsViewModel() {
-            InventoryIngredient = new InventoryIngredient();
+            StockIngredient = new StockQuantity();
             CurrentUser = App.CurrentUser;
             SelectedBlackListIngredient = new BlacklistIngredient();
             SelectedGreyListIngredient = new GraylistIngredient();
@@ -59,21 +74,55 @@ namespace FoodPlanner.ViewModels {
         #endregion
 
         #region ICommands
-        public ICommand SaveListItemCommand {
+        public ICommand SaveNewStockIngredientNameCommand {
             get {
-                if (_saveListItemCommand == null) {
-                    _saveListItemCommand = new RelayCommand<Ingredient>(i => SaveNewStockIngredientName(i));
+                if (_saveNewStockIngredientNameCommand == null) {
+                    _saveNewStockIngredientNameCommand = new RelayCommand<Ingredient>(i => SaveNewStockIngredientName(i));
                 }
 
-                return _saveListItemCommand;
+                return _saveNewStockIngredientNameCommand;
             }
         }
 
-        private void SaveNewStockIngredientName(Ingredient i) {
-            InventoryIngredient.ID = i.ID;
+        public ICommand IncrementShopAheadCommand {
+            get {
+                if (_incrementShopAheadCommand == null) {
+                    _incrementShopAheadCommand = new RelayCommand(() => IncrementShopAhead());
+                }
 
+                return _incrementShopAheadCommand;
+            }
         }
 
+        public ICommand DecrementShopAheadCommmand {
+            get {
+                if (_decrementShopAhead == null) {
+                    _decrementShopAhead = new RelayCommand(() => DecrementShopAhead());
+                }
+
+                return _decrementShopAhead;
+            }
+        }
+
+        public ICommand IncrementPersonsInHouseholdCommand {
+            get {
+                if (_incrementPersonsInHouseholdCommand == null) {
+                    _incrementPersonsInHouseholdCommand = new RelayCommand(() => IncrementPersonsInHousehold());
+                }
+
+                return _incrementPersonsInHouseholdCommand;
+            }
+        }
+
+        public ICommand DecrementPersonsInHouseholdCommand {
+            get {
+                if (_decrementPersonsInHouseholdCommand == null) {
+                    _decrementPersonsInHouseholdCommand = new RelayCommand(() => DecrementPersonsInHousehold());
+                }
+
+                return _decrementPersonsInHouseholdCommand;
+            }
+        }
 
         public ICommand AddIngredientToUnwantedIngredientsCommand {
             get {
@@ -95,12 +144,57 @@ namespace FoodPlanner.ViewModels {
             }
         }
 
+        public ICommand AddNewStockIngredientCommand {
+            get {
+                if (_addNewStockIngredientCommand == null) {
+                    _addNewStockIngredientCommand = new RelayCommand(() => AddNewStockIngredient());
+                }
+
+                return _addNewStockIngredientCommand;
+            }
+        }
+
         #endregion
 
         #region Methods
 
-        private void SaveChosenListItemFromAutoCompleteList(Ingredient ingredient) {
-            InventoryIngredient.Ingredient.ID = ingredient.ID;
+        //Crasher når "App.db.SaveChanges();" køres.  
+        private void AddNewStockIngredient() {
+            StockQuantity StockIngredientToBeAdded = new StockQuantity() { IngredientID = StockIngredient.IngredientID, ID = StockIngredient.ID };
+            App.db.StockQuantities.Add(StockIngredientToBeAdded);
+            App.db.SaveChanges();
+        }
+
+        private void SaveNewStockIngredientName(Ingredient ingredient) {
+            StockIngredient.Ingredient = ingredient;
+            //App.db.SaveChanges();
+            RaisePropertyChanged("StockIngredient");
+            Console.WriteLine("Der er givet et navn");
+        }
+
+        //For alle in/decrement gælder det at de ikke må være 0> og >(eks)1000
+        private void IncrementShopAhead() {
+            App.CurrentUser.ShopAhead++;
+            App.db.SaveChanges();
+            RaisePropertyChanged("ShopAhead");
+        }
+
+        private void DecrementShopAhead() {
+            App.CurrentUser.ShopAhead--;
+            App.db.SaveChanges();
+            RaisePropertyChanged("ShopAhead");
+        }
+
+        private void IncrementPersonsInHousehold() {
+            App.CurrentUser.PersonsInHouseHold++;
+            App.db.SaveChanges();
+            RaisePropertyChanged("PersonsInHouseHold");
+        }
+
+        private void DecrementPersonsInHousehold() {
+            App.CurrentUser.PersonsInHouseHold--;
+            App.db.SaveChanges();
+            RaisePropertyChanged("PersonsInHouseHold");
         }
 
         //Fix: Det skal sikres at man ikke kan tilføje den samme ingrediens flere gange.

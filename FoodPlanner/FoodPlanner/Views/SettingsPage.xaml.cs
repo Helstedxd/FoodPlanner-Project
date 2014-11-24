@@ -12,5 +12,9 @@ namespace FoodPlanner.Views
         {
             InitializeComponent();
         }
+
+        private void TextBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e) {
+
+        }
     }
 }

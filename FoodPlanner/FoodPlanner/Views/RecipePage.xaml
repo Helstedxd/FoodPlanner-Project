@@ -13,7 +13,7 @@
         <ViewModels:RecipeViewModel/>
     </Page.DataContext>-->
 
-    <Grid DataContext="{Binding Recipe}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="Auto"/>
@@ -35,8 +35,9 @@
         </Button>
 
         <StackPanel Grid.Column="2" Orientation="Horizontal">
-            <DatePicker Height="{Binding ElementName=TopBarButton, Path=ActualHeight}" Visibility="Collapsed"/>
-            <Button Style="{StaticResource ButtonIconTemplate}" HorizontalAlignment="Right" Height="{Binding ElementName=TopBarButton, Path=ActualHeight}" Width="{Binding ElementName=TopBarButton, Path=ActualHeight}">
+            <Label Content="{Binding Path=SuccesText}"/>
+            <DatePicker SelectedDate="{Binding activeDate, Mode=TwoWay}" Height="{Binding ElementName=TopBarButton, Path=ActualHeight}" Margin="0,2"/>
+            <Button Command="{Binding StartDialogCommand}" Style="{StaticResource ButtonIconTemplate}" HorizontalAlignment="Right" Height="{Binding ElementName=TopBarButton, Path=ActualHeight}" Width="{Binding ElementName=TopBarButton, Path=ActualHeight}" Margin="2,3,2,1">
                 <Button.Background>
                     <ImageBrush ImageSource="../Images/plusIcon.png" Stretch="Uniform"/>
                 </Button.Background>
@@ -44,19 +45,19 @@
             
         </StackPanel>
 
-        <Image Grid.Row="1" Grid.RowSpan="2" Height="100" Width="100" Source="{Binding Image}"/>
+        <Image Grid.Row="1" Grid.RowSpan="2" Height="100" Width="100" Source="{Binding Recipe.Image}"/>
 
         <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource TextTitle}">
             <Label.Content>
-                <AccessText TextWrapping="Wrap" Text="{Binding Title}"/>
+                <AccessText TextWrapping="Wrap" Text="{Binding Recipe.Title}"/>
             </Label.Content>
         </Label>
 
         <ScrollViewer Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="2" Padding="5,0,0,0">
-            <TextBlock Text="{Binding RecipesPreparation.Preparation}" TextWrapping="Wrap"/>
+            <TextBlock Text="{Binding Recipe.RecipesPreparation.Preparation}" TextWrapping="Wrap"/>
         </ScrollViewer>
 
-        <ListBox x:Name="IngredientListbox" ItemsSource="{Binding RecipeIngredients}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Row="3" Width="100" Background="{StaticResource BackgroundColour}" BorderThickness="0">
+        <ListBox x:Name="IngredientListbox" ItemsSource="{Binding Recipe.RecipeIngredients}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Row="3" Width="100" Background="{StaticResource BackgroundColour}" BorderThickness="0">
             <ListBox.ItemTemplate>    
             <DataTemplate>
                     <StackPanel>

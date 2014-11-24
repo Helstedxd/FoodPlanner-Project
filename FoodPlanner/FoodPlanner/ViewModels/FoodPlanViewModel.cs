@@ -33,10 +33,10 @@ namespace FoodPlanner.ViewModels
             SaturdayMeals = new ObservableCollection<Meal>();
             SundayMeals = new ObservableCollection<Meal>();
 
-            ActiveDate = DateTime.Now;
-            if (ActiveDate.DayOfWeek == DayOfWeek.Sunday) //This is done in order to get the GetDdayDifference method to make sense when it's Sunday
+            activeDate = DateTime.Now;
+            if (activeDate.DayOfWeek == DayOfWeek.Sunday) //This is done in order to get the GetDdayDifference method to make sense when it's Sunday
             {
-                ActiveDate = ActiveDate.AddDays(-1);
+                activeDate = activeDate.AddDays(-1);
             }
             //TestMethod();
             ShowMeals();
@@ -44,7 +44,7 @@ namespace FoodPlanner.ViewModels
 
         #region Propertie
         private DateTime _activeDate;
-        private DateTime ActiveDate
+        private DateTime activeDate
         {
             get { return _activeDate; }
             set { 
@@ -150,7 +150,7 @@ namespace FoodPlanner.ViewModels
             {
                 DateTimeFormatInfo timeFormat = DateTimeFormatInfo.CurrentInfo;
                 Calendar calendar = timeFormat.Calendar;
-                return "Week " + calendar.GetWeekOfYear(ActiveDate, timeFormat.CalendarWeekRule, timeFormat.FirstDayOfWeek).ToString();
+                return "Week " + calendar.GetWeekOfYear(activeDate, timeFormat.CalendarWeekRule, timeFormat.FirstDayOfWeek).ToString();
             }
         }
         #endregion
@@ -158,13 +158,13 @@ namespace FoodPlanner.ViewModels
         #region Methods
         public void NextWeek()
         {
-            ActiveDate = ActiveDate.AddDays(7);
+            activeDate = activeDate.AddDays(7);
             FlushMeals();
             ShowMeals();
         }
         public void PreviousWeek()
         {
-            ActiveDate = ActiveDate.AddDays(-7);
+            activeDate = activeDate.AddDays(-7);
             FlushMeals();
             ShowMeals();
         }
@@ -182,7 +182,7 @@ namespace FoodPlanner.ViewModels
         {
             int difference = GetDdayDifference(day);
             string result;
-            return result = ActiveDate.AddDays(-difference).Date.ToString("dddd\ndd/MM",CultureInfo.CreateSpecificCulture("en-US"));
+            return result = activeDate.AddDays(-difference).Date.ToString("dddd\ndd/MM",CultureInfo.CreateSpecificCulture("en-US"));
         }
         private int GetDdayDifference(DayOfWeek day)
         {
@@ -190,11 +190,11 @@ namespace FoodPlanner.ViewModels
 
             if (day == DayOfWeek.Sunday)
             {
-                difference = Convert.ToInt16(ActiveDate.DayOfWeek) - 7;
+                difference = Convert.ToInt16(activeDate.DayOfWeek) - 7;
             }
             else
             {
-                difference = ActiveDate.DayOfWeek - day;
+                difference = activeDate.DayOfWeek - day;
             }
 
             return difference;
@@ -202,8 +202,8 @@ namespace FoodPlanner.ViewModels
         private void ShowMeals()
         {
             int mondayDifference = GetDdayDifference(DayOfWeek.Monday), sundayDifference = GetDdayDifference(DayOfWeek.Sunday);
-            DateTime mondayDate = ActiveDate.AddDays(-mondayDifference), 
-                    sundayDate = ActiveDate.AddDays(-sundayDifference);
+            DateTime mondayDate = activeDate.AddDays(-mondayDifference), 
+                    sundayDate = activeDate.AddDays(-sundayDifference);
             List<Meal> mealList = App.db.Meals.Where(m => m.Date >= mondayDate.Date && m.Date <= sundayDate.Date).ToList();
             foreach (Meal m in mealList)
             {

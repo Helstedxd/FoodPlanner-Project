@@ -35,8 +35,9 @@
         </Button>
 
         <StackPanel Grid.Column="2" Orientation="Horizontal">
-            <DatePicker Height="{Binding ElementName=TopBarButton, Path=ActualHeight}" Visibility="Collapsed"/>
-            <Button Style="{StaticResource ButtonIconTemplate}" HorizontalAlignment="Right" Height="{Binding ElementName=TopBarButton, Path=ActualHeight}" Width="{Binding ElementName=TopBarButton, Path=ActualHeight}">
+            <Label Content="{Binding Path=SuccesText}"/>
+            <DatePicker SelectedDate="{Binding activeDate, Mode=TwoWay}" Height="{Binding ElementName=TopBarButton, Path=ActualHeight}" Margin="0,2"/>
+            <Button Command="{Binding StartDialogCommand}" Style="{StaticResource ButtonIconTemplate}" HorizontalAlignment="Right" Height="{Binding ElementName=TopBarButton, Path=ActualHeight}" Width="{Binding ElementName=TopBarButton, Path=ActualHeight}" Margin="2,3,2,1">
                 <Button.Background>
                     <ImageBrush ImageSource="../Images/plusIcon.png" Stretch="Uniform"/>
                 </Button.Background>

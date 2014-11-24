@@ -54,7 +54,7 @@ namespace FoodPlanner.Models
             IQueryable<IGrouping<int, Result>> recipeIngredients = from ri in App.db.RecipeIngredients
                                                                    join i in App.db.Ingredients on ri.IngredientID equals i.ID
                                                                    join r in App.db.Recipes on ri.RecipeID equals r.ID
-                                                                   where recipeIDs.Any(rid => rid == ri.RecipeID)
+                                                                   where recipeIDs.Contains(ri.RecipeID)
                                                                    group new Result()
                                                                    {
                                                                        recipe = ri.Recipe,
@@ -68,70 +68,63 @@ namespace FoodPlanner.Models
         public List<SearchResults> addValuesToSearch(IQueryable<IGrouping<int, Result>> userInput, List<string> searchKeywords = null)
         {
             List<SearchResults> result = new List<SearchResults>();
-            try
-            {
-                foreach (IGrouping<int, Result> ri in userInput)
-                {
-                    Recipe recipe = ri.FirstOrDefault().recipe;
 
-                    SearchResults searchResult = new SearchResults(recipe);
+            foreach (IGrouping<int, Result> ri in userInput)
+            {
+                Recipe recipe = ri.FirstOrDefault().recipe;
+
+                SearchResults searchResult = new SearchResults(recipe);
+
+                if (searchKeywords != null)
+                {
+                    if (searchKeywords.Any(s => recipe.Title.ToLower().Contains(s.ToLower())))
+                    {
+                        searchResult.keyWordMatch++;
+                    }
+                }
+
+
+                foreach (Result res in ri)
+                {
+                    searchResult.addIngredient(res.ingredient);
+
+                    if (inventoryList.Where(il => il.IngredientID == res.ingredient.ID).Count() != 0)
+                    {
+                        if (inventoryList.Where(il => il.IngredientID == res.ingredient.ID).First().Quantity >= res.quantity)
+                        {
+                            searchResult.fullMatch++;
+                        }
+                        else
+                        {
+                            searchResult.partialMatch += inventoryList.Where(il => il.IngredientID == res.ingredient.ID).First().Quantity / res.quantity;
+                        }
+                    }
 
                     if (searchKeywords != null)
                     {
-                        if (searchKeywords.Any(s => recipe.Title.ToLower().Contains(s.ToLower())))
+                        if (searchKeywords.Any(s => res.ingredient.Name.ToLower().Contains(s.ToLower())))
                         {
                             searchResult.keyWordMatch++;
                         }
                     }
 
-
-                    foreach (Result res in ri)
+                    if (lastMeals.Where(iflm => iflm.ingredientID == res.ingredient.ID).Count() != 0)
                     {
-                        searchResult.addIngredient(res.ingredient);
-
-                        if (inventoryList.Where(il => il.IngredientID == res.ingredient.ID).Count() != 0)
-                        {
-                            if (inventoryList.Where(il => il.IngredientID == res.ingredient.ID).First().Quantity >= res.quantity)
-                            {
-                                searchResult.fullMatch++;
-                            }
-                            else
-                            {
-                                searchResult.partialMatch += inventoryList.Where(il => il.IngredientID == res.ingredient.ID).First().Quantity / res.quantity;
-                            }
-                        }
-
-                        if (searchKeywords != null)
-                        {
-                            if (searchKeywords.Any(s => res.ingredient.Name.ToLower().Contains(s.ToLower())))
-                            {
-                                searchResult.keyWordMatch++;
-                            }
-                        }
-
-                        if (lastMeals.Where(iflm => iflm.ingredientID == res.ingredient.ID).Count() != 0)
-                        {
-                            searchResult.prevIngredients += lastMeals.Where(iflm => iflm.ingredientID == res.ingredient.ID).Single().ingredientCount;
-                        }
-
-                        if (grayList.Where(gl => res.ingredient.ID == gl.ingredient.ID).Count() != 0)
-                        {
-                            searchResult.setRating = grayList.Where(gl => res.ingredient.ID == gl.ingredient.ID).Single().rating;
-                        }
-                        else
-                        {
-                            //50 is the default value of nonrated items
-                            searchResult.setRating = 50;
-                        }
+                        searchResult.prevIngredients += lastMeals.Where(iflm => iflm.ingredientID == res.ingredient.ID).Single().ingredientCount;
                     }
 
-                    result.Add(searchResult);
+                    if (grayList.Where(gl => res.ingredient.ID == gl.ingredient.ID).Count() != 0)
+                    {
+                        searchResult.setRating = grayList.Where(gl => res.ingredient.ID == gl.ingredient.ID).SingleOrDefault().rating;
+                    }
+                    else
+                    {
+                        //50 is the default value of nonrated items
+                        searchResult.setRating = 50;
+                    }
                 }
-            }
 
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.InnerException.Message);
+                result.Add(searchResult);
             }
 
 

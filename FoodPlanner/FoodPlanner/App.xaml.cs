@@ -34,9 +34,6 @@ namespace FoodPlanner
                 //MessageBox.Show(ex.Message);
             }
 
-            var test = new Search();
-            test.ShowDialog();
-
             MainWindow mainWindow = new MainWindow();
             Navigator.NavigationService = mainWindow.Frame.NavigationService;
             Navigator.GoToMealPlanCommand.Execute(null);

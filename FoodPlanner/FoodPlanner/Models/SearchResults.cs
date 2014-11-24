@@ -43,7 +43,7 @@ namespace FoodPlanner.Models
         {
             get
             {
-                return string.Format("{0}/{1}", Math.Round((getFullMatch * _ingredients.Count()), 2), _ingredients.Count());
+                return string.Format("{0}/{1}", Math.Round((getFullMatch * _ingredients.Count()), 2).ToString("G29"), _ingredients.Count());
             }
         }
 

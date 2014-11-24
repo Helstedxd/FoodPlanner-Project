@@ -102,30 +102,30 @@ namespace FoodPlanner
 
         private void startSearch_Click(object sender, RoutedEventArgs e)
         {
-            PublicQuerys test = new PublicQuerys();
+            PublicQuerys publicQuerys = new PublicQuerys();
 
             List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
 
-            List<int> tester = (from ri in App.db.RecipeIngredients
-                                join i in App.db.Ingredients on ri.IngredientID equals i.ID
-                                where searchQuery.Any(s => i.Name.Contains(s))
-                                select ri.RecipeID).ToList();
+            List<int> recipeIDByIngredients = (from ri in App.db.RecipeIngredients
+                                               join i in App.db.Ingredients on ri.IngredientID equals i.ID
+                                               where searchQuery.Any(s => i.Name.Contains(s))
+                                               select ri.RecipeID).ToList();
 
-            List<int> tester2 = (from ri in App.db.RecipeIngredients
-                                 join r in App.db.Recipes on ri.RecipeID equals r.ID
-                                 where searchQuery.Any(s => r.Title.Contains(s))
-                                 select ri.RecipeID).ToList();
+            List<int> recipeIDByRecipeName = (from ri in App.db.RecipeIngredients
+                                              join r in App.db.Recipes on ri.RecipeID equals r.ID
+                                              where searchQuery.Any(s => r.Title.Contains(s))
+                                              select ri.RecipeID).ToList();
 
-            tester2.AddRange(tester);
+            recipeIDByIngredients.AddRange(recipeIDByRecipeName);
 
-            List<int> final = tester2.Distinct().Except(test.blackList).ToList();
+            List<int> recipeIDs = recipeIDByIngredients.Distinct().Except(publicQuerys.blackList).ToList();
 
 
-            IQueryable<IGrouping<int, Result>> test2 = test.search(final);
+            IQueryable<IGrouping<int, Result>> groupedRecipes = publicQuerys.search(recipeIDs);
 
-            List<SearchResults> test3 = test.addValuesToSearch(test2, searchQuery);
+            List<SearchResults> orderedListOfSearchResults = publicQuerys.addValuesToSearch(groupedRecipes, searchQuery);
 
-            listResults.ItemsSource = test3.ToList();
+            listResults.ItemsSource = orderedListOfSearchResults.ToList();
 
         }
 

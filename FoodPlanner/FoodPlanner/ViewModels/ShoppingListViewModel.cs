@@ -14,26 +14,63 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using FoodPlanner.Models;
+using MvvmFoundation.Wpf;
 
 namespace FoodPlanner.ViewModels
 {
 
-    public class ShoppingListViewModel
+    public class ShoppingListViewModel : ObservableObject
     {
 
-        public List<InventoryIngredient> ShoppingList { get; set; }
+        public ObservableCollection<ShoppingListIngredient> ShoppingList { get; set; }
+
+        private bool _checkAllChecked;
+        public bool CheckAllChecked
+        {
+            get
+            {
+                return _checkAllChecked;
+            }
+            set
+            {
+                _checkAllChecked = value;
+                //ShoppingList. .All(i => i.Checked = value);
+                foreach (var lol in ShoppingList)
+                    lol.Checked = value;
+
+                RaisePropertyChanged("ShoppingList");
+            }
+        }
 
         public ShoppingListViewModel()
         {
-
-            ShoppingList = new List<InventoryIngredient>();
-
+            ShoppingList = new ObservableCollection<ShoppingListIngredient>();
             AssembleShoppingList();
-
         }
+
+
+
+        //TODO: this doens't work just remove :(
+        /*private ICommand _checkAllCommand;
+        public ICommand CheckAllCommand
+        {
+            get
+            {
+                if (_checkAllCommand == null)
+                {
+                    _checkAllCommand = new RelayCommand(() => {
+                        ShoppingList.All(i => i.Checked = true);
+                    
+                    });
+                }
+                return _checkAllCommand;
+            }
+        }*/
+
 
         private void AssembleShoppingList()
         {
+            //TODO: only consider within the shopAhead period (and maybe exclude days in the past)
             //TODO: somehow store these common queries...
             var InventoryIngredientsTotalQuantity =
                 from ii in App.db.InventoryIngredients
@@ -75,7 +112,7 @@ namespace FoodPlanner.ViewModels
                 if (IngredientDifference.InventoryQuantityDifference > 0)
                 {
                     // TODO: the purchase- and expiration date will have to be updated if we add this item to the inventory
-                    InventoryIngredient newShoppingListIngredient = new InventoryIngredient(IngredientDifference.Ingredient, IngredientDifference.InventoryQuantityDifference);
+                    ShoppingListIngredient newShoppingListIngredient = new ShoppingListIngredient(IngredientDifference.Ingredient, IngredientDifference.InventoryQuantityDifference);
                     ShoppingList.Add(newShoppingListIngredient);
                 }
             }

@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FoodPlanner"
       xmlns:ViewModels="clr-namespace:FoodPlanner.ViewModels"
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="405"
@@ -10,22 +11,32 @@
     <Page.DataContext>
         <ViewModels:ShoppingListViewModel/>
     </Page.DataContext>
+    <Page.Resources>
+        <Style TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+        </Style>
+    </Page.Resources>
     <Grid>
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="30"/>
         </Grid.ColumnDefinitions>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-
-        <ListView Grid.Row="1" Grid.RowSpan="1" Grid.ColumnSpan="2" ItemsSource="{Binding ShoppingList}">
+        <ListView Grid.Row="1" Grid.RowSpan="1" Grid.ColumnSpan="2" ItemsSource="{Binding ShoppingList}" >
             <ListView.View>
                 <GridView>
+                    <GridViewColumn>
+                        <CheckBox IsChecked="{Binding CheckAllChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  />
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding Path=Checked}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Width="Auto" Header="Name" CellTemplate="{StaticResource ShoppingListNameCell}"/>
                     <!-- <GridViewColumn Width="Auto" Header="Quantity" CellTemplate="{StaticResource ShoppingListQuantityCell}"/>
                     <GridViewColumn Width="Auto" Header="Unit" CellTemplate="{StaticResource ShoppingListUnitCell}"/>-->
@@ -39,8 +50,8 @@
                 <ImageBrush ImageSource="/FoodPlanner;component/Images/completeShoppingListIcon.png"/>
             </Button.Background>
         </Button>
-        <TextBlock TextWrapping="Wrap" TextAlignment="Center" Background="WhiteSmoke" Text="{Binding Path=Artist.Fans.Count, 
-                 StringFormat= 'You are shopping for the next: {0} days'}"/>
+        <TextBlock TextWrapping="Wrap" TextAlignment="Center" Background="WhiteSmoke" 
+                   Text="{Binding Path=ShopAhead, Source={x:Static local:App.CurrentUser}, StringFormat='You are shopping for the next: {0} days'}"/>
 
         <Border Grid.Column="0"  BorderThickness=" 2,2,1,2" BorderBrush="Black"/>
         <Border Grid.Column="1"  BorderThickness=" 1,2,2,2" BorderBrush="Black"/>

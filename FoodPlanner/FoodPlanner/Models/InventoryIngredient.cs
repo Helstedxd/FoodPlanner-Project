@@ -1,11 +1,12 @@
-﻿using System;
+﻿using MvvmFoundation.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace FoodPlanner.Models
 {
-    public partial class InventoryIngredient
+    public partial class InventoryIngredient : ObservableObject
     {
 
         public InventoryIngredient() { }

@@ -18,7 +18,7 @@ namespace FoodPlanner.ViewModels
         public Recipe Recipe { get; set; }
         public RecipeViewModel(Recipe recipe)
         {
-            ActiveDate = DateTime.Now;
+            activeDate = DateTime.Now;
             this.Recipe = recipe;
         }
 
@@ -26,7 +26,7 @@ namespace FoodPlanner.ViewModels
         private DateTime _activeDate;
         private string _succesText = "", afterString;
 
-        public DateTime ActiveDate
+        public DateTime activeDate
         {
             get 
             { 
@@ -53,15 +53,32 @@ namespace FoodPlanner.ViewModels
             Meal newMeal = new Meal()
             {
                 Recipe = this.Recipe,
-                Date = ActiveDate,
-                Participants = App.CurrentUser.PersonsInHouseHold,
-                RecipeID = this.Recipe.ID,
-                User = App.CurrentUser,
-                UserID = App.CurrentUser.ID
+                Date = activeDate,
+                Participants = App.CurrentUser.PersonsInHouseHold
             };
-            App.CurrentUser.Meals.Add(newMeal);
-            App.db.SaveChanges();
-            afterString = "Meal added";
+
+            bool mealDublicate = false;
+            DateTime morning = new DateTime(activeDate.Year, activeDate.Month, activeDate.Day, 0, 0, 0);
+            DateTime night = new DateTime(activeDate.Year, activeDate.Month, activeDate.Day, 23, 59, 59);
+            List<Meal> mealList = App.db.Meals.Where(m => m.Date >= morning & m.Date <= night).ToList();
+            foreach (Meal m in mealList)
+            {
+                if (m.Recipe == newMeal.Recipe)
+                {
+                    mealDublicate = true;
+                }
+            }
+
+            if (!mealDublicate)
+            {
+                App.CurrentUser.Meals.Add(newMeal);
+                App.db.SaveChanges();
+                afterString = "Meal added";
+            }
+            else
+            {
+                afterString = "Meal was not added";
+            }
             RaisePropertyChanged("SuccesText");
         }
         #endregion

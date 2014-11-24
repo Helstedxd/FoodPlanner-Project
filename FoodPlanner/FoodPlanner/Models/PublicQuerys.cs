@@ -108,12 +108,10 @@ namespace FoodPlanner.Models
                         }
                     }
 
-                    /*
-                    if (ingredientFromLatestMeals.Where(iflm => iflm.ingredientID == res.ingredient.ID).Count() != 0)
+                    if (lastMeals.Where(iflm => iflm.ingredientID == res.ingredient.ID).Count() != 0)
                     {
-                        searchResult.prevIngredients += ingredientFromLatestMeals.Where(iflm => iflm.ingredientID == res.ingredient.ID).Single().ingredientCount;
+                        searchResult.prevIngredients += lastMeals.Where(iflm => iflm.ingredientID == res.ingredient.ID).Single().ingredientCount;
                     }
-                    */
 
                     if (grayList.Where(gl => res.ingredient.ID == gl.ingredient.ID).Count() != 0)
                     {

@@ -125,7 +125,11 @@ namespace FoodPlanner
 
             List<SearchResults> orderedListOfSearchResults = publicQuerys.addValuesToSearch(groupedRecipes, searchQuery);
 
-            listResults.ItemsSource = orderedListOfSearchResults.ToList();
+            listResults.ItemsSource = orderedListOfSearchResults.ToList().OrderByDescending(res => res.fullMatch)
+                                                                         .ThenByDescending(res => res.partialMatch)
+                                                                         .ThenByDescending(res => res.getRating)
+                                                                         .ThenByDescending(res => res.prevIngredients)
+                                                                         .ThenByDescending(res => res.recipe.Title);
 
         }
 

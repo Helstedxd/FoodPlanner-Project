@@ -102,36 +102,38 @@ namespace FoodPlanner
 
         private void startSearch_Click(object sender, RoutedEventArgs e)
         {
-            PublicQuerys publicQuerys = new PublicQuerys();
+            if (!string.IsNullOrWhiteSpace(searchBox.Text))
+            {
+                PublicQuerys publicQuerys = new PublicQuerys();
 
-            List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
+                List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
 
-            List<int> recipeIDByIngredients = (from ri in App.db.RecipeIngredients
-                                               join i in App.db.Ingredients on ri.IngredientID equals i.ID
-                                               where searchQuery.Any(s => i.Name.Contains(s))
-                                               select ri.RecipeID).ToList();
+                List<int> recipeIDByIngredients = (from ri in App.db.RecipeIngredients
+                                                   join i in App.db.Ingredients on ri.IngredientID equals i.ID
+                                                   where searchQuery.Any(s => i.Name.Contains(s))
+                                                   select ri.RecipeID).ToList();
 
-            List<int> recipeIDByRecipeName = (from ri in App.db.RecipeIngredients
-                                              join r in App.db.Recipes on ri.RecipeID equals r.ID
-                                              where searchQuery.Any(s => r.Title.Contains(s))
-                                              select ri.RecipeID).ToList();
+                List<int> recipeIDByRecipeName = (from ri in App.db.RecipeIngredients
+                                                  join r in App.db.Recipes on ri.RecipeID equals r.ID
+                                                  where searchQuery.Any(s => r.Title.Contains(s))
+                                                  select ri.RecipeID).ToList();
 
-            recipeIDByIngredients.AddRange(recipeIDByRecipeName);
+                recipeIDByIngredients.AddRange(recipeIDByRecipeName);
 
-            List<int> recipeIDs = recipeIDByIngredients.Distinct().Except(publicQuerys.blackList).ToList();
+                List<int> recipeIDs = recipeIDByIngredients.Distinct().Except(publicQuerys.blackList).ToList();
 
 
-            IQueryable<IGrouping<int, Result>> groupedRecipes = publicQuerys.search(recipeIDs);
+                IQueryable<IGrouping<int, Result>> groupedRecipes = publicQuerys.search(recipeIDs);
 
-            List<SearchResults> orderedListOfSearchResults = publicQuerys.addValuesToSearch(groupedRecipes, searchQuery);
+                List<SearchResults> orderedListOfSearchResults = publicQuerys.addValuesToSearch(groupedRecipes, searchQuery);
 
-            listResults.ItemsSource = orderedListOfSearchResults.OrderByDescending(res => res.fullMatch)
-                                                                .ThenByDescending(res => res.partialMatch)
-                                                                .ThenByDescending(res => res.getRating)
-                                                                .ThenByDescending(res => res.prevIngredients)
-                                                                .ThenByDescending(res => res.recipe.Title)
-                                                                .ToList();
-
+                listResults.ItemsSource = orderedListOfSearchResults.OrderByDescending(res => res.fullMatch)
+                                                                    .ThenByDescending(res => res.partialMatch)
+                                                                    .ThenByDescending(res => res.getRating)
+                                                                    .ThenByDescending(res => res.prevIngredients)
+                                                                    .ThenByDescending(res => res.recipe.Title)
+                                                                    .ToList();
+            }
         }
 
         private void listResults_SelectionChanged(object sender, SelectionChangedEventArgs e)

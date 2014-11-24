@@ -106,7 +106,22 @@ namespace FoodPlanner
 
             List<string> searchQuery = searchBox.Text.Split(',').Select(s => s.Trim()).ToList();
 
-            IQueryable<IGrouping<int, Result>> test2 = test.search(App.db.Recipes.Where(r => r.Title.Contains("turk")).Select(r => r.ID).ToList());
+            List<int> tester = (from ri in App.db.RecipeIngredients
+                                join i in App.db.Ingredients on ri.IngredientID equals i.ID
+                                where searchQuery.Any(s => i.Name.Contains(s))
+                                select ri.RecipeID).ToList();
+
+            List<int> tester2 = (from ri in App.db.RecipeIngredients
+                                 join r in App.db.Recipes on ri.RecipeID equals r.ID
+                                 where searchQuery.Any(s => r.Title.Contains(s))
+                                 select ri.RecipeID).ToList();
+
+            tester2.AddRange(tester);
+
+            List<int> final = tester2.Distinct().Except(test.blackList).ToList();
+
+
+            IQueryable<IGrouping<int, Result>> test2 = test.search(final);
 
             List<SearchResults> test3 = test.addValuesToSearch(test2, searchQuery);
 

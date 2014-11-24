@@ -19,14 +19,15 @@ namespace FoodPlanner.ViewModels
 
         public BlacklistIngredient SelectedBlackListIngredient { get; set; }
         public GraylistIngredient SelectedGreyListIngredient { get; set; }
-        private ICommand _saveNewStockIngredientNameCommand;
-        private ICommand _addIngredientToUnwantedIngredientsCommand;
-        private ICommand _removeingredientFromUnwantedIngredientsCommand;
-        private ICommand _incrementShopAheadCommand;
-        private ICommand _decrementShopAhead;
-        private ICommand _incrementPersonsInHouseholdCommand;
-        private ICommand _decrementPersonsInHouseholdCommand;
-        private ICommand _addNewStockIngredientCommand;
+        private ICommand _saveNewStockIngredientNameCommand,
+            _addIngredientToUnwantedIngredientsCommand,
+            _removeingredientFromUnwantedIngredientsCommand,
+            _incrementShopAheadCommand,
+            _decrementShopAhead,
+            _incrementPersonsInHouseholdCommand,
+            _decrementPersonsInHouseholdCommand,
+            _addNewStockIngredientCommand,
+            _addNewFavoriteIngredientCommand;
         private User _currentUser;
         private Uri _selectedPage = new Uri(Properties.Settings.Default.StartPage, UriKind.Relative);
         public User CurrentUser
@@ -36,28 +37,6 @@ namespace FoodPlanner.ViewModels
             {
                 _currentUser = value;
                 RaisePropertyChanged("CurrentUser");
-            }
-        }
-
-        public List<Uri> UriList 
-        {
-            get
-            {
-                return CreateUri();
-            }
-        }
-
-        public Uri SelectedPage
-        {
-            get
-            {
-                return _selectedPage;
-            }
-            set
-            {
-                _selectedPage = value;
-                Properties.Settings.Default.StartPage = value.ToString();
-                Properties.Settings.Default.Save();
             }
         }
 
@@ -107,6 +86,28 @@ namespace FoodPlanner.ViewModels
         }
 
         #region Properties
+
+        public List<Uri> UriList
+        {
+            get
+            {
+                return CreateUri();
+            }
+        }
+
+        public Uri SelectedPage
+        {
+            get
+            {
+                return _selectedPage;
+            }
+            set
+            {
+                _selectedPage = value;
+                Properties.Settings.Default.StartPage = value.ToString();
+                Properties.Settings.Default.Save();
+            }
+        }
 
         #endregion
 
@@ -215,6 +216,19 @@ namespace FoodPlanner.ViewModels
             }
         }
 
+        public ICommand AddNewFavoriteIngredientCommand
+        {
+            get
+            {
+                if (_addNewFavoriteIngredientCommand == null)
+                {
+                    _addNewFavoriteIngredientCommand = new RelayCommand(() => AddNewFavoriteIngredient());
+                }
+
+                return _addNewFavoriteIngredientCommand;
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -226,6 +240,11 @@ namespace FoodPlanner.ViewModels
             StockQuantity StockIngredientToBeAdded = new StockQuantity() { IngredientID = StockIngredient.IngredientID, ID = StockIngredient.ID };
             App.db.StockQuantities.Add(StockIngredientToBeAdded);
             App.db.SaveChanges();
+        }
+
+        private void AddNewFavoriteIngredient()
+        {
+            throw new NotImplementedException();
         }
 
         private List<Uri> CreateUri()

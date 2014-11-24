@@ -22,25 +22,9 @@ namespace FoodPlanner.ViewModels
     public class ShoppingListViewModel : ObservableObject
     {
 
-        public ObservableCollection<ShoppingListIngredient> ShoppingList { get; set; }
-
+        #region Fields
         private bool _checkAllChecked;
-        public bool CheckAllChecked
-        {
-            get
-            {
-                return _checkAllChecked;
-            }
-            set
-            {
-                _checkAllChecked = value;
-                //ShoppingList. .All(i => i.Checked = value);
-                foreach (var lol in ShoppingList)
-                    lol.Checked = value;
-
-                RaisePropertyChanged("ShoppingList");
-            }
-        }
+        #endregion
 
         public ShoppingListViewModel()
         {
@@ -48,25 +32,24 @@ namespace FoodPlanner.ViewModels
             AssembleShoppingList();
         }
 
+        #region Properties
+        public ObservableCollection<ShoppingListIngredient> ShoppingList { get; set; }
 
-
-        //TODO: this doens't work just remove :(
-        /*private ICommand _checkAllCommand;
-        public ICommand CheckAllCommand
+        public bool CheckAllChecked
         {
-            get
+            get { return _checkAllChecked; }
+            set
             {
-                if (_checkAllCommand == null)
+                _checkAllChecked = value;
+                foreach (ShoppingListIngredient shoppingItem in ShoppingList)
                 {
-                    _checkAllCommand = new RelayCommand(() => {
-                        ShoppingList.All(i => i.Checked = true);
-                    
-                    });
+                    shoppingItem.Checked = value;
                 }
-                return _checkAllCommand;
             }
-        }*/
+        }
+        #endregion
 
+        #region Methods
 
         private void AssembleShoppingList()
         {
@@ -116,9 +99,9 @@ namespace FoodPlanner.ViewModels
                     ShoppingList.Add(newShoppingListIngredient);
                 }
             }
-
-
         }
+
+        #endregion
     }
 
 }

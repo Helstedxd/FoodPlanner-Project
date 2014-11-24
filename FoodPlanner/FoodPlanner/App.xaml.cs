@@ -36,8 +36,8 @@ namespace FoodPlanner
 
             MainWindow mainWindow = new MainWindow();
             Navigator.NavigationService = mainWindow.Frame.NavigationService;
-            Navigator.GoToMealPlanCommand.Execute(null);
 
+            Navigator.NavigationService.Source = new Uri(FoodPlanner.Properties.Settings.Default.StartPage,UriKind.Relative);
             mainWindow.Show();
         }
 

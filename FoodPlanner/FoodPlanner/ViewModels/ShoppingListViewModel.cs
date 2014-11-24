@@ -14,26 +14,46 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using FoodPlanner.Models;
+using MvvmFoundation.Wpf;
 
 namespace FoodPlanner.ViewModels
 {
 
-    public class ShoppingListViewModel
+    public class ShoppingListViewModel : ObservableObject
     {
 
-        public List<InventoryIngredient> ShoppingList { get; set; }
+        #region Fields
+        private bool _checkAllChecked;
+        #endregion
 
         public ShoppingListViewModel()
         {
-
-            ShoppingList = new List<InventoryIngredient>();
-
+            ShoppingList = new ObservableCollection<ShoppingListIngredient>();
             AssembleShoppingList();
-
         }
+
+        #region Properties
+        public ObservableCollection<ShoppingListIngredient> ShoppingList { get; set; }
+
+        public bool CheckAllChecked
+        {
+            get { return _checkAllChecked; }
+            set
+            {
+                _checkAllChecked = value;
+                foreach (ShoppingListIngredient shoppingItem in ShoppingList)
+                {
+                    shoppingItem.Checked = value;
+                }
+            }
+        }
+        #endregion
+
+        #region Methods
 
         private void AssembleShoppingList()
         {
+            //TODO: only consider within the shopAhead period (and maybe exclude days in the past)
             //TODO: somehow store these common queries...
             var InventoryIngredientsTotalQuantity =
                 from ii in App.db.InventoryIngredients
@@ -75,13 +95,13 @@ namespace FoodPlanner.ViewModels
                 if (IngredientDifference.InventoryQuantityDifference > 0)
                 {
                     // TODO: the purchase- and expiration date will have to be updated if we add this item to the inventory
-                    InventoryIngredient newShoppingListIngredient = new InventoryIngredient(IngredientDifference.Ingredient, IngredientDifference.InventoryQuantityDifference);
+                    ShoppingListIngredient newShoppingListIngredient = new ShoppingListIngredient(IngredientDifference.Ingredient, IngredientDifference.InventoryQuantityDifference);
                     ShoppingList.Add(newShoppingListIngredient);
                 }
             }
-
-
         }
+
+        #endregion
     }
 
 }

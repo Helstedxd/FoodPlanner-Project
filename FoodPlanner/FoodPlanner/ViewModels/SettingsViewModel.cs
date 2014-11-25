@@ -237,7 +237,8 @@ namespace FoodPlanner.ViewModels
 
         private void AddNewStockIngredient()
         {
-            StockQuantity StockIngredientToBeAdded = new StockQuantity() { IngredientID = StockIngredient.IngredientID, ID = StockIngredient.ID };
+            StockQuantity StockIngredientToBeAdded = new StockQuantity() { IngredientID = StockIngredient.Ingredient.ID, Quantity = StockIngredient.Quantity, UserID = App.CurrentUser.ID };
+
             App.db.StockQuantities.Add(StockIngredientToBeAdded);
             App.db.SaveChanges();
         }

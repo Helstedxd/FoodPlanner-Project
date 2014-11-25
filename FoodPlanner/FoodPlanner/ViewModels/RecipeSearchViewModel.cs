@@ -1,5 +1,4 @@
-﻿using FoodPlanner.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -7,10 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using FoodPlanner.Models;
+using MvvmFoundation.Wpf;
 
 namespace FoodPlanner.ViewModels
 {
-    public class RecipeSearchViewModel
+    public class RecipeSearchViewModel : ObservableObject
     {
         public RecipeSearchViewModel()
         {
@@ -27,18 +28,15 @@ namespace FoodPlanner.ViewModels
             set
             {
                 _searchText = value;
-                if (!string.IsNullOrWhiteSpace(value))
-                {
-                    SearchRecipes(_searchText);
-                }
+                SearchRecipes();
             }
 
         }
 
-        private void SearchRecipes(string query)
+        private void SearchRecipes()
         {
             listOfSearchResults.Clear();
-            List<string> searchQuery = query.Split(',').Select(s => s.Trim()).ToList();
+            List<string> searchQuery = _searchText.Split(',').Select(s => s.Trim()).ToList();
 
             PublicQuerys publicQuerys = new PublicQuerys();
 

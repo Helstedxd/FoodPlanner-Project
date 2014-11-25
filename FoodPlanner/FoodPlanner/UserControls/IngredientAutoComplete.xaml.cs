@@ -70,15 +70,26 @@ namespace FoodPlanner.UserControls
 
         #endregion
 
+        private List<Ingredient> QueriedIngredients
+        {
+            get { return _queriedIngredients; }
+            set
+            {
+                _queriedIngredients = value;
+                RaisePropertyChanged("FoundIngredients");
+                RaisePropertyChanged("AutoCompleteListVisibility");
+            }
+        }
+
         public IEnumerable<Ingredient> FoundIngredients
         {
             get
             {
-                if (_queriedIngredients == null)
+                if (QueriedIngredients == null)
                 {
-                    _queriedIngredients = new List<Ingredient>();
+                    QueriedIngredients = new List<Ingredient>();
                 }
-                return _queriedIngredients.Where(i => i.Name.ToLower().Contains(SearchText.ToLower()));
+                return QueriedIngredients.Where(i => i.Name.ToLower().Contains(SearchText.ToLower()));
             }
         }
 
@@ -105,7 +116,6 @@ namespace FoodPlanner.UserControls
                 _searchText = value;
                 RaisePropertyChanged("SearchText");
                 RaisePropertyChanged("FoundIngredients");
-                RaisePropertyChanged("AutoCompleteListVisibility");
                 TryToRepopulateTheList();
             }
         }
@@ -118,14 +128,13 @@ namespace FoodPlanner.UserControls
             // and a continues search string could change the previously fetched items.
             if (string.IsNullOrEmpty(_lastSearchText) ||
                 !SearchText.StartsWith(_lastSearchText, StringComparison.OrdinalIgnoreCase) ||
-                _queriedIngredients.Count() >= MaximumItems)
+                QueriedIngredients.Count() >= MaximumItems)
             {
                 _lastSearchText = SearchText;
                 if (SearchText == "")
                 {
-                    _queriedIngredients.Clear();
-                    RaisePropertyChanged("FoundIngredients");
-                    RaisePropertyChanged("AutoCompleteListVisibility");
+                    //QueriedIngredients.Clear();
+                    QueriedIngredients = new List<Ingredient>();
                 }
                 else
                 {
@@ -153,9 +162,7 @@ namespace FoodPlanner.UserControls
             // Populate the list if the search text has not changed.
             if (originalSearchText == SearchText)
             {
-                _queriedIngredients = foundIngredientsInDb.ToList();
-                RaisePropertyChanged("FoundIngredients");
-                RaisePropertyChanged("AutoCompleteListVisibility");
+                QueriedIngredients = foundIngredientsInDb.ToList();
             }
             else
             {

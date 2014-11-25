@@ -27,9 +27,61 @@ namespace FoodPlanner.ViewModels
             _incrementPersonsInHouseholdCommand,
             _decrementPersonsInHouseholdCommand,
             _addNewStockIngredientCommand,
-            _addNewFavoriteIngredientCommand;
+            _addNewGreyedIngredientCommand,
+            _SaveNewGreyedItemNameCommand;
+
         private User _currentUser;
         private Uri _selectedPage = new Uri(Properties.Settings.Default.StartPage, UriKind.Relative);
+        private StockQuantity _inventoryIngredient;
+        private GraylistIngredient _greyListInventoryIngredient;
+        private string _rating;
+        #endregion
+
+        public SettingsViewModel()
+        {
+            StockIngredient = new StockQuantity();
+            CurrentUser = App.CurrentUser;
+            SelectedBlackListIngredient = new BlacklistIngredient();
+            GreyListInventoryIngredient = new GraylistIngredient();
+        }
+
+        #region Properties
+
+        public StockQuantity StockIngredient
+        {
+            get 
+            { 
+                return _inventoryIngredient; 
+            }
+            set
+            {
+                _inventoryIngredient = value;
+                RaisePropertyChanged("InventoryIngredient");
+            }
+        }
+
+        public string Rating
+        {
+            get
+            {
+                return _rating;
+            }
+            set
+            {
+                _rating = value;
+            }
+        } 
+
+        public GraylistIngredient GreyListInventoryIngredient
+        {
+            get { return _greyListInventoryIngredient; }
+            set
+            {
+                _greyListInventoryIngredient = value;
+                RaisePropertyChanged("GreyListIngredient");
+            }
+        }
+
         public User CurrentUser
         {
             get { return _currentUser; }
@@ -54,38 +106,6 @@ namespace FoodPlanner.ViewModels
                 return App.CurrentUser.ShopAhead;
             }
         }
-        private StockQuantity _inventoryIngredient;
-        public StockQuantity StockIngredient
-        {
-            get { return _inventoryIngredient; }
-            set
-            {
-                _inventoryIngredient = value;
-                RaisePropertyChanged("InventoryIngredient");
-            }
-        }
-        private GraylistIngredient _greyListInventoryIngredient;
-        public GraylistIngredient GreyListInventoryIngredient
-        {
-            get { return _greyListInventoryIngredient; }
-            set
-            {
-                _greyListInventoryIngredient = value;
-                RaisePropertyChanged("GreyListIngredient");
-            }
-        }
-
-        #endregion
-
-        public SettingsViewModel()
-        {
-            StockIngredient = new StockQuantity();
-            CurrentUser = App.CurrentUser;
-            SelectedBlackListIngredient = new BlacklistIngredient();
-            SelectedGreyListIngredient = new GraylistIngredient();
-        }
-
-        #region Properties
 
         public List<Uri> UriList
         {
@@ -122,6 +142,19 @@ namespace FoodPlanner.ViewModels
                 }
 
                 return _saveNewStockIngredientNameCommand;
+            }
+        }
+
+        public ICommand SaveNewGreyedIngredientNameCommand
+        {
+            get
+            {
+                if (_SaveNewGreyedItemNameCommand == null)
+                {
+                    _SaveNewGreyedItemNameCommand = new RelayCommand<Ingredient>(i => SaveNewGreyedIentName(i));
+                }
+
+                return _SaveNewGreyedItemNameCommand;
             }
         }
 
@@ -216,16 +249,16 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-        public ICommand AddNewFavoriteIngredientCommand
+        public ICommand AddNewGryedIngredientCommand
         {
             get
             {
-                if (_addNewFavoriteIngredientCommand == null)
+                if (_addNewGreyedIngredientCommand == null)
                 {
-                    _addNewFavoriteIngredientCommand = new RelayCommand(() => AddNewFavoriteIngredient());
+                    _addNewGreyedIngredientCommand = new RelayCommand(() => AddNewGreyedIngredient());
                 }
 
-                return _addNewFavoriteIngredientCommand;
+                return _addNewGreyedIngredientCommand;
             }
         }
 
@@ -237,14 +270,18 @@ namespace FoodPlanner.ViewModels
 
         private void AddNewStockIngredient()
         {
-            StockQuantity StockIngredientToBeAdded = new StockQuantity() { IngredientID = StockIngredient.IngredientID, ID = StockIngredient.ID };
+            StockQuantity StockIngredientToBeAdded = new StockQuantity() { IngredientID = StockIngredient.Ingredient.ID, Quantity = StockIngredient.Quantity, UserID = App.CurrentUser.ID };
+
             App.db.StockQuantities.Add(StockIngredientToBeAdded);
             App.db.SaveChanges();
         }
 
-        private void AddNewFavoriteIngredient()
+        private void AddNewGreyedIngredient()
         {
-            throw new NotImplementedException();
+            int ratingValue = Convert.ToInt16(Rating);
+            GraylistIngredient IngredientToBeAdded = new GraylistIngredient() { IngredientID = GreyListInventoryIngredient.IngredientID, UserID = GreyListInventoryIngredient.UserID, IngredientValue = ratingValue };
+            App.db.GraylistIngredients.Add(IngredientToBeAdded);
+            App.db.SaveChanges();
         }
 
         private List<Uri> CreateUri()
@@ -263,9 +300,14 @@ namespace FoodPlanner.ViewModels
         private void SaveNewStockIngredientName(Ingredient ingredient)
         {
             StockIngredient.Ingredient = ingredient;
-            //App.db.SaveChanges();
             RaisePropertyChanged("StockIngredient");
-            Console.WriteLine("Der er givet et navn");
+        }
+        private void SaveNewGreyedIentName(Ingredient ingredient)
+        {
+            GreyListInventoryIngredient.IngredientID = ingredient.ID;
+            GreyListInventoryIngredient.Ingredient = ingredient;
+            GreyListInventoryIngredient.UserID = App.CurrentUser.ID;
+            RaisePropertyChanged("GreyListInventoryIngredient");
         }
 
         //For alle in/decrement gælder det at de ikke må være 0> og >(eks)1000

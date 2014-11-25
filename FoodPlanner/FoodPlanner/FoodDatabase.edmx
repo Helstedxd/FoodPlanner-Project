@@ -27,7 +27,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DietID" Type="int" Nullable="false" />
-          <Property Name="Ingredient" Type="int" Nullable="false" />
+          <Property Name="IngredientID" Type="int" Nullable="false" />
           <Property Name="IngredientValue" Type="int" Nullable="false" />
           <Property Name="IngredientIsBlacklisted" Type="bool" Nullable="false" />
         </EntityType>
@@ -158,7 +158,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="DietRules">
-              <PropertyRef Name="Ingredient" />
+              <PropertyRef Name="IngredientID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -594,7 +594,7 @@
             <End Role="Ingredient" EntitySet="Ingredients" />
             <End Role="DietRule" EntitySet="DietRules" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="RecipesPreparation">
           <Key>
             <PropertyRef Name="ID" />
@@ -735,11 +735,11 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DietID" Type="Int32" Nullable="false" />
-          <Property Name="Ingredient" Type="Int32" Nullable="false" />
+          <Property Name="IngredientID" Type="Int32" Nullable="false" />
           <Property Name="IngredientValue" Type="Int32" Nullable="false" />
           <Property Name="IngredientIsBlacklisted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="DietPreset" Relationship="FoodModel.DietRules_ibfk_1" FromRole="DietRule" ToRole="DietPreset" />
-          <NavigationProperty Name="Ingredient1" Relationship="FoodModel.DietRules_ibfk_2" FromRole="DietRule" ToRole="Ingredient" />
+          <NavigationProperty Name="Ingredient" Relationship="FoodModel.DietRules_ibfk_2" FromRole="DietRule" ToRole="Ingredient" />
         </EntityType>
         <Association Name="DietRules_ibfk_1">
           <End Type="FoodModel.DietPreset" Role="DietPreset" Multiplicity="1" />
@@ -761,11 +761,11 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="DietRule">
-              <PropertyRef Name="Ingredient" />
+              <PropertyRef Name="IngredientID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -886,7 +886,7 @@
               <MappingFragment StoreEntitySet="DietRules">
                 <ScalarProperty Name="IngredientIsBlacklisted" ColumnName="IngredientIsBlacklisted" />
                 <ScalarProperty Name="IngredientValue" ColumnName="IngredientValue" />
-                <ScalarProperty Name="Ingredient" ColumnName="Ingredient" />
+                <ScalarProperty Name="IngredientID" ColumnName="IngredientID" />
                 <ScalarProperty Name="DietID" ColumnName="DietID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

@@ -16,11 +16,11 @@ namespace FoodPlanner.Models
     {
         public int ID { get; set; }
         public int DietID { get; set; }
-        public int Ingredient { get; set; }
+        public int IngredientID { get; set; }
         public int IngredientValue { get; set; }
         public bool IngredientIsBlacklisted { get; set; }
     
         public virtual DietPreset DietPreset { get; set; }
-        public virtual Ingredient Ingredient1 { get; set; }
+        public virtual Ingredient Ingredient { get; set; }
     }
 }

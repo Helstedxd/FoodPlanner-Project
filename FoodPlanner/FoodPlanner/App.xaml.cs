@@ -34,11 +34,14 @@ namespace FoodPlanner
                 //MessageBox.Show(ex.Message);
             }
 
+            var test = new Diet();
+            test.ShowDialog();
+
             MainWindow mainWindow = new MainWindow();
             Navigator.NavigationService = mainWindow.Frame.NavigationService;
 
             Navigator.NavigationService.Source = new Uri(FoodPlanner.Properties.Settings.Default.StartPage,UriKind.Relative);
-            mainWindow.Show();
+            //mainWindow.Show();
         }
 
         private void ApplicationExit(object sender, ExitEventArgs args)

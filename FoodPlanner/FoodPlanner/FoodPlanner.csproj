@@ -78,6 +78,15 @@
     <Compile Include="BlacklistIngredient.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Diet.xaml.cs">
+      <DependentUpon>Diet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DietPreset.cs">
+      <DependentUpon>FoodDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DietRule.cs">
+      <DependentUpon>FoodDatabase.tt</DependentUpon>
+    </Compile>
     <Compile Include="FoodDatabase.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -138,20 +147,11 @@
     <Compile Include="Views\RecipeSearchPage.xaml.cs">
       <DependentUpon>RecipeSearchPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RecommendedRecipesWindow.xaml.cs">
-      <DependentUpon>RecommendedRecipesWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Search.xaml.cs">
-      <DependentUpon>Search.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShoppingListPage.xaml.cs">
       <DependentUpon>ShoppingListPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ShowRecipe.xaml.cs">
-      <DependentUpon>ShowRecipe.xaml</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
@@ -160,6 +160,10 @@
     <Compile Include="Views\InventoryPage.xaml.cs">
       <DependentUpon>InventoryPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="Diet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -202,23 +206,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="RecommendedRecipesWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Search.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ShoppingListPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ShowRecipe.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

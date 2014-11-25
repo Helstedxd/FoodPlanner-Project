@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,9 +66,9 @@ namespace FoodPlanner.Models
             return recipeIngredients;
         }
 
-        public List<SearchResults> addValuesToSearch(IQueryable<IGrouping<int, Result>> userInput, List<string> searchKeywords = null)
+        public ObservableCollection<SearchResults> addValuesToSearch(IQueryable<IGrouping<int, Result>> userInput, List<string> searchKeywords = null)
         {
-            List<SearchResults> result = new List<SearchResults>();
+            ObservableCollection<SearchResults> result = new ObservableCollection<SearchResults>();
 
             foreach (IGrouping<int, Result> ri in userInput)
             {
@@ -128,7 +129,7 @@ namespace FoodPlanner.Models
             }
 
 
-            return result;
+            return new ObservableCollection<SearchResults>(result.OrderByDescending(res => res.fullMatch).ThenByDescending(res => res.partialMatch).ThenByDescending(res => res.getRating).ThenByDescending(res => res.prevIngredients).ThenByDescending(res => res.recipe.Title));
         }
     }
 }

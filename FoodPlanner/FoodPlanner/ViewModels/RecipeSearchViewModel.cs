@@ -16,6 +16,15 @@ namespace FoodPlanner.ViewModels
         public RecipeSearchViewModel()
         {
             this.listOfSearchResults = new ObservableCollection<SearchResults>();
+
+            PublicQuerys publicQuerys = new PublicQuerys();
+
+            IQueryable<IGrouping<int, Result>> groupedRecipes = publicQuerys.search((from r in App.db.Meals where r.UserID == App.CurrentUser.ID && r.Date <= DateTime.Now select r.RecipeID).ToList());
+
+            ObservableCollection<SearchResults> orderedListOfSearchResults = publicQuerys.addValuesToSearch(groupedRecipes);
+
+            listOfSearchResults = orderedListOfSearchResults;
+            RaisePropertyChanged("listOfSearchResults");
         }
 
         private string _searchText;
@@ -35,7 +44,6 @@ namespace FoodPlanner.ViewModels
 
         private void SearchRecipes()
         {
-            listOfSearchResults.Clear();
             List<string> searchQuery = _searchText.Split(',').Select(s => s.Trim()).ToList();
 
             PublicQuerys publicQuerys = new PublicQuerys();
@@ -56,17 +64,10 @@ namespace FoodPlanner.ViewModels
 
             IQueryable<IGrouping<int, Result>> groupedRecipes = publicQuerys.search(recipeIDs);
 
-            List<SearchResults> orderedListOfSearchResults = publicQuerys.addValuesToSearch(groupedRecipes, searchQuery).OrderByDescending(res => res.fullMatch)
-                                                                                                                        .ThenByDescending(res => res.partialMatch)
-                                                                                                                        .ThenByDescending(res => res.getRating)
-                                                                                                                        .ThenByDescending(res => res.prevIngredients)
-                                                                                                                        .ThenByDescending(res => res.recipe.Title)
-                                                                                                                        .ToList();
+            ObservableCollection<SearchResults> orderedListOfSearchResults = publicQuerys.addValuesToSearch(groupedRecipes, searchQuery);
 
-            foreach (SearchResults sr in orderedListOfSearchResults)
-            {
-                listOfSearchResults.Add(sr);
-            }
+            listOfSearchResults = orderedListOfSearchResults;
+            RaisePropertyChanged("listOfSearchResults");
         }
 
         public ObservableCollection<SearchResults> listOfSearchResults { get; private set; }

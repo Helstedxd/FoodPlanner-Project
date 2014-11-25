@@ -12,6 +12,24 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IngredientID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="IsFromDiet" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DietPresets">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DietName" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DietRules">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DietID" Type="int" Nullable="false" />
+          <Property Name="Ingredient" Type="int" Nullable="false" />
+          <Property Name="IngredientValue" Type="int" Nullable="false" />
+          <Property Name="IngredientIsBlacklisted" Type="bool" Nullable="false" />
         </EntityType>
         <EntityType Name="GraylistIngredients">
           <Key>
@@ -21,6 +39,7 @@
           <Property Name="IngredientID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="IngredientValue" Type="int" Nullable="false" />
+          <Property Name="IsFromDiet" Type="bool" Nullable="false" />
         </EntityType>
         <EntityType Name="Ingredients">
           <Key>
@@ -116,6 +135,30 @@
             </Principal>
             <Dependent Role="BlacklistIngredients">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DietRules_ibfk_1">
+          <End Role="DietPresets" Type="Self.DietPresets" Multiplicity="1" />
+          <End Role="DietRules" Type="Self.DietRules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DietPresets">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DietRules">
+              <PropertyRef Name="DietID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DietRules_ibfk_2">
+          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="1" />
+          <End Role="DietRules" Type="Self.DietRules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredients">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DietRules">
+              <PropertyRef Name="Ingredient" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -253,6 +296,8 @@
         </Association>
         <EntityContainer Name="FoodModelStoreContainer">
           <EntitySet Name="BlacklistIngredients" EntityType="Self.BlacklistIngredients" Schema="foodplan" store:Type="Tables" />
+          <EntitySet Name="DietPresets" EntityType="Self.DietPresets" Schema="foodplan" store:Type="Tables" />
+          <EntitySet Name="DietRules" EntityType="Self.DietRules" Schema="foodplan" store:Type="Tables" />
           <EntitySet Name="GraylistIngredients" EntityType="Self.GraylistIngredients" Schema="foodplan" store:Type="Tables" />
           <EntitySet Name="Ingredients" EntityType="Self.Ingredients" Schema="foodplan" store:Type="Tables" />
           <EntitySet Name="InventoryIngredients" EntityType="Self.InventoryIngredients" Schema="foodplan" store:Type="Tables" />
@@ -269,6 +314,14 @@
           <AssociationSet Name="BlacklistIngredients_ibfk_2" Association="Self.BlacklistIngredients_ibfk_2">
             <End Role="Users" EntitySet="Users" />
             <End Role="BlacklistIngredients" EntitySet="BlacklistIngredients" />
+          </AssociationSet>
+          <AssociationSet Name="DietRules_ibfk_1" Association="Self.DietRules_ibfk_1">
+            <End Role="DietPresets" EntitySet="DietPresets" />
+            <End Role="DietRules" EntitySet="DietRules" />
+          </AssociationSet>
+          <AssociationSet Name="DietRules_ibfk_2" Association="Self.DietRules_ibfk_2">
+            <End Role="Ingredients" EntitySet="Ingredients" />
+            <End Role="DietRules" EntitySet="DietRules" />
           </AssociationSet>
           <AssociationSet Name="GraylistIngredients_ibfk_1" Association="Self.GraylistIngredients_ibfk_1">
             <End Role="Ingredients" EntitySet="Ingredients" />
@@ -331,6 +384,7 @@
           <NavigationProperty Name="BlacklistIngredients" Relationship="FoodModel.BlacklistIngredients_ibfk_1" FromRole="Ingredient" ToRole="BlacklistIngredient" />
           <NavigationProperty Name="StockQuantities" Relationship="FoodModel.StockQuantities_ibfk_1" FromRole="Ingredient" ToRole="StockQuantity" />
           <NavigationProperty Name="GraylistIngredients" Relationship="FoodModel.GraylistIngredients_ibfk_1" FromRole="Ingredient" ToRole="GraylistIngredient" />
+          <NavigationProperty Name="DietRules" Relationship="FoodModel.DietRules_ibfk_2" FromRole="Ingredient" ToRole="DietRule" />
         </EntityType>
         <EntityType Name="InventoryIngredient" a:TypeAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
           <Key>
@@ -530,6 +584,16 @@
             <End Role="User" EntitySet="Users" />
             <End Role="GraylistIngredient" EntitySet="GraylistIngredients" />
           </AssociationSet>
+          <EntitySet Name="DietPresets" EntityType="FoodModel.DietPreset" />
+          <EntitySet Name="DietRules" EntityType="FoodModel.DietRule" />
+          <AssociationSet Name="DietRules_ibfk_1" Association="FoodModel.DietRules_ibfk_1">
+            <End Role="DietPreset" EntitySet="DietPresets" />
+            <End Role="DietRule" EntitySet="DietRules" />
+          </AssociationSet>
+          <AssociationSet Name="DietRules_ibfk_2" Association="FoodModel.DietRules_ibfk_2">
+            <End Role="Ingredient" EntitySet="Ingredients" />
+            <End Role="DietRule" EntitySet="DietRules" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="RecipesPreparation">
           <Key>
@@ -560,6 +624,7 @@
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Ingredient" Relationship="FoodModel.BlacklistIngredients_ibfk_1" FromRole="BlacklistIngredient" ToRole="Ingredient" />
           <NavigationProperty Name="User" Relationship="FoodModel.BlacklistIngredients_ibfk_2" FromRole="BlacklistIngredient" ToRole="User" />
+          <Property Name="IsFromDiet" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="StockQuantity">
           <Key>
@@ -630,6 +695,7 @@
           <Property Name="IngredientValue" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Ingredient" Relationship="FoodModel.GraylistIngredients_ibfk_1" FromRole="GraylistIngredient" ToRole="Ingredient" />
           <NavigationProperty Name="User" Relationship="FoodModel.GraylistIngredients_ibfk_2" FromRole="GraylistIngredient" ToRole="User" />
+          <Property Name="IsFromDiet" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="GraylistIngredients_ibfk_1">
           <End Type="FoodModel.Ingredient" Role="Ingredient" Multiplicity="1" />
@@ -652,6 +718,50 @@
             </Principal>
             <Dependent Role="GraylistIngredient">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DietPreset">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DietName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DietRules" Relationship="FoodModel.DietRules_ibfk_1" FromRole="DietPreset" ToRole="DietRule" />
+        </EntityType>
+        <EntityType Name="DietRule">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DietID" Type="Int32" Nullable="false" />
+          <Property Name="Ingredient" Type="Int32" Nullable="false" />
+          <Property Name="IngredientValue" Type="Int32" Nullable="false" />
+          <Property Name="IngredientIsBlacklisted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="DietPreset" Relationship="FoodModel.DietRules_ibfk_1" FromRole="DietRule" ToRole="DietPreset" />
+          <NavigationProperty Name="Ingredient1" Relationship="FoodModel.DietRules_ibfk_2" FromRole="DietRule" ToRole="Ingredient" />
+        </EntityType>
+        <Association Name="DietRules_ibfk_1">
+          <End Type="FoodModel.DietPreset" Role="DietPreset" Multiplicity="1" />
+          <End Type="FoodModel.DietRule" Role="DietRule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DietPreset">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DietRule">
+              <PropertyRef Name="DietID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DietRules_ibfk_2">
+          <End Type="FoodModel.Ingredient" Role="Ingredient" Multiplicity="1" />
+          <End Type="FoodModel.DietRule" Role="DietRule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DietRule">
+              <PropertyRef Name="Ingredient" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -735,6 +845,7 @@
           <EntitySetMapping Name="BlacklistIngredients">
             <EntityTypeMapping TypeName="FoodModel.BlacklistIngredient">
               <MappingFragment StoreEntitySet="BlacklistIngredients">
+                <ScalarProperty Name="IsFromDiet" ColumnName="IsFromDiet" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="IngredientID" ColumnName="IngredientID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -754,10 +865,30 @@
           <EntitySetMapping Name="GraylistIngredients">
             <EntityTypeMapping TypeName="FoodModel.GraylistIngredient">
               <MappingFragment StoreEntitySet="GraylistIngredients">
+                <ScalarProperty Name="IsFromDiet" ColumnName="IsFromDiet" />
                 <ScalarProperty Name="IngredientValue" ColumnName="IngredientValue" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="IngredientID" ColumnName="IngredientID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DietPresets">
+            <EntityTypeMapping TypeName="FoodModel.DietPreset">
+              <MappingFragment StoreEntitySet="DietPresets">
+                <ScalarProperty Name="DietName" ColumnName="DietName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DietRules">
+            <EntityTypeMapping TypeName="FoodModel.DietRule">
+              <MappingFragment StoreEntitySet="DietRules">
+                <ScalarProperty Name="IngredientIsBlacklisted" ColumnName="IngredientIsBlacklisted" />
+                <ScalarProperty Name="IngredientValue" ColumnName="IngredientValue" />
+                <ScalarProperty Name="Ingredient" ColumnName="Ingredient" />
+                <ScalarProperty Name="DietID" ColumnName="DietID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -28,6 +28,10 @@
         <EntityTypeShape EntityType="FoodModel.GraylistIngredient" Width="1.5" PointX="10.5" PointY="3.25" />
         <AssociationConnector Association="FoodModel.GraylistIngredients_ibfk_1" />
         <AssociationConnector Association="FoodModel.GraylistIngredients_ibfk_2" />
+        <EntityTypeShape EntityType="FoodModel.DietPreset" Width="1.5" PointX="4.5" PointY="12.25" />
+        <EntityTypeShape EntityType="FoodModel.DietRule" Width="1.5" PointX="4.5" PointY="9.5" />
+        <AssociationConnector Association="FoodModel.DietRules_ibfk_1" />
+        <AssociationConnector Association="FoodModel.DietRules_ibfk_2" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

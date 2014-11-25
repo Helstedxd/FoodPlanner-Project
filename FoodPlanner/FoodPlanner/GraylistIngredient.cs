@@ -18,6 +18,7 @@ namespace FoodPlanner.Models
         public int IngredientID { get; set; }
         public int UserID { get; set; }
         public int IngredientValue { get; set; }
+        public bool IsFromDiet { get; set; }
     
         public virtual Ingredient Ingredient { get; set; }
         public virtual User User { get; set; }

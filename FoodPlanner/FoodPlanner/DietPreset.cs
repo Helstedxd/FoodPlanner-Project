@@ -12,14 +12,16 @@ namespace FoodPlanner.Models
     using System;
     using System.Collections.ObjectModel;
     
-    public partial class BlacklistIngredient
+    public partial class DietPreset
     {
-        public int Id { get; set; }
-        public int IngredientID { get; set; }
-        public int UserID { get; set; }
-        public bool IsFromDiet { get; set; }
+        public DietPreset()
+        {
+            this.DietRules = new ObservableCollection<DietRule>();
+        }
     
-        public virtual Ingredient Ingredient { get; set; }
-        public virtual User User { get; set; }
+        public int ID { get; set; }
+        public string DietName { get; set; }
+    
+        public virtual ObservableCollection<DietRule> DietRules { get; set; }
     }
 }

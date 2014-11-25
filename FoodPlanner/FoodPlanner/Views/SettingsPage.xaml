@@ -107,14 +107,7 @@
                     <!--<TextBlock Text="{Binding InventoryIngredient.Quantity, StringFormat=Quantity: {0}}" Grid.Row="7"/>-->
                 </StackPanel>
 
-                <!--Lav så source property opdateres ved key up (kan gøres med events/triggers)-->
-                <TextBox x:Name="QuantityTextBox" Text="{Binding StockIngredient.Quantity, Delay=300, Mode=TwoWay}" Grid.Row="5" Grid.ColumnSpan="2">
-                    <!--<t:Interaction.Triggers>
-                    <i:EventTrigger EventName="KeyUp">
-                        <t:InvokeDataCommand Command="{Binding MyCommand}"/>
-                    </i:EventTrigger>
-                </t:Interaction.Triggers>-->
-                </TextBox>
+                <TextBox x:Name="QuantityTextBox" Text="{Binding StockIngredient.Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.ColumnSpan="2"/>
 
                 <TextBlock Text="{Binding StockIngredient.Ingredient.Unit, Mode=OneWay, StringFormat=Unit: {0}}" Grid.Row="6"/>
                 <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding AddNewStockIngredientCommand}" Grid.Row="7" Grid.Column="1">

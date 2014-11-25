@@ -67,19 +67,19 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
                     <RowDefinition Height="30"/>
                     <RowDefinition/>
                     <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
                     <RowDefinition Height="30"/>
-                    <RowDefinition/>
                 </Grid.RowDefinitions>
 
                 <TextBlock Text="Stock Management" Style="{StaticResource TextblockTitle}" Grid.ColumnSpan="2"/>
-                <TextBlock Text="Stock List" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource TextUnderTitle}"/>
-                <ListView x:Name="StockListView" Grid.Row="2" ItemsSource="{Binding CurrentUser.StockQuantities}" Grid.ColumnSpan="2">
+                <TextBlock Text="Stock List" Grid.Row="8" Grid.ColumnSpan="2" Style="{StaticResource TextUnderTitle}"/>
+                <ListView x:Name="StockListView" Grid.Row="9" ItemsSource="{Binding CurrentUser.StockQuantities}" Grid.ColumnSpan="2">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="Auto" Header="Name" CellTemplate="{StaticResource ShoppingListNameCell}"/>
@@ -87,28 +87,28 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <Button Style="{StaticResource ButtonIconTemplate}" Grid.Row="3" Grid.Column="1">
+                <Button Style="{StaticResource ButtonIconTemplate}" Grid.Row="10" Grid.Column="1">
                     <Button.Background>
                         <ImageBrush ImageSource="../Images/minusIcon.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
 
-                <TextBlock Text="Add a new stock ingredient" Grid.Row="4" Style="{StaticResource TextUnderTitle}" Grid.ColumnSpan="2"/>
-                <StackPanel Grid.Row="5" Orientation="Horizontal" Grid.ColumnSpan="2">
+                <TextBlock Text="Add a new stock ingredient" Grid.Row="1" Style="{StaticResource TextUnderTitle}" Grid.ColumnSpan="2"/>
+                <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="2">
                     <TextBlock Text="Name: "/>
                     <TextBlock Text="{Binding StockIngredient.Ingredient.Name}"/>
                     <!--<TextBlock Text="{Binding StockIngredient.Ingredient.Name, StringFormat=Name: {0}, Mode=OneWay}" Grid.Row="5"/>-->
                 </StackPanel>
 
-                <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveNewStockIngredientNameCommand}" MaximumItems="5" Grid.Row="6" Grid.ColumnSpan="2"/>
-                <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.ColumnSpan="2">
+                <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveNewStockIngredientNameCommand}" MaximumItems="5" Grid.Row="3" Grid.ColumnSpan="2"/>
+                <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="2">
                     <TextBlock Text="Quantity: "/>
                     <TextBlock Text="{Binding StockIngredient.Quantity}"/>
                     <!--<TextBlock Text="{Binding InventoryIngredient.Quantity, StringFormat=Quantity: {0}}" Grid.Row="7"/>-->
                 </StackPanel>
 
                 <!--Lav så source property opdateres ved key up (kan gøres med events/triggers)-->
-                <TextBox x:Name="QuantityTextBox" Text="{Binding StockIngredient.Quantity, Delay=300, Mode=TwoWay}" Grid.Row="8" Grid.ColumnSpan="2">
+                <TextBox x:Name="QuantityTextBox" Text="{Binding StockIngredient.Quantity, Delay=300, Mode=TwoWay}" Grid.Row="5" Grid.ColumnSpan="2">
                     <!--<t:Interaction.Triggers>
                     <i:EventTrigger EventName="KeyUp">
                         <t:InvokeDataCommand Command="{Binding MyCommand}"/>
@@ -116,8 +116,8 @@
                 </t:Interaction.Triggers>-->
                 </TextBox>
 
-                <TextBlock Text="{Binding StockIngredient.Ingredient.Unit, Mode=OneWay, StringFormat=Unit: {0}}" Grid.Row="9"/>
-                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding AddNewStockIngredientCommand}" Grid.Row="9" Grid.Column="1">
+                <TextBlock Text="{Binding StockIngredient.Ingredient.Unit, Mode=OneWay, StringFormat=Unit: {0}}" Grid.Row="6"/>
+                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding AddNewStockIngredientCommand}" Grid.Row="7" Grid.Column="1">
                     <Button.Background>
                         <ImageBrush ImageSource="../Images/plusIcon.png" Stretch="UniformToFill"/>
                     </Button.Background>

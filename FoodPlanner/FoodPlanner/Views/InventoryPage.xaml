@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:ValueControls="clr-namespace:FoodPlanner.ValueConverters"
       xmlns:ViewModels="clr-namespace:FoodPlanner.ViewModels"
       xmlns:UserControls="clr-namespace:FoodPlanner.UserControls"
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
@@ -13,6 +14,9 @@
     <Page.DataContext>
         <ViewModels:InventoryViewModel/>
     </Page.DataContext>
+    <Page.Resources>
+        <ValueControls:InventoryIngredientCominedQuantityConverter x:Key="InventoryCombinedQuantityConverter" />
+    </Page.Resources>
     <Grid Name="InventoryGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -28,7 +32,7 @@
 
         <UserControls:IngredientAutoComplete SelectItemCommand="{Binding AddIngredientToInventoryCommand}"
                                              MaximumItems="10" Grid.Row="0" />
-        
+
         <ListView Grid.Row="1" ItemsSource="{Binding InventoryIngredients}" Background="{StaticResource BackgroundColour}">
             <ListView.View>
                 <GridView>
@@ -36,21 +40,12 @@
                     <GridViewColumn Header="Quantity">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <!-- TODO: implement/create up/down functionality -->
-                                <!--<xctk:DecimalUpDown Value="{Binding Quantity}" FormatString="{Binding Ingredient.Unit, StringFormat=0 {0}}" Width="100" />-->
-                                <TextBlock>
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} {1}">
-                                            <Binding Path="Quantity" />
-                                            <Binding Path="Ingredient.Unit" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
+                                <xctk:DecimalUpDown Value="{Binding Quantity}" FormatString="{Binding Ingredient.Unit, StringFormat=0 {0}}" Width="100" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                        <GridViewColumn Header="Expiration Date" Width="Auto">
-                            <GridViewColumn.CellTemplate>
+                    <GridViewColumn Header="Expiration Date" Width="Auto">
+                        <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <DatePicker SelectedDate="{Binding ExpirationDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                             </DataTemplate>
@@ -58,6 +53,31 @@
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Expander IsExpanded="False">
+                                            <Expander.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Name}" Width="100"/>
+                                                    <TextBlock Text="{Binding ItemCount}" FontWeight="Bold" Margin="10 0 0 0" />
+                                                    <TextBlock Text=" item(s), Total quantity: " FontWeight="Bold" />
+                                                    <TextBlock Text="{Binding Items, Converter={StaticResource InventoryCombinedQuantityConverter}}" FontWeight="Bold" Margin="10 0 0 0" />
+                                                </StackPanel>
+                                            </Expander.Header>
+                                            <ItemsPresenter />
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </ListView.GroupStyle>
         </ListView>
 
         <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Bottom" Width="75" Grid.Row="2" Command="{Binding SaveInventoryCommand}" Grid.ColumnSpan="2"/>

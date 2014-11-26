@@ -21,7 +21,11 @@ namespace FoodPlanner.ValueConverters
             ReadOnlyObservableCollection<object> col = value as ReadOnlyObservableCollection<object>;
 
             if (col != null)
-                return col.Sum(o => ((InventoryIngredient)o).Quantity);
+            {
+                decimal quantity = col.Sum(o => ((InventoryIngredient)o).Quantity);
+                string unit = ((InventoryIngredient)col.First()).Ingredient.Unit;
+                return quantity + " " + unit;
+            }
 
             throw new NotSupportedException("Converter only supports items of type ReadOnlyObservableCollection<object>");
         }

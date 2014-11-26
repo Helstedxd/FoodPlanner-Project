@@ -34,7 +34,7 @@ namespace FoodPlanner.ViewModels
             _removeGreyListIngredientCommand;
 
         private User _currentUser;
-        private WindowPick _selectedPage = new WindowPick(new Uri(Properties.Settings.Default.StartPage, UriKind.Relative), "Pick a window");
+        private WindowPick _selectedPage = new WindowPick(new Uri(Properties.Settings.Default.StartPage, UriKind.Relative),"");
         private StockQuantity _inventoryIngredient;
         private GraylistIngredient _greyListInventoryIngredient;
         private string _rating;
@@ -350,10 +350,10 @@ namespace FoodPlanner.ViewModels
             List<WindowPick> returnList = new List<WindowPick>()
             {
                 new WindowPick(new Uri("Views/InventoryPage.xaml",    UriKind.Relative), "Inventory"),
-                new WindowPick(new Uri("Views/MealPlanPage.xaml",     UriKind.Relative), "FoodPlan"),
+                new WindowPick(new Uri("Views/MealPlanPage.xaml",     UriKind.Relative), "Food Plan"),
                 new WindowPick(new Uri("Views/RecipeSearchPage.xaml", UriKind.Relative), "Search"),
                 new WindowPick(new Uri("Views/SettingsPage.xaml",     UriKind.Relative), "Settings"),
-                new WindowPick(new Uri("Views/ShoppingListPage.xaml", UriKind.Relative), "ShoppingList")
+                new WindowPick(new Uri("Views/ShoppingListPage.xaml", UriKind.Relative), "Shopping List")
             };
             return returnList;
         }

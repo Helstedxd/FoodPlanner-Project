@@ -12,11 +12,13 @@ namespace FoodPlanner.Models
         public PublicQuerys() { }
 
         public List<inventoryListGroupedByQuantity> inventoryList = (from ii in App.db.InventoryIngredients
+                                                                     join i in App.db.Ingredients on ii.IngredientID equals i.ID
                                                                      where ii.UserID == App.CurrentUser.ID
                                                                      group ii by ii.IngredientID into iig
                                                                      select new inventoryListGroupedByQuantity()
                                                                      {
                                                                          IngredientID = iig.FirstOrDefault().IngredientID,
+                                                                         Unit = iig.FirstOrDefault().Ingredient.Unit,
                                                                          Quantity = iig.Sum(i => i.Quantity),
                                                                          Ingredient = iig.FirstOrDefault().Ingredient,
                                                                          ExpirationDate = iig.FirstOrDefault().ExpirationDate,
@@ -39,15 +41,17 @@ namespace FoodPlanner.Models
         public List<int> blackList = (from bl in App.db.BlacklistIngredients
                                       join ri in App.db.RecipeIngredients on bl.IngredientID equals ri.IngredientID
                                       where bl.UserID == App.CurrentUser.ID
-                                      select ri.RecipeID).ToList();
+                                      group ri by ri.RecipeID into ri
+                                      select ri.FirstOrDefault().RecipeID).ToList();
 
         public List<GrayList> grayList = (from gl in App.db.GraylistIngredients
                                           join i in App.db.Ingredients on gl.IngredientID equals i.ID
                                           where gl.UserID == App.CurrentUser.ID
+                                          group gl by gl.IngredientID into gl
                                           select new GrayList()
                                           {
-                                              ingredient = i,
-                                              rating = gl.IngredientValue
+                                              ingredient = gl.FirstOrDefault().Ingredient,
+                                              rating = gl.OrderByDescending(r => r.IngredientValue).FirstOrDefault().IngredientValue
                                           }).ToList();
 
         public IQueryable<IGrouping<int, Result>> search(List<int> recipeIDs)

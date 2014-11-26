@@ -91,40 +91,28 @@ namespace FoodPlanner.ViewModels
         {
             //TODO: only consider within the shopAhead period (and maybe exclude days in the past)
             //TODO: somehow store these common queries...
-            var InventoryIngredientsTotalQuantity =
-                from ii in App.db.InventoryIngredients
-                join i in App.db.Ingredients on ii.IngredientID equals i.ID
-                where ii.UserID == App.CurrentUser.ID
-                group ii by ii.IngredientID into iig
-                select new
-                {
-                    IngredientID = iig.FirstOrDefault().IngredientID,
-                    Unit = iig.FirstOrDefault().Ingredient.Unit,
-                    TotalQuantity = iig.Sum(i => i.Quantity)
-                };
+            PublicQuerys publicQuery = new PublicQuerys();
 
-            var MealRecipeIngredientsTotalQuantity =
-                from ri in App.db.RecipeIngredients
-                where App.db.Meals.Any(m => m.UserID == App.CurrentUser.ID && m.RecipeID == ri.RecipeID)
-                group ri by ri.IngredientID into rig
-                select new
-                {
-                    IngredientID = rig.FirstOrDefault().IngredientID,
-                    Ingredient = rig.FirstOrDefault().Ingredient,
-                    Unit = rig.FirstOrDefault().Ingredient.Unit,
-                    TotalQuantity = rig.Sum(i => i.Quantity),
-                };
+            var MealRecipeIngredientsTotalQuantity = from ri in App.db.RecipeIngredients
+                                                     where App.db.Meals.Any(m => m.UserID == App.CurrentUser.ID && m.RecipeID == ri.RecipeID)
+                                                     group ri by ri.IngredientID into rig
+                                                     select new
+                                                     {
+                                                         IngredientID = rig.FirstOrDefault().IngredientID,
+                                                         Ingredient = rig.FirstOrDefault().Ingredient,
+                                                         Unit = rig.FirstOrDefault().Ingredient.Unit,
+                                                         TotalQuantity = rig.Sum(i => i.Quantity),
+                                                     };
 
-            var InventoryMealIngredientQuantityDifferences =
-                from mritq in MealRecipeIngredientsTotalQuantity
-                join iitq in InventoryIngredientsTotalQuantity on mritq.IngredientID equals iitq.IngredientID into j
-                from iitqOrNull in j.DefaultIfEmpty()
-                select new
-                {
-                    Ingredient = mritq.Ingredient,
-                    InventoryQuantityDifference = iitqOrNull != null ? mritq.TotalQuantity - iitqOrNull.TotalQuantity : mritq.TotalQuantity,
-                    Unit = mritq.Ingredient.Unit
-                };
+            var InventoryMealIngredientQuantityDifferences = from mritq in MealRecipeIngredientsTotalQuantity
+                                                             join iitq in publicQuery.inventoryList on mritq.IngredientID equals iitq.IngredientID into j
+                                                             from iitqOrNull in j.DefaultIfEmpty()
+                                                             select new
+                                                             {
+                                                                 Ingredient = mritq.Ingredient,
+                                                                 InventoryQuantityDifference = iitqOrNull != null ? mritq.TotalQuantity - iitqOrNull.Quantity : mritq.TotalQuantity,
+                                                                 Unit = mritq.Ingredient.Unit
+                                                             };
 
             foreach (var IngredientDifference in InventoryMealIngredientQuantityDifferences)
             {

@@ -34,7 +34,7 @@ namespace FoodPlanner.ViewModels
             _removeGreyListIngredientCommand;
 
         private User _currentUser;
-        private Uri _selectedPage = new Uri(Properties.Settings.Default.StartPage, UriKind.Relative);
+        private WindowPick _selectedPage = new WindowPick(new Uri(Properties.Settings.Default.StartPage, UriKind.Relative), "Pick a window");
         private StockQuantity _inventoryIngredient;
         private GraylistIngredient _greyListInventoryIngredient;
         private string _rating;
@@ -52,6 +52,25 @@ namespace FoodPlanner.ViewModels
 
         #region Properties
 
+        public int StartWindowIndex
+        {
+            get
+            {
+                int count = 1;
+                foreach (WindowPick wp in UriList)
+                {
+                    if (wp.ViewPath.ToString() == Properties.Settings.Default.StartPage)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        count++;
+                    }
+                }
+                return count;
+            }
+        }
         public StockQuantity StockIngredient
         {
             get 
@@ -112,7 +131,7 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-        public List<Uri> UriList
+        public List<WindowPick> UriList
         {
             get
             {
@@ -120,7 +139,7 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-        public Uri SelectedPage
+        public WindowPick SelectedPage
         {
             get
             {
@@ -129,8 +148,9 @@ namespace FoodPlanner.ViewModels
             set
             {
                 _selectedPage = value;
-                Properties.Settings.Default.StartPage = value.ToString();
+                Properties.Settings.Default.StartPage = value.ViewPath.ToString();
                 Properties.Settings.Default.Save();
+                
             }
         }
 
@@ -325,15 +345,15 @@ namespace FoodPlanner.ViewModels
             App.db.SaveChanges();
         }
 
-        private List<Uri> CreateUri()
+        private List<WindowPick> CreateUri()
         {
-            List<Uri> returnList = new List<Uri>()
+            List<WindowPick> returnList = new List<WindowPick>()
             {
-                new Uri("Views/InventoryPage.xaml", UriKind.Relative),
-                new Uri("Views/MealPlanPage.xaml", UriKind.Relative),
-                new Uri("Views/RecipeSearchPage.xaml", UriKind.Relative),
-                new Uri("Views/SettingsPage.xaml", UriKind.Relative),
-                new Uri("Views/ShoppingListPage.xaml", UriKind.Relative)
+                new WindowPick(new Uri("Views/InventoryPage.xaml",    UriKind.Relative), "Inventory"),
+                new WindowPick(new Uri("Views/MealPlanPage.xaml",     UriKind.Relative), "FoodPlan"),
+                new WindowPick(new Uri("Views/RecipeSearchPage.xaml", UriKind.Relative), "Search"),
+                new WindowPick(new Uri("Views/SettingsPage.xaml",     UriKind.Relative), "Settings"),
+                new WindowPick(new Uri("Views/ShoppingListPage.xaml", UriKind.Relative), "ShoppingList")
             };
             return returnList;
         }

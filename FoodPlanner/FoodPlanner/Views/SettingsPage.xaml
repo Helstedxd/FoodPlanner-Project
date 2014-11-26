@@ -79,7 +79,7 @@
 
                 <TextBlock Text="Stock Management" Style="{StaticResource TextblockTitle}" Grid.ColumnSpan="2"/>
                 <TextBlock Text="Stock List" Grid.Row="8" Grid.ColumnSpan="2" Style="{StaticResource TextUnderTitle}"/>
-                <ListView x:Name="StockListView" Grid.Row="9" ItemsSource="{Binding CurrentUser.StockQuantities}" Grid.ColumnSpan="2">
+                <ListView x:Name="StockListView" Grid.Row="9" ItemsSource="{Binding CurrentUser.StockQuantities}" SelectedItem="{Binding SelectedStockQuantityIngredient}" Grid.ColumnSpan="2">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="Auto" Header="Name" CellTemplate="{StaticResource ShoppingListNameCell}"/>
@@ -87,7 +87,7 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <Button Style="{StaticResource ButtonIconTemplate}" Grid.Row="10" Grid.Column="1">
+                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding RemoveStockIngredientCommand}" Grid.Row="10" Grid.Column="1">
                     <Button.Background>
                         <ImageBrush ImageSource="../Images/minusIcon.png" Stretch="Uniform"/>
                     </Button.Background>
@@ -163,7 +163,7 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <Button Style="{StaticResource ButtonIconTemplate}" Content="Remove" Grid.Row="9" Grid.Column="1">
+                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding RemoveGreyListIngredientCommand}" Content="Remove" Grid.Row="9" Grid.Column="1">
                     <Button.Background>
                         <ImageBrush ImageSource="../Images/minusIcon.png" Stretch="Uniform"/>
                     </Button.Background>

@@ -19,6 +19,7 @@ namespace FoodPlanner.ViewModels
 
         public BlacklistIngredient SelectedBlackListIngredient { get; set; }
         public GraylistIngredient SelectedGreyListIngredient { get; set; }
+        public StockQuantity SelectedStockQuantityIngredient { get; set; }
         private ICommand _saveNewStockIngredientNameCommand,
             _addIngredientToUnwantedIngredientsCommand,
             _removeingredientFromUnwantedIngredientsCommand,
@@ -28,7 +29,9 @@ namespace FoodPlanner.ViewModels
             _decrementPersonsInHouseholdCommand,
             _addNewStockIngredientCommand,
             _addNewGreyedIngredientCommand,
-            _SaveNewGreyedItemNameCommand;
+            _SaveNewGreyedItemNameCommand,
+            _removeStockIngredientCommand,
+            _removeGreyListIngredientCommand;
 
         private User _currentUser;
         private Uri _selectedPage = new Uri(Properties.Settings.Default.StartPage, UriKind.Relative);
@@ -42,6 +45,8 @@ namespace FoodPlanner.ViewModels
             StockIngredient = new StockQuantity();
             CurrentUser = App.CurrentUser;
             SelectedBlackListIngredient = new BlacklistIngredient();
+            SelectedStockQuantityIngredient = new StockQuantity();
+            SelectedGreyListIngredient = new GraylistIngredient();
             GreyListInventoryIngredient = new GraylistIngredient();
         }
 
@@ -132,6 +137,32 @@ namespace FoodPlanner.ViewModels
         #endregion
 
         #region ICommands
+
+        public ICommand RemoveGreyListIngredientCommand 
+        {
+            get 
+            {
+                if (_removeGreyListIngredientCommand == null) 
+                {
+                    _removeGreyListIngredientCommand = new RelayCommand(() => RemoveGreylistIngredient());
+                }
+
+                return _removeGreyListIngredientCommand;
+            }
+        }
+
+        public ICommand RemoveStockIngredientCommand {
+            get 
+            {
+                if (_removeStockIngredientCommand == null) 
+                {
+                    _removeStockIngredientCommand = new RelayCommand(() => RemoveStockIngredient());
+                }
+
+                return _removeStockIngredientCommand;
+            }
+        }
+
         public ICommand SaveNewStockIngredientNameCommand
         {
             get
@@ -266,7 +297,17 @@ namespace FoodPlanner.ViewModels
 
         #region Methods
 
-        //Crasher når "App.db.SaveChanges();" køres.  
+        private void RemoveGreylistIngredient() 
+        {
+            App.db.GraylistIngredients.RemoveRange(App.db.GraylistIngredients.Where(gli => gli.Id == SelectedGreyListIngredient.Id && gli.UserID == SelectedGreyListIngredient.UserID));
+            App.db.SaveChanges();
+        }
+
+        private void RemoveStockIngredient() 
+        {
+            App.db.StockQuantities.RemoveRange(App.db.StockQuantities.Where(sq => sq.ID == SelectedStockQuantityIngredient.ID && sq.UserID == SelectedStockQuantityIngredient.UserID));
+            App.db.SaveChanges();
+        } 
 
         private void AddNewStockIngredient()
         {

@@ -302,6 +302,7 @@ namespace FoodPlanner.ViewModels
             StockIngredient.Ingredient = ingredient;
             RaisePropertyChanged("StockIngredient");
         }
+
         private void SaveNewGreyedIentName(Ingredient ingredient)
         {
             GreyListInventoryIngredient.IngredientID = ingredient.ID;

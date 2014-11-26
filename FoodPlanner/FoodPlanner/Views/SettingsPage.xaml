@@ -97,14 +97,13 @@
                 <TextBlock Text="Add a new stock ingredient" Grid.Row="1" Style="{StaticResource TextUnderTitle}" Grid.ColumnSpan="2"/>
                 <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="2">
                     <TextBlock Text="Name: "/>
-                    <TextBlock Text="{Binding StockIngredient.Ingredient.Name}"/>
-                    <!--<TextBlock Text="{Binding StockIngredient.Ingredient.Name, StringFormat=Name: {0}, Mode=OneWay}" Grid.Row="5"/>-->
+                    <TextBlock Text="{Binding StockIngredient.Ingredient.Name}" FontSize="13" FontStyle="Oblique"/>
                 </StackPanel>
 
                 <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveNewStockIngredientNameCommand}" MaximumItems="5" Grid.Row="3" Grid.ColumnSpan="2" Margin="0,0,200,0"/>
                 <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="2">
                     <TextBlock Text="Quantity: "/>
-                    <TextBlock Text="{Binding StockIngredient.Quantity}"/>
+                    <TextBlock Text="{Binding StockIngredient.Quantity}"  FontSize="13" FontStyle="Oblique"/>
                     <!--<TextBlock Text="{Binding InventoryIngredient.Quantity, StringFormat=Quantity: {0}}" Grid.Row="7"/>-->
                 </StackPanel>
                 
@@ -141,12 +140,12 @@
                 <TextBlock Style="{StaticResource TextUnderTitle}" Text="Rate a new ingredient" Grid.Row="1" Grid.ColumnSpan="2"/>
                 <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="2">
                     <TextBlock Text="Name: "/>
-                    <TextBlock Text="{Binding GreyListInventoryIngredient.Ingredient.Name}"/>
+                    <TextBlock Text="{Binding GreyListInventoryIngredient.Ingredient.Name}"  FontSize="13" FontStyle="Oblique"/>
                 </StackPanel>
                 <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveNewGreyedIngredientNameCommand}" MaximumItems="5" Grid.Row="3" Grid.ColumnSpan="2" Margin="0,0,200,0"/>
                 <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="2">
                     <TextBlock Text="Rating: "/>
-                    <TextBlock Text="{Binding GreyListInventoryIngredient.IngredientValue}"/>
+                    <TextBlock Text="{Binding GreyListInventoryIngredient.IngredientValue}"  FontSize="13" FontStyle="Oblique"/>
                 </StackPanel>
                 <Slider Grid.Row="5" Minimum="1" Maximum="100" Value="{Binding GreyListInventoryIngredient.IngredientValue, Mode=TwoWay}"/>
                 <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding AddNewGryedIngredientCommand}" Grid.Row="6" Grid.Column="1">

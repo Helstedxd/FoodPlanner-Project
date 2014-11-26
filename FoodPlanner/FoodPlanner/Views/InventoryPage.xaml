@@ -23,46 +23,13 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!--<StackPanel Orientation="Horizontal" Margin="0,0,0.063,0.168">-->
-        <!-- <TextBlock Text="Add Food:" VerticalAlignment="Center" Margin="5" />-->
-        <!--<toolkit:AutoCompleteBox x:Name="inventoryAutoCompleteBox" Width="475" Margin="5" VerticalAlignment="Center"
-                                         FilterMode="Contains" IsTextCompletionEnabled="True"
-                                         MinimumPopulateDelay="500" MinimumPrefixLength="2" Populating="inventoryAutoCompleteBox_Populating" />-->
-        <!--<Button Grid.Column="1" x:Name="AddButton" Style="{DynamicResource ButtonIconTemplate}" IsEnabled="{Binding disableAddButton, Mode=OneWay}" Command="{Binding AddToInventory}">
-            <Button.Background>
-                <ImageBrush ImageSource="/Images/plusIcon.png" Stretch="Uniform"/>
-            </Button.Background>
-        </Button>-->
-
         <Border Grid.Column="0"  BorderThickness=" 2,2,1,2" BorderBrush="Black"/>
         <Border Grid.Column="1"  BorderThickness=" 1,2,2,2" BorderBrush="Black"/>
-        <!--</StackPanel>-->
 
         <UserControls:IngredientAutoComplete SelectItemCommand="{Binding AddIngredientToInventoryCommand}"
                                              MaximumItems="10" Grid.Row="0" />
         
-        <!--<DataGrid x:Name="inventoryIngredientsDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="139,4.77,5.063,4.895" ItemsSource="{Binding InventoryIngredients, Mode=OneWay}" EnableRowVirtualization="True" AutoGenerateColumns="False" Grid.Row="2">
-            <DataGrid.Columns>
-                <DataGridTextColumn x:Name="ingredientColumn" Width="Auto" Header="Ingredient" IsReadOnly="True" Binding="{Binding Ingredient}"/>
-                <DataGridTextColumn x:Name="quantityColumn" Width="Auto" Header="Quantity" Binding="{Binding Quantity}"/>
-                <DataGridTemplateColumn x:Name="purchaseDateColumn" Width="Auto" Header="Purchase Date">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <DatePicker SelectedDate="{Binding PurchaseDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn x:Name="expirationDateColumn" Width="Auto" Header="Expiration Date">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <DatePicker SelectedDate="{Binding ExpirationDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>-->
-        
-        <ListView Margin="5" Grid.Row="1" MaxWidth="{Binding ElementName=InventoryGrid, Path=MaxWidth}" ItemsSource="{Binding InventoryIngredients}" Background="{StaticResource BackgroundColour}">
+        <ListView Grid.Row="1" ItemsSource="{Binding InventoryIngredients}" Background="{StaticResource BackgroundColour}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Ingredient" DisplayMemberBinding="{Binding Ingredient.Name}" Width="Auto" />

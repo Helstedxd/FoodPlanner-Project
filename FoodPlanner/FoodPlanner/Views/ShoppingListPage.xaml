@@ -53,7 +53,8 @@
         <TextBlock TextWrapping="Wrap" TextAlignment="Center" Background="WhiteSmoke" 
                    Text="{Binding Path=ShopAhead, Source={x:Static local:App.CurrentUser}, StringFormat='You are shopping for the next: {0} days'}"/>
 
-        <Border Grid.Column="0"  BorderThickness=" 2,2,1,2" BorderBrush="Black"/>
+        <Border Grid.Column="0"  BorderThickness=" 2,2,1,2" BorderBrush="Black" Grid.ColumnSpan="2" Margin="1,0,29.11,0.157"/>
         <Border Grid.Column="1"  BorderThickness=" 1,2,2,2" BorderBrush="Black"/>
+        <Button Content="add" Grid.Column="1" Command="{Binding Path=AddCheckedToInventoryCommand}"></Button>
     </Grid>
 </Page>

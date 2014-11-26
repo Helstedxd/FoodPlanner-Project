@@ -20,6 +20,18 @@ namespace FoodPlanner.Models
             this.ExpirationDate = DateTime.Now.AddDays(7);
         }
 
+        public InventoryIngredient(InventoryIngredient ii)
+        {
+            this.ID = ii.ID;
+            this.UserID = ii.UserID;
+            this.IngredientID = ii.IngredientID;
+            this.User = ii.User;
+            this.ExpirationDate = ii.ExpirationDate;
+            this.Ingredient = ii.Ingredient;
+            this.PurchaseDate = ii.PurchaseDate;
+            this.Quantity = ii.Quantity;
+        }
+
         public override string ToString()
         {
             if (!Convert.ToBoolean(this.Quantity))

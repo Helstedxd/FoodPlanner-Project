@@ -23,7 +23,10 @@ namespace FoodPlanner.ViewModels
     {
 
         #region Fields
+
         private bool _checkAllChecked;
+        private ICommand _addCheckedToInventory;
+
         #endregion
 
         public ShoppingListViewModel()
@@ -32,7 +35,8 @@ namespace FoodPlanner.ViewModels
             AssembleShoppingList();
         }
 
-        #region Properties
+        #region Properties & Commands
+
         public ObservableCollection<ShoppingListIngredient> ShoppingList { get; set; }
 
         public bool CheckAllChecked
@@ -47,9 +51,41 @@ namespace FoodPlanner.ViewModels
                 }
             }
         }
+
+
+
+        public ICommand AddCheckedToInventoryCommand
+        {
+            get
+            {
+                if (_addCheckedToInventory == null)
+                {
+                    _addCheckedToInventory = new RelayCommand(() => AddCheckedToInventory());
+                }
+                return _addCheckedToInventory;
+            }
+        }
+
         #endregion
 
         #region Methods
+
+        private void AddCheckedToInventory()
+        {
+            // ShoppingList.Where(i => i.Checked == true)
+            foreach (ShoppingListIngredient shoppingItem in ShoppingList.ToList())
+            {
+                if (shoppingItem.Checked == true)
+                {
+                    //TODO: could we avoid this conversion
+                    InventoryIngredient ii = new InventoryIngredient(shoppingItem);
+                    App.CurrentUser.InventoryIngredients.Add(ii);
+                    ShoppingList.Remove(shoppingItem);
+                }
+            }
+
+            App.db.SaveChanges();
+        }
 
         private void AssembleShoppingList()
         {
@@ -102,6 +138,7 @@ namespace FoodPlanner.ViewModels
         }
 
         #endregion
+
     }
 
 }

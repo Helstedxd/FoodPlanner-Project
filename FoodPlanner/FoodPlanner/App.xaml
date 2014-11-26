@@ -154,6 +154,7 @@
             <WrapPanel Orientation="Horizontal" Background="{StaticResource BackgroundColour}"/>
         </ItemsPanelTemplate>
         <!--End: Meal planning Page Template for day listboxes-->
+        
         <DataTemplate x:Key="StockListRatingCellTemplate">
             <TextBlock Text="{Binding Path=IngredientValue}" Foreground="Black"/>
         </DataTemplate>

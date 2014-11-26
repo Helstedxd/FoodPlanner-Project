@@ -12,5 +12,9 @@ namespace FoodPlanner.Views
         {
             InitializeComponent();
         }
+
+        private void DecimalUpDown_InputValidationError(object sender, Xceed.Wpf.Toolkit.Core.Input.InputValidationErrorEventArgs e) {
+
+        }
     }
 }

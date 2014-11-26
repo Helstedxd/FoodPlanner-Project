@@ -108,8 +108,8 @@
                 </StackPanel>
                 
                 <!--<TextBox x:Name="QuantityTextBox" Text="{Binding StockIngredient.Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.ColumnSpan="2"/>-->
-                <t:DecimalUpDown Grid.Row="5" Margin="0,0,168,0" TextAlignment="Left" Value="{Binding StockIngredient.Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Watermark="Enter Quantity" Minimum="0.1"/>
-                <TextBlock Text="{Binding StockIngredient.Ingredient.Unit, Mode=OneWay, StringFormat=Unit: {0}}" Grid.Row="6"/>
+                <t:DecimalUpDown Grid.Row="5" Margin="0,0,168,0" TextAlignment="Left" Value="{Binding StockIngredient.Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0.1"/>
+                <TextBlock Text="{Binding StockIngredient.Ingredient.Unit, Mode=OneWay, StringFormat=Unit: {0}}" Grid.Row="6" FontStyle="Oblique"/>
                 <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding AddNewStockIngredientCommand}" Grid.Row="7" Grid.Column="1">
                     <Button.Background>
                         <ImageBrush ImageSource="../Images/plusIcon.png" Stretch="UniformToFill"/>

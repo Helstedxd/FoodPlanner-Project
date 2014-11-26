@@ -37,7 +37,6 @@ namespace FoodPlanner.ViewModels
         private WindowPick _selectedPage = new WindowPick(new Uri(Properties.Settings.Default.StartPage, UriKind.Relative),"");
         private StockQuantity _inventoryIngredient;
         private GraylistIngredient _greyListInventoryIngredient;
-        private string _rating;
         #endregion
 
         public SettingsViewModel()
@@ -81,18 +80,6 @@ namespace FoodPlanner.ViewModels
             {
                 _inventoryIngredient = value;
                 RaisePropertyChanged("InventoryIngredient");
-            }
-        }
-
-        public string Rating
-        {
-            get
-            {
-                return _rating;
-            }
-            set
-            {
-                _rating = value;
             }
         } 
 
@@ -339,8 +326,7 @@ namespace FoodPlanner.ViewModels
 
         private void AddNewGreyedIngredient()
         {
-            int ratingValue = Convert.ToInt16(Rating);
-            GraylistIngredient IngredientToBeAdded = new GraylistIngredient() { IngredientID = GreyListInventoryIngredient.IngredientID, UserID = GreyListInventoryIngredient.UserID, IngredientValue = ratingValue };
+            GraylistIngredient IngredientToBeAdded = new GraylistIngredient() { IngredientID = GreyListInventoryIngredient.IngredientID, UserID = GreyListInventoryIngredient.UserID, IngredientValue = GreyListInventoryIngredient.IngredientValue };
             App.db.GraylistIngredients.Add(IngredientToBeAdded);
             App.db.SaveChanges();
         }

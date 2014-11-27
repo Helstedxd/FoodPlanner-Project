@@ -38,7 +38,8 @@ namespace FoodPlanner.ViewModels
         private StockQuantity _inventoryIngredient;
         private GraylistIngredient _greyListInventoryIngredient;
         string _ratedDublicateResult,
-               _blackedDublicateResult;
+               _blackedDublicateResult,
+               _currenStartUpPage;
         #endregion
 
         public SettingsViewModel()
@@ -86,6 +87,16 @@ namespace FoodPlanner.ViewModels
                 return _blackedDublicateResult;
             }
         }
+
+        public string CurrenStartUpPage
+        {
+            get
+            {
+                _currenStartUpPage = GetStartUpPage();
+                return _currenStartUpPage;
+            }
+        } 
+
         public StockQuantity StockIngredient
         {
             get 
@@ -320,6 +331,20 @@ namespace FoodPlanner.ViewModels
 
         #region Methods
 
+        private string GetStartUpPage()
+        {
+            string result = "Pick a window";
+
+            foreach (WindowPick wp in UriList)
+            {
+                if (Properties.Settings.Default.StartPage == wp.ViewPath.ToString())
+                {
+                    result = wp.Name;
+                }
+            }
+            return result;
+        }
+
         private void RemoveGreylistIngredient() 
         {
             App.db.GraylistIngredients.RemoveRange(App.db.GraylistIngredients.Where(gli => gli.Id == SelectedGreyListIngredient.Id && gli.UserID == SelectedGreyListIngredient.UserID));
@@ -392,11 +417,11 @@ namespace FoodPlanner.ViewModels
         {
             List<WindowPick> returnList = new List<WindowPick>()
             {
-                new WindowPick(new Uri("Views/InventoryPage.xaml",    UriKind.Relative), "Inventory"),
                 new WindowPick(new Uri("Views/MealPlanPage.xaml",     UriKind.Relative), "Food Plan"),
                 new WindowPick(new Uri("Views/RecipeSearchPage.xaml", UriKind.Relative), "Search"),
-                new WindowPick(new Uri("Views/SettingsPage.xaml",     UriKind.Relative), "Settings"),
-                new WindowPick(new Uri("Views/ShoppingListPage.xaml", UriKind.Relative), "Shopping List")
+                new WindowPick(new Uri("Views/ShoppingListPage.xaml", UriKind.Relative), "Shopping List"),
+                new WindowPick(new Uri("Views/InventoryPage.xaml",    UriKind.Relative), "Inventory"),
+                new WindowPick(new Uri("Views/SettingsPage.xaml",     UriKind.Relative), "Settings")
             };
             return returnList;
         }
@@ -439,7 +464,7 @@ namespace FoodPlanner.ViewModels
 
         private void DecrementPersonsInHousehold()
         {
-            if (App.CurrentUser.PersonsInHouseHold > 0) 
+            if (App.CurrentUser.PersonsInHouseHold > 1) 
             {
                 App.CurrentUser.PersonsInHouseHold--;
                 RaisePropertyChanged("PersonsInHouseHold");

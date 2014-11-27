@@ -57,7 +57,7 @@
                 </Button>
 
                 <TextBlock Text="Start up screen:" Grid.Row="3" VerticalAlignment="Center"/>
-                <ComboBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding Path=UriList}" SelectedItem="{Binding Path=SelectedPage}" IsEditable="True" IsReadOnly="True" Text="Pick a window"/>
+                <ComboBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding Path=UriList}" SelectedItem="{Binding Path=SelectedPage}" IsEditable="True" IsReadOnly="True" Text="{Binding Path=CurrenStartUpPage, Mode=OneTime}"/>
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>

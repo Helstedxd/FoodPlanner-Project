@@ -71,16 +71,12 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition/>
-                    <RowDefinition/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
 
                 <TextBlock Text="Stock Management" Style="{StaticResource TextblockTitle}" Grid.ColumnSpan="2"/>
-                <TextBlock Text="Stock List" Grid.Row="8" Grid.ColumnSpan="2" Style="{StaticResource TextUnderTitle}"/>
-                <ListView x:Name="StockListView" Grid.Row="9" ItemsSource="{Binding CurrentUser.StockQuantities}" SelectedItem="{Binding SelectedStockQuantityIngredient}" Grid.ColumnSpan="2">
+                <TextBlock Text="Stock List" Grid.Row="4" Grid.ColumnSpan="2" Style="{StaticResource TextUnderTitle}"/>
+                <ListView x:Name="StockListView" Grid.Row="5" ItemsSource="{Binding CurrentUser.StockQuantities}" SelectedItem="{Binding SelectedStockQuantityIngredient}" Grid.ColumnSpan="2">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Name" CellTemplate="{StaticResource ShoppingListNameCell}"/>
@@ -94,7 +90,7 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding RemoveStockIngredientCommand}" Grid.Row="10" Grid.Column="1">
+                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding RemoveStockIngredientCommand}" Grid.Row="6" Grid.Column="1">
                     <Button.Background>
                         <ImageBrush ImageSource="../Images/minusIcon.png" Stretch="Uniform"/>
                     </Button.Background>

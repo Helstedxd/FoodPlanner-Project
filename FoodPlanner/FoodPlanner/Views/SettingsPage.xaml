@@ -97,20 +97,19 @@
                 <TextBlock Text="Add a new stock ingredient" Grid.Row="1" Style="{StaticResource TextUnderTitle}" Grid.ColumnSpan="2"/>
                 <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="2">
                     <TextBlock Text="Name: "/>
-                    <TextBlock Text="{Binding StockIngredient.Ingredient.Name}"/>
-                    <!--<TextBlock Text="{Binding StockIngredient.Ingredient.Name, StringFormat=Name: {0}, Mode=OneWay}" Grid.Row="5"/>-->
+                    <TextBlock Text="{Binding StockIngredient.Ingredient.Name}" FontSize="13" FontStyle="Oblique"/>
                 </StackPanel>
 
                 <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveNewStockIngredientNameCommand}" MaximumItems="5" Grid.Row="3" Grid.ColumnSpan="2" Margin="0,0,200,0"/>
                 <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="2">
                     <TextBlock Text="Quantity: "/>
-                    <TextBlock Text="{Binding StockIngredient.Quantity}"/>
+                    <TextBlock Text="{Binding StockIngredient.Quantity}"  FontSize="13" FontStyle="Oblique"/>
                     <!--<TextBlock Text="{Binding InventoryIngredient.Quantity, StringFormat=Quantity: {0}}" Grid.Row="7"/>-->
                 </StackPanel>
                 
                 <!--<TextBox x:Name="QuantityTextBox" Text="{Binding StockIngredient.Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.ColumnSpan="2"/>-->
-                <t:DecimalUpDown Grid.Row="5" Margin="0,0,168,0" TextAlignment="Left" Value="{Binding StockIngredient.Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Watermark="Enter Quantity"/>
-                <TextBlock Text="{Binding StockIngredient.Ingredient.Unit, Mode=OneWay, StringFormat=Unit: {0}}" Grid.Row="6"/>
+                <t:DecimalUpDown Grid.Row="5" Margin="0,0,168,0" TextAlignment="Left" Value="{Binding StockIngredient.Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0.1"/>
+                <TextBlock Text="{Binding StockIngredient.Ingredient.Unit, Mode=OneWay, StringFormat=Unit: {0}}" Grid.Row="6" FontStyle="Oblique"/>
                 <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding AddNewStockIngredientCommand}" Grid.Row="7" Grid.Column="1">
                     <Button.Background>
                         <ImageBrush ImageSource="../Images/plusIcon.png" Stretch="UniformToFill"/>
@@ -128,10 +127,10 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
-                    <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition/>
+                    <RowDefinition/>
                     <RowDefinition Height="30"/>
-                    <RowDefinition />
+                    <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
@@ -140,16 +139,16 @@
                 
                 <TextBlock Style="{StaticResource TextUnderTitle}" Text="Rate a new ingredient" Grid.Row="1" Grid.ColumnSpan="2"/>
                 <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="2">
-                    <TextBlock Text="Name: " Grid.Row="2" Grid.ColumnSpan="2"/>
-                    <TextBlock Text="{Binding GreyListInventoryIngredient.Ingredient.Name}"/>
+                    <TextBlock Text="Name: "/>
+                    <TextBlock Text="{Binding GreyListInventoryIngredient.Ingredient.Name}"  FontSize="13" FontStyle="Oblique"/>
                 </StackPanel>
                 <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveNewGreyedIngredientNameCommand}" MaximumItems="5" Grid.Row="3" Grid.ColumnSpan="2" Margin="0,0,200,0"/>
                 <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="2">
                     <TextBlock Text="Rating: "/>
-                    <TextBlock Text="{Binding GreyListInventoryIngredient.IngredientValue}"/>
+                    <TextBlock Text="{Binding GreyListInventoryIngredient.IngredientValue}"  FontSize="13" FontStyle="Oblique"/>
                 </StackPanel>
-                <Slider Grid.Row="5" Grid.ColumnSpan="2" Minimum="1" Maximum="100" Value="{Binding GreyListInventoryIngredient.IngredientValue, Mode=TwoWay}"/>
-                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding AddNewGryedIngredientCommand}" Grid.Row="6" Grid.Column="1" Height="30" Margin="2,2,2,0" VerticalAlignment="Top">
+                <Slider Grid.Row="5" Minimum="1" Maximum="100" Value="{Binding GreyListInventoryIngredient.IngredientValue, Mode=TwoWay}"/>
+                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding AddNewGryedIngredientCommand}" Grid.Row="6" Grid.Column="1">
                     <Button.Background>
                         <ImageBrush ImageSource="../Images/plusIcon.png" Stretch="Uniform"/>
                     </Button.Background>
@@ -160,18 +159,11 @@
                 <ListView SelectedItem="{Binding SelectedGreyListIngredient}" ItemsSource="{Binding Path=CurrentUser.GraylistIngredients}" Grid.Row="8" Grid.ColumnSpan="2">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Name" CellTemplate="{StaticResource ShoppingListNameCell}"/>
-                            <GridViewColumn Header="Rating"/>
+                            <GridViewColumn Header="Name" Width="Auto" CellTemplate="{StaticResource ShoppingListNameCell}"/>
+                            <GridViewColumn Header="Rating" Width="Auto" CellTemplate="{StaticResource StockListRatingCellTemplate}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <!--<ListBox x:Name="FavoriteIngredientsList" SelectedItem="{Binding SelectedGreyListIngredient}" ItemsSource="{Binding Path=CurrentUser.GraylistIngredients}" Grid.Row="8" Grid.ColumnSpan="2">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Path=Ingredient.Name}"/>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>-->
                 <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding RemoveGreyListIngredientCommand}" Content="Remove" Grid.Row="9" Grid.Column="1">
                     <Button.Background>
                         <ImageBrush ImageSource="../Images/minusIcon.png" Stretch="Uniform"/>
@@ -188,29 +180,28 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
                     <RowDefinition Height="30"/>
-                    <RowDefinition/>
-                    <RowDefinition/>
                 </Grid.RowDefinitions>
 
                 <TextBlock Text="Unwanted Ingredients" Style="{StaticResource TextblockTitle}" Grid.ColumnSpan="2"/>
-                <TextBlock Text="Unwanted ingredients list" Style="{StaticResource TextUnderTitle}" Grid.Row="1" Grid.ColumnSpan="2"/>
-                <ListBox x:Name="UnwantedIngredientsList" SelectedItem="{Binding SelectedBlackListIngredient}" ItemsSource="{Binding Path=CurrentUser.BlacklistIngredients}" Grid.Row="2" Grid.ColumnSpan="2">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Path=Ingredient.Name}"/>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-
-                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding RemoveIngredientFromUnwantedIngredientsCommand}" Grid.Row="3" Grid.Column="2">
+                <TextBlock Text="Unwanted ingredients list" Style="{StaticResource TextUnderTitle}" Grid.Row="3" Grid.ColumnSpan="2"/>
+                <ListView SelectedItem="{Binding SelectedGreyListIngredient}" ItemsSource="{Binding Path=CurrentUser.BlacklistIngredients}" Grid.Row="4" Grid.ColumnSpan="2">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Name" Width="Auto" CellTemplate="{StaticResource ShoppingListNameCell}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding RemoveIngredientFromUnwantedIngredientsCommand}" Grid.Row="5" Grid.Column="2">
                     <Button.Background>
                         <ImageBrush ImageSource="../Images/minusIcon.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
 
-                <TextBlock Text="Add unwanted ingredient" Style="{StaticResource TextUnderTitle}" Grid.Row="4" Grid.ColumnSpan="2"/>
-                <UserControls:IngredientAutoComplete SelectItemCommand="{Binding AddIngredientToUnwantedIngredientsCommand}" MaximumItems="5" Grid.Row="5"  Grid.ColumnSpan="2" Margin="0,0,200,0"/>
+                <TextBlock Text="Add unwanted ingredient" Style="{StaticResource TextUnderTitle}" Grid.Row="1" Grid.ColumnSpan="2"/>
+                <UserControls:IngredientAutoComplete SelectItemCommand="{Binding AddIngredientToUnwantedIngredientsCommand}" MaximumItems="5" Grid.Row="2"  Grid.ColumnSpan="2" Margin="0,0,200,0"/>
             </Grid>
         </StackPanel>
     </ScrollViewer>

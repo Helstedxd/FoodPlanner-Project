@@ -26,10 +26,23 @@ namespace FoodPlanner.ViewModels
         public InventoryViewModel()
         {
             InventoryIngredients = App.CurrentUser.InventoryIngredients;
+           // InventoryIngredients = (from ii in App.CurrentUser.InventoryIngredients
+            //                       where ii.UserID == App.CurrentUser.ID
+             //                      group ii by ii.IngredientID).ToList();
+
+
+            //TODO: add total quantity to group
+            // Add Grouping View
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(InventoryIngredients);
+            //PropertyGroupDescription groupDescription = new PropertyGroupDescription("Ingredient.ID");
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Ingredient.Name");
+            //PropertyGroupDescription groupDescription = new PropertyGroupDescription("Key");
+            view.GroupDescriptions.Add(groupDescription);
         }
 
         #region Properties
 
+        //public IEnumerable<IGrouping<int, InventoryIngredient>> InventoryIngredients { get; set; }
         public ObservableCollection<InventoryIngredient> InventoryIngredients { get; set; }
 
         #endregion

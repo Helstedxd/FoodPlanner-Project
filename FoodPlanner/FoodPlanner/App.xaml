@@ -155,6 +155,9 @@
         </ItemsPanelTemplate>
         <!--End: Meal planning Page Template for day listboxes-->
         
+        <DataTemplate x:Key="StockListRatingCellTemplate">
+            <TextBlock Text="{Binding Path=IngredientValue}" Foreground="Black"/>
+        </DataTemplate>
         <!--Start: -->
     </Application.Resources>
 </Application>

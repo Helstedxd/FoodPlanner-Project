@@ -390,28 +390,24 @@ namespace FoodPlanner.ViewModels
         private void IncrementShopAhead()
         {
             App.CurrentUser.ShopAhead++;
-            App.db.SaveChanges();
             RaisePropertyChanged("ShopAhead");
         }
 
         private void DecrementShopAhead()
         {
             App.CurrentUser.ShopAhead--;
-            App.db.SaveChanges();
             RaisePropertyChanged("ShopAhead");
         }
 
         private void IncrementPersonsInHousehold()
         {
             App.CurrentUser.PersonsInHouseHold++;
-            App.db.SaveChanges();
             RaisePropertyChanged("PersonsInHouseHold");
         }
 
         private void DecrementPersonsInHousehold()
         {
             App.CurrentUser.PersonsInHouseHold--;
-            App.db.SaveChanges();
             RaisePropertyChanged("PersonsInHouseHold");
         }
 

@@ -43,6 +43,7 @@ namespace FoodPlanner
 
         private void ApplicationExit(object sender, ExitEventArgs args)
         {
+            App.db.SaveChanges();
             App.db.Dispose();
         }
 

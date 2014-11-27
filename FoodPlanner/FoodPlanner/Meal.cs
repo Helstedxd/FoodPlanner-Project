@@ -19,6 +19,7 @@ namespace FoodPlanner.Models
         public int RecipeID { get; set; }
         public System.DateTime Date { get; set; }
         public int Participants { get; set; }
+        public bool IsActive { get; set; }
     
         public virtual Recipe Recipe { get; set; }
         public virtual User User { get; set; }

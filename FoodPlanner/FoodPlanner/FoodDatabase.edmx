@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FoodModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FoodModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BlacklistIngredients">
           <Key>
             <PropertyRef Name="Id" />
@@ -69,6 +69,7 @@
           <Property Name="RecipeID" Type="int" Nullable="false" />
           <Property Name="Date" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="Participants" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bool" Nullable="false" />
         </EntityType>
         <EntityType Name="RecipeIngredients">
           <Key>
@@ -410,6 +411,7 @@
           <NavigationProperty Name="Recipe" Relationship="Self.Meals_ibfk_1" FromRole="Meals" ToRole="Recipes" />
           <NavigationProperty Name="User" Relationship="Self.Meals_ibfk_2" FromRole="Meals" ToRole="Users" />
           <Property Name="Participants" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="RecipeIngredient">
           <Key>
@@ -795,6 +797,7 @@
           <EntitySetMapping Name="Meals">
             <EntityTypeMapping TypeName="FoodModel.Meal">
               <MappingFragment StoreEntitySet="Meals">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Participants" ColumnName="Participants" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />

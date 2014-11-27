@@ -11,6 +11,22 @@ namespace FoodPlanner.Models
     {
         public PublicQuerys() { }
 
+        public IQueryable<inventoryListGroupedByQuantity> inventoryIQueryable = from ii in App.db.InventoryIngredients
+                                                                                join i in App.db.Ingredients on ii.IngredientID equals i.ID
+                                                                                where ii.UserID == App.CurrentUser.ID
+                                                                                group ii by ii.IngredientID into iig
+                                                                                select new inventoryListGroupedByQuantity()
+                                                                                {
+                                                                                    IngredientID = iig.FirstOrDefault().IngredientID,
+                                                                                    Unit = iig.FirstOrDefault().Ingredient.Unit,
+                                                                                    Quantity = iig.Sum(i => i.Quantity),
+                                                                                    Ingredient = iig.FirstOrDefault().Ingredient,
+                                                                                    ExpirationDate = iig.FirstOrDefault().ExpirationDate,
+                                                                                    PurchaseDate = iig.FirstOrDefault().PurchaseDate,
+                                                                                    User = iig.FirstOrDefault().User,
+                                                                                    UserID = iig.FirstOrDefault().UserID
+                                                                                };
+
         public List<inventoryListGroupedByQuantity> inventoryList = (from ii in App.db.InventoryIngredients
                                                                      join i in App.db.Ingredients on ii.IngredientID equals i.ID
                                                                      where ii.UserID == App.CurrentUser.ID
@@ -51,7 +67,7 @@ namespace FoodPlanner.Models
                                           select new GrayList()
                                           {
                                               ingredient = gl.FirstOrDefault().Ingredient,
-                                              rating = gl.OrderByDescending(r => r.IngredientValue).FirstOrDefault().IngredientValue
+                                              rating = (gl.Sum(r => r.IngredientValue) / gl.Count())
                                           }).ToList();
 
         public IQueryable<IGrouping<int, Result>> search(List<int> recipeIDs)

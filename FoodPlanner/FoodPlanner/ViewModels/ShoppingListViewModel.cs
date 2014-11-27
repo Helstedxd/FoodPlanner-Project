@@ -105,7 +105,7 @@ namespace FoodPlanner.ViewModels
                                                      };
 
             var InventoryMealIngredientQuantityDifferences = from mritq in MealRecipeIngredientsTotalQuantity
-                                                             join iitq in publicQuery.inventoryList on mritq.IngredientID equals iitq.IngredientID into j
+                                                             join iitq in publicQuery.inventoryIQueryable on mritq.IngredientID equals iitq.IngredientID into j
                                                              from iitqOrNull in j.DefaultIfEmpty()
                                                              select new
                                                              {

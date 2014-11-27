@@ -146,7 +146,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Label Content="{Binding Recipe.Title}" FontSize="12"/>
+                <TextBlock Text="{Binding Recipe.Title}" FontSize="12" TextTrimming="CharacterEllipsis" Width="100"/>
                 <Label Content="{Binding Participants}" ContentStringFormat="Planned for {0} person(s)" FontSize="10" Grid.Row="1"/>
             </Grid>
         </DataTemplate>

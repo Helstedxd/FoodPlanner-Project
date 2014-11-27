@@ -395,8 +395,11 @@ namespace FoodPlanner.ViewModels
 
         private void DecrementShopAhead()
         {
-            App.CurrentUser.ShopAhead--;
-            RaisePropertyChanged("ShopAhead");
+            if (App.CurrentUser.ShopAhead > 0) 
+            {
+                App.CurrentUser.ShopAhead--;
+                RaisePropertyChanged("ShopAhead");
+            }
         }
 
         private void IncrementPersonsInHousehold()
@@ -407,8 +410,11 @@ namespace FoodPlanner.ViewModels
 
         private void DecrementPersonsInHousehold()
         {
-            App.CurrentUser.PersonsInHouseHold--;
-            RaisePropertyChanged("PersonsInHouseHold");
+            if (App.CurrentUser.PersonsInHouseHold > 0) 
+            {
+                App.CurrentUser.PersonsInHouseHold--;
+                RaisePropertyChanged("PersonsInHouseHold");
+            }
         }
 
         //Fix: Det skal sikres at man ikke kan tilføje den samme ingrediens flere gange.

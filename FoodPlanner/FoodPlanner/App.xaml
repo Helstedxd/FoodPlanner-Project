@@ -160,6 +160,10 @@
         <DataTemplate x:Key="StockListRatingCellTemplate">
             <TextBlock Text="{Binding Path=IngredientValue}" Foreground="Black"/>
         </DataTemplate>
+        <!--Stock Quantity Template in settings-->
+        <DataTemplate x:Key="StockQuantityCellTemplate">
+            
+        </DataTemplate>   
         <!--Start: -->
     </Application.Resources>
 </Application>

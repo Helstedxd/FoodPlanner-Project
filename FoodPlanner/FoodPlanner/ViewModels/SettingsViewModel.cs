@@ -307,7 +307,7 @@ namespace FoodPlanner.ViewModels
             {
                 if (_addNewStockIngredientCommand == null)
                 {
-                    _addNewStockIngredientCommand = new RelayCommand(() => AddNewStockIngredient());
+                    _addNewStockIngredientCommand = new RelayCommand<Ingredient>(i => AddNewStockIngredient(i));
                 }
 
                 return _addNewStockIngredientCommand;
@@ -357,9 +357,9 @@ namespace FoodPlanner.ViewModels
             App.db.SaveChanges();
         } 
 
-        private void AddNewStockIngredient()
+        private void AddNewStockIngredient(Ingredient ingredient)
         {
-            StockQuantity StockIngredientToBeAdded = new StockQuantity() { IngredientID = StockIngredient.Ingredient.ID, Quantity = StockIngredient.Quantity, UserID = App.CurrentUser.ID };
+            StockQuantity StockIngredientToBeAdded = new StockQuantity() { IngredientID = ingredient.ID, Quantity = 0, UserID = App.CurrentUser.ID };
 
             App.db.StockQuantities.Add(StockIngredientToBeAdded);
             App.db.SaveChanges();

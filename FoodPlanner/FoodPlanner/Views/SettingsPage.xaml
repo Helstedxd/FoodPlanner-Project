@@ -83,8 +83,14 @@
                 <ListView x:Name="StockListView" Grid.Row="9" ItemsSource="{Binding CurrentUser.StockQuantities}" SelectedItem="{Binding SelectedStockQuantityIngredient}" Grid.ColumnSpan="2">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="Auto" Header="Name" CellTemplate="{StaticResource ShoppingListNameCell}"/>
-                            <GridViewColumn Width="Auto" Header="Quantity And Unit" CellTemplate="{StaticResource ShoppingListUnitAndQuantityCell}"/>
+                            <GridViewColumn Header="Name" CellTemplate="{StaticResource ShoppingListNameCell}"/>
+                            <GridViewColumn Width="Auto" Header="Quantity">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <t:DecimalUpDown Value="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FormatString="{Binding Ingredient.Unit, StringFormat=0 {0}}" Minimum="0.1" Width="100"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -100,21 +106,16 @@
                     <TextBlock Text="{Binding StockIngredient.Ingredient.Name}" FontSize="13" FontStyle="Oblique"/>
                 </StackPanel>
 
-                <UserControls:IngredientAutoComplete SelectItemCommand="{Binding SaveNewStockIngredientNameCommand}" MaximumItems="5" Grid.Row="3" Grid.ColumnSpan="2" Margin="0,0,200,0"/>
-                <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="2">
+                <UserControls:IngredientAutoComplete SelectItemCommand="{Binding AddNewStockIngredientCommand}" MaximumItems="5" Grid.Row="3" Grid.ColumnSpan="2" Margin="0,0,200,0"/>
+                <!--<StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="2">
                     <TextBlock Text="Quantity: "/>
                     <TextBlock Text="{Binding StockIngredient.Quantity}"  FontSize="13" FontStyle="Oblique"/>
-                    <!--<TextBlock Text="{Binding InventoryIngredient.Quantity, StringFormat=Quantity: {0}}" Grid.Row="7"/>-->
-                </StackPanel>
+                    <TextBlock Text="{Binding InventoryIngredient.Quantity, StringFormat=Quantity: {0}}" Grid.Row="7"/>
+                </StackPanel>-->
                 
                 <!--<TextBox x:Name="QuantityTextBox" Text="{Binding StockIngredient.Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.ColumnSpan="2"/>-->
-                <t:DecimalUpDown Grid.Row="5" Margin="0,0,168,0" TextAlignment="Left" Value="{Binding StockIngredient.Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0.1"/>
-                <TextBlock Text="{Binding StockIngredient.Ingredient.Unit, Mode=OneWay, StringFormat=Unit: {0}}" Grid.Row="6" FontStyle="Oblique"/>
-                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding AddNewStockIngredientCommand}" Grid.Row="7" Grid.Column="1">
-                    <Button.Background>
-                        <ImageBrush ImageSource="../Images/plusIcon.png" Stretch="UniformToFill"/>
-                    </Button.Background>
-                </Button>
+                <!--<t:DecimalUpDown Grid.Row="5" Margin="0,0,168,0" TextAlignment="Left" Value="{Binding StockIngredient.Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0.1"/>-->
+                <!--<TextBlock Text="{Binding StockIngredient.Ingredient.Unit, Mode=OneWay, StringFormat=Unit: {0}}" Grid.Row="6" FontStyle="Oblique"/>-->
             </Grid>
 
             <Grid>

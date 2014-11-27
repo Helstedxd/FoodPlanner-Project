@@ -119,7 +119,8 @@
 
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="180"/>
                     <ColumnDefinition Width="30"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -147,8 +148,9 @@
                     <TextBlock Text="Rating: "/>
                     <TextBlock Text="{Binding GreyListInventoryIngredient.IngredientValue}"  FontSize="13" FontStyle="Oblique"/>
                 </StackPanel>
-                <Slider Grid.Row="5" Minimum="1" Maximum="100" Value="{Binding GreyListInventoryIngredient.IngredientValue, Mode=TwoWay}"/>
-                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding AddNewGryedIngredientCommand}" Grid.Row="6" Grid.Column="1">
+                <Slider Name="ratingSlider"  Grid.Row="5" Minimum="1" Maximum="100" Value="{Binding GreyListInventoryIngredient.IngredientValue, Mode=TwoWay}" SelectionStart="1" Grid.ColumnSpan="3"/>
+                <Label Content="{Binding Path=RatedDublicate}" Grid.Row="6" Grid.Column="1" Foreground="Red"/>
+                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding AddNewGryedIngredientCommand}" Grid.Row="6" Grid.Column="2">
                     <Button.Background>
                         <ImageBrush ImageSource="../Images/plusIcon.png" Stretch="Uniform"/>
                     </Button.Background>
@@ -156,7 +158,7 @@
 
 
                 <TextBlock Text="Rated ingredients list" Style="{StaticResource TextUnderTitle}" Grid.Row="7" Grid.ColumnSpan="2"/>
-                <ListView SelectedItem="{Binding SelectedGreyListIngredient}" ItemsSource="{Binding Path=CurrentUser.GraylistIngredients}" Grid.Row="8" Grid.ColumnSpan="2">
+                <ListView SelectedItem="{Binding SelectedGreyListIngredient}" ItemsSource="{Binding Path=CurrentUser.GraylistIngredients}" Grid.Row="8" Grid.ColumnSpan="3">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Name" Width="Auto" CellTemplate="{StaticResource ShoppingListNameCell}"/>
@@ -164,7 +166,7 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding RemoveGreyListIngredientCommand}" Content="Remove" Grid.Row="9" Grid.Column="1">
+                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding RemoveGreyListIngredientCommand}" Content="Remove" Grid.Row="9" Grid.Column="2">
                     <Button.Background>
                         <ImageBrush ImageSource="../Images/minusIcon.png" Stretch="Uniform"/>
                     </Button.Background>

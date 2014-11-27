@@ -8,6 +8,7 @@ using MvvmFoundation.Wpf;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Media;
 
 namespace FoodPlanner.ViewModels
 {
@@ -25,6 +26,7 @@ namespace FoodPlanner.ViewModels
         #region Properties
         private DateTime _activeDate;
         private string _succesText = "", afterString;
+        private System.Windows.Media.Brush _succesTextColour = System.Windows.Media.Brushes.Black;
 
         public DateTime activeDate
         {
@@ -43,6 +45,18 @@ namespace FoodPlanner.ViewModels
             get
             {
                 return _succesText + afterString;
+            }
+        }
+
+        public System.Windows.Media.Brush SuccesTextColour
+        {
+            get
+            {
+                return _succesTextColour;
+            }
+            set
+            {
+                _succesTextColour = value;
             }
         }
         #endregion
@@ -74,12 +88,15 @@ namespace FoodPlanner.ViewModels
                 App.CurrentUser.Meals.Add(newMeal);
                 App.db.SaveChanges();
                 afterString = "Meal added";
+                SuccesTextColour = _succesTextColour = System.Windows.Media.Brushes.Black;
             }
             else
             {
                 afterString = "Meal was not added";
+                _succesTextColour = System.Windows.Media.Brushes.Red;
             }
             RaisePropertyChanged("SuccesText");
+            RaisePropertyChanged("SuccesTextColour");
         }
         #endregion
 

@@ -37,6 +37,7 @@ namespace FoodPlanner.ViewModels
         private WindowPick _selectedPage = new WindowPick(new Uri(Properties.Settings.Default.StartPage, UriKind.Relative),"");
         private StockQuantity _inventoryIngredient;
         private GraylistIngredient _greyListInventoryIngredient;
+        string ratedDublicateResult;
         #endregion
 
         public SettingsViewModel()
@@ -68,6 +69,13 @@ namespace FoodPlanner.ViewModels
                     }
                 }
                 return count;
+            }
+        }
+        public string RatedDublicate
+        {
+            get
+            {
+                return ratedDublicateResult;
             }
         }
         public StockQuantity StockIngredient
@@ -326,9 +334,29 @@ namespace FoodPlanner.ViewModels
 
         private void AddNewGreyedIngredient()
         {
+            IQueryable<GraylistIngredient> grayList = App.db.GraylistIngredients.Where(gli => gli.UserID == App.CurrentUser.ID);
             GraylistIngredient IngredientToBeAdded = new GraylistIngredient() { IngredientID = GreyListInventoryIngredient.IngredientID, UserID = GreyListInventoryIngredient.UserID, IngredientValue = GreyListInventoryIngredient.IngredientValue };
-            App.db.GraylistIngredients.Add(IngredientToBeAdded);
-            App.db.SaveChanges();
+            bool dublicate = false;
+
+            foreach (GraylistIngredient gli in grayList)
+            {
+                if (gli.IngredientID == IngredientToBeAdded.IngredientID)
+                {
+                    dublicate = true;
+                }
+            }
+
+            if (!dublicate)
+            {
+                ratedDublicateResult = "";
+                App.db.GraylistIngredients.Add(IngredientToBeAdded);
+                App.db.SaveChanges();
+            }
+            else
+            {
+                ratedDublicateResult = "Item was not added (dublicate)";
+            }
+            RaisePropertyChanged("RatedDublicate");
         }
 
         private List<WindowPick> CreateUri()

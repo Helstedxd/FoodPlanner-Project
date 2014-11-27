@@ -22,7 +22,20 @@ namespace FoodPlanner.ValueConverters
 
             if (col != null)
             {
-                decimal quantity = col.Sum(o => ((InventoryIngredient)o).Quantity);
+                //decimal quantity = col.Sum(o => ((InventoryIngredient)o).Quantity);
+                decimal quantity = 0;
+                foreach (object o in col)
+                {
+                    if (o is InventoryIngredient)
+                    {
+                        quantity += ((InventoryIngredient)o).Quantity;
+                    }
+                    else
+                    {
+                        throw new NotSupportedException("Collection must only contain elements of type InventoryIngredient");
+                    }
+                }
+
                 string unit = ((InventoryIngredient)col.First()).Ingredient.Unit;
                 return quantity + " " + unit;
             }
@@ -32,7 +45,6 @@ namespace FoodPlanner.ValueConverters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            // Do the conversion from visibility to bool
             throw new NotImplementedException();
         }
     }

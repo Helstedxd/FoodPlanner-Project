@@ -17,11 +17,7 @@ namespace FoodPlanner.ViewModels
     {
         #region Fields
 
-        public BlacklistIngredient SelectedBlackListIngredient { get; set; }
-        public GraylistIngredient SelectedGreyListIngredient { get; set; }
-        public StockQuantity SelectedStockQuantityIngredient { get; set; }
-        private ICommand _saveNewStockIngredientNameCommand,
-            _addIngredientToUnwantedIngredientsCommand,
+        private ICommand _addIngredientToUnwantedIngredientsCommand,
             _removeingredientFromUnwantedIngredientsCommand,
             _incrementShopAheadCommand,
             _decrementShopAhead,
@@ -53,6 +49,12 @@ namespace FoodPlanner.ViewModels
         }
 
         #region Properties
+
+        public BlacklistIngredient SelectedBlackListIngredient { get; set; }
+
+        public GraylistIngredient SelectedGreyListIngredient { get; set; }
+
+        public StockQuantity SelectedStockQuantityIngredient { get; set; }
 
         public int StartWindowIndex
         {
@@ -172,16 +174,16 @@ namespace FoodPlanner.ViewModels
 
         #region ICommands
 
-        public ICommand RemoveGreyListIngredientCommand 
+        public ICommand AddNewStockIngredientCommand
         {
-            get 
+            get
             {
-                if (_removeGreyListIngredientCommand == null) 
+                if (_addNewStockIngredientCommand == null)
                 {
-                    _removeGreyListIngredientCommand = new RelayCommand(() => RemoveGreylistIngredient());
+                    _addNewStockIngredientCommand = new RelayCommand<Ingredient>(i => AddNewStockIngredient(i));
                 }
 
-                return _removeGreyListIngredientCommand;
+                return _addNewStockIngredientCommand;
             }
         }
 
@@ -194,19 +196,6 @@ namespace FoodPlanner.ViewModels
                 }
 
                 return _removeStockIngredientCommand;
-            }
-        }
-
-        public ICommand SaveNewStockIngredientNameCommand
-        {
-            get
-            {
-                if (_saveNewStockIngredientNameCommand == null)
-                {
-                    _saveNewStockIngredientNameCommand = new RelayCommand<Ingredient>(i => SaveNewStockIngredientName(i));
-                }
-
-                return _saveNewStockIngredientNameCommand;
             }
         }
 
@@ -301,19 +290,6 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-        public ICommand AddNewStockIngredientCommand
-        {
-            get
-            {
-                if (_addNewStockIngredientCommand == null)
-                {
-                    _addNewStockIngredientCommand = new RelayCommand<Ingredient>(i => AddNewStockIngredient(i));
-                }
-
-                return _addNewStockIngredientCommand;
-            }
-        }
-
         public ICommand AddNewGryedIngredientCommand
         {
             get
@@ -327,6 +303,18 @@ namespace FoodPlanner.ViewModels
             }
         }
 
+        public ICommand RemoveGreyListIngredientCommand 
+        {
+            get 
+            {
+                if (_removeGreyListIngredientCommand == null) 
+                {
+                    _removeGreyListIngredientCommand = new RelayCommand(() => RemoveGreylistIngredient());
+                }
+
+                return _removeGreyListIngredientCommand;
+            }
+        }
         #endregion
 
         #region Methods
@@ -348,20 +336,6 @@ namespace FoodPlanner.ViewModels
         private void RemoveGreylistIngredient() 
         {
             App.db.GraylistIngredients.RemoveRange(App.db.GraylistIngredients.Where(gli => gli.Id == SelectedGreyListIngredient.Id && gli.UserID == SelectedGreyListIngredient.UserID));
-            App.db.SaveChanges();
-        }
-
-        private void RemoveStockIngredient() 
-        {
-            App.db.StockQuantities.RemoveRange(App.db.StockQuantities.Where(sq => sq.ID == SelectedStockQuantityIngredient.ID && sq.UserID == SelectedStockQuantityIngredient.UserID));
-            App.db.SaveChanges();
-        } 
-
-        private void AddNewStockIngredient(Ingredient ingredient)
-        {
-            StockQuantity StockIngredientToBeAdded = new StockQuantity() { IngredientID = ingredient.ID, Quantity = 0, UserID = App.CurrentUser.ID };
-
-            App.db.StockQuantities.Add(StockIngredientToBeAdded);
             App.db.SaveChanges();
         }
 
@@ -390,29 +364,6 @@ namespace FoodPlanner.ViewModels
             return dublicat;
         }
 
-        private void AddNewGreyedIngredient()
-        {
-            GraylistIngredient IngredientToBeAdded = new GraylistIngredient() 
-            { 
-                IngredientID = GreyListInventoryIngredient.IngredientID, 
-                UserID = GreyListInventoryIngredient.UserID, 
-                IngredientValue = GreyListInventoryIngredient.IngredientValue 
-            };
-            bool dublicat = ListDublicate(IngredientToBeAdded.IngredientID);
-
-            if (!dublicat)
-            {
-                _ratedDublicateResult = "";
-                App.db.GraylistIngredients.Add(IngredientToBeAdded);
-                App.db.SaveChanges();
-            }
-            else
-            {
-                _ratedDublicateResult = "Item was not added (dublicate)";
-            }
-            RaisePropertyChanged("RatedDublicate");
-        }
-
         private List<WindowPick> CreateUri()
         {
             List<WindowPick> returnList = new List<WindowPick>()
@@ -426,21 +377,6 @@ namespace FoodPlanner.ViewModels
             return returnList;
         }
 
-        private void SaveNewStockIngredientName(Ingredient ingredient)
-        {
-            StockIngredient.Ingredient = ingredient;
-            RaisePropertyChanged("StockIngredient");
-        }
-
-        private void SaveNewGreyedIentName(Ingredient ingredient)
-        {
-            GreyListInventoryIngredient.IngredientID = ingredient.ID;
-            GreyListInventoryIngredient.Ingredient = ingredient;
-            GreyListInventoryIngredient.UserID = App.CurrentUser.ID;
-            RaisePropertyChanged("GreyListInventoryIngredient");
-        }
-
-        //For alle in/decrement gælder det at de ikke må være 0> og >(eks)1000
         private void IncrementShopAhead()
         {
             App.CurrentUser.ShopAhead++;
@@ -471,7 +407,51 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-        //Fix: Det skal sikres at man ikke kan tilføje den samme ingrediens flere gange.
+        private void AddNewStockIngredient(Ingredient ingredient)
+        {
+            StockQuantity StockIngredientToBeAdded = new StockQuantity() { IngredientID = ingredient.ID, Quantity = 0, UserID = App.CurrentUser.ID };
+
+            App.db.StockQuantities.Add(StockIngredientToBeAdded);
+            App.db.SaveChanges();
+        }
+
+        private void RemoveStockIngredient() 
+        {
+            App.db.StockQuantities.RemoveRange(App.db.StockQuantities.Where(sq => sq.ID == SelectedStockQuantityIngredient.ID && sq.UserID == SelectedStockQuantityIngredient.UserID));
+            App.db.SaveChanges();
+        } 
+
+        private void AddNewGreyedIngredient()
+        {
+            GraylistIngredient IngredientToBeAdded = new GraylistIngredient() 
+            { 
+                IngredientID = GreyListInventoryIngredient.IngredientID, 
+                UserID = GreyListInventoryIngredient.UserID, 
+                IngredientValue = GreyListInventoryIngredient.IngredientValue 
+            };
+            bool dublicat = ListDublicate(IngredientToBeAdded.IngredientID);
+
+            if (!dublicat)
+            {
+                _ratedDublicateResult = "";
+                App.db.GraylistIngredients.Add(IngredientToBeAdded);
+                App.db.SaveChanges();
+            }
+            else
+            {
+                _ratedDublicateResult = "Item was not added (dublicate)";
+            }
+            RaisePropertyChanged("RatedDublicate");
+        }
+
+        private void SaveNewGreyedIentName(Ingredient ingredient)
+        {
+            GreyListInventoryIngredient.IngredientID = ingredient.ID;
+            GreyListInventoryIngredient.Ingredient = ingredient;
+            GreyListInventoryIngredient.UserID = App.CurrentUser.ID;
+            RaisePropertyChanged("GreyListInventoryIngredient");
+        }
+
         private void AddIngredientToUnwantedIngredients(Ingredient ingredient)
         {
             BlacklistIngredient IngredientToBeAdded = new BlacklistIngredient() 
@@ -494,7 +474,6 @@ namespace FoodPlanner.ViewModels
             RaisePropertyChanged("BlackedDublicateResult");
         }
 
-        //Fix: Metoden skal også sikre mod at der er valgt et element i listboxen.
         private void RemoveIngredientFromUnwantedIngredients()
         {
             App.db.BlacklistIngredients.RemoveRange(App.db.BlacklistIngredients.Where(bli => bli.Id == SelectedBlackListIngredient.Id && bli.UserID == App.CurrentUser.ID));

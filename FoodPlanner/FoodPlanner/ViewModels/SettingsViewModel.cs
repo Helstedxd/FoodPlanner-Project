@@ -37,7 +37,8 @@ namespace FoodPlanner.ViewModels
         private WindowPick _selectedPage = new WindowPick(new Uri(Properties.Settings.Default.StartPage, UriKind.Relative),"");
         private StockQuantity _inventoryIngredient;
         private GraylistIngredient _greyListInventoryIngredient;
-        string ratedDublicateResult;
+        string _ratedDublicateResult,
+               _blackedDublicateResult;
         #endregion
 
         public SettingsViewModel()
@@ -75,7 +76,14 @@ namespace FoodPlanner.ViewModels
         {
             get
             {
-                return ratedDublicateResult;
+                return _ratedDublicateResult;
+            }
+        }
+        public string BlackedDublicateResult
+        {
+            get
+            {
+                return _blackedDublicateResult;
             }
         }
         public StockQuantity StockIngredient
@@ -332,29 +340,50 @@ namespace FoodPlanner.ViewModels
             App.db.SaveChanges();
         }
 
-        private void AddNewGreyedIngredient()
+        private bool ListDublicate(int ID)
         {
             IQueryable<GraylistIngredient> grayList = App.db.GraylistIngredients.Where(gli => gli.UserID == App.CurrentUser.ID);
-            GraylistIngredient IngredientToBeAdded = new GraylistIngredient() { IngredientID = GreyListInventoryIngredient.IngredientID, UserID = GreyListInventoryIngredient.UserID, IngredientValue = GreyListInventoryIngredient.IngredientValue };
-            bool dublicate = false;
+            IQueryable<BlacklistIngredient> blackList = App.db.BlacklistIngredients.Where(gli => gli.UserID == App.CurrentUser.ID);
+            bool dublicat = false;
 
             foreach (GraylistIngredient gli in grayList)
             {
-                if (gli.IngredientID == IngredientToBeAdded.IngredientID)
+                if (gli.IngredientID == ID)
                 {
-                    dublicate = true;
+                    dublicat = true;
                 }
             }
 
-            if (!dublicate)
+            foreach (BlacklistIngredient bli in blackList)
             {
-                ratedDublicateResult = "";
+                if (bli.IngredientID == ID)
+                {
+                    dublicat = true;
+                }
+            }
+
+            return dublicat;
+        }
+
+        private void AddNewGreyedIngredient()
+        {
+            GraylistIngredient IngredientToBeAdded = new GraylistIngredient() 
+            { 
+                IngredientID = GreyListInventoryIngredient.IngredientID, 
+                UserID = GreyListInventoryIngredient.UserID, 
+                IngredientValue = GreyListInventoryIngredient.IngredientValue 
+            };
+            bool dublicat = ListDublicate(IngredientToBeAdded.IngredientID);
+
+            if (!dublicat)
+            {
+                _ratedDublicateResult = "";
                 App.db.GraylistIngredients.Add(IngredientToBeAdded);
                 App.db.SaveChanges();
             }
             else
             {
-                ratedDublicateResult = "Item was not added (dublicate)";
+                _ratedDublicateResult = "Item was not added (dublicate)";
             }
             RaisePropertyChanged("RatedDublicate");
         }
@@ -420,9 +449,24 @@ namespace FoodPlanner.ViewModels
         //Fix: Det skal sikres at man ikke kan tilføje den samme ingrediens flere gange.
         private void AddIngredientToUnwantedIngredients(Ingredient ingredient)
         {
-            BlacklistIngredient IngredientToBeAdded = new BlacklistIngredient() { IngredientID = ingredient.ID, UserID = App.CurrentUser.ID };
-            App.db.BlacklistIngredients.Add(IngredientToBeAdded);
-            App.db.SaveChanges();
+            BlacklistIngredient IngredientToBeAdded = new BlacklistIngredient() 
+            { 
+                IngredientID = ingredient.ID, 
+                UserID = App.CurrentUser.ID 
+            };
+            bool dublicat = ListDublicate(IngredientToBeAdded.IngredientID);
+
+            if (!dublicat)
+            {
+                _blackedDublicateResult = "";
+                App.db.BlacklistIngredients.Add(IngredientToBeAdded);
+                App.db.SaveChanges();
+            }
+            else
+            {
+                _blackedDublicateResult = "Item was not added (dublicate)";
+            }
+            RaisePropertyChanged("BlackedDublicateResult");
         }
 
         //Fix: Metoden skal også sikre mod at der er valgt et element i listboxen.

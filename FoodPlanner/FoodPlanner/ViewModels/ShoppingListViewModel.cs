@@ -112,53 +112,37 @@ namespace FoodPlanner.ViewModels
                                                                           TotalQuantity = rig.Sum(i => i.Quantity),
                                                                       }).ToList();
 
-            List<ShoppingClass> test = (from il in publicQuery.inventoryList
-                                        select new ShoppingClass()
-                                        {
-                                            Ingredient = il.Ingredient,
-                                            TotalQuantity = il.Quantity
-                                        }).ToList();
+            List<ShoppingClass> userInventory = (from il in publicQuery.inventoryList
+                                                 select new ShoppingClass()
+                                                 {
+                                                     Ingredient = il.Ingredient,
+                                                     TotalQuantity = il.Quantity
+                                                 }).ToList();
 
-            List<ShoppingClass> tedst = stockQuantities.Concat(MealRecipeIngredientsTotalQuantity)
-                       .GroupBy(sc => sc.Ingredient)
-                       .Select(sc => new ShoppingClass()
-                       {
-                           Ingredient = sc.FirstOrDefault().Ingredient,
-                           TotalQuantity = sc.Count() == 1 ? sc.First().TotalQuantity : ((sc.First().TotalQuantity - sc.Last().TotalQuantity) > 0 ? sc.First().TotalQuantity : (sc.First().TotalQuantity + (sc.Last().TotalQuantity - sc.First().TotalQuantity)))
-                       }).ToList();
+            List<ShoppingClass> groupedToFindTotalQuantity = stockQuantities.Concat(MealRecipeIngredientsTotalQuantity)
+                                       .GroupBy(sc => sc.Ingredient)
+                                       .Select(sc => new ShoppingClass()
+                                       {
+                                           Ingredient = sc.FirstOrDefault().Ingredient,
+                                           TotalQuantity = sc.Count() == 1 ? sc.First().TotalQuantity : ((sc.First().TotalQuantity - sc.Last().TotalQuantity) > 0 ? sc.First().TotalQuantity : (sc.First().TotalQuantity + (sc.Last().TotalQuantity - sc.First().TotalQuantity)))
+                                       }).ToList();
 
-            foreach (ShoppingClass sc in tedst)
+            foreach (ShoppingClass sc in groupedToFindTotalQuantity)
             {
-                ShoppingListIngredient newShoppingListIngredient = new ShoppingListIngredient(sc.Ingredient, sc.TotalQuantity);
-                ShoppingList.Add(newShoppingListIngredient);
-            }
-
-            /*
-            foreach (ShoppingClass sq in stockQuantities.ToList())
-            {
-                foreach (ShoppingClass mritq in MealRecipeIngredientsTotalQuantity.ToList())
+                ShoppingListIngredient newShoppingListIngredient = null;
+                if (userInventory.Contains(sc))
                 {
-                    if (sq.Ingredient.ID == mritq.Ingredient.ID)
+                    if (userInventory.Where(t => t.Ingredient == sc.Ingredient).Single().TotalQuantity >= sc.TotalQuantity)
                     {
-                        ShoppingListIngredient newShoppingListIngredient = new ShoppingListIngredient(sq.Ingredient, (sq.TotalQuantity - mritq.TotalQuantity) > 0 ? sq.TotalQuantity : (sq.TotalQuantity + (mritq.TotalQuantity - sq.TotalQuantity)));
-                        ShoppingList.Add(newShoppingListIngredient);
-                    }
-                    else
-                    {
-                        if (ShoppingList.Where(sl => sl.Ingredient.ID == sq.Ingredient.ID).Count() == 0)
-                        {
-                            ShoppingListIngredient newShoppingListIngredient = new ShoppingListIngredient(sq.Ingredient, sq.TotalQuantity);
-                            ShoppingList.Add(newShoppingListIngredient);
-                        }
-                        if (ShoppingList.Where(sl => sl.Ingredient.ID == mritq.Ingredient.ID).Count() == 0)
-                        {
-                            ShoppingListIngredient newShoppingListIngredient = new ShoppingListIngredient(mritq.Ingredient, mritq.TotalQuantity);
-                            ShoppingList.Add(newShoppingListIngredient);
-                        }
+                        newShoppingListIngredient = new ShoppingListIngredient(sc.Ingredient, (sc.TotalQuantity - userInventory.Where(t => t.Ingredient == sc.Ingredient).Single().TotalQuantity));
                     }
                 }
+                else
+                {
+                    newShoppingListIngredient = new ShoppingListIngredient(sc.Ingredient, sc.TotalQuantity);
+                }
+                ShoppingList.Add(newShoppingListIngredient);
             }
-            */
         }
 
         #endregion

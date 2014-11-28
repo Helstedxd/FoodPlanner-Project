@@ -178,7 +178,7 @@
 
                 <TextBlock Text="Unwanted Ingredients" Style="{StaticResource TextblockTitle}" Grid.ColumnSpan="2"/>
                 <TextBlock Text="Unwanted ingredients list" Style="{StaticResource TextUnderTitle}" Grid.Row="4" Grid.ColumnSpan="2"/>
-                <ListView SelectedItem="{Binding SelectedGreyListIngredient}" ItemsSource="{Binding Path=CurrentUser.BlacklistIngredients}" Grid.Row="5" Grid.ColumnSpan="2">
+                <ListView SelectedItem="{Binding SelectedBlackListIngredient}" ItemsSource="{Binding Path=CurrentUser.BlacklistIngredients}" Grid.Row="5" Grid.ColumnSpan="2">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Name" Width="Auto" CellTemplate="{StaticResource ShoppingListNameCell}"/>

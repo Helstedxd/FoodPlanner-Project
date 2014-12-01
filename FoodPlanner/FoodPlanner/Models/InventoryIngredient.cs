@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FoodPlanner.Models
 {
-    public partial class InventoryIngredient : ObservableObject
+    public partial class InventoryIngredient
     {
 
         public InventoryIngredient() { }

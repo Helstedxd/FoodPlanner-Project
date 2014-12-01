@@ -51,7 +51,6 @@ namespace FoodPlanner.ViewModels
             };
 
             SelectedSortIndex = 0;
-
         }
 
         #region Properties

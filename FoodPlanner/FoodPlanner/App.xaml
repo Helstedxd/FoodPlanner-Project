@@ -114,20 +114,20 @@
 
         <!--Start: Template for Shopping List (element Listview)-->
         <DataTemplate x:Key="ShoppingListNameCell">
-            <TextBlock Text="{Binding Path=Ingredient}" Foreground="Black"/>
+            <TextBlock Text="{Binding Path=InventoryIngredient.Ingredient}" Foreground="Black"/>
         </DataTemplate>
         <DataTemplate x:Key="ShoppingListQuantityCell">
-            <TextBlock Text="{Binding Path=Quantity}" Foreground="Black"/>
+            <TextBlock Text="{Binding Path=InventoryIngredient.Quantity}" Foreground="Black"/>
         </DataTemplate>
         <DataTemplate x:Key="ShoppingListUnitCell">
-            <TextBlock Text="{Binding Path=Ingredient.Unit}" Foreground="Black"/>
+            <TextBlock Text="{Binding Path=InventoryIngredient.Ingredient.Unit}" Foreground="Black"/>
         </DataTemplate>
         <DataTemplate x:Key="ShoppingListUnitAndQuantityCell">
             <TextBlock Foreground="Black">
                 <TextBlock.Text>
                     <MultiBinding StringFormat="{}{1} {0}">
-                        <Binding Path="Ingredient.Unit" />
-                        <Binding Path="Quantity" />
+                        <Binding Path="InventoryIngredient.Ingredient.Unit" />
+                        <Binding Path="InventoryIngredient.Quantity" />
                     </MultiBinding>
                 </TextBlock.Text>
             </TextBlock>

@@ -80,7 +80,7 @@
                 <ListView x:Name="StockListView" Grid.Row="5" ItemsSource="{Binding CurrentUser.StockQuantities}" SelectedItem="{Binding SelectedStockQuantityIngredient}" Grid.ColumnSpan="2">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Name" CellTemplate="{StaticResource ShoppingListNameCell}"/>
+                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Ingredient}" />
                             <GridViewColumn Width="Auto" Header="Quantity">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
@@ -147,7 +147,7 @@
                 <ListView SelectedItem="{Binding SelectedGreyListIngredient}" ItemsSource="{Binding Path=CurrentUser.GraylistIngredients}" Grid.Row="8" Grid.ColumnSpan="3">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Name" Width="Auto" CellTemplate="{StaticResource ShoppingListNameCell}"/>
+                            <GridViewColumn Header="Name" Width="Auto" DisplayMemberBinding="{Binding Ingredient}" />
                             <GridViewColumn Header="Rating" Width="Auto" CellTemplate="{StaticResource StockListRatingCellTemplate}"/>
                         </GridView>
                     </ListView.View>
@@ -181,7 +181,7 @@
                 <ListView SelectedItem="{Binding SelectedBlackListIngredient}" ItemsSource="{Binding Path=CurrentUser.BlacklistIngredients}" Grid.Row="5" Grid.ColumnSpan="2">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Name" Width="Auto" CellTemplate="{StaticResource ShoppingListNameCell}"/>
+                            <GridViewColumn Header="Name" Width="Auto" DisplayMemberBinding="{Binding Ingredient}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>

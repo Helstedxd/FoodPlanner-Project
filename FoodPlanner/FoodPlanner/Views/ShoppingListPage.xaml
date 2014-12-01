@@ -40,7 +40,7 @@
                     <GridViewColumn Width="Auto" Header="Name" CellTemplate="{StaticResource ShoppingListNameCell}"/>
                     <!-- <GridViewColumn Width="Auto" Header="Quantity" CellTemplate="{StaticResource ShoppingListQuantityCell}"/>
                     <GridViewColumn Width="Auto" Header="Unit" CellTemplate="{StaticResource ShoppingListUnitCell}"/>-->
-                    <GridViewColumn Width="Auto" Header="Quantity And Unit" CellTemplate="{StaticResource ShoppingListUnitAndQuantityCell}"/>
+                    <GridViewColumn Width="Auto" Header="Quantity" CellTemplate="{StaticResource ShoppingListUnitAndQuantityCell}"/>
                 </GridView>
             </ListView.View>
         </ListView>

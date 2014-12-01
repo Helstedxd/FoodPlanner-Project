@@ -77,9 +77,7 @@ namespace FoodPlanner.ViewModels
             {
                 if (shoppingItem.Checked == true)
                 {
-                    //TODO: could we avoid this conversion
-                    InventoryIngredient ii = new InventoryIngredient(shoppingItem);
-                    App.CurrentUser.InventoryIngredients.Add(ii);
+                    App.CurrentUser.InventoryIngredients.Add(shoppingItem.InventoryIngredient);
                     ShoppingList.Remove(shoppingItem);
                 }
             }
@@ -134,13 +132,17 @@ namespace FoodPlanner.ViewModels
                 {
                     if (userInventory.Where(t => t.Ingredient == sc.Ingredient).Single().TotalQuantity >= sc.TotalQuantity)
                     {
-                        newShoppingListIngredient = new ShoppingListIngredient(sc.Ingredient, (sc.TotalQuantity - userInventory.Where(t => t.Ingredient == sc.Ingredient).Single().TotalQuantity));
+                        InventoryIngredient newInventoryIngredient = new InventoryIngredient(sc.Ingredient, (sc.TotalQuantity - userInventory.Where(t => t.Ingredient == sc.Ingredient).Single().TotalQuantity));
+                        newShoppingListIngredient = new ShoppingListIngredient(newInventoryIngredient);
                     }
                 }
                 else
                 {
-                    newShoppingListIngredient = new ShoppingListIngredient(sc.Ingredient, sc.TotalQuantity);
+                    InventoryIngredient newInventoryIngredient = new InventoryIngredient(sc.Ingredient, sc.TotalQuantity);
+                    newShoppingListIngredient = new ShoppingListIngredient(newInventoryIngredient);
                 }
+
+                //TODO: this could be null?!
                 ShoppingList.Add(newShoppingListIngredient);
             }
         }

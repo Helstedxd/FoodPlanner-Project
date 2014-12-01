@@ -78,18 +78,6 @@ namespace FoodPlanner.ViewModels
 
         #region Commands
 
-        public ICommand SaveInventoryCommand
-        {
-            get
-            {
-                if (_saveInventoryCommand == null)
-                {
-                    _saveInventoryCommand = new RelayCommand(() => SaveInventory());
-                }
-                return _saveInventoryCommand;
-            }
-        }
-
         public ICommand AddIngredientToInventoryCommand
         {
             get
@@ -99,6 +87,19 @@ namespace FoodPlanner.ViewModels
                     _addIngredientToInventory = new RelayCommand<Ingredient>(i => AddIngredientToInventory(i));
                 }
                 return _addIngredientToInventory;
+            }
+        }
+
+        private ICommand _removeIngredientFromInventoryCommand;
+        public ICommand RemoveIngredientFromInventoryCommand
+        {
+            get
+            {
+                if (_removeIngredientFromInventoryCommand == null)
+                {
+                    _removeIngredientFromInventoryCommand = new RelayCommand<InventoryIngredient>(ii => RemoveIngredientFromInventory(ii));
+                }
+                return _removeIngredientFromInventoryCommand;
             }
         }
 
@@ -118,20 +119,15 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-        private void SaveInventory()
+        private void RemoveIngredientFromInventory(InventoryIngredient inventoryIngredient)
         {
-            //TODO: stuff (Inventory is not saved if you leave the page..)
-            // List<InventoryIngredient> currentUserInventory = App.CurrentUser.InventoryIngredients.ToList();
-
-            /*foreach (InventoryIngredient ii in App.db.InventoryIngredients.Where(ii => ii.UserID == App.CurrentUser.ID))
+            if (inventoryIngredient != null)
             {
-                if (currentUserInventory.Where(ci => ci.ID == ii.ID).Count() == 0)
-                {
-                    App.db.InventoryIngredients.Remove(ii);
-                }
-            }*/
-
-            App.db.SaveChanges();
+                App.db.InventoryIngredients.Remove(inventoryIngredient);
+                //TODO: InventoryIngredients is a copy of App.CurrentUser.InventoryIngredients
+                // It would be better if we only needed to update one of them...
+                InventoryIngredients.Remove(inventoryIngredient);
+            }
         }
 
         #endregion

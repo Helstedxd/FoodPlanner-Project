@@ -21,7 +21,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -30,7 +29,7 @@
         <Border Grid.Column="0"  BorderThickness=" 2,2,1,2" BorderBrush="Black"/>
         <Border Grid.Column="1"  BorderThickness=" 1,2,2,2" BorderBrush="Black"/>
 
-        
+
         <StackPanel>
             <UserControls:IngredientAutoComplete SelectItemCommand="{Binding AddIngredientToInventoryCommand}"
                                                  MaximumItems="10" Grid.Row="0" />
@@ -53,6 +52,14 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <DatePicker SelectedDate="{Binding ExpirationDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Slet lol" Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Remove" Command="{Binding DataContext.RemoveIngredientFromInventoryCommand, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
+                                        CommandParameter="{Binding}"></Button>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -84,8 +91,5 @@
                 </GroupStyle>
             </ListView.GroupStyle>
         </ListView>
-
-        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Bottom" Width="75" Grid.Row="2" Command="{Binding SaveInventoryCommand}" Grid.ColumnSpan="2"/>
-
     </Grid>
 </Page>

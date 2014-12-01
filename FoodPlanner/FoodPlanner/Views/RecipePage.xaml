@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:ViewModels="clr-namespace:FoodPlanner.ViewModels" x:Class="FoodPlanner.Views.RecipePage" 
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:local="clr-namespace:FoodPlanner"
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="405"
@@ -25,7 +26,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        
+
         <Border Grid.ColumnSpan="3" BorderThickness="0 0 0 2" BorderBrush="Black"/>
 
         <Button x:Name="TopBarButton" Command="{Binding Source={x:Static local:Navigator.GoBackCommand}}" Style="{StaticResource ButtonIconTemplate}" HorizontalAlignment="Left" Width="{Binding ElementName=TopBarButton, Path=ActualHeight}">
@@ -34,15 +35,20 @@
             </Button.Background>
         </Button>
 
+        <StackPanel Grid.Column="1" Orientation="Horizontal" Visibility="{Binding isMealSet}" Margin="0">
+            <xctk:DecimalUpDown Value="{Binding getMealParticipants, Mode=TwoWay}" Height="{Binding ActualHeight, ElementName=TopBarButton}" Width="50" Margin="0,2,0,5" />
+        </StackPanel>
+
         <StackPanel Grid.Column="2" Orientation="Horizontal">
-            <Label Content="{Binding Path=SuccesText}" Foreground="{Binding Path=SuccesTextColour}"/>
-            <DatePicker SelectedDate="{Binding activeDate, Mode=TwoWay}" Height="{Binding ElementName=TopBarButton, Path=ActualHeight}" Margin="0,2"/>
-            <Button Command="{Binding StartDialogCommand}" Style="{StaticResource ButtonIconTemplate}" HorizontalAlignment="Right" Height="{Binding ElementName=TopBarButton, Path=ActualHeight}" Width="{Binding ElementName=TopBarButton, Path=ActualHeight}" Margin="2,3,2,1">
+
+            <Label Content="{Binding SuccesText}" Foreground="{Binding SuccesTextColour}"/>
+            <DatePicker SelectedDate="{Binding activeDate, Mode=TwoWay}" Height="{Binding ActualHeight, ElementName=TopBarButton}" Margin="0,2"/>
+            <Button Command="{Binding StartDialogCommand}" Style="{StaticResource ButtonIconTemplate}" HorizontalAlignment="Right" Height="{Binding ActualHeight, ElementName=TopBarButton}" Width="{Binding ActualHeight, ElementName=TopBarButton}" Margin="2,3,2,1">
                 <Button.Background>
-                    <ImageBrush ImageSource="../Images/plusIcon.png" Stretch="Uniform"/>
+                    <ImageBrush ImageSource="{Binding getImage}" Stretch="Uniform"/>
                 </Button.Background>
             </Button>
-            
+
         </StackPanel>
 
         <Image Grid.Row="1" Grid.RowSpan="2" Height="100" Width="100" Source="{Binding Recipe.Image}"/>
@@ -58,8 +64,8 @@
         </ScrollViewer>
 
         <ListBox x:Name="IngredientListbox" ItemsSource="{Binding Recipe.RecipeIngredients}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Row="3" Width="100" Background="{StaticResource BackgroundColour}" BorderThickness="0">
-            <ListBox.ItemTemplate>    
-            <DataTemplate>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
                     <StackPanel>
                         <Border x:Name="IngredientBorder" BorderBrush="{StaticResource Text.Orange}" BorderThickness="0 0 0 1" Width="80">
                             <TextBlock Width="80" Name="IngredientText"  Text="{Binding}" TextWrapping="Wrap"/>

@@ -23,16 +23,72 @@ namespace FoodPlanner.ViewModels
             this.Recipe = recipe;
         }
 
+        public RecipeViewModel(Meal meal)
+        {
+            _meal = meal;
+            activeDate = meal.Date;
+            this.Recipe = meal.Recipe;
+        }
+
         #region Properties
         private DateTime _activeDate;
+        private Meal _meal = null;
         private string _succesText = "", afterString;
         private System.Windows.Media.Brush _succesTextColour = System.Windows.Media.Brushes.Black;
 
+        public Meal getMeal
+        {
+            get
+            {
+                return _meal;
+            }
+        }
+
+        public int getMealParticipants
+        {
+            get
+            {
+                if (_meal != null)
+                {
+                    return _meal.Participants;
+                }
+                return 0;
+            }
+            set
+            {
+                _meal.Participants = value;
+            }
+        }
+
+        public string getImage
+        {
+            get
+            {
+                if (_meal != null)
+                {
+                    return "../Images/reload.png";
+                }
+                return "../Images/plusIcon.png";
+            }
+        }
+
+        public Visibility isMealSet
+        {
+            get
+            {
+                if (_meal != null)
+                {
+                    return Visibility.Visible;
+                }
+                return Visibility.Hidden;
+            }
+        }
+
         public DateTime activeDate
         {
-            get 
-            { 
-                return _activeDate; 
+            get
+            {
+                return _activeDate;
             }
             set
             {
@@ -40,7 +96,7 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-        public string SuccesText 
+        public string SuccesText
         {
             get
             {
@@ -98,6 +154,18 @@ namespace FoodPlanner.ViewModels
             RaisePropertyChanged("SuccesText");
             RaisePropertyChanged("SuccesTextColour");
         }
+
+        public void updateMeal()
+        {
+            _meal.Date = activeDate;
+
+            afterString = "Meal updated";
+            SuccesTextColour = _succesTextColour = System.Windows.Media.Brushes.Black;
+            App.db.SaveChanges();
+
+            RaisePropertyChanged("SuccesText");
+            RaisePropertyChanged("SuccesTextColour");
+        }
         #endregion
 
         #region Commands
@@ -105,11 +173,22 @@ namespace FoodPlanner.ViewModels
         {
             get
             {
-                if (_startDialogCommand == null)
+                if (_meal == null)
                 {
-                    _startDialogCommand = new RelayCommand(() => AddMeal());
+                    if (_startDialogCommand == null)
+                    {
+                        _startDialogCommand = new RelayCommand(() => AddMeal());
+                    }
+                    return _startDialogCommand;
                 }
-                return _startDialogCommand;
+                else
+                {
+                    if (_startDialogCommand == null)
+                    {
+                        _startDialogCommand = new RelayCommand(() => updateMeal());
+                    }
+                    return _startDialogCommand;
+                }
             }
         }
         #endregion

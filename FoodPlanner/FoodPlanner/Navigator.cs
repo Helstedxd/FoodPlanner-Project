@@ -25,6 +25,7 @@ namespace FoodPlanner
         private static ICommand _goToSettingsCommand;
         private static ICommand _goToMealPlanCommand;
         private static ICommand _goToRecipeCommand;
+        private static ICommand _goToRecipeFromMealCommand;
         private static ICommand _goBackCommand;
 
         #endregion
@@ -119,6 +120,24 @@ namespace FoodPlanner
                     });
                 }
                 return _goToRecipeCommand;
+            }
+        }
+
+        public static ICommand GoToRecipeFromMealCommand
+        {
+            get
+            {
+                if (_goToRecipeFromMealCommand == null)
+                {
+                    _goToRecipeFromMealCommand = new RelayCommand<Meal>(meal =>
+                    {
+                        RecipeViewModel rvm = new RecipeViewModel(meal);
+                        RecipePage rp = new RecipePage();
+                        rp.DataContext = rvm;
+                        Navigator.Navigate(rp);
+                    });
+                }
+                return _goToRecipeFromMealCommand;
             }
         }
 

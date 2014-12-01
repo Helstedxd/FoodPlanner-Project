@@ -139,8 +139,8 @@
             <Grid Background="{StaticResource Button.Static.Border.Light}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseUp">
-                        <i:InvokeCommandAction Command="{Binding Source={x:Static local:Navigator.GoToRecipeCommand}}" 
-                                               CommandParameter="{Binding Content.Recipe, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" />
+                        <i:InvokeCommandAction Command="{Binding Source={x:Static local:Navigator.GoToRecipeFromMealCommand}}" 
+                                               CommandParameter="{Binding Content, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
 

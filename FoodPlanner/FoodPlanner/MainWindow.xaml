@@ -6,7 +6,16 @@
     xmlns:UserControls="clr-namespace:FoodPlanner.UserControls"
     xmlns:ViewModels="clr-namespace:FoodPlanner.ViewModels"
     mc:Ignorable="d" x:Class="FoodPlanner.MainWindow"
-    Title="MainWindow" d:DesignHeight="720" d:DesingHeightWidth="405" ResizeMode="NoResize" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen" Height="720" Width="405" Background="{StaticResource BackgroundColour}" Cursor="Hand">
+    Title="MainWindow"
+    d:DesignHeight="720"
+    d:DesingHeightWidth="405"
+    ResizeMode="NoResize"
+    WindowStyle="ToolWindow"
+    WindowStartupLocation="CenterScreen"
+    Height="720"
+    Width="405"
+    Background="{StaticResource BackgroundColour}"
+    Cursor="Hand">
     <Window.DataContext>
         <ViewModels:MainViewModel/>
     </Window.DataContext>

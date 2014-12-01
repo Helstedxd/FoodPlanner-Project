@@ -37,8 +37,22 @@ namespace FoodPlanner
             MainWindow mainWindow = new MainWindow();
             Navigator.NavigationService = mainWindow.Frame.NavigationService;
 
-            Navigator.NavigationService.Source = new Uri(FoodPlanner.Properties.Settings.Default.StartPage,UriKind.Relative);
+            Navigator.NavigationService.Source = new Uri(FoodPlanner.Properties.Settings.Default.StartPage, UriKind.Relative);
             mainWindow.Show();
+
+            DateTime shopAhead = DateTime.Now.AddDays(CurrentUser.ShopAhead);
+
+            //var meals = App.db.Meals.Where(m => m.UserID == CurrentUser.ID && m.IsActive && m.Date < shopAhead);
+
+            var meals = (from m in db.Meals
+                         join r in db.Recipes on m.RecipeID equals r.ID
+                         where m.UserID == CurrentUser.ID && m.IsActive && m.Date < shopAhead
+                         select m).ToList();
+
+            foreach (Meal m in meals)
+            {
+                Console.WriteLine(m.Date + ": " + m.Recipe.Title);
+            }
         }
 
         private void ApplicationExit(object sender, ExitEventArgs args)

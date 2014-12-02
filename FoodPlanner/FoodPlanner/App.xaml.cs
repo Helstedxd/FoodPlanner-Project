@@ -42,8 +42,6 @@ namespace FoodPlanner
 
             DateTime shopAhead = DateTime.Now.AddDays(CurrentUser.ShopAhead);
 
-            PublicQuerys publicQuerys = new PublicQuerys();
-
             List<Meal> meals = (from m in db.Meals
                                 where m.UserID == CurrentUser.ID && m.IsActive && m.Date < shopAhead
                                 select m).ToList();

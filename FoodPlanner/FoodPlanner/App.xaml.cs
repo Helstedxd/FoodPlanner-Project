@@ -40,6 +40,17 @@ namespace FoodPlanner
             Navigator.NavigationService.Source = new Uri(FoodPlanner.Properties.Settings.Default.StartPage, UriKind.Relative);
             mainWindow.Show();
 
+            removePassedMeals();
+        }
+
+        private void ApplicationExit(object sender, ExitEventArgs args)
+        {
+            App.db.SaveChanges();
+            App.db.Dispose();
+        }
+
+        private void removePassedMeals()
+        {
             DateTime shopAhead = DateTime.Now.AddDays(CurrentUser.ShopAhead);
 
             List<Meal> meals = (from m in db.Meals
@@ -52,7 +63,6 @@ namespace FoodPlanner
 
             foreach (Meal m in meals)
             {
-                Console.WriteLine(m.Date + ": " + m.Recipe.Title);
                 db.Meals.Where(m2 => m2.ID == m.ID).SingleOrDefault().IsActive = false;
 
                 foreach (RecipeIngredient ri in m.Recipe.RecipeIngredients)
@@ -76,12 +86,6 @@ namespace FoodPlanner
                 }
             }
             db.SaveChanges();
-        }
-
-        private void ApplicationExit(object sender, ExitEventArgs args)
-        {
-            App.db.SaveChanges();
-            App.db.Dispose();
         }
 
     }

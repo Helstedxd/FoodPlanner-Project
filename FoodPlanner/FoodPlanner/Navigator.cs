@@ -19,6 +19,7 @@ namespace FoodPlanner
         #region Fields
 
         private static NavigationService _navigationService;
+        private static List<KeyValuePair<string, Uri>> _pages;
         private static ICommand _goToInventoryCommand;
         private static ICommand _goToShoppingListCommand;
         private static ICommand _goToRecipeSearchCommand;
@@ -32,9 +33,27 @@ namespace FoodPlanner
 
         #region Properties & Commands
 
+        public static List<KeyValuePair<string, Uri>> Pages
+        {
+            get
+            {
+                if (_pages == null)
+                {
+                    _pages = new List<KeyValuePair<string, Uri>>() {
+                        new KeyValuePair<string, Uri>("Mealplan",       new Uri("Views/MealPlanPage.xaml", UriKind.Relative)),
+                        new KeyValuePair<string, Uri>("Search",         new Uri("Views/RecipeSearchPage.xaml", UriKind.Relative)),
+                        new KeyValuePair<string, Uri>("Shopping List",  new Uri("Views/ShoppingListPage.xaml", UriKind.Relative)),
+                        new KeyValuePair<string, Uri>("Inventory",      new Uri("Views/InventoryPage.xaml", UriKind.Relative)),
+                        new KeyValuePair<string, Uri>("Settings",       new Uri("Views/SettingsPage.xaml", UriKind.Relative))
+                    };
+                }
+                return _pages;
+            }
+        }
+
         public static NavigationService NavigationService
         {
-             get
+            get
             {
                 return _navigationService;
             }

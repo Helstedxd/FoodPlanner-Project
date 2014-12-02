@@ -57,13 +57,16 @@
                 </Button>
 
                 <TextBlock Text="Start up screen:" Grid.Row="3" VerticalAlignment="Center"/>
-                <ComboBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding Path=UriList}" SelectedItem="{Binding Path=SelectedPage}" IsEditable="True" IsReadOnly="True" Text="{Binding Path=CurrenStartUpPage, Mode=OneTime}"/>
+                <ComboBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding Path=PageList}" DisplayMemberPath="Key" SelectedItem="{Binding Path=SelectedStartUpPage}" IsReadOnly="True" />
             </Grid>
-            
+
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="94*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="19*"/>
+                    <ColumnDefinition Width="21.594"/>
+                    <ColumnDefinition Width="8.563"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -75,9 +78,9 @@
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Stock Management" Style="{StaticResource TextblockTitle}" Grid.ColumnSpan="2"/>
-                <TextBlock Text="Stock List" Grid.Row="4" Grid.ColumnSpan="2" Style="{StaticResource TextUnderTitle}"/>
-                <ListView x:Name="StockListView" Grid.Row="5" ItemsSource="{Binding CurrentUser.StockQuantities}" SelectedItem="{Binding SelectedStockQuantityIngredient}" Grid.ColumnSpan="2">
+                <TextBlock Text="Stock Management" Style="{StaticResource TextblockTitle}" Grid.ColumnSpan="5" Margin="0,0,-0.031,0.377"/>
+                <TextBlock Text="Stock List" Grid.Row="4" Grid.ColumnSpan="5" Style="{StaticResource TextUnderTitle}" Margin="0,0.263,-0.031,0.622"/>
+                <ListView x:Name="StockListView" Grid.Row="5" ItemsSource="{Binding CurrentUser.StockQuantities}" SelectedItem="{Binding SelectedStockQuantityIngredient}" Grid.ColumnSpan="5" Margin="0,1.378,-0.031,28.905" Grid.RowSpan="2">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Ingredient}" />
@@ -91,16 +94,16 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding RemoveStockIngredientCommand}" Grid.Row="6" Grid.Column="1">
+                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding RemoveStockIngredientCommand}" Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" Margin="2.188,2.236,1.969,0.905">
                     <Button.Background>
                         <ImageBrush ImageSource="../Images/minusIcon.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
 
-                <TextBlock Text="Add a new stock ingredient" Grid.Row="1" Style="{StaticResource TextUnderTitle}" Grid.ColumnSpan="2"/>
-                <TextBlock Text="Name" Grid.Row="2"/>
+                <TextBlock Text="Add a new stock ingredient" Style="{StaticResource TextUnderTitle}" Grid.ColumnSpan="5" Margin="0,22,-0.031,15.413" Grid.RowSpan="3"/>
+                <TextBlock Text="Name" Grid.Row="2" Grid.ColumnSpan="4" Margin="0,0.603,21.424,3.413"/>
 
-                <UserControls:IngredientAutoComplete SelectItemCommand="{Binding AddNewStockIngredientCommand}" MaximumItems="5" Grid.Row="3" Grid.ColumnSpan="2" Margin="0,0,200,0"/>
+                <UserControls:IngredientAutoComplete SelectItemCommand="{Binding AddNewStockIngredientCommand}" MaximumItems="5" Grid.Row="3" Margin="0,0.587,103.969,17.622" Grid.RowSpan="2"/>
             </Grid>
 
             <Grid>
@@ -123,7 +126,7 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Text="Rated Ingredients" Grid.ColumnSpan="2" Style="{StaticResource TextblockTitle}"/>
-                
+
                 <TextBlock Style="{StaticResource TextUnderTitle}" Text="Rate a new ingredient" Grid.Row="1" Grid.ColumnSpan="2"/>
                 <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="2">
                     <TextBlock Text="Name: "/>
@@ -159,7 +162,7 @@
                 </Button>
 
             </Grid>
-            
+
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -195,7 +198,7 @@
                 <TextBlock Text="Name" Grid.Row="2"/>
                 <UserControls:IngredientAutoComplete SelectItemCommand="{Binding AddIngredientToUnwantedIngredientsCommand}" MaximumItems="5" Grid.Row="3"  Grid.ColumnSpan="2" Margin="0,0,200,0"/>
                 <Label Content="{Binding Path=BlackedDublicateResult}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Foreground="Red"/>
-            </Grid>           
+            </Grid>
         </StackPanel>
     </ScrollViewer>
 </Page>

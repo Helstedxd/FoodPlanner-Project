@@ -30,7 +30,7 @@ namespace FoodPlanner.ViewModels
             _removeGreyListIngredientCommand;
 
         private User _currentUser;
-        private WindowPick _selectedPage = new WindowPick(new Uri(Properties.Settings.Default.StartPage, UriKind.Relative),"");
+        private KeyValuePair<string, Uri> _selectedStartUpPage;
         private StockQuantity _inventoryIngredient;
         private GraylistIngredient _greyListInventoryIngredient;
         string _ratedDublicateResult,
@@ -56,25 +56,6 @@ namespace FoodPlanner.ViewModels
 
         public StockQuantity SelectedStockQuantityIngredient { get; set; }
 
-        public int StartWindowIndex
-        {
-            get
-            {
-                int count = 1;
-                foreach (WindowPick wp in UriList)
-                {
-                    if (wp.ViewPath.ToString() == Properties.Settings.Default.StartPage)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        count++;
-                    }
-                }
-                return count;
-            }
-        }
         public string RatedDublicate
         {
             get
@@ -90,27 +71,18 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-        public string CurrenStartUpPage
+        public StockQuantity StockIngredient
         {
             get
             {
-                _currenStartUpPage = GetStartUpPage();
-                return _currenStartUpPage;
-            }
-        } 
-
-        public StockQuantity StockIngredient
-        {
-            get 
-            { 
-                return _inventoryIngredient; 
+                return _inventoryIngredient;
             }
             set
             {
                 _inventoryIngredient = value;
                 RaisePropertyChanged("InventoryIngredient");
             }
-        } 
+        }
 
         public GraylistIngredient GreyListInventoryIngredient
         {
@@ -138,35 +110,57 @@ namespace FoodPlanner.ViewModels
             {
                 return App.CurrentUser.PersonsInHouseHold;
             }
+            set
+            {
+                App.CurrentUser.PersonsInHouseHold = value;
+                RaisePropertyChanged("PersonsInHouseHold");
+            }
         }
+
         public int ShopAhead
         {
             get
             {
                 return App.CurrentUser.ShopAhead;
             }
-        }
-
-        public List<WindowPick> UriList
-        {
-            get
+            set
             {
-                return CreateUri();
+                App.CurrentUser.ShopAhead = value;
+                RaisePropertyChanged("ShopAhead");
+
             }
         }
 
-        public WindowPick SelectedPage
+        public List<KeyValuePair<string, Uri>> PageList
         {
             get
             {
-                return _selectedPage;
+                return Navigator.Pages;
+            }
+        }
+
+        public KeyValuePair<string, Uri> SelectedStartUpPage
+        {
+            get
+            {
+                if (_selectedStartUpPage.Equals(default(KeyValuePair<string, Uri>)))
+                {
+                    // Find the start-up page from settings.
+                    foreach (KeyValuePair<string, Uri> page in PageList)
+                    {
+                        if (Properties.Settings.Default.StartPage == page.Value.ToString())
+                        {
+                            _selectedStartUpPage = page;
+                        }
+                    }
+                }
+                return _selectedStartUpPage;
             }
             set
             {
-                _selectedPage = value;
-                Properties.Settings.Default.StartPage = value.ViewPath.ToString();
+                _selectedStartUpPage = value;
+                Properties.Settings.Default.StartPage = _selectedStartUpPage.Value.ToString();
                 Properties.Settings.Default.Save();
-                
             }
         }
 
@@ -187,10 +181,11 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-        public ICommand RemoveStockIngredientCommand {
-            get 
+        public ICommand RemoveStockIngredientCommand
+        {
+            get
             {
-                if (_removeStockIngredientCommand == null) 
+                if (_removeStockIngredientCommand == null)
                 {
                     _removeStockIngredientCommand = new RelayCommand(() => RemoveStockIngredient());
                 }
@@ -303,11 +298,11 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-        public ICommand RemoveGreyListIngredientCommand 
+        public ICommand RemoveGreyListIngredientCommand
         {
-            get 
+            get
             {
-                if (_removeGreyListIngredientCommand == null) 
+                if (_removeGreyListIngredientCommand == null)
                 {
                     _removeGreyListIngredientCommand = new RelayCommand(() => RemoveGreylistIngredient());
                 }
@@ -319,21 +314,7 @@ namespace FoodPlanner.ViewModels
 
         #region Methods
 
-        private string GetStartUpPage()
-        {
-            string result = "Pick a window";
-
-            foreach (WindowPick wp in UriList)
-            {
-                if (Properties.Settings.Default.StartPage == wp.ViewPath.ToString())
-                {
-                    result = wp.Name;
-                }
-            }
-            return result;
-        }
-
-        private void RemoveGreylistIngredient() 
+        private void RemoveGreylistIngredient()
         {
             App.db.GraylistIngredients.RemoveRange(App.db.GraylistIngredients.Where(gli => gli.Id == SelectedGreyListIngredient.Id && gli.UserID == SelectedGreyListIngredient.UserID));
             App.db.SaveChanges();
@@ -364,46 +345,29 @@ namespace FoodPlanner.ViewModels
             return dublicat;
         }
 
-        private List<WindowPick> CreateUri()
-        {
-            List<WindowPick> returnList = new List<WindowPick>()
-            {
-                new WindowPick(new Uri("Views/MealPlanPage.xaml",     UriKind.Relative), "Food Plan"),
-                new WindowPick(new Uri("Views/RecipeSearchPage.xaml", UriKind.Relative), "Search"),
-                new WindowPick(new Uri("Views/ShoppingListPage.xaml", UriKind.Relative), "Shopping List"),
-                new WindowPick(new Uri("Views/InventoryPage.xaml",    UriKind.Relative), "Inventory"),
-                new WindowPick(new Uri("Views/SettingsPage.xaml",     UriKind.Relative), "Settings")
-            };
-            return returnList;
-        }
-
         private void IncrementShopAhead()
         {
-            App.CurrentUser.ShopAhead++;
-            RaisePropertyChanged("ShopAhead");
+            ShopAhead++;
         }
 
         private void DecrementShopAhead()
         {
-            if (App.CurrentUser.ShopAhead > 0) 
+            if (ShopAhead > 0)
             {
-                App.CurrentUser.ShopAhead--;
-                RaisePropertyChanged("ShopAhead");
+                ShopAhead--;
             }
         }
 
         private void IncrementPersonsInHousehold()
         {
-            App.CurrentUser.PersonsInHouseHold++;
-            RaisePropertyChanged("PersonsInHouseHold");
+            PersonsInHouseHold++;
         }
 
         private void DecrementPersonsInHousehold()
         {
-            if (App.CurrentUser.PersonsInHouseHold > 1) 
+            if (PersonsInHouseHold > 1)
             {
-                App.CurrentUser.PersonsInHouseHold--;
-                RaisePropertyChanged("PersonsInHouseHold");
+                PersonsInHouseHold--;
             }
         }
 
@@ -415,19 +379,19 @@ namespace FoodPlanner.ViewModels
             App.db.SaveChanges();
         }
 
-        private void RemoveStockIngredient() 
+        private void RemoveStockIngredient()
         {
             App.db.StockQuantities.RemoveRange(App.db.StockQuantities.Where(sq => sq.ID == SelectedStockQuantityIngredient.ID && sq.UserID == SelectedStockQuantityIngredient.UserID));
             App.db.SaveChanges();
-        } 
+        }
 
         private void AddNewGreyedIngredient()
         {
-            GraylistIngredient IngredientToBeAdded = new GraylistIngredient() 
-            { 
-                IngredientID = GreyListInventoryIngredient.IngredientID, 
-                UserID = GreyListInventoryIngredient.UserID, 
-                IngredientValue = GreyListInventoryIngredient.IngredientValue 
+            GraylistIngredient IngredientToBeAdded = new GraylistIngredient()
+            {
+                IngredientID = GreyListInventoryIngredient.IngredientID,
+                UserID = GreyListInventoryIngredient.UserID,
+                IngredientValue = GreyListInventoryIngredient.IngredientValue
             };
             bool dublicat = ListDublicate(IngredientToBeAdded.IngredientID);
 
@@ -454,10 +418,10 @@ namespace FoodPlanner.ViewModels
 
         private void AddIngredientToUnwantedIngredients(Ingredient ingredient)
         {
-            BlacklistIngredient IngredientToBeAdded = new BlacklistIngredient() 
-            { 
-                IngredientID = ingredient.ID, 
-                UserID = App.CurrentUser.ID 
+            BlacklistIngredient IngredientToBeAdded = new BlacklistIngredient()
+            {
+                IngredientID = ingredient.ID,
+                UserID = App.CurrentUser.ID
             };
             bool dublicat = ListDublicate(IngredientToBeAdded.IngredientID);
 

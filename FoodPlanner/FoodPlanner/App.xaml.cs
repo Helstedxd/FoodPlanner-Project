@@ -42,17 +42,42 @@ namespace FoodPlanner
 
             DateTime shopAhead = DateTime.Now.AddDays(CurrentUser.ShopAhead);
 
-            //var meals = App.db.Meals.Where(m => m.UserID == CurrentUser.ID && m.IsActive && m.Date < shopAhead);
+            PublicQuerys publicQuerys = new PublicQuerys();
 
-            var meals = (from m in db.Meals
-                         join r in db.Recipes on m.RecipeID equals r.ID
-                         where m.UserID == CurrentUser.ID && m.IsActive && m.Date < shopAhead
-                         select m).ToList();
+            List<Meal> meals = (from m in db.Meals
+                                where m.UserID == CurrentUser.ID && m.IsActive && m.Date < shopAhead
+                                select m).ToList();
+
+            List<InventoryIngredient> inventoryIngredient = (from ii in db.InventoryIngredients
+                                                             where ii.UserID == CurrentUser.ID
+                                                             select ii).ToList();
 
             foreach (Meal m in meals)
             {
                 Console.WriteLine(m.Date + ": " + m.Recipe.Title);
+                db.Meals.Where(m2 => m2.ID == m.ID).SingleOrDefault().IsActive = false;
+
+                foreach (RecipeIngredient ri in m.Recipe.RecipeIngredients)
+                {
+                    if (inventoryIngredient.Where(ii => ii.IngredientID == ri.IngredientID).Count() != 0)
+                    {
+                        decimal rest = ri.Quantity;
+                        foreach (InventoryIngredient ii in inventoryIngredient.Where(ii => ii.IngredientID == ri.IngredientID))
+                        {
+                            if (ii.Quantity <= ri.Quantity)
+                            {
+                                db.InventoryIngredients.Remove(ii);
+                                rest -= ii.Quantity;
+                            }
+                            else
+                            {
+                                db.InventoryIngredients.Where(i => i.ID == ii.ID).FirstOrDefault().Quantity -= rest;
+                            }
+                        }
+                    }
+                }
             }
+            db.SaveChanges();
         }
 
         private void ApplicationExit(object sender, ExitEventArgs args)

@@ -158,6 +158,14 @@ namespace FoodPlanner.ViewModels
         public void updateMeal()
         {
             _meal.Date = activeDate;
+            if (activeDate < DateTime.Now)
+            {
+                _meal.IsActive = false;
+            }
+            else
+            {
+                _meal.IsActive = true;
+            }
 
             afterString = "Meal updated";
             SuccesTextColour = _succesTextColour = System.Windows.Media.Brushes.Black;

@@ -45,7 +45,7 @@
             <Setter Property="FontSize" Value="11"/>
         </Style>
         <!--End: Template for text label-->
-        
+
         <!--Start: Template for Image buttons-->
         <Style x:Key="ButtonIconTemplate" TargetType="{x:Type Button}">
             <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
@@ -136,34 +136,43 @@
 
         <!--Start: Meal planning Page Template for day listboxes-->
         <DataTemplate x:Key="MealsListBoxTemplate">
-            <Grid Background="{StaticResource Button.Static.Border.Light}">
+            <Grid Background="{StaticResource Button.Static.Border.Light}" Width="80">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseUp">
                         <i:InvokeCommandAction Command="{Binding Source={x:Static local:Navigator.GoToRecipeFromMealCommand}}" 
                                                CommandParameter="{Binding Content, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
+                
+               <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="{Binding Recipe.Title}" FontSize="12" TextTrimming="CharacterEllipsis" Width="100"/>
-                <Label Content="{Binding Participants}" ContentStringFormat="Planned for {0} person(s)" FontSize="10" Grid.Row="1"/>
+
+                <Image Stretch="UniformToFill" Source="{Binding Recipe.Image}"></Image>
+                <TextBlock Padding="1" Text="{Binding Recipe.Title}" FontSize="12" TextTrimming="CharacterEllipsis" TextWrapping="Wrap">
+                    <TextBlock.Background>
+                        <SolidColorBrush Color="White" Opacity="0.6" />
+                    </TextBlock.Background>
+                </TextBlock>
+
+                <Label Padding="1" Content="{Binding Participants}" ContentStringFormat="For {0} person(s)" FontSize="10" Grid.Row="1"/>
+          
             </Grid>
         </DataTemplate>
         <ItemsPanelTemplate x:Key="WrapPanelHorizontalTemplate">
-            <WrapPanel Orientation="Horizontal" Background="{StaticResource BackgroundColour}"/>
+          <!--  <WrapPanel Orientation="Horizontal" Background="{StaticResource BackgroundColour}"/>-->
+            <StackPanel Orientation="Horizontal" Background="{StaticResource BackgroundColour}" />
         </ItemsPanelTemplate>
         <!--End: Meal planning Page Template for day listboxes-->
-        
+
         <DataTemplate x:Key="StockListRatingCellTemplate">
             <TextBlock Text="{Binding Path=IngredientValue}" Foreground="Black"/>
         </DataTemplate>
         <!--Stock Quantity Template in settings-->
         <DataTemplate x:Key="StockQuantityCellTemplate">
-            
-        </DataTemplate>   
+
+        </DataTemplate>
         <!--Start: -->
     </Application.Resources>
 </Application>

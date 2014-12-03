@@ -11,9 +11,14 @@
 	FlowDirection="LeftToRight"
     d:DesignHeight="720" d:DesignWidth="405"
     Title="MealPlan">
-
+    <Page.Resources>
+        <!--TODO: could this be moved to the MealsListBoxTemplate -->
+        <Style TargetType="ListBoxItem">
+            <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+        </Style>        
+    </Page.Resources>
     <Page.DataContext>
-        <ViewModels:FoodPlanViewModel/>
+        <ViewModels:MealPlanViewModel/>
     </Page.DataContext>
 
     <Grid>
@@ -52,7 +57,7 @@
         <Label Style="{StaticResource TextTitle}" VerticalAlignment="Center" FontSize="30" Content="{Binding Path=WeekString}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center"/>
 
         <ListBox x:Name="MondayMealsListBox" Grid.Row="1" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding MondayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
-        <ListBox x:Name="TuesdayMealsListBox" Grid.Row="2" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding TuesdayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
+        <ListBox x:Name="TuesdayMealsListBox" Grid.Row="2" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding TuesdayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>
         <ListBox x:Name="WednesdayMealsListBox" Grid.Row="3" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding WednesdayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
         <ListBox x:Name="ThursdayMealsListBox" Grid.Row="4" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding ThursdayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
         <ListBox x:Name="FridayMealsListBox" Grid.Row="5" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding FridayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>

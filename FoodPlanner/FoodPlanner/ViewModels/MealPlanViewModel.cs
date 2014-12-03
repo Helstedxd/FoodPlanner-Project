@@ -19,11 +19,11 @@ using MvvmFoundation.Wpf;
 
 namespace FoodPlanner.ViewModels
 {
-    public class FoodPlanViewModel : ObservableObject
+    public class MealPlanViewModel : ObservableObject
     {
         private ICommand _nextWeek,
                          _previousWeek;
-        public FoodPlanViewModel()
+        public MealPlanViewModel()
         {
             MondayMeals = new ObservableCollection<Meal>();//ObservableCollection allows for updates in the view
             TuesdayMeals = new ObservableCollection<Meal>();

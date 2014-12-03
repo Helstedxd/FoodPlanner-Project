@@ -4,7 +4,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:UserControls="clr-namespace:FoodPlanner.UserControls"
-    xmlns:ViewModels="clr-namespace:FoodPlanner.ViewModels"
     mc:Ignorable="d" x:Class="FoodPlanner.MainWindow"
     Title="FoodPlanner"
     d:DesignHeight="720"
@@ -16,9 +15,6 @@
     Width="405"
     Background="{StaticResource BackgroundColour}"
     Cursor="Hand">
-    <Window.DataContext>
-        <ViewModels:MainViewModel/>
-    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>

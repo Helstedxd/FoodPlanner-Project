@@ -154,8 +154,7 @@
     <Compile Include="RecipeIngredient.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\FoodPlanViewModel.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\MealPlanViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\RecipeSearchViewModel.cs" />
     <Compile Include="ViewModels\ShoppingListViewModel.cs" />

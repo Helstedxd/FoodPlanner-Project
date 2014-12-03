@@ -132,7 +132,6 @@
     <Compile Include="Models\RecipeIngredient.cs" />
     <Compile Include="Models\ShoppingListIngredient.cs" />
     <Compile Include="Models\PublicQuerys.cs" />
-    <Compile Include="Models\WindowPick.cs" />
     <Compile Include="Navigator.cs" />
     <Compile Include="RecipesPreparation.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>

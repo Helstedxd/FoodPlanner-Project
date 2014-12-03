@@ -114,6 +114,7 @@
           <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="PersonsInHouseHold" Type="int" Nullable="false" />
           <Property Name="ShopAhead" Type="int" Nullable="false" />
+          <Property Name="ChosenDiet" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="BlacklistIngredients_ibfk_1">
           <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="1" />
@@ -450,6 +451,7 @@
           <NavigationProperty Name="BlacklistIngredients" Relationship="FoodModel.BlacklistIngredients_ibfk_2" FromRole="User" ToRole="BlacklistIngredient" />
           <NavigationProperty Name="StockQuantities" Relationship="FoodModel.StockQuantities_ibfk_2" FromRole="User" ToRole="StockQuantity" />
           <NavigationProperty Name="GraylistIngredients" Relationship="FoodModel.GraylistIngredients_ibfk_2" FromRole="User" ToRole="GraylistIngredient" />
+          <Property Name="ChosenDiet" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="InventoryIngredients_ibfk_2">
           <End Role="Ingredients" Type="Self.Ingredient" Multiplicity="1" />
@@ -830,6 +832,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="FoodModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ChosenDiet" ColumnName="ChosenDiet" />
                 <ScalarProperty Name="ShopAhead" ColumnName="ShopAhead" />
                 <ScalarProperty Name="PersonsInHouseHold" ColumnName="PersonsInHouseHold" />
                 <ScalarProperty Name="ID" ColumnName="ID" />

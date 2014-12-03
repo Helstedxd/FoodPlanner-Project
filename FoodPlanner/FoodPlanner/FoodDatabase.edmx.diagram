@@ -10,7 +10,7 @@
         <EntityTypeShape EntityType="FoodModel.Meal" Width="1.5" PointX="2.25" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="FoodModel.RecipeIngredient" Width="1.5" PointX="2.375" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FoodModel.Recipe" Width="1.5" PointX="2.25" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="FoodModel.User" Width="1.5" PointX="4.5" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FoodModel.User" Width="1.5" PointX="4.5" PointY="0.625" IsExpanded="true" />
         <AssociationConnector Association="FoodModel.InventoryIngredients_ibfk_2" ManuallyRouted="false" />
         <AssociationConnector Association="FoodModel.RecipeIngredients_ibfk_2" ManuallyRouted="false" />
         <AssociationConnector Association="FoodModel.InventoryIngredients_ibfk_1" ManuallyRouted="false" />

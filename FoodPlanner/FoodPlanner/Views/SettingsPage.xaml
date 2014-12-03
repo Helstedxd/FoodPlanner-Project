@@ -134,7 +134,7 @@
                     <TextBlock Text="Rating: "/>
                     <TextBlock Text="{Binding GreyListInventoryIngredient.IngredientValue}"  FontSize="13" FontStyle="Oblique"/>
                 </StackPanel>
-                <Slider Name="ratingSlider"  Grid.Row="5" Minimum="1" Maximum="100" Value="{Binding GreyListInventoryIngredient.IngredientValue, Mode=TwoWay}" SelectionStart="1" Grid.ColumnSpan="3"/>
+                <Slider Name="ratingSlider"  Grid.Row="5" Minimum="0" Maximum="100" Value="{Binding GreyListInventoryIngredient.IngredientValue, Mode=TwoWay}" SelectionStart="1" Grid.ColumnSpan="3"/>
                 <Label Content="{Binding Path=RatedDublicate}" Grid.Row="6" Grid.Column="1" Foreground="Red"/>
                 <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding AddNewGryedIngredientCommand}" Grid.Row="6" Grid.Column="2">
                     <Button.Background>
@@ -144,7 +144,7 @@
 
 
                 <TextBlock Text="Rated ingredients list" Style="{StaticResource TextUnderTitle}" Grid.Row="7" Grid.ColumnSpan="2"/>
-                <ListView SelectedItem="{Binding SelectedGreyListIngredient}" ItemsSource="{Binding Path=CurrentUser.GraylistIngredients}" Grid.Row="8" Grid.ColumnSpan="3">
+                <ListView SelectedItem="{Binding SelectedGreyListIngredient}" ItemsSource="{Binding Path=CurrentUser.GraylistIngredientsWithoutDiets}" Grid.Row="8" Grid.ColumnSpan="3">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Name" Width="Auto" DisplayMemberBinding="{Binding Ingredient}" />
@@ -178,7 +178,7 @@
 
                 <TextBlock Text="Unwanted Ingredients" Style="{StaticResource TextblockTitle}" Grid.ColumnSpan="2"/>
                 <TextBlock Text="Unwanted ingredients list" Style="{StaticResource TextUnderTitle}" Grid.Row="4" Grid.ColumnSpan="2"/>
-                <ListView SelectedItem="{Binding SelectedBlackListIngredient}" ItemsSource="{Binding Path=CurrentUser.BlacklistIngredients}" Grid.Row="5" Grid.ColumnSpan="2">
+                <ListView SelectedItem="{Binding SelectedBlackListIngredient}" ItemsSource="{Binding Path=CurrentUser.BlacklistIngredientsWithoutDiets}" Grid.Row="5" Grid.ColumnSpan="3">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Name" Width="Auto" DisplayMemberBinding="{Binding Ingredient}"/>
@@ -200,11 +200,33 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Direts" Style="{StaticResource TextblockTitle}" Grid.Column="0"/>
+                <TextBlock Text="Direts" Style="{StaticResource TextblockTitle}" Grid.Row="0" Grid.ColumnSpan="3"/>
 
-                
+                <ListView SelectedItem="{Binding SelectedDietPreset}" ItemsSource="{Binding Path=ListOfDiets}" Grid.Row="1" Grid.ColumnSpan="3">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Diet" Width="Auto" DisplayMemberBinding="{Binding DietName}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+                <Button Command="{Binding ChooseDietCommand}" Content="Choose Diet" Grid.Row="2" Grid.Column="0" Margin="5"/>
+
+                <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding RemoveDietCommand}" Content="Remove" Grid.Row="2" Grid.Column="2">
+                    <Button.Background>
+                        <ImageBrush ImageSource="../Images/minusIcon.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+
             </Grid>            
         </StackPanel>
     </ScrollViewer>

@@ -113,6 +113,7 @@
     <Compile Include="GraylistIngredient.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\User.cs" />
     <Compile Include="Ingredient.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>

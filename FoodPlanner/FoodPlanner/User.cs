@@ -27,6 +27,7 @@ namespace FoodPlanner.Models
         public string Name { get; set; }
         public int PersonsInHouseHold { get; set; }
         public int ShopAhead { get; set; }
+        public int ChosenDiet { get; set; }
     
         public virtual ObservableCollection<InventoryIngredient> InventoryIngredients { get; set; }
         public virtual ObservableCollection<Meal> Meals { get; set; }

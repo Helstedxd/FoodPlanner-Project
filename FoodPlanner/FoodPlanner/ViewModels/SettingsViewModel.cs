@@ -67,6 +67,19 @@ namespace FoodPlanner.ViewModels
             }
         }
 
+        public string CurrentDiet
+        {
+            get
+            {
+                string currentDiet = "";
+                if (CurrentUser.ChosenDiet != 0)
+                {
+                    currentDiet = App.db.DietPresets.Where(dp => dp.ID == CurrentUser.ChosenDiet).SingleOrDefault().DietName;
+                }
+                return "Current Diet: " + currentDiet;
+            }
+        }
+
         public DietPreset SelectedDietPreset { get; set; }
 
 
@@ -465,13 +478,19 @@ namespace FoodPlanner.ViewModels
                 }
             }
 
+            CurrentUser.ChosenDiet = SelectedDietPreset.ID;
+            App.db.SaveChanges();
+            RaisePropertyChanged("CurrentDiet");
         }
 
         private void RemoveDiet()
         {
             App.db.GraylistIngredients.RemoveRange(App.db.GraylistIngredients.Where(gli => gli.UserID == App.CurrentUser.ID && gli.IsFromDiet));
             App.db.BlacklistIngredients.RemoveRange(App.db.BlacklistIngredients.Where(bli => bli.UserID == App.CurrentUser.ID && bli.IsFromDiet));
-            App.db.SaveChanges();
+
+            CurrentUser.ChosenDiet = 0;
+            App.db.SaveChangesAsync();
+            RaisePropertyChanged("CurrentDiet");
         }
 
         private void AddNewStockIngredient(Ingredient ingredient)

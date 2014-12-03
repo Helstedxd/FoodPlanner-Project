@@ -6,7 +6,7 @@
     xmlns:UserControls="clr-namespace:FoodPlanner.UserControls"
     xmlns:ViewModels="clr-namespace:FoodPlanner.ViewModels"
     mc:Ignorable="d" x:Class="FoodPlanner.MainWindow"
-    Title="FoodPlanner 2.0"
+    Title="FoodPlanner"
     d:DesignHeight="720"
     d:DesingHeightWidth="405"
     ResizeMode="NoResize"

@@ -109,9 +109,15 @@ namespace FoodPlanner.ViewModels
 
         private void AddIngredientToInventory(Ingredient ingredient)
         {
+            // Add ingredient with a quantity of 1 by default.
+            AddIngredientToInventory(ingredient, 1);
+        }
+
+        private void AddIngredientToInventory(Ingredient ingredient, decimal quantiy)
+        {
             if (ingredient != null)
             {
-                InventoryIngredient newInventoryIngredient = new InventoryIngredient(ingredient, 1);
+                InventoryIngredient newInventoryIngredient = new InventoryIngredient(ingredient, quantiy);
                 App.CurrentUser.InventoryIngredients.Add(newInventoryIngredient);
                 //TODO: InventoryIngredients is a copy of App.CurrentUser.InventoryIngredients
                 // It would be better if we only needed to update one of them...

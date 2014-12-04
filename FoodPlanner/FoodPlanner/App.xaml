@@ -46,6 +46,12 @@
         </Style>
         <!--End: Template for text label-->
 
+        <!--Start: Template for date label-->
+        <Style x:Key="DateLabelTemplate" TargetType="{x:Type Label}" BasedOn="{StaticResource TextLabelTemplate}">
+            <Setter Property="ContentStringFormat" Value="dddd&#x0a;dd/MM"/>
+        </Style>
+        <!--End: Template for text label-->
+
         <!--Start: Template for Image buttons-->
         <Style x:Key="ButtonIconTemplate" TargetType="{x:Type Button}">
             <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
@@ -149,7 +155,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Image Stretch="UniformToFill" Source="{Binding Recipe.Image}"></Image>
+                <Image Stretch="UniformToFill" Source="{Binding Recipe.Image}"/>
                 <TextBlock Padding="1" Text="{Binding Recipe.Title}" FontSize="12" TextTrimming="CharacterEllipsis" TextWrapping="Wrap">
                     <TextBlock.Background>
                         <SolidColorBrush Color="White" Opacity="0.6" />

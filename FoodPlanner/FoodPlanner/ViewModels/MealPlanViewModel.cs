@@ -21,8 +21,14 @@ namespace FoodPlanner.ViewModels
 {
     public class MealPlanViewModel : ObservableObject
     {
-        private ICommand _nextWeek,
-                         _previousWeek;
+
+        #region Fields
+        private ICommand _nextWeek;
+        private ICommand _previousWeek;
+        private DateTime _activeDate;
+        private DateTime _mondayDate;
+        #endregion
+
         public MealPlanViewModel()
         {
             MondayMeals = new ObservableCollection<Meal>();//ObservableCollection allows for updates in the view
@@ -33,141 +39,151 @@ namespace FoodPlanner.ViewModels
             SaturdayMeals = new ObservableCollection<Meal>();
             SundayMeals = new ObservableCollection<Meal>();
 
-            activeDate = DateTime.Now;
-            if (activeDate.DayOfWeek == DayOfWeek.Sunday) //This is done in order to get the GetDdayDifference method to make sense when it's Sunday
+            ActiveDate = DateTime.Now;
+            if (ActiveDate.DayOfWeek == DayOfWeek.Sunday) //This is done in order to get the GetDdayDifference method to make sense when it's Sunday
             {
-                activeDate = activeDate.AddDays(-1);
+                ActiveDate = ActiveDate.AddDays(-1);
             }
-            //TestMethod();
+
             ShowMeals();
         }
 
-        #region Propertie
-        private DateTime _activeDate;
-        private DateTime activeDate
+        #region Properties
+
+
+        private DateTime ActiveDate
         {
             get { return _activeDate; }
-            set { 
+            set
+            {
                 _activeDate = value;
-                RaisePropertyChanged("MondayString");
-                RaisePropertyChanged("TuesdayString");
-                RaisePropertyChanged("WednesdayString");
-                RaisePropertyChanged("ThursdayString");
-                RaisePropertyChanged("FridayString");
-                RaisePropertyChanged("SaturdayString");
-                RaisePropertyChanged("SundayString");
+
+                // Set monday date as it is the reference.
+                _mondayDate = ActiveDate;
+                while (_mondayDate.DayOfWeek != DayOfWeek.Monday)
+                {
+                    _mondayDate = _mondayDate.AddDays(-1);
+                }
+
                 RaisePropertyChanged("WeekString");
+
+                RaisePropertyChanged("MondayDate");
+                RaisePropertyChanged("TuesdayDate");
+                RaisePropertyChanged("WednesdayDate");
+                RaisePropertyChanged("ThursdayDate");
+                RaisePropertyChanged("FridayDate");
+                RaisePropertyChanged("SaturdayDate");
+                RaisePropertyChanged("SundayDate");
             }
         }
 
-        public string MondayString
+        #region WeekDay Dates
+        
+        // Monday is used as reference for all dates
+        public DateTime MondayDate
         {
             get
             {
-                return Day(DayOfWeek.Monday);
+                return _mondayDate;
             }
         }
-        public ObservableCollection<Meal> MondayMeals
-        {
-            get;
-            private set;
-        }
-        public string TuesdayString
+
+        public DateTime TuesdayDate
         {
             get
             {
-                return Day(DayOfWeek.Tuesday);
+                return MondayDate.AddDays(1);
             }
         }
-        public ObservableCollection<Meal> TuesdayMeals
-        {
-            get;
-            private set;
-        }
-        public string WednesdayString
+
+        public DateTime WednesdayDate
         {
             get
             {
-                return Day(DayOfWeek.Wednesday);
+                return MondayDate.AddDays(2);
             }
         }
-        public ObservableCollection<Meal> WednesdayMeals
-        {
-            get;
-            private set;
-        }
-        public string ThursdayString
+
+        public DateTime ThursdayDate
         {
             get
             {
-                return Day(DayOfWeek.Thursday);
+                return MondayDate.AddDays(3);
             }
         }
-        public ObservableCollection<Meal> ThursdayMeals
-        {
-            get;
-            private set;
-        }
-        public string FridayString
+
+        public DateTime FridayDate
         {
             get
             {
-                return Day(DayOfWeek.Friday);
+                return MondayDate.AddDays(4);
             }
         }
-        public ObservableCollection<Meal> FridayMeals
-        {
-            get;
-            private set;
-        }
-        public string SaturdayString
+
+        public DateTime SaturdayDate
         {
             get
             {
-                return Day(DayOfWeek.Saturday);
+                return MondayDate.AddDays(5);
             }
         }
-        public ObservableCollection<Meal> SaturdayMeals
-        {
-            get;
-            private set;
-        }
-        public string SundayString
+
+        public DateTime SundayDate
         {
             get
             {
-                return Day(DayOfWeek.Sunday);
+                return MondayDate.AddDays(6);
             }
         }
-        public ObservableCollection<Meal> SundayMeals
-        {
-            get;
-            private set;
-        }
-        public string WeekString
+
+        #endregion
+
+        #region WeekDay Meal Collections
+
+        public ObservableCollection<Meal> MondayMeals { get; private set; }
+
+        public ObservableCollection<Meal> TuesdayMeals { get; private set; }
+
+        public ObservableCollection<Meal> WednesdayMeals { get; private set; }
+
+        public ObservableCollection<Meal> ThursdayMeals { get; private set; }
+
+        public ObservableCollection<Meal> FridayMeals { get; private set; }
+
+        public ObservableCollection<Meal> SaturdayMeals { get; private set; }
+
+        public ObservableCollection<Meal> SundayMeals { get; private set; }
+
+        #endregion
+
+        public int Week
         {
             get
             {
                 DateTimeFormatInfo timeFormat = DateTimeFormatInfo.CurrentInfo;
                 Calendar calendar = timeFormat.Calendar;
-                return "Week " + calendar.GetWeekOfYear(activeDate, timeFormat.CalendarWeekRule, timeFormat.FirstDayOfWeek).ToString();
+                return calendar.GetWeekOfYear(ActiveDate, timeFormat.CalendarWeekRule, timeFormat.FirstDayOfWeek);
             }
         }
+
         #endregion
 
         #region Methods
+
         public void NextWeek()
         {
-            activeDate = activeDate.AddDays(7);
+            ActiveDate = ActiveDate.AddDays(7);
             FlushMeals();
             ShowMeals();
         }
+
         public void PreviousWeek()
         {
-            activeDate = activeDate.AddDays(-7);
+            ActiveDate = ActiveDate.AddDays(-7);
             FlushMeals();
             ShowMeals();
         }
+
         private void FlushMeals()
         {
             MondayMeals.Clear();
@@ -178,68 +194,33 @@ namespace FoodPlanner.ViewModels
             SaturdayMeals.Clear();
             SundayMeals.Clear();
         }
-        private string Day(DayOfWeek day)
-        {
-            int difference = GetDdayDifference(day);
-            string result;
-            return result = activeDate.AddDays(-difference).Date.ToString("dddd\ndd/MM",CultureInfo.CreateSpecificCulture("en-US"));
-        }
-        private int GetDdayDifference(DayOfWeek day)
-        {
-            int difference;
 
-            if (day == DayOfWeek.Sunday)
-            {
-                difference = Convert.ToInt16(activeDate.DayOfWeek) - 7;
-            }
-            else
-            {
-                difference = activeDate.DayOfWeek - day;
-            }
-
-            return difference;
-        }
         private void ShowMeals()
         {
-            int mondayDifference = GetDdayDifference(DayOfWeek.Monday), sundayDifference = GetDdayDifference(DayOfWeek.Sunday);
-            DateTime mondayDate = activeDate.AddDays(-mondayDifference), 
-                    sundayDate = activeDate.AddDays(-sundayDifference);
-            List<Meal> mealList = App.db.Meals.Where(m => m.Date >= mondayDate.Date && m.Date <= sundayDate.Date).ToList();
+            List<Meal> mealList = App.db.Meals.Where(m => m.Date >= MondayDate.Date && m.Date <= SundayDate.Date).ToList();
+
+            // List of day-collections indexed according to the DayOfWeek enum
+            List<ObservableCollection<Meal>> MealDayCollections = new List<ObservableCollection<Meal>>() {
+                SundayMeals,
+                MondayMeals,
+                TuesdayMeals,
+                WednesdayMeals,
+                ThursdayMeals,
+                FridayMeals,
+                SaturdayMeals
+            };
+
+            // Add meals to the correct day-list
             foreach (Meal m in mealList)
             {
-                if (m.Date.DayOfWeek == DayOfWeek.Monday)
-                {
-                    MondayMeals.Add(m);
-                }
-                else if (m.Date.DayOfWeek == DayOfWeek.Tuesday)
-                {
-                    TuesdayMeals.Add(m);
-                }
-                else if (m.Date.DayOfWeek == DayOfWeek.Wednesday)
-                {
-                    WednesdayMeals.Add(m);
-                }
-                else if (m.Date.DayOfWeek == DayOfWeek.Thursday)
-                {
-                    ThursdayMeals.Add(m);
-                }
-                else if (m.Date.DayOfWeek == DayOfWeek.Friday)
-                {
-                    FridayMeals.Add(m);
-                }
-                else if (m.Date.DayOfWeek == DayOfWeek.Saturday)
-                {
-                    SaturdayMeals.Add(m);
-                }
-                else if (m.Date.DayOfWeek == DayOfWeek.Sunday)
-                {
-                    SundayMeals.Add(m);
-                }
+                MealDayCollections[(int)m.Date.DayOfWeek].Add(m);
             }
         }
+
         #endregion
 
         #region Commands
+
         public ICommand NextWeekCommand
         {
             get

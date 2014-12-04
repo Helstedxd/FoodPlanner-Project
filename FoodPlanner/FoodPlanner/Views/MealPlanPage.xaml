@@ -12,10 +12,17 @@
     d:DesignHeight="720" d:DesignWidth="405"
     Title="MealPlan">
     <Page.Resources>
-        <!--TODO: could this be moved to the MealsListBoxTemplate -->
-        <Style TargetType="ListBoxItem">
-            <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
-        </Style>        
+        <!--TODO: maybe move this to app styles -->
+        <Style x:Key="ListBoxItemStretchStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        </Style>
+
+        <Style TargetType="{x:Type ListBox}">
+            <Setter Property="ItemContainerStyle" Value="{StaticResource ListBoxItemStretchStyle}"/>
+            <Setter Property="ItemsPanel" Value="{StaticResource WrapPanelHorizontalTemplate}"/>
+            <Setter Property="ItemTemplate" Value="{StaticResource MealsListBoxTemplate}"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden"/>
+        </Style>
     </Page.Resources>
     <Page.DataContext>
         <ViewModels:MealPlanViewModel/>
@@ -42,27 +49,27 @@
                 <ImageBrush ImageSource="/Images/upArrowIcon.png" Stretch="Uniform"/>
             </Button.Background>
         </Button>
-        <Label Content="{Binding Path=MondayString, Mode=OneWay}" Grid.Row="1" Style="{StaticResource TextLabelTemplate}"/>
-        <Label Content="{Binding Path=TuesdayString, Mode=OneWay}" Grid.Row="2" Style="{StaticResource TextLabelTemplate}"/>
-        <Label Content="{Binding Path=WednesdayString, Mode=OneWay}" Grid.Row="3" Style="{StaticResource TextLabelTemplate}"/>
-        <Label Content="{Binding Path=ThursdayString, Mode=OneWay}" Grid.Row="4" Style="{StaticResource TextLabelTemplate}"/>
-        <Label Content="{Binding Path=FridayString, Mode=OneWay}" Grid.Row="5" Style="{StaticResource TextLabelTemplate}"/>
-        <Label Content="{Binding Path=SaturdayString, Mode=OneWay}" Grid.Row="6" Style="{StaticResource TextLabelTemplate}"/>
-        <Label Content="{Binding Path=SundayString, Mode=OneWay}" Grid.Row="7" Style="{StaticResource TextLabelTemplate}"/>
+        <Label Content="{Binding Path=MondayDate, Mode=OneWay}" Grid.Row="1" Style="{StaticResource DateLabelTemplate}"/>
+        <Label Content="{Binding Path=TuesdayDate, Mode=OneWay}" Grid.Row="2" Style="{StaticResource DateLabelTemplate}"/>
+        <Label Content="{Binding Path=WednesdayDate, Mode=OneWay}" Grid.Row="3" Style="{StaticResource DateLabelTemplate}"/>
+        <Label Content="{Binding Path=ThursdayDate, Mode=OneWay}" Grid.Row="4" Style="{StaticResource DateLabelTemplate}"/>
+        <Label Content="{Binding Path=FridayDate, Mode=OneWay}" Grid.Row="5" Style="{StaticResource DateLabelTemplate}"/>
+        <Label Content="{Binding Path=SaturdayDate, Mode=OneWay}" Grid.Row="6" Style="{StaticResource DateLabelTemplate}"/>
+        <Label Content="{Binding Path=SundayDate, Mode=OneWay}" Grid.Row="7" Style="{StaticResource DateLabelTemplate}"/>
+       
         <Button Command="{Binding NextWeekCommand}" Content="\/" Grid.Row="8" Style="{StaticResource ButtonIconTemplate}">
             <Button.Background>
                 <ImageBrush ImageSource="/Images/downArrowIcon.png" Stretch="Uniform"/>
             </Button.Background>
         </Button>
-        <Label Style="{StaticResource TextTitle}" VerticalAlignment="Center" FontSize="30" Content="{Binding Path=WeekString}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center"/>
+        <Label Content="{Binding Path=Week}" ContentStringFormat="Week {0}" Style="{StaticResource TextTitle}" VerticalAlignment="Center" FontSize="30" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center"/>
 
-        <ListBox x:Name="MondayMealsListBox" Grid.Row="1" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding MondayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
-        <ListBox x:Name="TuesdayMealsListBox" Grid.Row="2" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding TuesdayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}"/>
-        <ListBox x:Name="WednesdayMealsListBox" Grid.Row="3" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding WednesdayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
-        <ListBox x:Name="ThursdayMealsListBox" Grid.Row="4" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding ThursdayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
-        <ListBox x:Name="FridayMealsListBox" Grid.Row="5" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding FridayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
-        <ListBox x:Name="SaturdayMealsListBox" Grid.Row="6" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding SaturdayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
-        <ListBox x:Name="SundayMealsListBox" Grid.Row="7" Grid.Column="1" ItemsPanel="{StaticResource WrapPanelHorizontalTemplate}" ItemsSource="{Binding SundayMeals}" ItemTemplate="{StaticResource MealsListBoxTemplate}" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
-
+        <ListBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding MondayMeals}"/>
+        <ListBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding TuesdayMeals}"/>
+        <ListBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding WednesdayMeals}"/>
+        <ListBox Grid.Row="4" Grid.Column="1" ItemsSource="{Binding ThursdayMeals}"/>
+        <ListBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding FridayMeals}"/>
+        <ListBox Grid.Row="6" Grid.Column="1" ItemsSource="{Binding SaturdayMeals}"/>
+        <ListBox Grid.Row="7" Grid.Column="1" ItemsSource="{Binding SundayMeals}"/>
     </Grid>
 </Page>

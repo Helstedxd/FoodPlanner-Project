@@ -338,7 +338,7 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-        public ICommand AddNewGryedIngredientCommand
+        public ICommand AddNewGreydIngredientCommand
         {
             get
             {
@@ -373,7 +373,7 @@ namespace FoodPlanner.ViewModels
             App.db.SaveChanges();
         }
 
-        private bool ListDublicate(int ID)
+        private bool ListDublicate(int ID, bool isGreyListObject)
         {
             IQueryable<GraylistIngredient> grayList = App.db.GraylistIngredients.Where(gli => gli.UserID == App.CurrentUser.ID);
             IQueryable<BlacklistIngredient> blackList = App.db.BlacklistIngredients.Where(gli => gli.UserID == App.CurrentUser.ID);
@@ -384,17 +384,39 @@ namespace FoodPlanner.ViewModels
                 if (gli.IngredientID == ID)
                 {
                     dublicat = true;
+                    if (!isGreyListObject)
+                    {
+                        _blackedDublicateResult = "ERROR: Ingreident is Blacklisted";
+                        RaisePropertyChanged("BlackedDublicateResult");
+                    }
+                    else
+                    {
+                        _ratedDublicateResult = "ERROR: The ingreident is Rated";
+                        RaisePropertyChanged("RatedDublicate");
+                    }
                 }
             }
 
-            foreach (BlacklistIngredient bli in blackList)
+            if (dublicat == false)
             {
-                if (bli.IngredientID == ID)
+                foreach (BlacklistIngredient bli in blackList)
                 {
-                    dublicat = true;
+                    if (bli.IngredientID == ID)
+                    {
+                        dublicat = true;
+                        if (isGreyListObject)
+                        {
+                            _ratedDublicateResult = "ERROR: The ingreident is Rated";
+                            RaisePropertyChanged("RatedDublicate");
+                        }
+                        else
+                        {
+                            _blackedDublicateResult = "ERROR: Ingreident is Blacklisted";
+                            RaisePropertyChanged("BlackedDublicateResult");
+                        }
+                    }
                 }
             }
-
             return dublicat;
         }
 
@@ -477,19 +499,15 @@ namespace FoodPlanner.ViewModels
                 UserID = GreyListInventoryIngredient.UserID,
                 IngredientValue = GreyListInventoryIngredient.IngredientValue
             };
-            bool dublicat = ListDublicate(IngredientToBeAdded.IngredientID);
+            bool dublicat = ListDublicate(IngredientToBeAdded.IngredientID, true);
 
             if (!dublicat)
             {
                 _ratedDublicateResult = "";
+                RaisePropertyChanged("RatedDublicate");
                 App.db.GraylistIngredients.Add(IngredientToBeAdded);
                 App.db.SaveChanges();
             }
-            else
-            {
-                _ratedDublicateResult = "Item was not added (dublicate)";
-            }
-            RaisePropertyChanged("RatedDublicate");
         }
 
         private void SaveNewGreyedIentName(Ingredient ingredient)
@@ -507,19 +525,15 @@ namespace FoodPlanner.ViewModels
                 IngredientID = ingredient.ID,
                 UserID = App.CurrentUser.ID
             };
-            bool dublicat = ListDublicate(IngredientToBeAdded.IngredientID);
+            bool dublicat = ListDublicate(IngredientToBeAdded.IngredientID, false);
 
             if (!dublicat)
             {
                 _blackedDublicateResult = "";
+                RaisePropertyChanged("BlackedDublicateResult");
                 App.db.BlacklistIngredients.Add(IngredientToBeAdded);
                 App.db.SaveChanges();
-            }
-            else
-            {
-                _blackedDublicateResult = "Item was not added (dublicate)";
-            }
-            RaisePropertyChanged("BlackedDublicateResult");
+            }            
         }
 
         private void RemoveIngredientFromUnwantedIngredients()

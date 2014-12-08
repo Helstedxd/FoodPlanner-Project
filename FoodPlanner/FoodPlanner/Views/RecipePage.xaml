@@ -63,7 +63,7 @@
             <TextBlock Text="{Binding Recipe.RecipesPreparation.Preparation}" TextWrapping="Wrap"/>
         </ScrollViewer>
 
-        <ListBox x:Name="IngredientListbox" ItemsSource="{Binding Recipe.RecipeIngredients}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Row="3" Width="100" Background="{StaticResource BackgroundColour}" BorderThickness="0">
+        <ListBox x:Name="IngredientListbox" ItemsSource="{Binding getRecipeIngredients}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Row="3" Width="100" Background="{StaticResource BackgroundColour}" BorderThickness="0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>

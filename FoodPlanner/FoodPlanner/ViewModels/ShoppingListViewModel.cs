@@ -101,14 +101,22 @@ namespace FoodPlanner.ViewModels
                                                        TotalQuantity = s.Quantity
                                                    }).ToList();
 
-            List<ShoppingClass> MealRecipeIngredientsTotalQuantity = (from ri in App.db.RecipeIngredients
-                                                                      where App.db.Meals.Any(m => m.UserID == App.CurrentUser.ID && m.RecipeID == ri.RecipeID && m.IsActive && m.Date <= dateToShopAhead)
-                                                                      group ri by ri.IngredientID into rig
-                                                                      select new ShoppingClass()
-                                                                      {
-                                                                          Ingredient = rig.FirstOrDefault().Ingredient,
-                                                                          TotalQuantity = rig.Sum(i => i.Quantity),
-                                                                      }).ToList();
+            List<ShoppingClass> MealRecipeIngredientsTotalQuantity = new List<ShoppingClass>();
+
+            foreach (Meal m in App.db.Meals.Where(m => m.UserID == App.CurrentUser.ID && m.Date <= dateToShopAhead && m.IsActive).ToList())
+            {
+                foreach (RecipeIngredient i in m.Recipe.RecipeIngredients)
+                {
+                    if (MealRecipeIngredientsTotalQuantity.Where(mritq => mritq.Ingredient == i.Ingredient).Count() == 0)
+                    {
+                        MealRecipeIngredientsTotalQuantity.Add(new ShoppingClass() { Ingredient = i.Ingredient, TotalQuantity = i.Quantity * (m.Participants / i.Recipe.Persons) });
+                    }
+                    else
+                    {
+                        MealRecipeIngredientsTotalQuantity.Where(mritq => mritq.Ingredient == i.Ingredient).FirstOrDefault().TotalQuantity += i.Quantity * (m.Participants / i.Recipe.Persons);
+                    }
+                }
+            }
 
             List<ShoppingClass> userInventory = (from il in publicQuery.inventoryList
                                                  select new ShoppingClass()
@@ -135,6 +143,11 @@ namespace FoodPlanner.ViewModels
                         InventoryIngredient newInventoryIngredient = new InventoryIngredient(sc.Ingredient, (sc.TotalQuantity - userInventory.Where(t => t.Ingredient == sc.Ingredient).Single().TotalQuantity));
                         newShoppingListIngredient = new ShoppingListIngredient(newInventoryIngredient);
                     }
+                    else
+                    {
+                        InventoryIngredient newInventoryIngredient = new InventoryIngredient(sc.Ingredient, sc.TotalQuantity);
+                        newShoppingListIngredient = new ShoppingListIngredient(newInventoryIngredient);
+                    }
                 }
                 else
                 {
@@ -142,7 +155,6 @@ namespace FoodPlanner.ViewModels
                     newShoppingListIngredient = new ShoppingListIngredient(newInventoryIngredient);
                 }
 
-                //TODO: this could be null?!
                 ShoppingList.Add(newShoppingListIngredient);
             }
         }

@@ -38,9 +38,8 @@ namespace FoodPlanner
             Navigator.NavigationService = mainWindow.Frame.NavigationService;
 
             Navigator.NavigationService.Source = new Uri(FoodPlanner.Properties.Settings.Default.StartPage, UriKind.Relative);
-            mainWindow.Show();
-
             removePassedMeals();
+            mainWindow.Show();
         }
 
         private void ApplicationExit(object sender, ExitEventArgs args)
@@ -51,10 +50,10 @@ namespace FoodPlanner
 
         private void removePassedMeals()
         {
-            DateTime shopAhead = DateTime.Now.AddDays(CurrentUser.ShopAhead);
+            DateTime today = DateTime.Now;
 
             List<Meal> meals = (from m in db.Meals
-                                where m.UserID == CurrentUser.ID && m.IsActive && m.Date < shopAhead
+                                where m.UserID == CurrentUser.ID && m.IsActive && m.Date < today
                                 select m).ToList();
 
             List<InventoryIngredient> inventoryIngredient = (from ii in db.InventoryIngredients
@@ -62,7 +61,7 @@ namespace FoodPlanner
                                                              select ii).ToList();
 
             foreach (Meal m in meals)
-            {
+            {                
                 db.Meals.Where(m2 => m2.ID == m.ID).SingleOrDefault().IsActive = false;
 
                 foreach (RecipeIngredient ri in m.Recipe.RecipeIngredients)
@@ -87,6 +86,5 @@ namespace FoodPlanner
             }
             db.SaveChanges();
         }
-
     }
 }

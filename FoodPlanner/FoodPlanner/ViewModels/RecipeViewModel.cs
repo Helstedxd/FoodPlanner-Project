@@ -44,6 +44,22 @@ namespace FoodPlanner.ViewModels
             }
         }
 
+        public List<RecipeIngredient> getRecipeIngredients
+        {
+            get
+            {
+                if (_meal != null)
+                {
+                    List<RecipeIngredient> returnList = new List<RecipeIngredient>();
+
+                    Recipe.RecipeIngredients.ToList().ForEach(ri => returnList.Add(new RecipeIngredient() { Ingredient = ri.Ingredient, Recipe = ri.Recipe, Quantity = Math.Round(ri.Quantity * ((decimal)_meal.Participants / (decimal)Recipe.Persons), 2), IngredientID = ri.IngredientID, RecipeID = ri.RecipeID }));
+
+                    return returnList;
+                }
+                return Recipe.RecipeIngredients.ToList();
+            }
+        }
+
         public int getMealParticipants
         {
             get

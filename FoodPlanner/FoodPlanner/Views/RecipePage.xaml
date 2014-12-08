@@ -48,6 +48,11 @@
                     <ImageBrush ImageSource="{Binding getImage}" Stretch="Uniform"/>
                 </Button.Background>
             </Button>
+            <Button Command="{Binding RemoveMealCommand}" Style="{StaticResource ButtonIconTemplate}" HorizontalAlignment="Right" Height="{Binding ActualHeight, ElementName=TopBarButton}" Width="{Binding ActualHeight, ElementName=TopBarButton}" Margin="2,3,2,1" Visibility="{Binding isMealSet}">
+                <Button.Background>
+                    <ImageBrush ImageSource="../Images/minusIcon.png" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>
 
         </StackPanel>
 

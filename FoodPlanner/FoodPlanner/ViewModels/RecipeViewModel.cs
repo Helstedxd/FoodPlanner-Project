@@ -14,7 +14,12 @@ namespace FoodPlanner.ViewModels
 {
     public class RecipeViewModel : ObservableObject
     {
+        private DateTime _activeDate;
+        private Meal _meal = null;
+        private string _succesText = "", afterString;
+        private System.Windows.Media.Brush _succesTextColour = System.Windows.Media.Brushes.Black;
         private ICommand _startDialogCommand;
+        private ICommand _removeMealCommand;
 
         public Recipe Recipe { get; set; }
         public RecipeViewModel(Recipe recipe)
@@ -25,22 +30,26 @@ namespace FoodPlanner.ViewModels
 
         public RecipeViewModel(Meal meal)
         {
-            _meal = meal;
+            Meal = meal;
             activeDate = meal.Date;
             this.Recipe = meal.Recipe;
         }
 
         #region Properties
-        private DateTime _activeDate;
-        private Meal _meal = null;
-        private string _succesText = "", afterString;
-        private System.Windows.Media.Brush _succesTextColour = System.Windows.Media.Brushes.Black;
 
-        public Meal getMeal
+        public Meal Meal
         {
             get
             {
                 return _meal;
+            }
+            set
+            {
+                _meal = value;
+                RaisePropertyChanged("Meal");
+                RaisePropertyChanged("getMealParticipants");
+                RaisePropertyChanged("getImage");
+                RaisePropertyChanged("isMealSet");
             }
         }
 
@@ -64,15 +73,15 @@ namespace FoodPlanner.ViewModels
         {
             get
             {
-                if (_meal != null)
+                if (Meal != null)
                 {
-                    return _meal.Participants;
+                    return Meal.Participants;
                 }
                 return 0;
             }
             set
             {
-                _meal.Participants = value;
+                Meal.Participants = value;
             }
         }
 
@@ -80,7 +89,7 @@ namespace FoodPlanner.ViewModels
         {
             get
             {
-                if (_meal != null)
+                if (Meal != null)
                 {
                     return "../Images/reload.png";
                 }
@@ -92,11 +101,11 @@ namespace FoodPlanner.ViewModels
         {
             get
             {
-                if (_meal != null)
+                if (Meal != null)
                 {
                     return Visibility.Visible;
                 }
-                return Visibility.Hidden;
+                return Visibility.Collapsed;
             }
         }
 
@@ -173,14 +182,14 @@ namespace FoodPlanner.ViewModels
 
         public void updateMeal()
         {
-            _meal.Date = activeDate;
+            Meal.Date = activeDate;
             if (activeDate < DateTime.Now)
             {
-                _meal.IsActive = false;
+                Meal.IsActive = false;
             }
             else
             {
-                _meal.IsActive = true;
+                Meal.IsActive = true;
             }
 
             afterString = "Meal updated";
@@ -190,6 +199,16 @@ namespace FoodPlanner.ViewModels
             RaisePropertyChanged("SuccesText");
             RaisePropertyChanged("SuccesTextColour");
         }
+
+        private void RemoveMeal()
+        {
+            if (Meal != null)
+            {
+                App.db.Meals.Remove(Meal);
+                Meal = null;
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -197,7 +216,7 @@ namespace FoodPlanner.ViewModels
         {
             get
             {
-                if (_meal == null)
+                if (Meal == null)
                 {
                     if (_startDialogCommand == null)
                     {
@@ -213,6 +232,18 @@ namespace FoodPlanner.ViewModels
                     }
                     return _startDialogCommand;
                 }
+            }
+        }
+
+        public ICommand RemoveMealCommand
+        {
+            get
+            {
+                if (_removeMealCommand == null)
+                {
+                    _removeMealCommand = new RelayCommand(() => RemoveMeal());
+                }
+                return _removeMealCommand;
             }
         }
         #endregion

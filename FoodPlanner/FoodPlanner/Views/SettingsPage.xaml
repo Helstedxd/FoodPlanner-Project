@@ -80,7 +80,7 @@
                 <ListView x:Name="StockListView" Grid.Row="5" ItemsSource="{Binding CurrentUser.StockQuantities}" SelectedItem="{Binding SelectedStockQuantityIngredient}" Grid.ColumnSpan="2">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Ingredient}" />
+                            <GridViewColumn Width="Auto" Header="Name" DisplayMemberBinding="{Binding Ingredient}" />
                             <GridViewColumn Width="Auto" Header="Quantity">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>

@@ -65,7 +65,7 @@ namespace FoodPlanner.ViewModels
                     _mondayDate = _mondayDate.AddDays(-1);
                 }
 
-                RaisePropertyChanged("WeekString");
+                RaisePropertyChanged("Week");
 
                 RaisePropertyChanged("MondayDate");
                 RaisePropertyChanged("TuesdayDate");

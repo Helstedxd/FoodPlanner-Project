@@ -50,20 +50,22 @@
                     <GridViewColumn Header="Expiration Date" Width="Auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <DatePicker SelectedDate="{Binding ExpirationDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Slet lol" Width="Auto">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="Remove" Command="{Binding DataContext.RemoveIngredientFromInventoryCommand, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
-                                        CommandParameter="{Binding}"></Button>
-                            </DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <DatePicker SelectedDate="{Binding ExpirationDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                    <Button Width="30" Margin="10 0" Style="{StaticResource ButtonIconTemplate}"
+                                            Command="{Binding DataContext.RemoveIngredientFromInventoryCommand, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
+                                            CommandParameter="{Binding}">
+                                        <Button.Background>
+                                            <ImageBrush ImageSource="../Images/minusIcon.png" Stretch="Uniform"/>
+                                        </Button.Background>
+                                    </Button>
+                                </StackPanel>
+                          </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
+            
             <ListView.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.ContainerStyle>

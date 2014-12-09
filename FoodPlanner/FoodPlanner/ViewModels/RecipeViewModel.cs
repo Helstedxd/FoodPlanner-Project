@@ -205,6 +205,7 @@ namespace FoodPlanner.ViewModels
             if (Meal != null)
             {
                 App.db.Meals.Remove(Meal);
+                App.db.SaveChanges();
                 Meal = null;
             }
         }

@@ -40,10 +40,10 @@ namespace FoodPlanner.ViewModels
             SundayMeals = new ObservableCollection<Meal>();
 
             ActiveDate = DateTime.Now;
-            if (ActiveDate.DayOfWeek == DayOfWeek.Sunday) //This is done in order to get the GetDdayDifference method to make sense when it's Sunday
+           /* if (ActiveDate.DayOfWeek == DayOfWeek.Sunday) //This is done in order to get the GetDdayDifference method to make sense when it's Sunday
             {
                 ActiveDate = ActiveDate.AddDays(-1);
-            }
+            }*/
 
             ShowMeals();
         }
@@ -58,15 +58,15 @@ namespace FoodPlanner.ViewModels
             {
                 _activeDate = value;
 
-                // Set monday date as it is the reference.
+                // Find first monday before activeDate
                 _mondayDate = ActiveDate;
                 while (_mondayDate.DayOfWeek != DayOfWeek.Monday)
                 {
                     _mondayDate = _mondayDate.AddDays(-1);
                 }
-
+                
+                // Update the properties that depend on ActiveDate or Monday
                 RaisePropertyChanged("Week");
-
                 RaisePropertyChanged("MondayDate");
                 RaisePropertyChanged("TuesdayDate");
                 RaisePropertyChanged("WednesdayDate");
@@ -160,6 +160,7 @@ namespace FoodPlanner.ViewModels
         {
             get
             {
+                // TODO: GetWeekOfYear does not follow ISO 8601 (returns week 53 instead of 1)
                 DateTimeFormatInfo timeFormat = DateTimeFormatInfo.CurrentInfo;
                 Calendar calendar = timeFormat.Calendar;
                 return calendar.GetWeekOfYear(ActiveDate, timeFormat.CalendarWeekRule, timeFormat.FirstDayOfWeek);

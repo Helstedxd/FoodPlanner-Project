@@ -37,6 +37,11 @@
         </StackPanel>
 
         <ListView Grid.Row="1" ItemsSource="{Binding InventoryIngredients}" Background="{StaticResource BackgroundColour}">
+            <ListView.Resources>
+                <Style TargetType="GridViewColumnHeader">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </Style>
+            </ListView.Resources>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Ingredient" DisplayMemberBinding="{Binding Ingredient.Name}" Width="Auto" />

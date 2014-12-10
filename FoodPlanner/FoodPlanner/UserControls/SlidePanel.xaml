@@ -23,13 +23,13 @@
         <Button Grid.Column="0" Style="{StaticResource SlidemenuButtonIconTemplate}" Command="{Binding Source={x:Static local:Navigator.GoToMealPlanCommand}}">
             <Button.Resources>
                 <ImageSource x:Key="Image">../Images/Calender.png</ImageSource>
-                <system:String x:Key="ImageText">Calender</system:String>
+                <system:String x:Key="ImageText">Mealplan</system:String>
             </Button.Resources>
         </Button>
         <Button Grid.Column="1" Style="{StaticResource SlidemenuButtonIconTemplate}" Command="{Binding Source={x:Static local:Navigator.GoToRecipeSearchCommand}}">
             <Button.Resources>
                 <ImageSource x:Key="Image">../Images/Foodplan.png</ImageSource>
-                <system:String x:Key="ImageText">Foodplan</system:String>
+                <system:String x:Key="ImageText">Search</system:String>
             </Button.Resources>
         </Button>
         <Button Grid.Column="2" Style="{StaticResource SlidemenuButtonIconTemplate}" Command="{Binding Source={x:Static local:Navigator.GoToShoppingListCommand}}">

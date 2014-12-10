@@ -34,7 +34,7 @@
                 </Button.Resources>
             </Button>
 
-            <TextBlock Grid.Column="1" Foreground="White" FontSize="20" HorizontalAlignment="Center" Text="View Recipe"/>
+            <TextBlock Grid.Column="1" Foreground="White" FontSize="20" HorizontalAlignment="Center" Text="{Binding Recipe.Title}"/>
         </Grid>
 
         <Border Grid.Row="1" Name="Border" Margin="5" Height="140">

@@ -35,7 +35,7 @@
         <Button Grid.Column="2" Style="{StaticResource SlidemenuButtonIconTemplate}" Command="{Binding Source={x:Static local:Navigator.GoToShoppingListCommand}}">
             <Button.Resources>
                 <ImageSource x:Key="Image">../Images/Shoppinglist.png</ImageSource>
-                <system:String x:Key="ImageText">Shoppinglist</system:String>
+                <system:String x:Key="ImageText">Shopping List</system:String>
             </Button.Resources>
         </Button>
         <Button Grid.Column="3" Style="{StaticResource SlidemenuButtonIconTemplate}" Command="{Binding Source={x:Static local:Navigator.GoToInventoryCommand}}">

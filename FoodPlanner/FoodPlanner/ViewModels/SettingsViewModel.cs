@@ -32,11 +32,10 @@ namespace FoodPlanner.ViewModels
             _removeStockIngredientCommand,
             _removeGreyListIngredientCommand;
 
-        private User _currentUser;
         private KeyValuePair<string, Uri> _selectedStartUpPage;
         private StockQuantity _inventoryIngredient;
         private GraylistIngredient _greyListInventoryIngredient;
-        string _ratedDublicateResult,
+        private string _ratedDublicateResult,
                _blackedDublicateResult,
                _currenStartUpPage;
         #endregion
@@ -44,7 +43,6 @@ namespace FoodPlanner.ViewModels
         public SettingsViewModel()
         {
             StockIngredient = new StockQuantity();
-            CurrentUser = App.CurrentUser;
             SelectedBlackListIngredient = new BlacklistIngredient();
             SelectedStockQuantityIngredient = new StockQuantity();
             SelectedGreyListIngredient = new GraylistIngredient();
@@ -122,11 +120,22 @@ namespace FoodPlanner.ViewModels
 
         public User CurrentUser
         {
-            get { return _currentUser; }
-            set
+            get { return App.CurrentUser; }
+        }
+
+        public ObservableCollection<GraylistIngredient> GraylistIngredientsWithoutDiets
+        {
+            get
             {
-                _currentUser = value;
-                RaisePropertyChanged("CurrentUser");
+                return new ObservableCollection<GraylistIngredient>(App.CurrentUser.GraylistIngredients.Where(gi => !gi.IsFromDiet));
+            }
+        }
+
+        public ObservableCollection<BlacklistIngredient> BlacklistIngredientsWithoutDiets
+        {
+            get
+            {
+                return new ObservableCollection<BlacklistIngredient>(App.CurrentUser.BlacklistIngredients.Where(bi => !bi.IsFromDiet));
             }
         }
 
@@ -369,8 +378,9 @@ namespace FoodPlanner.ViewModels
 
         private void RemoveGreylistIngredient()
         {
-            App.db.GraylistIngredients.RemoveRange(App.db.GraylistIngredients.Where(gli => gli.Id == SelectedGreyListIngredient.Id && gli.UserID == SelectedGreyListIngredient.UserID));
+            App.db.GraylistIngredients.Remove(SelectedGreyListIngredient); ////.RemoveRange(App.db.GraylistIngredients.Where(gli => gli.Id == SelectedGreyListIngredient.Id && gli.UserID == SelectedGreyListIngredient.UserID));            
             App.db.SaveChanges();
+            RaisePropertyChanged("GraylistIngredientsWithoutDiets");
         }
 
         private bool ListDublicate(int ID, bool isGreyListObject)
@@ -386,12 +396,12 @@ namespace FoodPlanner.ViewModels
                     dublicat = true;
                     if (!isGreyListObject)
                     {
-                        _blackedDublicateResult = "ERROR: Ingreident is Blacklisted";
+                        _blackedDublicateResult = "ERROR: Ingredient is Blacklisted";
                         RaisePropertyChanged("BlackedDublicateResult");
                     }
                     else
                     {
-                        _ratedDublicateResult = "ERROR: The ingreident is Rated";
+                        _ratedDublicateResult = "ERROR: The ingredient is Rated";
                         RaisePropertyChanged("RatedDublicate");
                     }
                 }
@@ -487,25 +497,28 @@ namespace FoodPlanner.ViewModels
 
         private void RemoveStockIngredient()
         {
-            App.db.StockQuantities.RemoveRange(App.db.StockQuantities.Where(sq => sq.ID == SelectedStockQuantityIngredient.ID && sq.UserID == SelectedStockQuantityIngredient.UserID));
+            App.db.StockQuantities.Remove(SelectedStockQuantityIngredient);// .RemoveRange(App.db.StockQuantities.Where(sq => sq.ID == SelectedStockQuantityIngredient.ID && sq.UserID == SelectedStockQuantityIngredient.UserID));
             App.db.SaveChanges();
         }
 
         private void AddNewGreyedIngredient()
         {
-            GraylistIngredient IngredientToBeAdded = new GraylistIngredient()
+           /* GraylistIngredient IngredientToBeAdded = new GraylistIngredient()
             {
                 IngredientID = GreyListInventoryIngredient.IngredientID,
                 UserID = GreyListInventoryIngredient.UserID,
                 IngredientValue = GreyListInventoryIngredient.IngredientValue
-            };
-            bool dublicat = ListDublicate(IngredientToBeAdded.IngredientID, true);
+            };*/
 
-            if (!dublicat)
+            bool dublicate = ListDublicate(GreyListInventoryIngredient.IngredientID, true);
+
+            if (!dublicate)
             {
                 _ratedDublicateResult = "";
                 RaisePropertyChanged("RatedDublicate");
-                App.db.GraylistIngredients.Add(IngredientToBeAdded);
+               // App.db.GraylistIngredients.Add(IngredientToBeAdded);
+                App.CurrentUser.GraylistIngredients.Add(GreyListInventoryIngredient);
+                RaisePropertyChanged("GraylistIngredientsWithoutDiets");
                 App.db.SaveChanges();
             }
         }
@@ -523,23 +536,24 @@ namespace FoodPlanner.ViewModels
             BlacklistIngredient IngredientToBeAdded = new BlacklistIngredient()
             {
                 IngredientID = ingredient.ID,
-                UserID = App.CurrentUser.ID
             };
-            bool dublicat = ListDublicate(IngredientToBeAdded.IngredientID, false);
+            bool dublicate = ListDublicate(IngredientToBeAdded.IngredientID, false);
 
-            if (!dublicat)
+            if (!dublicate)
             {
                 _blackedDublicateResult = "";
                 RaisePropertyChanged("BlackedDublicateResult");
-                App.db.BlacklistIngredients.Add(IngredientToBeAdded);
+                App.CurrentUser.BlacklistIngredients.Add(IngredientToBeAdded);
+                RaisePropertyChanged("BlacklistIngredientsWithoutDiets");
                 App.db.SaveChanges();
             }
         }
 
         private void RemoveIngredientFromUnwantedIngredients()
         {
-            App.db.BlacklistIngredients.RemoveRange(App.db.BlacklistIngredients.Where(bli => bli.Id == SelectedBlackListIngredient.Id && bli.UserID == App.CurrentUser.ID));
+            App.db.BlacklistIngredients.Remove(SelectedBlackListIngredient);//.RemoveRange(App.db.BlacklistIngredients.Where(bli => bli.Id == SelectedBlackListIngredient.Id && bli.UserID == App.CurrentUser.ID));
             App.db.SaveChanges();
+            RaisePropertyChanged("BlacklistIngredientsWithoutDiets");
         }
 
         #endregion

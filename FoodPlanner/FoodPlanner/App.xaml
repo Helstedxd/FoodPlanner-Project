@@ -53,6 +53,18 @@
         <!--End: Template for text label-->
 
         <!--Start: Template for Image buttons-->
+        <Style x:Key="backButton" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Image Margin="3" Source="{DynamicResource ResourceKey=Image}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="SlidemenuButtonIconTemplate" TargetType="{x:Type Button}">
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>

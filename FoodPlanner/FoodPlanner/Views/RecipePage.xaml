@@ -14,6 +14,51 @@
         <ViewModels:RecipeViewModel/>
     </Page.DataContext>-->
 
+    <Grid Background="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Command="{Binding Source={x:Static local:Navigator.GoBackCommand}}" Style="{StaticResource backButton}">
+                <Button.Resources>
+                    <ImageSource x:Key="Image">../Images/BackButton.png</ImageSource>
+                </Button.Resources>
+            </Button>
+
+            <TextBlock Grid.Column="1" Foreground="White" FontSize="20" HorizontalAlignment="Center" Text="View Recipe"/>
+        </Grid>
+
+        <Border Grid.Row="1" Name="Border" Margin="5" Height="140">
+            <Border.Triggers>
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="Border" Storyboard.TargetProperty="Height" To="375" Duration="0:0:0.5"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="Border" Storyboard.TargetProperty="Height" To="140" Duration="0:0:0.5"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Border.Triggers>
+            <Image  Source="{Binding Recipe.Image}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" />
+        </Border>
+    </Grid>
+
+
+    <!--
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -79,5 +124,5 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-    </Grid>
+    </Grid>-->
 </Page>

@@ -97,6 +97,22 @@ namespace FoodPlanner.Models
             }
         }
 
+        public decimal percentageFullMatch
+        {
+            get
+            {
+                return _fullMatch / _ingredients.Count();
+            }
+        }
+
+        public decimal percentagePartialMatch
+        {
+            get
+            {
+                return _partialMatch / _ingredients.Count();
+            }
+        }
+
         public decimal keyWordMatch
         {
             get

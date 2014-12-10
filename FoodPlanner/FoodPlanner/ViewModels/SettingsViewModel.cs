@@ -533,7 +533,7 @@ namespace FoodPlanner.ViewModels
                 RaisePropertyChanged("BlackedDublicateResult");
                 App.db.BlacklistIngredients.Add(IngredientToBeAdded);
                 App.db.SaveChanges();
-            }            
+            }
         }
 
         private void RemoveIngredientFromUnwantedIngredients()

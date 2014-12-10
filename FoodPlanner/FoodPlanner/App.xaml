@@ -13,7 +13,7 @@
         <SolidColorBrush x:Key="Button.Colour.Border" Color="#FB4E00"/>
         <SolidColorBrush x:Key="Text.Orange" Color="#FB4E00"/>
         <SolidColorBrush x:Key="Button.Text.Background" Color="#FFDDDDDD"/>
-        <SolidColorBrush x:Key="BackgroundColour" Color="#E2E2E2"/>
+        <SolidColorBrush x:Key="BackgroundColour" Color="#FFFFFF"/>
 
         <!--Start: Templates for title text-->
         <Style TargetType="{x:Type Control}" x:Key="TextTitle">

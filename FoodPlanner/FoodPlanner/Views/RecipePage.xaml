@@ -14,14 +14,15 @@
         <ViewModels:RecipeViewModel/>
     </Page.DataContext>-->
 
-    <Grid Background="Black">
+    <Grid Background="{StaticResource BackgroundColour}">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="100"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0" Background="Black">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="*"/>
@@ -55,6 +56,48 @@
             </Border.Triggers>
             <Image  Source="{Binding Recipe.Image}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" />
         </Border>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontSize="15" Text="Persons:" />
+            <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0" Value="{Binding getMealParticipants, Mode=TwoWay}" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50"/>
+
+            <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontSize="15" Text="Date:" />
+            <DatePicker Grid.Column="1" Grid.Row="1" SelectedDate="{Binding activeDate, Mode=TwoWay}" Height="{Binding ActualHeight, ElementName=TopBarButton}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="125"/>
+
+        </Grid>
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <ListBox Grid.Column="0" x:Name="IngredientListbox" ItemsSource="{Binding getRecipeIngredients}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Row="3" Width="100" Background="{StaticResource BackgroundColour}" Foreground="Black" BorderThickness="0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Border x:Name="IngredientBorder" BorderBrush="{StaticResource Text.Orange}" BorderThickness="0 0 0 1" Width="80">
+                                <TextBlock Width="80" Name="IngredientText"  Text="{Binding}" TextWrapping="Wrap"/>
+                            </Border>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <ScrollViewer Grid.Column="1" Padding="5,0,0,0">
+                <TextBlock Text="{Binding Recipe.RecipesPreparation.Preparation}" TextWrapping="Wrap" Foreground="Black"/>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 
 

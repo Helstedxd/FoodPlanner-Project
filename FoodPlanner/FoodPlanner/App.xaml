@@ -53,6 +53,45 @@
         <!--End: Template for text label-->
 
         <!--Start: Template for Image buttons-->
+        <Style x:Key="SlidemenuButtonIconTemplate" TargetType="{x:Type Button}">
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="Border" BorderBrush="Transparent" Padding="0" Margin="0" Background="Black">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="10"/>
+                                </Grid.RowDefinitions>
+                                <Image Grid.Row="0" Margin="5,5,5,5" Source="{DynamicResource ResourceKey=Image}" Stretch="Uniform" />
+                                <TextBlock Grid.Row="1" Text="{DynamicResource ResourceKey=ImageText}" Foreground="White" FontSize="10" Padding="0" Margin="0,-4,0,0" HorizontalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#3e3e3e" Duration="0:0:0.5" Storyboard.TargetName="Border" Storyboard.TargetProperty="Background.Color"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="Black" Duration="0:0:1" Storyboard.TargetName="Border" Storyboard.TargetProperty="Background.Color"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="ButtonIconTemplate" TargetType="{x:Type Button}">
             <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
             <Setter Property="BorderThickness" Value="2"/>
@@ -149,8 +188,8 @@
                                                CommandParameter="{Binding Content, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                
-               <Grid.RowDefinitions>
+
+                <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
@@ -163,11 +202,11 @@
                 </TextBlock>
 
                 <Label Padding="1" Content="{Binding Participants}" ContentStringFormat="For {0} person(s)" FontSize="10" Grid.Row="1"/>
-          
+
             </Grid>
         </DataTemplate>
         <ItemsPanelTemplate x:Key="WrapPanelHorizontalTemplate">
-          <!--  <WrapPanel Orientation="Horizontal" Background="{StaticResource BackgroundColour}"/>-->
+            <!--  <WrapPanel Orientation="Horizontal" Background="{StaticResource BackgroundColour}"/>-->
             <StackPanel Orientation="Horizontal" Background="{StaticResource BackgroundColour}" />
         </ItemsPanelTemplate>
         <!--End: Meal planning Page Template for day listboxes-->

@@ -96,9 +96,6 @@
     <Compile Include="BlacklistIngredient.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Diet.xaml.cs">
-      <DependentUpon>Diet.xaml</DependentUpon>
-    </Compile>
     <Compile Include="DietPreset.cs">
       <DependentUpon>FoodDatabase.tt</DependentUpon>
     </Compile>
@@ -180,10 +177,6 @@
     <Compile Include="Views\InventoryPage.xaml.cs">
       <DependentUpon>InventoryPage.xaml</DependentUpon>
     </Compile>
-    <Page Include="Diet.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

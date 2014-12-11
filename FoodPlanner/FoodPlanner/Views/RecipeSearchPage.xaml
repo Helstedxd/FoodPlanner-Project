@@ -35,7 +35,9 @@
         <TextBox Grid.Column="1" Grid.ColumnSpan="2" FontSize="18" Name="Search" Text="{Binding Path=SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=1000}"/>
         <Border Grid.Column="0"  BorderThickness=" 2,2,1,2" BorderBrush="Black"/>
         <Border Grid.Column="1"   BorderThickness=" 1,2,1,2" BorderBrush="Black" Grid.ColumnSpan="5" Margin="1,0,2,0"/>
-        <ListBox Name="recipeListBox" Grid.Row="1" Grid.ColumnSpan="3" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemTemplate="{StaticResource ListRecipesTemplate}"  ItemsSource="{Binding Path=listOfSearchResults, Mode=OneWay}">
+        <ListBox Name="recipeListBox" Grid.Row="1" Grid.ColumnSpan="3" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                 ItemTemplate="{StaticResource ListRecipesTemplate}" ItemsSource="{Binding Path=listOfSearchResults, Mode=OneWay}"
+                 HorizontalContentAlignment="Stretch">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseUp">
                     <i:InvokeCommandAction Command="{Binding Source={x:Static local:Navigator.GoToRecipeCommand}}" 

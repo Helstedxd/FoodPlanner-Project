@@ -117,32 +117,21 @@
         <!--Start: Template for recipes list-->
         <DataTemplate x:Key="ListRecipesTemplate">
             <Grid>
-                <StackPanel  HorizontalAlignment="Stretch">
-                    <Border Name="ItemBorder" Margin="3" BorderBrush="{StaticResource Button.Static.Border}" BorderThickness="1" Padding="2" HorizontalAlignment="Stretch">
-                        <Grid Name="ItemGrid" Width="{Binding ElementName=ItemBorder,Path=ActualWidth}">
-                            <Grid.ColumnDefinitions >
-                                <ColumnDefinition Width="75"/>
-                                <ColumnDefinition Width="{Binding ElementName=ItemGrid,Path=MaxWidth}"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Image  Grid.RowSpan="2" Height="75" Width="75" Stretch="UniformToFill" Source="{Binding recipe.Image}" />
-                            <Label Grid.Column="1"  Grid.Row="1" Content="{Binding getMatchPercentage}" ContentStringFormat=" {0} ingredients"/>
-                            <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding recipe.Title}" Padding="5 0 5 0" TextTrimming="CharacterEllipsis"  Style="{StaticResource TextblockTitle}" FontSize="20"/>
-                            <StackPanel x:Name="addStackpannel" Orientation="Horizontal" Grid.Column="2" Grid.Row="1" Height="30"  HorizontalAlignment="Right">
-                                <DatePicker Margin="5 0 5 0" Visibility="Collapsed"/>
-                                <Button Style="{StaticResource ButtonIconTemplate}" Width="30" Height="{Binding ElementName=addStackpannel, Path=ActualHeight}" Margin="0 0 5 0">
-                                    <Button.Background>
-                                        <ImageBrush ImageSource="Images/plusIcon.png" Stretch="Uniform"/>
-                                    </Button.Background>
-                                </Button>
-                            </StackPanel>
-                        </Grid>
-                    </Border>
-                </StackPanel>
+                <Border Name="ItemBorder" Margin="3" BorderBrush="{StaticResource Button.Static.Border}" BorderThickness="1">
+                    <Grid Name="ItemGrid">
+                        <Grid.ColumnDefinitions >
+                            <ColumnDefinition Width="75"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.RowSpan="2" Height="75" Width="75" Stretch="UniformToFill" Source="{Binding recipe.Image}" />
+                        <Label Grid.Column="1"  Grid.Row="1" Content="{Binding getMatchPercentage}" ContentStringFormat=" {0} ingredients"/>
+                        <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding recipe.Title}" Padding="5 0 5 0" TextTrimming="CharacterEllipsis"  Style="{StaticResource TextblockTitle}" FontSize="20"/>
+                    </Grid>
+                </Border>
             </Grid>
         </DataTemplate>
 

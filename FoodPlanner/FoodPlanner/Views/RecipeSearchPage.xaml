@@ -38,7 +38,8 @@
         <ListBox Name="recipeListBox" Grid.Row="1" Grid.ColumnSpan="3" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemTemplate="{StaticResource ListRecipesTemplate}"  ItemsSource="{Binding Path=listOfSearchResults, Mode=OneWay}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseUp">
-                    <i:InvokeCommandAction Command="{Binding Source={x:Static local:Navigator.GoToRecipeCommand}}" CommandParameter="{Binding SelectedItem.recipe, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"/>
+                    <i:InvokeCommandAction Command="{Binding Source={x:Static local:Navigator.GoToRecipeCommand}}" 
+                                           CommandParameter="{Binding SelectedItem.recipe, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </ListBox>

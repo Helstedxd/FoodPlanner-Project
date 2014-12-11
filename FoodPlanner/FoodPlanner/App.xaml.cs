@@ -24,15 +24,15 @@ namespace FoodPlanner
         {
             App.db = new FoodContext();
 
-            try
-            {
-                App.CurrentUser = App.db.Users.First();
-            }
-            catch (EntityException ex)
-            {
-                //TODO: Handle
-                //MessageBox.Show(ex.Message);
-            }
+            //try
+            // {
+            App.CurrentUser = App.db.Users.First();
+            // }
+            // catch (EntityException ex)
+            // {
+            //TODO: Handle
+            // MessageBox.Show(ex.Message);
+            //}
 
             MainWindow mainWindow = new MainWindow();
             Navigator.NavigationService = mainWindow.Frame.NavigationService;
@@ -61,7 +61,7 @@ namespace FoodPlanner
                                                              select ii).ToList();
 
             foreach (Meal m in meals)
-            {                
+            {
                 db.Meals.Where(m2 => m2.ID == m.ID).SingleOrDefault().IsActive = false;
 
                 foreach (RecipeIngredient ri in m.Recipe.RecipeIngredients)

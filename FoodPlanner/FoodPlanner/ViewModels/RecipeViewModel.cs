@@ -50,6 +50,7 @@ namespace FoodPlanner.ViewModels
                 RaisePropertyChanged("getMealParticipants");
                 RaisePropertyChanged("getImage");
                 RaisePropertyChanged("isMealSet");
+                RaisePropertyChanged("StartDialogCommand");
             }
         }
 
@@ -81,7 +82,7 @@ namespace FoodPlanner.ViewModels
             }
             set
             {
-                Meal.Participants = value;
+                 Meal.Participants = value;
             }
         }
 
@@ -168,8 +169,10 @@ namespace FoodPlanner.ViewModels
             {
                 App.CurrentUser.Meals.Add(newMeal);
                 App.db.SaveChanges();
-                afterString = "Meal added";
-                SuccesTextColour = _succesTextColour = System.Windows.Media.Brushes.Black;
+                Meal = newMeal;
+                //TODO: fuck this
+                //afterString = "Meal added";
+                //SuccesTextColour = _succesTextColour = System.Windows.Media.Brushes.Black;
             }
             else
             {
@@ -219,18 +222,19 @@ namespace FoodPlanner.ViewModels
             {
                 if (Meal == null)
                 {
-                    if (_startDialogCommand == null)
-                    {
+                    // Command can change..
+                    //if (_startDialogCommand == null)
+                   // {
                         _startDialogCommand = new RelayCommand(() => AddMeal());
-                    }
+                   // }
                     return _startDialogCommand;
                 }
                 else
                 {
-                    if (_startDialogCommand == null)
-                    {
+                   // if (_startDialogCommand == null)
+                   // {
                         _startDialogCommand = new RelayCommand(() => updateMeal());
-                    }
+                   //}
                     return _startDialogCommand;
                 }
             }

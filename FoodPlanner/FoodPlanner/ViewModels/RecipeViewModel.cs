@@ -81,7 +81,10 @@ namespace FoodPlanner.ViewModels
             }
             set
             {
-                Meal.Participants = value;
+                if (value > 0)
+                {
+                    Meal.Participants = value;
+                }
             }
         }
 
@@ -183,6 +186,7 @@ namespace FoodPlanner.ViewModels
         public void updateMeal()
         {
             Meal.Date = activeDate;
+            /*
             if (activeDate < DateTime.Now)
             {
                 Meal.IsActive = false;
@@ -191,6 +195,7 @@ namespace FoodPlanner.ViewModels
             {
                 Meal.IsActive = true;
             }
+            */
 
             afterString = "Meal updated";
             SuccesTextColour = _succesTextColour = System.Windows.Media.Brushes.Black;

@@ -63,7 +63,7 @@ namespace FoodPlanner
             foreach (Meal m in meals)
             {                
                 db.Meals.Where(m2 => m2.ID == m.ID).SingleOrDefault().IsActive = false;
-
+                /*
                 foreach (RecipeIngredient ri in m.Recipe.RecipeIngredients)
                 {
                     if (inventoryIngredient.Where(ii => ii.IngredientID == ri.IngredientID).Count() != 0)
@@ -83,6 +83,7 @@ namespace FoodPlanner
                         }
                     }
                 }
+                */
             }
             db.SaveChanges();
         }

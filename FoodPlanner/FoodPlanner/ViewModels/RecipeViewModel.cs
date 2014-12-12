@@ -153,7 +153,8 @@ namespace FoodPlanner.ViewModels
             {
                 Recipe = this.Recipe,
                 Date = activeDate,
-                Participants = App.CurrentUser.PersonsInHouseHold
+                Participants = App.CurrentUser.PersonsInHouseHold,
+                IsActive = true
             };
 
             bool mealDublicate = false;

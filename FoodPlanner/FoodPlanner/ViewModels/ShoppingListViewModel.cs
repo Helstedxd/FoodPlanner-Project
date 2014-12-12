@@ -109,11 +109,11 @@ namespace FoodPlanner.ViewModels
                 {
                     if (MealRecipeIngredientsTotalQuantity.Where(mritq => mritq.Ingredient == i.Ingredient).Count() == 0)
                     {
-                        MealRecipeIngredientsTotalQuantity.Add(new ShoppingClass() { Ingredient = i.Ingredient, TotalQuantity = i.Quantity * (m.Participants / i.Recipe.Persons) });
+                        MealRecipeIngredientsTotalQuantity.Add(new ShoppingClass() { Ingredient = i.Ingredient, TotalQuantity = Math.Round(i.Quantity * ((decimal)m.Participants / (decimal)i.Recipe.Persons), 2) });
                     }
                     else
                     {
-                        MealRecipeIngredientsTotalQuantity.Where(mritq => mritq.Ingredient == i.Ingredient).FirstOrDefault().TotalQuantity += i.Quantity * (m.Participants / i.Recipe.Persons);
+                        MealRecipeIngredientsTotalQuantity.Where(mritq => mritq.Ingredient == i.Ingredient).FirstOrDefault().TotalQuantity += Math.Round(i.Quantity * ((decimal)m.Participants / (decimal)i.Recipe.Persons), 2);
                     }
                 }
             }
@@ -141,11 +141,6 @@ namespace FoodPlanner.ViewModels
                     if (userInventory.Where(t => t.Ingredient == sc.Ingredient).Single().TotalQuantity >= sc.TotalQuantity)
                     {
                         InventoryIngredient newInventoryIngredient = new InventoryIngredient(sc.Ingredient, (sc.TotalQuantity - userInventory.Where(t => t.Ingredient == sc.Ingredient).Single().TotalQuantity));
-                        newShoppingListIngredient = new ShoppingListIngredient(newInventoryIngredient);
-                    }
-                    else
-                    {
-                        InventoryIngredient newInventoryIngredient = new InventoryIngredient(sc.Ingredient, sc.TotalQuantity);
                         newShoppingListIngredient = new ShoppingListIngredient(newInventoryIngredient);
                     }
                 }

@@ -43,7 +43,8 @@ namespace FoodPlanner.ViewModels
         public SettingsViewModel()
         {
             StockIngredient = new StockQuantity();
-            GreyListInventoryIngredient = new GraylistIngredient();
+            GreyListInventoryIngredient = null;
+            IngredientValue = 1;
         }
 
         #region Properties
@@ -73,6 +74,12 @@ namespace FoodPlanner.ViewModels
                 }
                 return "Current Diet: " + currentDiet;
             }
+        }
+
+        public int IngredientValue
+        {
+            get;
+            set;
         }
 
         public DietPreset SelectedDietPreset { get; set; }
@@ -506,24 +513,31 @@ namespace FoodPlanner.ViewModels
 
         private void AddNewGreyedIngredient()
         {
-            bool dublicate = ListDublicate(GreyListInventoryIngredient.IngredientID, true);
-
-            if (!dublicate)
+            if (GreyListInventoryIngredient != null)
             {
-                _ratedDublicateResult = "";
-                RaisePropertyChanged("RatedDublicate");
-                // App.db.GraylistIngredients.Add(IngredientToBeAdded);
-                App.CurrentUser.GraylistIngredients.Add(GreyListInventoryIngredient);
-                RaisePropertyChanged("GraylistIngredientsWithoutDiets");
-                App.db.SaveChanges();
+                bool dublicate = ListDublicate(GreyListInventoryIngredient.IngredientID, true);
+
+                if (!dublicate)
+                {
+                    GreyListInventoryIngredient.IngredientValue = IngredientValue;
+                    _ratedDublicateResult = "";
+                    RaisePropertyChanged("RatedDublicate");
+                    // App.db.GraylistIngredients.Add(IngredientToBeAdded);
+                    App.CurrentUser.GraylistIngredients.Add(GreyListInventoryIngredient);
+                    RaisePropertyChanged("GraylistIngredientsWithoutDiets");
+                    App.db.SaveChanges();
+                }
             }
         }
 
         private void SaveNewGreyedIentName(Ingredient ingredient)
         {
-            GreyListInventoryIngredient.IngredientID = ingredient.ID;
-            GreyListInventoryIngredient.Ingredient = ingredient;
-            GreyListInventoryIngredient.UserID = App.CurrentUser.ID;
+            GreyListInventoryIngredient = new GraylistIngredient()
+            {
+                IngredientID = ingredient.ID,
+                Ingredient = ingredient,
+                UserID = App.CurrentUser.ID
+            };
             RaisePropertyChanged("GreyListInventoryIngredient");
         }
 

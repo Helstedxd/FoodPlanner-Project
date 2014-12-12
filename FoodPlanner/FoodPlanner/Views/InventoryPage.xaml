@@ -44,7 +44,7 @@
             </ListView.Resources>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Ingredient" DisplayMemberBinding="{Binding Ingredient.Name}" Width="Auto" />
+                   <!-- <GridViewColumn Header="Ingredient" DisplayMemberBinding="{Binding Ingredient.Name}" Width="Auto" /> -->
                     <GridViewColumn Header="Quantity">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -83,7 +83,7 @@
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="{Binding Name}" Width="100"/>
                                                     <TextBlock Text="{Binding ItemCount}" FontWeight="Bold" Margin="10 0 0 0" />
-                                                    <TextBlock Text=" item(s), Total quantity: " FontWeight="Bold" />
+                                                    <TextBlock Text=" item(s), Quantity: " FontWeight="Bold" />
                                                     <TextBlock Text="{Binding Items, Converter={StaticResource InventoryCombinedQuantityConverter}}" FontWeight="Bold" Margin="10 0 0 0" />
                                                 </StackPanel>
                                             </Expander.Header>

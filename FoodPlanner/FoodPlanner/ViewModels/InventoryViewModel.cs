@@ -122,6 +122,8 @@ namespace FoodPlanner.ViewModels
                 //TODO: InventoryIngredients is a copy of App.CurrentUser.InventoryIngredients
                 // It would be better if we only needed to update one of them...
                 InventoryIngredients.Add(newInventoryIngredient);
+
+                App.db.SaveChanges();
             }
         }
 
@@ -133,6 +135,8 @@ namespace FoodPlanner.ViewModels
                 //TODO: InventoryIngredients is a copy of App.CurrentUser.InventoryIngredients
                 // It would be better if we only needed to update one of them...
                 InventoryIngredients.Remove(inventoryIngredient);
+
+                App.db.SaveChanges();
             }
         }
 

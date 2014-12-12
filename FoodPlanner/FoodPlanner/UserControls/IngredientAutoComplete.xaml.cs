@@ -29,7 +29,6 @@ namespace FoodPlanner.UserControls
         private List<Ingredient> _queriedIngredients;
         private string _searchText;
         private string _lastSearchText;
-
         #endregion
 
         public IngredientAutoComplete()
@@ -154,15 +153,22 @@ namespace FoodPlanner.UserControls
             // should maybe be an event with callback to remove propertychanged dependency
             string originalSearchText = SearchText;
 
+            var blacklistedIngredients = App.db.BlacklistIngredients
+                .Where(bl => bl.UserID == App.CurrentUser.ID && bl.Ingredient.Name.ToLower().Contains(originalSearchText.ToLower()))
+                .Select(bl => bl.Ingredient);
+
             var foundIngredientsInDb = App.db.Ingredients
-                .Where(i => i.Name.ToLower().Contains(originalSearchText.ToLower()))
+                .Where(i => i.Name.ToLower().Contains(originalSearchText.ToLower()) && !blacklistedIngredients.Contains(i))
                 .Take(MaximumItems)
                 .OrderBy(i => i.Name.ToLower().IndexOf(originalSearchText));
 
             // Populate the list if the search text has not changed.
             if (originalSearchText == SearchText)
             {
-                QueriedIngredients = foundIngredientsInDb.ToList();
+                if (foundIngredientsInDb.Count() > 0)
+                {
+                    QueriedIngredients = foundIngredientsInDb.ToList();
+                }
             }
             else
             {

@@ -520,6 +520,7 @@ namespace FoodPlanner.ViewModels
                 if (!dublicate)
                 {
                     GreyListInventoryIngredient.IngredientValue = IngredientValue;
+
                     _ratedDublicateResult = "";
                     RaisePropertyChanged("RatedDublicate");
                     // App.db.GraylistIngredients.Add(IngredientToBeAdded);

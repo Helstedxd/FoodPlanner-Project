@@ -35,7 +35,7 @@
             </Button.Background>
         </Button>
 
-        <StackPanel Grid.Column="1" Orientation="Horizontal" Visibility="{Binding isMealSet}" Margin="0">
+        <StackPanel Grid.Column="0" HorizontalAlignment="Right" Orientation="Horizontal" Visibility="{Binding isMealSet}" Margin="0">
             <xctk:DecimalUpDown Value="{Binding getMealParticipants, Mode=TwoWay}" Height="{Binding ActualHeight, ElementName=TopBarButton}" Width="50" Margin="0,2,0,5" />
         </StackPanel>
 

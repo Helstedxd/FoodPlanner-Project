@@ -144,9 +144,10 @@ namespace FoodPlanner.ViewModels
             foreach (ShoppingClass sc in groupedToFindTotalQuantity)
             {
                 ShoppingListIngredient newShoppingListIngredient = null;
-                if (userInventory.Contains(sc))
+
+                if (userInventory.Where(ui => ui.Ingredient == sc.Ingredient).Count() != 0)
                 {
-                    if (userInventory.Where(t => t.Ingredient == sc.Ingredient).Single().TotalQuantity >= sc.TotalQuantity)
+                    if (userInventory.Where(t => t.Ingredient == sc.Ingredient).Single().TotalQuantity < sc.TotalQuantity)
                     {
                         InventoryIngredient newInventoryIngredient = new InventoryIngredient(sc.Ingredient, (sc.TotalQuantity - userInventory.Where(t => t.Ingredient == sc.Ingredient).Single().TotalQuantity));
                         newShoppingListIngredient = new ShoppingListIngredient(newInventoryIngredient);
@@ -154,11 +155,15 @@ namespace FoodPlanner.ViewModels
                 }
                 else
                 {
+                    Console.WriteLine(sc.Ingredient.Name);
                     InventoryIngredient newInventoryIngredient = new InventoryIngredient(sc.Ingredient, sc.TotalQuantity);
                     newShoppingListIngredient = new ShoppingListIngredient(newInventoryIngredient);
                 }
 
-                ShoppingList.Add(newShoppingListIngredient);
+                if (newShoppingListIngredient != null)
+                {
+                    ShoppingList.Add(newShoppingListIngredient);
+                }
             }
         }
 

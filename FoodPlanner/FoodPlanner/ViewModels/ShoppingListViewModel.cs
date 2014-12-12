@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using FoodPlanner.Models;
 using MvvmFoundation.Wpf;
+using System.ComponentModel;
 
 namespace FoodPlanner.ViewModels
 {
@@ -33,6 +34,13 @@ namespace FoodPlanner.ViewModels
         {
             ShoppingList = new ObservableCollection<ShoppingListIngredient>();
             AssembleShoppingList();
+
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ShoppingList);
+
+            // Sort Description
+            SortDescription SortByName = new SortDescription("InventoryIngredient.Ingredient.Name", ListSortDirection.Ascending);
+
+            view.SortDescriptions.Add(SortByName);
         }
 
         #region Properties & Commands

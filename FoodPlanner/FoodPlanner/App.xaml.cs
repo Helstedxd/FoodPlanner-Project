@@ -50,7 +50,7 @@ namespace FoodPlanner
 
         private void removePassedMeals()
         {
-            DateTime today = DateTime.Now;
+            DateTime today = DateTime.Now.AddDays(-1);
 
             List<Meal> meals = (from m in db.Meals
                                 where m.UserID == CurrentUser.ID && m.IsActive && m.Date < today

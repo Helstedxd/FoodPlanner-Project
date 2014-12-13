@@ -36,16 +36,16 @@
         </Button>
 
         <StackPanel Grid.Column="0" HorizontalAlignment="Right" Orientation="Horizontal" Visibility="{Binding isMealSet}" Margin="0">
-            <xctk:DecimalUpDown Value="{Binding getMealParticipants, Mode=TwoWay}" Height="{Binding ActualHeight, ElementName=TopBarButton}" Width="50" Margin="0,2,0,5" />
+            <xctk:DecimalUpDown Minimum="0" Value="{Binding Meal.Participants, Mode=TwoWay}" Height="{Binding ActualHeight, ElementName=TopBarButton}" Width="50" Margin="0,2,0,5" />
         </StackPanel>
 
         <StackPanel Grid.Column="2" Orientation="Horizontal">
 
             <Label Content="{Binding SuccesText}" Foreground="{Binding SuccesTextColour}"/>
-            <DatePicker SelectedDate="{Binding activeDate, Mode=TwoWay}" Height="{Binding ActualHeight, ElementName=TopBarButton}" Margin="0,2"/>
-            <Button Command="{Binding StartDialogCommand}" Style="{StaticResource ButtonIconTemplate}" HorizontalAlignment="Right" Height="{Binding ActualHeight, ElementName=TopBarButton}" Width="{Binding ActualHeight, ElementName=TopBarButton}" Margin="2,3,2,1">
+            <DatePicker SelectedDate="{Binding ActiveDate, Mode=TwoWay}" Height="{Binding ActualHeight, ElementName=TopBarButton}" Margin="0,2"/>
+            <Button Command="{Binding AddUpdateMealCommand}" Style="{StaticResource ButtonIconTemplate}" HorizontalAlignment="Right" Height="{Binding ActualHeight, ElementName=TopBarButton}" Width="{Binding ActualHeight, ElementName=TopBarButton}" Margin="2,3,2,1">
                 <Button.Background>
-                    <ImageBrush ImageSource="{Binding getImage}" Stretch="Uniform"/>
+                    <ImageBrush ImageSource="{Binding Image}" Stretch="Uniform"/>
                 </Button.Background>
             </Button>
             <Button Command="{Binding RemoveMealCommand}" Style="{StaticResource ButtonIconTemplate}" HorizontalAlignment="Right" Height="{Binding ActualHeight, ElementName=TopBarButton}" Width="{Binding ActualHeight, ElementName=TopBarButton}" Margin="2,3,2,1" Visibility="{Binding isMealSet}">
@@ -68,7 +68,7 @@
             <TextBlock Text="{Binding Recipe.RecipesPreparation.Preparation}" TextWrapping="Wrap"/>
         </ScrollViewer>
 
-        <ListBox x:Name="IngredientListbox" ItemsSource="{Binding getRecipeIngredients}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Row="3" Width="100" Background="{StaticResource BackgroundColour}" BorderThickness="0">
+        <ListBox x:Name="IngredientListbox" ItemsSource="{Binding RecipeIngredients}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Row="3" Width="100" Background="{StaticResource BackgroundColour}" BorderThickness="0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>

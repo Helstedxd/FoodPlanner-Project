@@ -31,7 +31,8 @@ namespace FoodPlanner.ViewModels
 
         public MealPlanViewModel()
         {
-            MondayMeals = new ObservableCollection<Meal>();//ObservableCollection allows for updates in the view
+            // ObservableCollection allows for updates in the view
+            MondayMeals = new ObservableCollection<Meal>();
             TuesdayMeals = new ObservableCollection<Meal>();
             WednesdayMeals = new ObservableCollection<Meal>();
             ThursdayMeals = new ObservableCollection<Meal>();
@@ -40,10 +41,6 @@ namespace FoodPlanner.ViewModels
             SundayMeals = new ObservableCollection<Meal>();
 
             ActiveDate = DateTime.Now;
-           /* if (ActiveDate.DayOfWeek == DayOfWeek.Sunday) //This is done in order to get the GetDdayDifference method to make sense when it's Sunday
-            {
-                ActiveDate = ActiveDate.AddDays(-1);
-            }*/
 
             ShowMeals();
         }
@@ -64,7 +61,7 @@ namespace FoodPlanner.ViewModels
                 {
                     _mondayDate = _mondayDate.AddDays(-1);
                 }
-                
+
                 // Update the properties that depend on ActiveDate or Monday
                 RaisePropertyChanged("Week");
                 RaisePropertyChanged("MondayDate");
@@ -78,7 +75,7 @@ namespace FoodPlanner.ViewModels
         }
 
         #region WeekDay Dates
-        
+
         // Monday is used as reference for all dates
         public DateTime MondayDate
         {
@@ -156,6 +153,7 @@ namespace FoodPlanner.ViewModels
 
         #endregion
 
+        // Gets the week number of ActiveDate
         public int Week
         {
             get
@@ -174,18 +172,18 @@ namespace FoodPlanner.ViewModels
         public void NextWeek()
         {
             ActiveDate = ActiveDate.AddDays(7);
-            FlushMeals();
+            ClearMeals();
             ShowMeals();
         }
 
         public void PreviousWeek()
         {
             ActiveDate = ActiveDate.AddDays(-7);
-            FlushMeals();
+            ClearMeals();
             ShowMeals();
         }
 
-        private void FlushMeals()
+        private void ClearMeals()
         {
             MondayMeals.Clear();
             TuesdayMeals.Clear();
@@ -198,6 +196,7 @@ namespace FoodPlanner.ViewModels
 
         private void ShowMeals()
         {
+            //TODO: We could also just query the individual days in the property getter.
             List<Meal> mealList = App.db.Meals.Where(m => m.Date >= MondayDate.Date && m.Date <= SundayDate.Date).ToList();
 
             // List of day-collections indexed according to the DayOfWeek enum
@@ -248,132 +247,5 @@ namespace FoodPlanner.ViewModels
         }
 
         #endregion
-
-        /*        
-          
-        private bool IsMatchDateMeal(Meal mealToCompare)
-        {
-            bool match = false;
-            if (mealToCompare.Date == ActiveDate.AddDays(-GetDdayDifference(mealToCompare.Date.DayOfWeek)).Date)
-            {
-                match = true;
-            }
-            return match;
-        } 
-         
-        private string getStringDay(int day)
-        {
-            string stringDay;
-            switch (day)
-            {
-                case 1:
-                    stringDay = "Monday";
-                    break;
-                case 2:
-                    stringDay = "Tuesday";
-                    break;
-                case 3:
-                    stringDay = "Wednesday";
-                    break;
-                case 4:
-                    stringDay = "Thursday";
-                    break;
-                case 5:
-                    stringDay = "Friday";
-                    break;
-                case 6:
-                    stringDay = "Saturday";
-                    break;
-                case 7:
-                    stringDay = "Sunday";
-                    break;
-                default:
-                    stringDay = "Error, out of reach";
-                    break;
-            }
-            return stringDay;
-        }
-
-        public int getWeeksInYear(int year)
-        {
-            DateTimeFormatInfo format = DateTimeFormatInfo.CurrentInfo;
-            DateTime weekYear = new DateTime(year, 12, 31);
-            System.Globalization.Calendar calendar = format.Calendar;
-            return calendar.GetWeekOfYear(weekYear, format.CalendarWeekRule, format.FirstDayOfWeek);
-        }
-        private int newWeek(DateTime moment, bool goesUp)
-        {
-            // DateTime moment = new DateTime(DateTime.Now.Year, 12, 27);
-
-            if (goesUp)
-            {
-                moment = moment.AddDays(7);
-            }
-
-            else
-            {
-                moment = moment.AddDays(-7);
-            }
-            System.Globalization.Calendar calendar = CultureInfo.CurrentCulture.Calendar;
-            System.Globalization.CalendarWeekRule rule = CalendarWeekRule.FirstFourDayWeek;
-            int weekNumber = calendar.GetWeekOfYear(moment, rule, moment.DayOfWeek);
-            return weekNumber;
-        }
-        private void updateArrows(Button butUp, Button butDown)
-        {
-            System.Globalization.Calendar calendar = CultureInfo.CurrentCulture.Calendar;
-            DateTime moment = DateTime.Now;
-            System.Globalization.CalendarWeekRule rule = CalendarWeekRule.FirstFourDayWeek;
-            int weekNumber = calendar.GetWeekOfYear(moment, rule, moment.DayOfWeek);
-            bool goUp;
-
-            List<Button> buttonList = new List<Button> { butUp, butDown };
-            if (buttonList[0].IsFocused)
-            {
-                goUp = true;
-            }
-            else
-            {
-                goUp = false;
-            }
-
-            string upDate = buttonList[0].Content.ToString(), downDate = buttonList[1].Content.ToString();//text from butDown and butUp
-            string[] upWeek = upDate.Split(' '), downWeek = downDate.Split(' '); //Splits the sting into '^' 'week:' 'number'
-
-            int futureDiff = Convert.ToUInt16(upWeek[2]) - weekNumber;
-            int pastDiff = weekNumber - Convert.ToUInt16(downWeek[2]);
-
-            DateTime futureWeek = DateTime.Now.AddDays(7 * futureDiff);
-            DateTime pastWeek = DateTime.Now.AddDays(-7 * pastDiff);
-
-            if (goUp)
-            {
-                butUp.Content = "^ week: " + (newWeek(futureWeek, true)).ToString(); //gets an updated 'number' and updates the text on the butUp
-                butDown.Content = "v week: " + (newWeek(pastWeek, true)).ToString(); //gets an updated 'number' and updates the text on the butDown                
-            }
-            else if (!goUp)
-            {
-                butUp.Content = "^ week: " + (newWeek(futureWeek, false)).ToString(); //gets an updated 'number' and updates the text on the butUp
-                butDown.Content = "v week: " + (newWeek(pastWeek, false)).ToString(); //gets an updated 'number' and updates the text on the butDown
-            }
-        }
-        private string updateDate(string date, bool goesUp) 
-        { 
-            string[] split = date.Split('.'); //date 23.02.2014
-            string result;
-            int day = Convert.ToInt16(split[0]), month = Convert.ToInt16(split[1]), year = Convert.ToInt16(split[2]);
-            DateTime moment = new DateTime(year, month, day);
-
-            if (goesUp)
-            {
-                moment = moment.AddDays(7);
-            }
-            else
-            {
-                moment = moment.AddDays(-7);
-            }
-            return result = getStringDay(Convert.ToInt16(moment.DayOfWeek)) + "\n" + moment.Day + "." + moment.Month;
-        }
-        */
     }
 }

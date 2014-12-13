@@ -14,24 +14,28 @@ namespace FoodPlanner.ViewModels
 {
     public class RecipeViewModel : ObservableObject
     {
+
+        #region Fields
+
         private DateTime _activeDate;
         private Meal _meal = null;
         private string _succesText = "", afterString;
-        private System.Windows.Media.Brush _succesTextColour = System.Windows.Media.Brushes.Black;
-        private ICommand _startDialogCommand;
+        private Brush _succesTextColour = Brushes.Black;
         private ICommand _removeMealCommand;
+
+        #endregion
 
         public Recipe Recipe { get; set; }
         public RecipeViewModel(Recipe recipe)
         {
-            activeDate = DateTime.Now;
+            ActiveDate = DateTime.Now;
             this.Recipe = recipe;
         }
 
         public RecipeViewModel(Meal meal)
         {
             Meal = meal;
-            activeDate = meal.Date;
+            ActiveDate = meal.Date;
             this.Recipe = meal.Recipe;
         }
 
@@ -47,14 +51,13 @@ namespace FoodPlanner.ViewModels
             {
                 _meal = value;
                 RaisePropertyChanged("Meal");
-                RaisePropertyChanged("getMealParticipants");
-                RaisePropertyChanged("getImage");
+                RaisePropertyChanged("Image");
                 RaisePropertyChanged("isMealSet");
-                RaisePropertyChanged("StartDialogCommand");
+                RaisePropertyChanged("AddUpdateMealCommand");
             }
         }
 
-        public List<RecipeIngredient> getRecipeIngredients
+        public List<RecipeIngredient> RecipeIngredients
         {
             get
             {
@@ -62,7 +65,14 @@ namespace FoodPlanner.ViewModels
                 {
                     List<RecipeIngredient> returnList = new List<RecipeIngredient>();
 
-                    Recipe.RecipeIngredients.ToList().ForEach(ri => returnList.Add(new RecipeIngredient() { Ingredient = ri.Ingredient, Recipe = ri.Recipe, Quantity = Math.Round(ri.Quantity * ((decimal)_meal.Participants / (decimal)Recipe.Persons), 2), IngredientID = ri.IngredientID, RecipeID = ri.RecipeID }));
+                    Recipe.RecipeIngredients.ToList().ForEach(ri => returnList.Add(new RecipeIngredient()
+                    {
+                        Ingredient = ri.Ingredient,
+                        Recipe = ri.Recipe,
+                        Quantity = Math.Round(ri.Quantity * ((decimal)_meal.Participants / (decimal)Recipe.Persons), 2),
+                        IngredientID = ri.IngredientID,
+                        RecipeID = ri.RecipeID
+                    }));
 
                     return returnList;
                 }
@@ -70,26 +80,7 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-        public int getMealParticipants
-        {
-            get
-            {
-                if (Meal != null)
-                {
-                    return Meal.Participants;
-                }
-                return 0;
-            }
-            set
-            {
-                if (value > 0)
-                {
-                    Meal.Participants = value;
-                }
-            }
-        }
-
-        public string getImage
+        public string Image
         {
             get
             {
@@ -113,7 +104,7 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-        public DateTime activeDate
+        public DateTime ActiveDate
         {
             get
             {
@@ -133,7 +124,7 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-        public System.Windows.Media.Brush SuccesTextColour
+        public Brush SuccesTextColour
         {
             get
             {
@@ -152,14 +143,14 @@ namespace FoodPlanner.ViewModels
             Meal newMeal = new Meal()
             {
                 Recipe = this.Recipe,
-                Date = activeDate,
+                Date = ActiveDate,
                 Participants = App.CurrentUser.PersonsInHouseHold,
                 IsActive = true
             };
 
             bool mealDublicate = false;
-            DateTime morning = new DateTime(activeDate.Year, activeDate.Month, activeDate.Day, 0, 0, 0);
-            DateTime night = new DateTime(activeDate.Year, activeDate.Month, activeDate.Day, 23, 59, 59);
+            DateTime morning = new DateTime(ActiveDate.Year, ActiveDate.Month, ActiveDate.Day, 0, 0, 0);
+            DateTime night = new DateTime(ActiveDate.Year, ActiveDate.Month, ActiveDate.Day, 23, 59, 59);
             List<Meal> mealList = App.db.Meals.Where(m => m.Date >= morning & m.Date <= night).ToList();
             foreach (Meal m in mealList)
             {
@@ -187,9 +178,9 @@ namespace FoodPlanner.ViewModels
             RaisePropertyChanged("SuccesTextColour");
         }
 
-        public void updateMeal()
+        private void UpdateMeal()
         {
-            Meal.Date = activeDate;
+            Meal.Date = ActiveDate;
             /*
             if (activeDate < DateTime.Now)
             {
@@ -202,7 +193,7 @@ namespace FoodPlanner.ViewModels
             */
 
             afterString = "Meal updated";
-            SuccesTextColour = _succesTextColour = System.Windows.Media.Brushes.Black;
+            SuccesTextColour = Brushes.Black;
             App.db.SaveChanges();
 
             RaisePropertyChanged("SuccesText");
@@ -222,26 +213,18 @@ namespace FoodPlanner.ViewModels
         #endregion
 
         #region Commands
-        public ICommand StartDialogCommand
+        public ICommand AddUpdateMealCommand
         {
             get
             {
+                //TODO: Maybe save command in field.
                 if (Meal == null)
                 {
-                    // Command can change..
-                    //if (_startDialogCommand == null)
-                   // {
-                        _startDialogCommand = new RelayCommand(() => AddMeal());
-                   // }
-                    return _startDialogCommand;
+                    return new RelayCommand(() => AddMeal());
                 }
                 else
                 {
-                   // if (_startDialogCommand == null)
-                   // {
-                        _startDialogCommand = new RelayCommand(() => updateMeal());
-                   //}
-                    return _startDialogCommand;
+                    return new RelayCommand(() => UpdateMeal());
                 }
             }
         }

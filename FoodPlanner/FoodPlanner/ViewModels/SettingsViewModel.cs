@@ -182,14 +182,15 @@ namespace FoodPlanner.ViewModels
         {
             get
             {
-                if (_selectedStartUpPage.Equals(default(KeyValuePair<string, Uri>)))
+                if (_selectedStartUpPage.Key == null)
                 {
-                    // Find the start-up page from settings.
+                    // Find the start-up page in settings.
                     foreach (KeyValuePair<string, Uri> page in PageList)
                     {
                         if (Properties.Settings.Default.StartPage == page.Value.ToString())
                         {
                             _selectedStartUpPage = page;
+                            break;
                         }
                     }
                 }

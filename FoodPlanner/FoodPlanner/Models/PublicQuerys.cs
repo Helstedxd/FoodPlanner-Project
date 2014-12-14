@@ -13,7 +13,7 @@ namespace FoodPlanner.Models
         public PublicQuerys() { }
         #endregion
 
-        #region Fields
+            #region Fields
         //A query that if multiple of the same ingredient is found in the users inventory, combines the sum into a single item, and combine the quantities onto one.
         public IQueryable<inventoryListGroupedByQuantity> inventoryIQueryable = from ii in App.db.InventoryIngredients
                                                                                 join i in App.db.Ingredients on ii.IngredientID equals i.ID
@@ -48,7 +48,7 @@ namespace FoodPlanner.Models
                                                                          UserID = iig.FirstOrDefault().UserID
                                                                      }).ToList();
 
-
+        //A query that get all the ingredients from earlier meals, and group them, where the ingredientCount is the numbers of times the specfic ingredient has been used.
         public List<LastMeal> ingredientsFromLastMeals = (from meals in App.db.Meals
                                                           join ri in App.db.RecipeIngredients on meals.RecipeID equals ri.RecipeID
                                                           join i in App.db.Ingredients on ri.IngredientID equals i.ID
@@ -60,12 +60,14 @@ namespace FoodPlanner.Models
                                                               ingredientCount = igrouped.Count()
                                                           }).ToList();
 
+        //A query that gets a list recipes where a blacklisted ingredient is used.
         public List<int> blackList = (from bl in App.db.BlacklistIngredients
                                       join ri in App.db.RecipeIngredients on bl.IngredientID equals ri.IngredientID
                                       where bl.UserID == App.CurrentUser.ID
                                       group ri by ri.RecipeID into ri
                                       select ri.FirstOrDefault().RecipeID).ToList();
 
+        //get a list of graylisted ingredients.
         public List<GrayList> grayList = (from gl in App.db.GraylistIngredients
                                           join i in App.db.Ingredients on gl.IngredientID equals i.ID
                                           where gl.UserID == App.CurrentUser.ID

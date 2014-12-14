@@ -145,13 +145,10 @@ namespace FoodPlanner.ViewModels
             {
                 ShoppingListIngredient newShoppingListIngredient = null;
 
-                if (userInventory.Where(ui => ui.Ingredient == sc.Ingredient).Count() != 0)
+                if (userInventory.Where(ui => ui.Ingredient == sc.Ingredient).Count() != 0 && userInventory.Where(t => t.Ingredient == sc.Ingredient).Single().TotalQuantity > sc.TotalQuantity && (sc.TotalQuantity - userInventory.Where(t => t.Ingredient == sc.Ingredient).Single().TotalQuantity) >= 0)
                 {
-                    if (userInventory.Where(t => t.Ingredient == sc.Ingredient).Single().TotalQuantity > sc.TotalQuantity && (sc.TotalQuantity - userInventory.Where(t => t.Ingredient == sc.Ingredient).Single().TotalQuantity) >= 0)
-                    {
-                        InventoryIngredient newInventoryIngredient = new InventoryIngredient(sc.Ingredient, (sc.TotalQuantity - userInventory.Where(t => t.Ingredient == sc.Ingredient).Single().TotalQuantity));
-                        newShoppingListIngredient = new ShoppingListIngredient(newInventoryIngredient);
-                    }
+                    InventoryIngredient newInventoryIngredient = new InventoryIngredient(sc.Ingredient, (sc.TotalQuantity - userInventory.Where(t => t.Ingredient == sc.Ingredient).Single().TotalQuantity));
+                    newShoppingListIngredient = new ShoppingListIngredient(newInventoryIngredient);
                 }
                 else
                 {

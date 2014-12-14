@@ -9,8 +9,12 @@ namespace FoodPlanner.Models
 {
     class PublicQuerys
     {
+        #region Constructor
         public PublicQuerys() { }
+        #endregion
 
+        #region Fields
+        //A query that if multiple of the same ingredient is found in the users inventory, combines the sum into a single item, and combine the quantities onto one.
         public IQueryable<inventoryListGroupedByQuantity> inventoryIQueryable = from ii in App.db.InventoryIngredients
                                                                                 join i in App.db.Ingredients on ii.IngredientID equals i.ID
                                                                                 where ii.UserID == App.CurrentUser.ID
@@ -27,6 +31,7 @@ namespace FoodPlanner.Models
                                                                                     UserID = iig.FirstOrDefault().UserID
                                                                                 };
 
+        //Same as last query execpt it's a list not a IQueryable.
         public List<inventoryListGroupedByQuantity> inventoryList = (from ii in App.db.InventoryIngredients
                                                                      join i in App.db.Ingredients on ii.IngredientID equals i.ID
                                                                      where ii.UserID == App.CurrentUser.ID
@@ -42,6 +47,7 @@ namespace FoodPlanner.Models
                                                                          User = iig.FirstOrDefault().User,
                                                                          UserID = iig.FirstOrDefault().UserID
                                                                      }).ToList();
+
 
         public List<LastMeal> ingredientsFromLastMeals = (from meals in App.db.Meals
                                                           join ri in App.db.RecipeIngredients on meals.RecipeID equals ri.RecipeID
@@ -69,7 +75,9 @@ namespace FoodPlanner.Models
                                               ingredient = gl.FirstOrDefault().Ingredient,
                                               rating = (gl.Sum(r => r.IngredientValue) / gl.Count())
                                           }).ToList();
+        #endregion
 
+        #region Methods
         public IQueryable<IGrouping<int, Result>> search(List<int> recipeIDs)
         {
             IQueryable<IGrouping<int, Result>> recipeIngredients = from ri in App.db.RecipeIngredients
@@ -151,5 +159,6 @@ namespace FoodPlanner.Models
 
             return new ObservableCollection<SearchResults>(result.OrderByDescending(res => res.percentageFullMatch).ThenByDescending(res => res.percentagePartialMatch).ThenByDescending(res => res.getRating).ThenByDescending(res => res.prevIngredients).ThenByDescending(res => res.recipe.Title));
         }
+        #endregion
     }
 }

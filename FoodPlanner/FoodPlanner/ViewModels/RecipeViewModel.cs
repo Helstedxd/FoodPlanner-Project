@@ -181,8 +181,7 @@ namespace FoodPlanner.ViewModels
         private void UpdateMeal()
         {
             Meal.Date = ActiveDate;
-            /*
-            if (activeDate < DateTime.Now)
+            if (_activeDate < DateTime.Now)
             {
                 Meal.IsActive = false;
             }
@@ -190,7 +189,6 @@ namespace FoodPlanner.ViewModels
             {
                 Meal.IsActive = true;
             }
-            */
 
             afterString = "Meal updated";
             SuccesTextColour = Brushes.Black;

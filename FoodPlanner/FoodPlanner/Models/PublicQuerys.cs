@@ -10,10 +10,11 @@ namespace FoodPlanner.Models
     class PublicQuerys
     {
         #region Constructor
+        //Entity Framework only supports empty constructors
         public PublicQuerys() { }
         #endregion
 
-            #region Fields
+        #region Fields
         //A query that if multiple of the same ingredient is found in the users inventory, combines the sum into a single item, and combine the quantities onto one.
         public IQueryable<inventoryListGroupedByQuantity> inventoryIQueryable = from ii in App.db.InventoryIngredients
                                                                                 join i in App.db.Ingredients on ii.IngredientID equals i.ID
@@ -82,6 +83,7 @@ namespace FoodPlanner.Models
         #region Methods
         public IQueryable<IGrouping<int, Result>> search(List<int> recipeIDs)
         {
+            //IQueryable that finds all the ingredients that belong to the found recipesm and how much of the found ingredient.
             IQueryable<IGrouping<int, Result>> recipeIngredients = from ri in App.db.RecipeIngredients
                                                                    join i in App.db.Ingredients on ri.IngredientID equals i.ID
                                                                    join r in App.db.Recipes on ri.RecipeID equals r.ID
@@ -98,52 +100,67 @@ namespace FoodPlanner.Models
 
         public ObservableCollection<SearchResults> addValuesToSearch(IQueryable<IGrouping<int, Result>> userInput, List<string> searchKeywords = null)
         {
+            //Create ObservableCollection which allows for updates in the view.
             ObservableCollection<SearchResults> result = new ObservableCollection<SearchResults>();
 
+            //Traverse through all found ingredients and add them to the recipe
             foreach (IGrouping<int, Result> ri in userInput)
             {
                 Recipe recipe = ri.FirstOrDefault().recipe;
 
+                //initialize the searchResult that is to be shown
                 SearchResults searchResult = new SearchResults(recipe);
 
+                //Make sure that searchKeywords is set, if null assume that it's a non-search that need to have added value.
                 if (searchKeywords != null)
                 {
+                    //check that the keyword is found in the recipe, it's case sensitive
                     if (searchKeywords.Any(s => recipe.Title.ToLower().Contains(s.ToLower())))
                     {
                         searchResult.keyWordMatch++;
                     }
                 }
 
-
+                //Traverse through all results which is ingredients
                 foreach (Result res in ri)
                 {
+                    //Add the ingredient to the recipe
                     searchResult.addIngredient(res.ingredient);
 
+                    //Check if the ingredient is found in the users' inventory
                     if (inventoryList.Where(il => il.IngredientID == res.ingredient.ID).Count() != 0)
                     {
+                        //if found check if it's a partial match or full match
+                        //full match means that all of the ingredient is found in the inventory
                         if (inventoryList.Where(il => il.IngredientID == res.ingredient.ID).First().Quantity >= res.quantity)
                         {
                             searchResult.fullMatch++;
                         }
                         else
                         {
+                            //if only partial match, and the partial match percentage to the partialMatch
                             searchResult.partialMatch += inventoryList.Where(il => il.IngredientID == res.ingredient.ID).First().Quantity / res.quantity;
                         }
                     }
 
+                    //Make sure that searchKeywords is set, if null assume that it's a non-search that need to have added value.
                     if (searchKeywords != null)
                     {
+                        //check that the keyword is found in the ingredient, it's case sensitive
                         if (searchKeywords.Any(s => res.ingredient.Name.ToLower().Contains(s.ToLower())))
                         {
                             searchResult.keyWordMatch++;
                         }
                     }
 
+                    //Check if the ingredient is used in previous meals.
                     if (ingredientsFromLastMeals.Where(iflm => iflm.ingredientID == res.ingredient.ID).Count() != 0)
                     {
+                        //if found add the amount of times the ingredient has been used to the prevIngredients
                         searchResult.prevIngredients += ingredientsFromLastMeals.Where(iflm => iflm.ingredientID == res.ingredient.ID).Single().ingredientCount;
                     }
 
+                    //Check if the ingredient is found in the gray list, if it is add the value to setRating
                     if (grayList.Where(gl => res.ingredient.ID == gl.ingredient.ID).Count() != 0)
                     {
                         searchResult.setRating = grayList.Where(gl => res.ingredient.ID == gl.ingredient.ID).SingleOrDefault().rating;
@@ -155,10 +172,11 @@ namespace FoodPlanner.Models
                     }
                 }
 
+                //add the SearchResults to the ObservableCollection of SearchResults
                 result.Add(searchResult);
             }
 
-
+            //return the ObservableCollection ordered.
             return new ObservableCollection<SearchResults>(result.OrderByDescending(res => res.percentageFullMatch).ThenByDescending(res => res.percentagePartialMatch).ThenByDescending(res => res.getRating).ThenByDescending(res => res.prevIngredients).ThenByDescending(res => res.recipe.Title));
         }
         #endregion

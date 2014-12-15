@@ -22,28 +22,24 @@ namespace FoodPlanner
 
         private void ApplicationStartup(object sender, StartupEventArgs args)
         {
+            // Create new context with entity framework
             App.db = new FoodContext();
 
-            //try
-            // {
+            // Just select the first user, since we do not really support log-in yet.
             App.CurrentUser = App.db.Users.First();
-            // }
-            // catch (EntityException ex)
-            // {
-            //TODO: Handle
-            // MessageBox.Show(ex.Message);
-            //}
 
+            // Create the main window and tie the frame to the Navigator.
             MainWindow mainWindow = new MainWindow();
             Navigator.NavigationService = mainWindow.Frame.NavigationService;
-
             Navigator.NavigationService.Source = new Uri(FoodPlanner.Properties.Settings.Default.StartPage, UriKind.Relative);
+           
             removePassedMeals();
             mainWindow.Show();
         }
 
         private void ApplicationExit(object sender, ExitEventArgs args)
         {
+            // Save changes to database and close the connection
             App.db.SaveChanges();
             App.db.Dispose();
         }

@@ -17,10 +17,9 @@ namespace FoodPlanner.ViewModels
 
         #region Fields
 
+        private string _statusText;
         private DateTime _activeDate;
         private Meal _meal = null;
-        private string _succesText = "", afterString;
-        private Brush _succesTextColour = Brushes.Black;
         private ICommand _removeMealCommand;
 
         #endregion
@@ -29,14 +28,14 @@ namespace FoodPlanner.ViewModels
         public RecipeViewModel(Recipe recipe)
         {
             ActiveDate = DateTime.Now;
-            this.Recipe = recipe;
+            Recipe = recipe;
         }
 
         public RecipeViewModel(Meal meal)
         {
             Meal = meal;
             ActiveDate = meal.Date;
-            this.Recipe = meal.Recipe;
+            Recipe = meal.Recipe;
         }
 
         #region Properties
@@ -51,7 +50,7 @@ namespace FoodPlanner.ViewModels
             {
                 _meal = value;
                 RaisePropertyChanged("Meal");
-                RaisePropertyChanged("Image");
+                RaisePropertyChanged("AddUpdateImage");
                 RaisePropertyChanged("isMealSet");
                 RaisePropertyChanged("AddUpdateMealCommand");
             }
@@ -65,10 +64,12 @@ namespace FoodPlanner.ViewModels
                 {
                     List<RecipeIngredient> returnList = new List<RecipeIngredient>();
 
+                    // Scale the recipe ingredients quantity according to meal participants
                     Recipe.RecipeIngredients.ToList().ForEach(ri => returnList.Add(new RecipeIngredient()
                     {
                         Ingredient = ri.Ingredient,
                         Recipe = ri.Recipe,
+                        //TODO: we should probably not round this, but display 2 decimals in xaml.
                         Quantity = Math.Round(ri.Quantity * ((decimal)_meal.Participants / (decimal)Recipe.Persons), 2),
                         IngredientID = ri.IngredientID,
                         RecipeID = ri.RecipeID
@@ -80,7 +81,7 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-        public string Image
+        public string AddUpdateImage
         {
             get
             {
@@ -106,35 +107,16 @@ namespace FoodPlanner.ViewModels
 
         public DateTime ActiveDate
         {
-            get
-            {
-                return _activeDate;
-            }
-            set
-            {
-                _activeDate = value;
-            }
+            get { return _activeDate; }
+            set { _activeDate = value; }
         }
 
-        public string SuccesText
+        public string StatusText
         {
-            get
-            {
-                return _succesText + afterString;
-            }
+            get { return _statusText; }
+            set { _statusText = value; RaisePropertyChanged("StatusText"); }
         }
 
-        public Brush SuccesTextColour
-        {
-            get
-            {
-                return _succesTextColour;
-            }
-            set
-            {
-                _succesTextColour = value;
-            }
-        }
         #endregion
 
         #region Methods
@@ -148,34 +130,9 @@ namespace FoodPlanner.ViewModels
                 IsActive = true
             };
 
-            bool mealDublicate = false;
-            DateTime morning = new DateTime(ActiveDate.Year, ActiveDate.Month, ActiveDate.Day, 0, 0, 0);
-            DateTime night = new DateTime(ActiveDate.Year, ActiveDate.Month, ActiveDate.Day, 23, 59, 59);
-            List<Meal> mealList = App.db.Meals.Where(m => m.Date >= morning & m.Date <= night).ToList();
-            foreach (Meal m in mealList)
-            {
-                if (m.Recipe == newMeal.Recipe)
-                {
-                    mealDublicate = true;
-                }
-            }
-
-            if (!mealDublicate)
-            {
-                App.CurrentUser.Meals.Add(newMeal);
-                App.db.SaveChanges();
-                Meal = newMeal;
-                //TODO: fuck this
-                //afterString = "Meal added";
-                //SuccesTextColour = _succesTextColour = System.Windows.Media.Brushes.Black;
-            }
-            else
-            {
-                afterString = "Meal was not added";
-                _succesTextColour = System.Windows.Media.Brushes.Red;
-            }
-            RaisePropertyChanged("SuccesText");
-            RaisePropertyChanged("SuccesTextColour");
+            App.CurrentUser.Meals.Add(newMeal);
+            App.db.SaveChanges();
+            Meal = newMeal;
         }
 
         private void UpdateMeal()
@@ -190,12 +147,9 @@ namespace FoodPlanner.ViewModels
                 Meal.IsActive = true;
             }
 
-            afterString = "Meal updated";
-            SuccesTextColour = Brushes.Black;
             App.db.SaveChanges();
-
-            RaisePropertyChanged("SuccesText");
-            RaisePropertyChanged("SuccesTextColour");
+            StatusText = "Meal updated";
+            RaisePropertyChanged("RecipeIngredients");
         }
 
         private void RemoveMeal()

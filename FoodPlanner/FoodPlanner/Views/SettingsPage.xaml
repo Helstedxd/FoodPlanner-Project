@@ -135,7 +135,7 @@
                     <TextBlock Text="{Binding ElementName=ratingSlider, Path=Value}"  FontSize="13" FontStyle="Oblique"/>
                 </StackPanel>
                 <Slider Name="ratingSlider"  Grid.Row="5" Minimum="0" Maximum="100" Value="{Binding IngredientValue, Mode=TwoWay}" SelectionStart="1" Grid.ColumnSpan="3"/>
-                <Label Content="{Binding Path=RatedDublicate}" Grid.Row="6" Grid.Column="1" Foreground="Red"/>
+                <Label Content="{Binding Path=RatedDublicateResult}" Grid.Row="6" Grid.Column="1" Foreground="Red"/>
                 <Button Style="{StaticResource ButtonIconTemplate}" Command="{Binding AddNewGreydIngredientCommand}" Grid.Row="6" Grid.Column="2">
                     <Button.Background>
                         <ImageBrush ImageSource="../Images/plusIcon.png" Stretch="Uniform"/>

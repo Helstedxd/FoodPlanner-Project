@@ -31,6 +31,8 @@ namespace FoodPlanner
 
         #endregion
 
+        private Navigator() { }
+
         #region Properties & Commands
 
         public static List<KeyValuePair<string, Uri>> Pages
@@ -184,13 +186,8 @@ namespace FoodPlanner
             }
             else
             {
-                //TODO: should this be handled?
                 Console.WriteLine("Navigation Service not available!");
             }
-        }
-        public static void GoBack()
-        {
-            NavigationService.GoBack();
         }
 
         private static void NavigationService_Navigated(object sender, NavigationEventArgs e)

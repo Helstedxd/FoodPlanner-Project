@@ -36,16 +36,16 @@
         </Button>
 
         <StackPanel Grid.Column="0" HorizontalAlignment="Right" Orientation="Horizontal" Visibility="{Binding isMealSet}" Margin="0">
-            <xctk:DecimalUpDown Minimum="0" Value="{Binding Meal.Participants, Mode=TwoWay}" Height="{Binding ActualHeight, ElementName=TopBarButton}" Width="50" Margin="0,2,0,5" />
+            <xctk:DecimalUpDown Minimum="1" Value="{Binding Meal.Participants, Mode=TwoWay}" Height="{Binding ActualHeight, ElementName=TopBarButton}" Width="50" Margin="0,2,0,5" />
         </StackPanel>
 
         <StackPanel Grid.Column="2" Orientation="Horizontal">
 
-            <Label Content="{Binding SuccesText}" Foreground="{Binding SuccesTextColour}"/>
+            <Label Content="{Binding StatusText}"/>
             <DatePicker SelectedDate="{Binding ActiveDate, Mode=TwoWay}" Height="{Binding ActualHeight, ElementName=TopBarButton}" Margin="0,2"/>
             <Button Command="{Binding AddUpdateMealCommand}" Style="{StaticResource ButtonIconTemplate}" HorizontalAlignment="Right" Height="{Binding ActualHeight, ElementName=TopBarButton}" Width="{Binding ActualHeight, ElementName=TopBarButton}" Margin="2,3,2,1">
                 <Button.Background>
-                    <ImageBrush ImageSource="{Binding Image}" Stretch="Uniform"/>
+                    <ImageBrush ImageSource="{Binding AddUpdateImage}" Stretch="Uniform"/>
                 </Button.Background>
             </Button>
             <Button Command="{Binding RemoveMealCommand}" Style="{StaticResource ButtonIconTemplate}" HorizontalAlignment="Right" Height="{Binding ActualHeight, ElementName=TopBarButton}" Width="{Binding ActualHeight, ElementName=TopBarButton}" Margin="2,3,2,1" Visibility="{Binding isMealSet}">

@@ -132,8 +132,10 @@ namespace FoodPlanner.UserControls
                 _lastSearchText = SearchText;
                 if (SearchText == "")
                 {
-                    //QueriedIngredients.Clear();
                     QueriedIngredients = new List<Ingredient>();
+                    //QueriedIngredients.Clear();
+                    //RaisePropertyChanged("FoundIngredients");
+                    //RaisePropertyChanged("AutoCompleteListVisibility");
                 }
                 else
                 {
@@ -150,7 +152,6 @@ namespace FoodPlanner.UserControls
         private void PopulateListWithIngredientsFromDatabase()
         {
             //TODO: this function should run asynchronously - and not block user interaction.
-            // should maybe be an event with callback to remove propertychanged dependency
             string originalSearchText = SearchText;
 
             var blacklistedIngredients = App.db.BlacklistIngredients

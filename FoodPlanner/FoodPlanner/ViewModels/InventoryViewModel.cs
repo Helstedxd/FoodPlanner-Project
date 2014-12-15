@@ -19,8 +19,8 @@ namespace FoodPlanner.ViewModels
 
         #region Fields
 
-        private ICommand _saveInventoryCommand;
-        private ICommand _addIngredientToInventory;
+        private ICommand _addIngredientToInventoryCommand;
+        private ICommand _removeIngredientFromInventoryCommand;
         private int _selectedSortIndex;
 
         #endregion
@@ -71,7 +71,6 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-        //public IEnumerable<IGrouping<int, InventoryIngredient>> InventoryIngredients { get; set; }
         public ObservableCollection<InventoryIngredient> InventoryIngredients { get; set; }
 
         #endregion
@@ -82,15 +81,14 @@ namespace FoodPlanner.ViewModels
         {
             get
             {
-                if (_addIngredientToInventory == null)
+                if (_addIngredientToInventoryCommand == null)
                 {
-                    _addIngredientToInventory = new RelayCommand<Ingredient>(i => AddIngredientToInventory(i));
+                    _addIngredientToInventoryCommand = new RelayCommand<Ingredient>(i => AddIngredientToInventory(i));
                 }
-                return _addIngredientToInventory;
+                return _addIngredientToInventoryCommand;
             }
         }
 
-        private ICommand _removeIngredientFromInventoryCommand;
         public ICommand RemoveIngredientFromInventoryCommand
         {
             get

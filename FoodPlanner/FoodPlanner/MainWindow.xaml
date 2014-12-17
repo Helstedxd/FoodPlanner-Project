@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:UserControls="clr-namespace:FoodPlanner.UserControls"
     mc:Ignorable="d" x:Class="FoodPlanner.MainWindow"
-    Title="FoodPlanner"
+    Title="Meal Planner"
     d:DesignHeight="720"
     d:DesingHeightWidth="405"
     ResizeMode="NoResize"

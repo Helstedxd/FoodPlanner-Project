@@ -143,6 +143,7 @@
       <DependentUpon>SlidePanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverters\ValueConverter.cs" />
+    <Compile Include="ViewModels\LastMeal.cs" />
     <Compile Include="ViewModels\RecipeViewModel.cs" />
     <Compile Include="Models\SearchResults.cs" />
     <Compile Include="Recipe.cs">

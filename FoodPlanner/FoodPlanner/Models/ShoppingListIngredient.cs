@@ -15,6 +15,7 @@ namespace FoodPlanner.Models
             get { return _checked; }
             set
             {
+                //sets the ShoppingListIngredient to be checked then notify the property.
                 _checked = value;
                 RaisePropertyChanged("Checked");
             }
@@ -22,8 +23,6 @@ namespace FoodPlanner.Models
 
         public InventoryIngredient InventoryIngredient { get; set; }
 
-
-        // public ShoppingListIngredient(Ingredient ingredient, decimal quantity) : base(ingredient, quantity) { }
 
         public ShoppingListIngredient(InventoryIngredient inventoryIngredient)
         {

@@ -34,6 +34,7 @@ namespace FoodPlanner.Models
 
         public override string ToString()
         {
+            //if Quantity is 0 the Unit and Quantity of the Ingredient should not be shown
             if (!Convert.ToBoolean(this.Quantity))
             {
                 return Convert.ToString(this.Ingredient.Name);

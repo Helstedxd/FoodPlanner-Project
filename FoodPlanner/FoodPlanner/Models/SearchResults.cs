@@ -127,6 +127,8 @@ namespace FoodPlanner.Models
             }
         }
 
+        //This is a list of ALL the ingredients on this item.
+        //It's made to list to save datareaders later on.
         public List<Ingredient> ingredient
         {
             get
@@ -168,14 +170,5 @@ namespace FoodPlanner.Models
             _ingredients = new List<Ingredient>();
         }
         #endregion
-    }
-
-    class LastMeal
-    {
-        public LastMeal() { }
-
-        public int ingredientID { get; set; }
-
-        public int ingredientCount { get; set; }
     }
 }

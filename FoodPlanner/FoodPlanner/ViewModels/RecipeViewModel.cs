@@ -27,12 +27,14 @@ namespace FoodPlanner.ViewModels
         public Recipe Recipe { get; set; }
         public RecipeViewModel(Recipe recipe)
         {
+            //Constructor if user is comming from search
             ActiveDate = DateTime.Now;
             Recipe = recipe;
         }
 
         public RecipeViewModel(Meal meal)
         {
+            //Constructor if user is comming from mealplan
             Meal = meal;
             ActiveDate = meal.Date;
             Recipe = meal.Recipe;
@@ -122,6 +124,7 @@ namespace FoodPlanner.ViewModels
         #region Methods
         private void AddMeal()
         {
+            //Add meal to the users mealplan
             Meal newMeal = new Meal()
             {
                 Recipe = this.Recipe,
@@ -137,6 +140,7 @@ namespace FoodPlanner.ViewModels
 
         private void UpdateMeal()
         {
+            //Upadet the meal on the users mealplan
             Meal.Date = ActiveDate;
             if (_activeDate < DateTime.Now)
             {
@@ -154,6 +158,7 @@ namespace FoodPlanner.ViewModels
 
         private void RemoveMeal()
         {
+            //Remove a meal from the mealplan
             if (Meal != null)
             {
                 App.db.Meals.Remove(Meal);

@@ -139,8 +139,8 @@
     <Compile Include="UserControls\IngredientAutoComplete.xaml.cs">
       <DependentUpon>IngredientAutoComplete.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\SlidePanel.xaml.cs">
-      <DependentUpon>SlidePanel.xaml</DependentUpon>
+    <Compile Include="UserControls\NavigationBar.xaml.cs">
+      <DependentUpon>NavigationBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverters\ValueConverter.cs" />
     <Compile Include="Models\LastMeal.cs" />
@@ -204,7 +204,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\SlidePanel.xaml">
+    <Page Include="UserControls\NavigationBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

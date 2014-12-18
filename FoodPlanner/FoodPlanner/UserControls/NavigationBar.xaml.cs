@@ -16,9 +16,9 @@ namespace FoodPlanner.UserControls
 	/// <summary>
 	/// Interaction logic for SlidePanel.xaml
 	/// </summary>
-	public partial class SlidePanel : UserControl
+	public partial class NavigationBar : UserControl
 	{
-		public SlidePanel()
+        public NavigationBar()
 		{
 			this.InitializeComponent();
 		}

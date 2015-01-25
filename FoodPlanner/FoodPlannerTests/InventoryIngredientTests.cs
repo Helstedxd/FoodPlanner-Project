@@ -8,25 +8,27 @@ namespace FoodPlannerTests {
 
         [TestMethod]
         public void PurchaseDate_AutoSetInConstructor_SetToNow() {
-            //Arrange
-            InventoryIngredient inventoryIngredientTest = new InventoryIngredient(new Ingredient(), 750);
+            //arrange
+            Ingredient testIngredient = new Ingredient();
             DateTime expectedPurchaseDate = DateTime.Now;
 
-            //act - blank because the property is set automaticly in the constructor
+            //act - The property is set automaticly in the constructor
+            InventoryIngredient testInventoryIngredient = new InventoryIngredient(testIngredient, 750);
 
             //assert
-            Assert.AreEqual(expectedPurchaseDate, inventoryIngredientTest.PurchaseDate);
+            Assert.AreEqual(expectedPurchaseDate, testInventoryIngredient.PurchaseDate);
         }
 
         [TestMethod]
         public void ExpirationDate_AutoSetInConstructor_SetTo7DaysAhead() {
+            Ingredient testIngredient = new Ingredient();
             DateTime expectedExpirationDate = DateTime.Now.AddDays(7);
-            InventoryIngredient inventoryIngredientTest = new InventoryIngredient(new Ingredient(), 750);
-
-            //act - blank because the property is set automaticly in the constructor
+            
+            //act - The property is set automaticly in the constructor
+            InventoryIngredient testInventoryIngredient = new InventoryIngredient(testIngredient, 200);
 
             //assert
-            Assert.AreEqual(expectedExpirationDate, inventoryIngredientTest.ExpirationDate);
+            Assert.AreEqual(expectedExpirationDate, testInventoryIngredient.ExpirationDate);
         }
     }
 }

@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="InventoryIngredientTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="InventoryViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FoodPlanner\FoodPlanner.csproj">

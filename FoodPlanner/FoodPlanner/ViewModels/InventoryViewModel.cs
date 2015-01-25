@@ -105,13 +105,13 @@ namespace FoodPlanner.ViewModels
 
         #region Methods
 
-        private void AddIngredientToInventory(Ingredient ingredient)
+        public void AddIngredientToInventory(Ingredient ingredient)
         {
             // Add ingredient with a quantity of 1 by default.
             AddIngredientToInventory(ingredient, 1);
         }
 
-        private void AddIngredientToInventory(Ingredient ingredient, decimal quantiy)
+        public void AddIngredientToInventory(Ingredient ingredient, decimal quantiy)
         {
             if (ingredient != null)
             {
@@ -125,7 +125,7 @@ namespace FoodPlanner.ViewModels
             }
         }
 
-        private void RemoveIngredientFromInventory(InventoryIngredient inventoryIngredient)
+        public void RemoveIngredientFromInventory(InventoryIngredient inventoryIngredient)
         {
             if (inventoryIngredient != null)
             {

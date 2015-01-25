@@ -12,15 +12,15 @@ namespace FoodPlannerTests {
         [TestMethod]
         public void AddInventoryIngredient_CorrectIngrAdded_InventoryUpdated() {
             //arrange
-            Ingredient expectedNewInvenIngredient = new Ingredient();
-            InventoryIngredient inventoryIngredientTest = new InventoryIngredient(expectedNewInvenIngredient, 1);
+            Ingredient expectedNewIngredient = new Ingredient();
+            InventoryIngredient inventoryIngredient = new InventoryIngredient(expectedNewIngredient, 1);
             InventoryViewModel invVM = new InventoryViewModel();
             bool ingredientAdded;
 
             //act
-            invVM.AddIngredientToInventory(expectedNewInvenIngredient, 1);
-            
-            if (FoodPlanner.App.CurrentUser.InventoryIngredients.Contains(inventoryIngredientTest)) {
+            invVM.AddIngredientToInventory(expectedNewIngredient, 1);
+
+            if (FoodPlanner.App.CurrentUser.InventoryIngredients.Contains(inventoryIngredient)) {
                 ingredientAdded = true;
             } else {
                 ingredientAdded = false;

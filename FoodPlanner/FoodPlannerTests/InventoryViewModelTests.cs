@@ -14,11 +14,11 @@ namespace FoodPlannerTests {
             //arrange
             Ingredient expectedNewIngredient = new Ingredient();
             InventoryIngredient inventoryIngredient = new InventoryIngredient(expectedNewIngredient, 1);
-            InventoryViewModel invVM = new InventoryViewModel();
+            InventoryViewModel inventoryViewModel = new InventoryViewModel();
             bool ingredientAdded;
 
             //act
-            invVM.AddIngredientToInventory(expectedNewIngredient, 1);
+            inventoryViewModel.AddIngredientToInventory(expectedNewIngredient, 1);
 
             if (FoodPlanner.App.CurrentUser.InventoryIngredients.Contains(inventoryIngredient)) {
                 ingredientAdded = true;
@@ -33,15 +33,15 @@ namespace FoodPlannerTests {
         [TestMethod]
         public void RemoveInventoryIngredient_CorrectRemoved_InventoryUpdated() {
             //arrange
-            InventoryViewModel invVM = new InventoryViewModel();
+            InventoryViewModel inventoryViewModel = new InventoryViewModel();
             Ingredient ingredient = new Ingredient();
             InventoryIngredient inventoryIngredient = new InventoryIngredient();
             inventoryIngredient.Ingredient = ingredient;
             bool inventoryIngredientRemoved = false;
 
             //act
-            invVM.AddIngredientToInventory(ingredient);
-            invVM.RemoveIngredientFromInventory(inventoryIngredient);
+            inventoryViewModel.AddIngredientToInventory(ingredient);
+            inventoryViewModel.RemoveIngredientFromInventory(inventoryIngredient);
 
             if (!FoodPlanner.App.CurrentUser.InventoryIngredients.Contains(inventoryIngredient)) {
                 inventoryIngredientRemoved = true;

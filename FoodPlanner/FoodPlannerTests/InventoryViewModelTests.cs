@@ -15,15 +15,13 @@ namespace FoodPlannerTests {
             Ingredient expectedNewIngredient = new Ingredient();
             InventoryIngredient inventoryIngredient = new InventoryIngredient(expectedNewIngredient, 1);
             InventoryViewModel inventoryViewModel = new InventoryViewModel();
-            bool ingredientAdded;
+            bool ingredientAdded = false;
 
             //act
             inventoryViewModel.AddIngredientToInventory(expectedNewIngredient, 1);
 
             if (FoodPlanner.App.CurrentUser.InventoryIngredients.Contains(inventoryIngredient)) {
                 ingredientAdded = true;
-            } else {
-                ingredientAdded = false;
             }
 
             //assert
